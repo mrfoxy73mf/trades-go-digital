@@ -220,31 +220,6 @@ const weekTimeline = [
 				</div>
 			</section>
 
-			<section class="section dark reveal">
-				<div class="container demo-section">
-					<div class="section-heading">
-						<p class="eyebrow">Product demo</p>
-						<h2>See President Trades in action</h2>
-						<p>
-							Watch how a quote can be created, accepted by the customer, and automatically
-							organised into the business office.
-						</p>
-					</div>
-					<div class="demo-video-frame">
-						<video controls preload="metadata" playsinline>
-							<source src="/videos/president-trades-demo.webm" type="video/webm" />
-							Your browser does not support the video tag.
-						</video>
-					</div>
-					<div class="demo-points" aria-label="President Trades demo highlights">
-						<span>Build a quote from your phone</span>
-						<span>Add labour, materials and dates</span>
-						<span>Customer accepts online</span>
-						<span>Quote and invoice are filed automatically</span>
-					</div>
-				</div>
-			</section>
-
 			<section id="comparison" class="section muted reveal">
 				<div class="container">
 					<div class="section-heading">
@@ -897,61 +872,6 @@ const weekTimeline = [
 		box-shadow: 0 0 24px rgba(42, 178, 255, 0.18);
 	}
 
-	.demo-section .section-heading {
-		max-width: 780px;
-	}
-
-	.demo-section {
-		position: relative;
-	}
-
-	.demo-video-frame {
-		width: min(100%, 520px);
-		margin: 0 auto;
-		overflow: hidden;
-		border-radius: 28px;
-		background: #020914;
-		box-shadow:
-			0 28px 80px rgba(0, 0, 0, 0.28),
-			0 0 48px rgba(42, 178, 255, 0.1);
-	}
-
-	.demo-video-frame video {
-		display: block;
-		width: 100%;
-		height: auto;
-		border-radius: 28px;
-		background: #020914;
-	}
-
-	.demo-points {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px 12px;
-		width: min(100%, 520px);
-		margin: 22px auto 0;
-	}
-
-	.demo-points span {
-		display: inline-flex;
-		align-items: center;
-		gap: 9px;
-		min-width: 0;
-		color: #dce9f8;
-		font-weight: 850;
-		line-height: 1.35;
-	}
-
-	.demo-points span::before {
-		width: 7px;
-		height: 7px;
-		flex: 0 0 auto;
-		border-radius: 999px;
-		background: #69d5ff;
-		box-shadow: 0 0 16px rgba(105, 213, 255, 0.62);
-		content: "";
-	}
-
 	.trade-grid {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
@@ -1342,16 +1262,6 @@ const weekTimeline = [
 
 		.cta-panel {
 			padding: 26px;
-		}
-
-		.demo-video-frame,
-		.demo-video-frame video {
-			border-radius: 14px;
-		}
-
-		.demo-points {
-			gap: 9px 12px;
-			margin-top: 16px;
 		}
 
 		.story-copy {
