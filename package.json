@@ -1,6 +1,6 @@
 {
 	"name": "trades-go-digital",
-	"description": "Build a personal website, blog, or portfolio with Astro.",
+	"description": "Trades Go Digital website for UK trades lead generation services.",
 	"cloudflare": {
 		"label": "Astro Framework Starter",
 		"products": [
