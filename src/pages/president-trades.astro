@@ -5,11 +5,11 @@ import Header from "../components/Header.astro";
 import { CONTACT_EMAIL, SITE_TITLE } from "../consts";
 
 const trustItems = [
-	"Installs on your phone",
-	"Built for UK trades",
-	"Your data stays yours",
-	"Office in your pocket",
-	"Simple day-to-day admin",
+	"Works from your phone",
+	"Built for UK trades businesses",
+	"Quotes, jobs and paperwork in one place",
+	"Business Office in your pocket",
+	"Simple admin without the clutter",
 ];
 
 const kpis = [
@@ -29,22 +29,22 @@ const flows = [
 	{
 		tag: "Instant",
 		title: "Quote to Job Pack in seconds",
-		text: "Customer accepts and the job paperwork is organised without you retyping the same details again.",
+		text: "Customer accepts the quote and the invoice is created automatically and organised in the Business Office.",
 	},
 	{
 		tag: "Live",
-		title: "Signed paperwork stays with the job",
-		text: "Certificates and sign-offs stay connected to the customer, the job and the records you need later.",
+		title: "Job records stay organised",
+		text: "Quotes, invoices, certificates and customer details stay together so you can find what you need later.",
 	},
 	{
 		tag: "One-time",
-		title: "Materials saved once",
-		text: "Keep regular labour, materials and job details ready so quotes and invoices are faster to build.",
+		title: "Materials ready when you need them",
+		text: "Build quotes faster with saved labour, materials and common part lists. Add your regular items once, reuse them on future jobs, and keep pricing more consistent across quotes and invoices.",
 	},
 	{
 		tag: "One tap",
-		title: "Accountant bundle ready",
-		text: "Receipts, mileage, invoices, job records and tax information stay easier to package and share.",
+		title: "Month-end ready for your accountant",
+		text: "Choose the month, then download, share or email one tidy bundle with receipts, invoices, mileage and import-ready records.",
 	},
 ];
 
@@ -61,10 +61,10 @@ const officeItems = [
 ];
 
 const aiItems = [
-	["Voice notes that tidy themselves", "Dictate notes, job updates and customer messages, then turn them into cleaner wording."],
-	["Customer letters in your tone", "Draft polite follow-ups, payment reminders and job updates faster."],
-	["Hands-free on site", "Capture information while you are working, then organise it when you have time."],
-	["Built around UK trades", "Focused on the admin UK trades businesses deal with every week."],
+	["Voice notes that tidy themselves", "Dictate job notes, customer updates and reminders, then turn them into clear wording when you need it."],
+	["Customer messages made easier", "Draft polite follow-ups, payment reminders and job updates without starting from a blank page."],
+	["Hands-free on site", "Capture details while you are working, then organise them properly when you have time."],
+	["Built around UK trades admin", "Designed for the notes, paperwork and follow-ups UK trades businesses deal with every week."],
 ];
 
 const priceItems = [
@@ -113,20 +113,27 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 					</div>
 				</div>
 				<div class="pt-container pt-hero-inner">
-					<div class="pt-topline">
-						<span>Built for UK trades businesses</span>
-						<span>Pre-launch access</span>
+					<div class="pt-hero-copy">
+						<div class="pt-topline">
+							<span>Built for UK trades businesses</span>
+							<span>Pre-launch access</span>
+						</div>
+						<h1>Run your business from your van.</h1>
+						<p class="pt-hero-lead">
+							One quote. One accept tap from your customer. The paperwork stays organised so you
+							are not still doing admin at 9pm.
+						</p>
+						<p class="pt-trustline">Works on site. Works in the van. Works when you get home.</p>
+						<div class="pt-actions">
+							<a class="pt-btn primary" href="#waiting-list">Register Your Interest</a>
+							<a class="pt-btn ghost" href="#preview">See how it works</a>
+						</div>
 					</div>
-					<img class="pt-logo" src="/president-trades-logo.png" alt="President Trades" />
-					<h1>Run your business from your phone.</h1>
-					<p class="pt-hero-lead">
-						One quote. One accept tap from your customer. The paperwork stays organised so you
-						are not still doing admin at 9pm.
-					</p>
-					<p class="pt-trustline">Works on site. Works in the van. Works when you get home.</p>
-					<div class="pt-actions">
-						<a class="pt-btn primary" href="#waiting-list">Register Your Interest</a>
-						<a class="pt-btn ghost" href="#preview">See how it works</a>
+					<div class="pt-hero-visual">
+						<img
+							src="/images/president-trades-van-worker.png"
+							alt="President Trades worker with branded van"
+						/>
 					</div>
 				</div>
 			</section>
@@ -176,7 +183,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			<section id="automatic" class="pt-section pt-auto">
 				<div class="pt-container">
 					<p class="pt-eyebrow">Time-saving flows</p>
-					<h2>Four taps.<br /><span>Four hours back.</span></h2>
+					<h2>Less admin.<br /><span>More time back.</span></h2>
 					<div class="pt-flow-grid">
 						{
 							flows.map((flow) => (
@@ -195,7 +202,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 				<div class="pt-container">
 					<p class="pt-eyebrow">Business office</p>
 					<div class="pt-section-head">
-						<h2>Filed where <span>you'd look for it.</span></h2>
+						<h2>Everything organised <span>around each job.</span></h2>
 						<p>
 							Quotes, jobs, certificates, expenses, mileage and tax records are grouped around
 							the way a trade business actually works.
@@ -204,17 +211,32 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 					<div class="pt-chip-grid">
 						{officeItems.map((item) => <span>{item}</span>)}
 					</div>
+					<div class="pt-trade-proof">
+						<img
+							src="/images/president-trades-worker-badge.png"
+							alt="President Trades worker and van"
+						/>
+						<div>
+							<p class="pt-eyebrow">Built around the work</p>
+							<h3>Made for trades businesses that live between site, van and home.</h3>
+							<p>
+								President Trades keeps the business office close by, so job records, paperwork
+								and follow-ups stay organised wherever the working day takes you.
+							</p>
+						</div>
+					</div>
 				</div>
 			</section>
 
 			<section class="pt-section pt-ai">
 				<div class="pt-container pt-ai-grid">
 					<div>
-						<p class="pt-eyebrow">Notebook and useful tools</p>
-						<h2>Talk to your phone.<br /><span>Skip the typing.</span></h2>
+						<p class="pt-eyebrow">Notebook and voice tools</p>
+						<h2>Talk it through.<br /><span>Tidy it up later.</span></h2>
 						<p>
-							Use AI where it genuinely helps, such as tidying notes, preparing customer
-							messages and reducing repeat typing. The business stays in your control.
+							Capture job notes, customer updates, reminders and follow-ups while you are
+							working. President Trades helps turn rough notes into clearer records and
+							messages, without taking control away from you.
 						</p>
 					</div>
 					<div class="pt-ai-list">
@@ -231,8 +253,9 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 						<p>Simple pricing with the core business office included.</p>
 					</div>
 					<article class="pt-price-card">
-						<div class="pt-price"><b>GBP 28</b><span>/month</span></div>
-						<p class="pt-price-intro">Early pricing details subject to launch confirmation.</p>
+						<div class="pt-price"><b>&pound;28</b><span>/month</span></div>
+						<p class="pt-price-intro">Less than &pound;1 a day for your first 2 months.</p>
+						<p class="pt-price-after">Then &pound;60 a month.</p>
 						<ul>
 							{priceItems.map((item) => <li><span>✓</span>{item}</li>)}
 						</ul>
@@ -275,25 +298,39 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 <style>
 	body {
 		margin: 0;
-		background: #0a0a0a;
+		background: #244057;
 		color: #f8fafc;
 		font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	}
 
+	html,
+	body {
+		overflow-x: hidden;
+	}
+
 	.pt-landing {
-		--bg: #0a0a0a;
-		--bg-1: #0d0d0d;
-		--bg-2: #111418;
+		--bg: #244057;
+		--bg-1: #2d4f6a;
+		--bg-2: #37617f;
 		--fg: #f8fafc;
-		--muted: #94a3b8;
-		--dim: #64748b;
-		--border: #1e293b;
-		--soft: #14202f;
+		--muted: #d5e0ea;
+		--dim: #b5c6d5;
+		--border: #63819b;
+		--soft: #4f708c;
 		--accent: #ff6b00;
 		--ok: #22c55e;
-		background: var(--bg);
+		background:
+			radial-gradient(circle at 18% 0%, rgba(255, 107, 0, 0.12), transparent 26%),
+			radial-gradient(circle at 88% 12%, rgba(166, 205, 232, 0.28), transparent 30%),
+			linear-gradient(180deg, #315774 0%, var(--bg) 44%, #20384f 100%);
 		color: var(--fg);
 		overflow-x: hidden;
+	}
+
+	.pt-landing *,
+	.pt-landing *::before,
+	.pt-landing *::after {
+		box-sizing: border-box;
 	}
 
 	.pt-container {
@@ -315,6 +352,10 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	.pt-hero-inner {
 		position: relative;
 		z-index: 2;
+		display: grid;
+		grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+		gap: 48px;
+		align-items: center;
 	}
 
 	.pt-hero-bg {
@@ -372,6 +413,23 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
 	}
 
+	.pt-hero-visual {
+		display: grid;
+		place-items: center;
+	}
+
+	.pt-hero-visual img {
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		border: 1px solid rgba(255, 255, 255, 0.32);
+		border-radius: 18px;
+		background: rgba(255, 255, 255, 0.08);
+		box-shadow:
+			0 34px 90px rgba(0, 0, 0, 0.26),
+			0 0 0 8px rgba(255, 255, 255, 0.05);
+		object-fit: cover;
+	}
+
 	.pt-topline,
 	.pt-eyebrow {
 		display: flex;
@@ -390,15 +448,17 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	h3,
 	p {
 		margin-top: 0;
+		overflow-wrap: anywhere;
 	}
 
 	h1 {
 		max-width: 780px;
 		margin-bottom: 32px;
 		color: var(--fg);
-		font-size: clamp(3rem, 7.4vw, 5.75rem);
-		line-height: 0.98;
+		font-size: clamp(2.9rem, 7vw, 5.4rem);
+		line-height: 1.06;
 		letter-spacing: 0;
+		text-wrap: balance;
 	}
 
 	h2 {
@@ -496,7 +556,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-trust {
 		padding: 30px 0;
-		background: #050505;
+		background: #20384f;
 		border-bottom: 1px solid var(--soft);
 	}
 
@@ -541,7 +601,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		padding: 32px;
 		border: 1px solid var(--border);
 		border-radius: 8px;
-		background: #0b0f14;
+		background: #294b66;
 	}
 
 	.pt-dashboard-bar,
@@ -579,7 +639,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-kpi-grid article,
 	.pt-panel {
-		background: #0a0e13;
+		background: #2d4f6a;
 	}
 
 	.pt-kpi-grid article {
@@ -737,7 +797,43 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		padding: 12px 18px;
 		border: 1px solid var(--border);
 		border-radius: 999px;
-		background: #0a0e13;
+		background: #2d4f6a;
+	}
+
+	.pt-trade-proof {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		gap: 26px;
+		align-items: center;
+		margin-top: 42px;
+		padding: 28px;
+		border: 1px solid var(--border);
+		border-radius: 18px;
+		background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.14);
+	}
+
+	.pt-trade-proof img {
+		width: 150px;
+		height: 150px;
+		border: 1px solid rgba(255, 255, 255, 0.28);
+		border-radius: 999px;
+		object-fit: cover;
+		box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+	}
+
+	.pt-trade-proof .pt-eyebrow {
+		margin-bottom: 12px;
+	}
+
+	.pt-trade-proof h3 {
+		max-width: 680px;
+		margin-bottom: 10px;
+		font-size: clamp(1.45rem, 2.4vw, 2.15rem);
+	}
+
+	.pt-trade-proof p:last-child {
+		margin-bottom: 0;
 	}
 
 	.pt-ai-grid,
@@ -781,10 +877,19 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	.pt-price-intro {
-		margin: 12px 0 24px;
+		margin: 12px 0 4px;
 		color: #fb923c;
 		font-size: 0.85rem;
 		font-weight: 850;
+	}
+
+	.pt-price-after {
+		margin: 0 0 24px;
+		color: var(--dim);
+		font-size: 0.82rem;
+		font-weight: 850;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
 	}
 
 	.pt-price-card ul {
@@ -828,7 +933,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 14px;
-		width: min(820px, 100%);
+		width: min(760px, 100%);
 		margin: 42px auto 0;
 		text-align: left;
 	}
@@ -837,6 +942,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		display: grid;
 		gap: 8px;
 		color: var(--fg);
+		font-size: 0.94rem;
 		font-weight: 850;
 	}
 
@@ -850,12 +956,19 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	textarea {
 		width: 100%;
 		min-width: 0;
+		min-height: 52px;
 		border: 1px solid rgba(148, 163, 184, 0.28);
 		border-radius: 8px;
 		background: rgba(255, 255, 255, 0.08);
 		color: var(--fg);
 		font: inherit;
+		font-size: 1rem;
 		padding: 14px;
+	}
+
+	textarea {
+		min-height: 132px;
+		resize: vertical;
 	}
 
 	input::placeholder,
@@ -895,19 +1008,51 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	@media (max-width: 720px) {
 		.pt-section,
 		.pt-hero {
-			padding: 64px 0;
+			padding: 56px 0;
 		}
 
 		.pt-hero-bg {
 			display: none;
 		}
 
+		.pt-hero-inner {
+			grid-template-columns: 1fr;
+			gap: 34px;
+		}
+
+		.pt-hero-visual {
+			justify-content: center;
+		}
+
+		.pt-hero-visual img {
+			width: 100%;
+			aspect-ratio: 4 / 3;
+			border-radius: 14px;
+		}
+
+		.pt-container {
+			width: min(100% - 28px, 620px);
+		}
+
+		.pt-logo {
+			width: 68px;
+			height: 68px;
+			margin-bottom: 22px;
+		}
+
 		h1 {
-			font-size: clamp(2.7rem, 13vw, 4rem);
+			font-size: clamp(2.25rem, 10.5vw, 3.15rem);
+			line-height: 1.12;
 		}
 
 		h2 {
-			font-size: clamp(2.1rem, 10vw, 3rem);
+			font-size: clamp(1.9rem, 8.5vw, 2.55rem);
+			line-height: 1.06;
+		}
+
+		p {
+			font-size: 0.98rem;
+			line-height: 1.65;
 		}
 
 		.pt-actions,
@@ -925,7 +1070,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		}
 
 		.pt-dashboard {
-			padding: 18px;
+			padding: 16px;
 		}
 
 		.pt-dashboard-bar,
@@ -940,8 +1085,113 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			gap: 6px;
 		}
 
+		.pt-trade-proof {
+			grid-template-columns: 1fr;
+			padding: 22px;
+			text-align: left;
+		}
+
+		.pt-trade-proof img {
+			width: 132px;
+			height: 132px;
+		}
+
 		.pt-price-card {
-			padding: 28px;
+			padding: 24px;
+		}
+
+		.pt-final img {
+			width: 128px;
+			height: 128px;
+		}
+
+		form {
+			gap: 12px;
+			margin-top: 28px;
+		}
+
+		label {
+			gap: 6px;
+			font-size: 0.86rem;
+		}
+
+		input,
+		textarea {
+			min-height: 46px;
+			border-radius: 7px;
+			font-size: 0.98rem;
+			padding: 11px 12px;
+		}
+
+		textarea {
+			min-height: 112px;
+		}
+
+		.form-note,
+		.email-note {
+			font-size: 0.88rem;
+			line-height: 1.55;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.pt-container {
+			width: min(100% - 24px, 420px);
+		}
+
+		.pt-section,
+		.pt-hero {
+			padding: 46px 0;
+		}
+
+		.pt-topline,
+		.pt-eyebrow {
+			font-size: 0.62rem;
+			letter-spacing: 0.12em;
+		}
+
+		h1 {
+			font-size: clamp(2rem, 10vw, 2.55rem);
+			line-height: 1.14;
+		}
+
+		.pt-hero-lead {
+			font-size: 1rem;
+		}
+
+		.pt-btn,
+		button {
+			min-height: 46px;
+			padding: 12px 14px;
+			font-size: 0.68rem;
+			letter-spacing: 0.1em;
+		}
+
+		.pt-dashboard,
+		.pt-flow-card,
+		.pt-ai-list article,
+		.pt-price-card {
+			border-radius: 6px;
+		}
+
+		.pt-panel,
+		.pt-flow-card,
+		.pt-ai-list article {
+			padding: 18px;
+		}
+
+		form {
+			gap: 10px;
+		}
+
+		input,
+		textarea {
+			min-height: 44px;
+			padding: 10px 11px;
+		}
+
+		textarea {
+			min-height: 104px;
 		}
 	}
 </style>
