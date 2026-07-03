@@ -17,46 +17,64 @@ const heroButtons = [
 		label: "Dashboard",
 		image: "/images/president-trades-dashboard.jpg",
 		alt: "President Trades dashboard screen",
+		description:
+			"See today's jobs, track your business performance and jump straight into the work that needs your attention.",
 	},
 	{
 		label: "Quote Page",
 		image: "/images/president-trades-quote-page.jpg",
 		alt: "President Trades quote page screen",
+		description:
+			"Create a quote once, then let President Trades take care of everything that happens next. The magic starts here.",
 	},
 	{
 		label: "Job Page",
 		image: "/images/president-trades-job-folder.jpg",
 		alt: "President Trades jobs screen",
+		description:
+			"Everything about the job lives here. Update details, add notes and photos, track progress, and let President Trades keep everything organised from start to finish.",
 	},
 	{
 		label: "Work Calendar",
 		image: "/images/president-trades-work-calendar.jpg",
 		alt: "President Trades work calendar screen",
+		description:
+			"Add your job dates when creating a quote. Once your customer accepts, President Trades automatically books the dates into your Work Calendar.",
 	},
 	{
 		label: "Suppliers Page",
 		image: "/images/president-trades-suppliers-page.jpg",
 		alt: "President Trades suppliers page screen",
+		description:
+			"Add your suppliers once. President Trades knows where to send your material lists and keeps every supplier invoice linked to the right job.",
 	},
 	{
 		label: "AI Assistant",
 		image: "/images/president-trades-ai-assistant.jpg",
 		alt: "President Trades AI Assistant screen",
+		description:
+			"Ask any question about President Trades, your business or your trade, and get answers in seconds.",
 	},
 	{
 		label: "Notebook",
 		image: "/images/president-trades-notebook.jpg",
 		alt: "President Trades notebook screen",
+		description:
+			"Speak naturally, then let President Trades turn your words into a professional email, letter or text message ready to send.",
 	},
 	{
 		label: "Business Office",
 		image: "/images/president-trades-business-office.jpg",
 		alt: "President Trades Business Office screen",
+		description:
+			"The Business Office is where President Trades works its magic, automatically organising every job, document, receipt, certificate and business record into one connected system.",
 	},
 	{
 		label: "Vehicles and Logs",
 		image: "/images/president-trades-vehicles-logs.jpg",
 		alt: "President Trades vehicles and mileage logs screen",
+		description:
+			"Log your business trips once, then let President Trades calculate your HMRC claim and keep everything ready for your accounts.",
 	},
 ];
 
@@ -96,32 +114,11 @@ const flows = [
 	},
 ];
 
-const officeItems = [
-	"Job folders",
-	"Work calendar",
-	"Notebook and voice notes",
-	"Accountant exports",
-	"Receipt tracking",
-	"Archives",
-	"Certificates",
-	"Tax centre",
-	"Vehicle and mileage logs",
-];
-
 const aiItems = [
 	["Voice notes that tidy themselves", "Dictate job notes, customer updates and reminders, then turn them into clear wording when you need it."],
 	["Customer messages made easier", "Draft polite follow-ups, payment reminders and job updates without starting from a blank page."],
 	["Hands-free on site", "Capture details while you are working, then organise them properly when you have time."],
 	["Built around UK trades admin", "Designed for the notes, paperwork and follow-ups UK trades businesses deal with every week."],
-];
-
-const priceItems = [
-	"Quotes, jobs, invoices and certificates",
-	"Business Office with organised job records",
-	"Tax Centre and accountant bundle",
-	"Notebook, voice notes and useful AI tools",
-	"Vehicle, mileage and calendar",
-	"Business branding on paperwork",
 ];
 
 const paperworkItems = [
@@ -200,6 +197,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 									type="button"
 									data-preview-src={item.image}
 									data-preview-alt={item.alt}
+									data-preview-description={item.description}
 								>
 									<b>{item.label}</b>
 								</button>
@@ -214,6 +212,10 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 						/>
 					</div>
 					<div class="pt-hero-points" aria-label="President Trades key benefits">
+						<div id="pt-hero-copy" class="pt-hero-copy" hidden>
+							<h2 id="pt-hero-copy-title"></h2>
+							<p id="pt-hero-copy-text"></p>
+						</div>
 						{trustItems.map((item) => <span><b>&check;</b>{item}</span>)}
 					</div>
 				</div>
@@ -257,42 +259,6 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 				</div>
 			</section>
 
-			<section id="preview" class="pt-section pt-preview">
-				<div class="pt-container">
-					<p class="pt-eyebrow">Why it's easy</p>
-					<div class="pt-section-head">
-						<h2>Tap less.<br /><span>Finish earlier.</span></h2>
-						<p>
-							President Trades is a business operating system for UK trades businesses. It helps
-							keep quotes, jobs, invoices, certificates, receipts and customer records together
-							in one place.
-						</p>
-					</div>
-					<div class="pt-dashboard">
-						<div class="pt-dashboard-bar">
-							<span>// Live preview - dashboard module</span>
-							<strong>System online</strong>
-						</div>
-						<div class="pt-kpi-grid">
-							{kpis.map(([label, value, delta]) => <article><span>{label}</span><b>{value}</b><em>{delta}</em></article>)}
-						</div>
-						<div class="pt-dashboard-lower">
-							<div class="pt-panel">
-								<h3>// Active jobs</h3>
-								{activeJobs.map(([name, amount, status]) => <p><span>{name}</span><b>{amount}</b><em>{status}</em></p>)}
-							</div>
-							<div class="pt-panel">
-								<h3>// 12-month volume</h3>
-								<div class="pt-bars" aria-hidden="true">
-									{[38, 60, 50, 76, 92, 70, 84, 100, 58, 72, 88, 82].map((height) => <span style={`height: ${height}%`}></span>)}
-								</div>
-								<div class="pt-axis"><span>Mar</span><span>Feb</span></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
 			<section id="automatic" class="pt-section pt-auto">
 				<div class="pt-container">
 					<p class="pt-eyebrow">Time-saving flows</p>
@@ -301,7 +267,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 						{
 							flows.map((flow) => (
 								<article class="pt-flow-card">
-									<div><span>{flow.tag}</span><b>↗</b></div>
+									<div><span>{flow.tag}</span><b>-&gt;</b></div>
 									<h3>{flow.title}</h3>
 									<p>{flow.text}</p>
 								</article>
@@ -316,13 +282,6 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 					<p class="pt-eyebrow">Business office</p>
 					<div class="pt-section-head">
 						<h2>Everything organised <span>around each job.</span></h2>
-						<p>
-							Quotes, jobs, certificates, expenses, mileage and tax records are grouped around
-							the way a trade business actually works.
-						</p>
-					</div>
-					<div class="pt-chip-grid">
-						{officeItems.map((item) => <span>{item}</span>)}
 					</div>
 					<div class="pt-trade-proof">
 						<img
@@ -358,25 +317,6 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 				</div>
 			</section>
 
-			<section id="pricing" class="pt-section pt-pricing">
-				<div class="pt-container pt-pricing-grid">
-					<div>
-						<p class="pt-eyebrow">Pricing</p>
-						<h2>One plan.<br />One price.<br /><span>Built for trades.</span></h2>
-						<p>Simple pricing with the core business office included.</p>
-					</div>
-					<article class="pt-price-card">
-						<div class="pt-price"><b>&pound;28</b><span>/month</span></div>
-						<p class="pt-price-intro">Less than &pound;1 a day for your first 2 months.</p>
-						<p class="pt-price-after">Then &pound;60 a month.</p>
-						<ul>
-							{priceItems.map((item) => <li><span>✓</span>{item}</li>)}
-						</ul>
-						<a class="pt-btn primary" href="#waiting-list">Register Your Interest</a>
-					</article>
-				</div>
-			</section>
-
 			<section id="waiting-list" class="pt-section pt-final">
 				<div class="pt-container">
 					<img src="/president-trades-logo.png" alt="President Trades" />
@@ -407,6 +347,9 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		<Footer />
 		<script>
 			const previewImage = document.querySelector<HTMLImageElement>("#pt-hero-preview");
+			const previewCopy = document.querySelector<HTMLElement>("#pt-hero-copy");
+			const previewCopyTitle = document.querySelector<HTMLElement>("#pt-hero-copy-title");
+			const previewCopyText = document.querySelector<HTMLElement>("#pt-hero-copy-text");
 			const previewMenu = document.querySelector<HTMLElement>(".pt-hero-menu");
 			const previewButtons = document.querySelectorAll<HTMLButtonElement>(".pt-hero-menu button");
 			const paperworkImage = document.querySelector<HTMLImageElement>("#pt-paperwork-preview");
@@ -422,6 +365,12 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 					previewImage.src = nextSrc;
 					previewImage.alt = button.dataset.previewAlt || "President Trades app screen";
+					if (previewCopy && previewCopyTitle && previewCopyText) {
+						const description = button.dataset.previewDescription || "";
+						previewCopy.hidden = !description;
+						previewCopyTitle.textContent = button.textContent?.trim() || "";
+						previewCopyText.textContent = description;
+					}
 					previewButtons.forEach((item) => item.classList.remove("is-active"));
 					button.classList.add("is-active");
 
@@ -470,6 +419,9 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 				previewImage.src = "/images/president-trades-magic-room.png";
 				previewImage.alt = "President Trades Magic Room office with branded van";
+				if (previewCopy) {
+					previewCopy.hidden = true;
+				}
 				previewButtons.forEach((item) => item.classList.remove("is-active"));
 
 				if (isPhone()) {
@@ -640,6 +592,27 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		border: 0;
 		background: transparent;
 		box-shadow: none;
+	}
+
+	.pt-hero-copy {
+		margin-bottom: 4px;
+		padding-bottom: 20px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	}
+
+	.pt-hero-copy h2 {
+		margin: 0 0 10px;
+		color: var(--fg);
+		font-size: clamp(1.8rem, 3vw, 2.7rem);
+		line-height: 1;
+	}
+
+	.pt-hero-copy p {
+		margin: 0;
+		color: var(--muted);
+		font-size: 1rem;
+		font-weight: 750;
+		line-height: 1.55;
 	}
 
 	.pt-hero-points span {
