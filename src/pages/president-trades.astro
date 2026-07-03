@@ -6,10 +6,38 @@ import { CONTACT_EMAIL, SITE_TITLE } from "../consts";
 
 const trustItems = [
 	"Works from your phone",
-	"Built for UK trades businesses",
+	"Built for UK trade businesses",
 	"Quotes, jobs and paperwork in one place",
-	"Business Office in your pocket",
-	"Simple admin without the clutter",
+	"Your business office in your pocket",
+	"Simple admin. No clutter.",
+];
+
+const heroButtons = [
+	{
+		label: "Dashboard",
+		image: "/images/president-trades-dashboard.jpg",
+		alt: "President Trades dashboard screen",
+	},
+	{
+		label: "Quote Page",
+		image: "/images/president-trades-quote-page.jpg",
+		alt: "President Trades quote page screen",
+	},
+	{
+		label: "Job Page",
+		image: "/images/president-trades-job-folder.jpg",
+		alt: "President Trades jobs screen",
+	},
+	{
+		label: "Work Calendar",
+		image: "/images/president-trades-work-calendar.jpg",
+		alt: "President Trades work calendar screen",
+	},
+	{ label: "Receipt Tracking" },
+	{ label: "Archives" },
+	{ label: "Certificates" },
+	{ label: "Tax Centre" },
+	{ label: "Vehicle & Mileage Logs" },
 ];
 
 const kpis = [
@@ -98,49 +126,30 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		<Header />
 		<main class="pt-landing">
 			<section class="pt-hero pt-section">
-				<div class="pt-hero-bg" aria-hidden="true">
-					<div class="pt-hero-col left">
-						<span>INCOME - YTD<br /><b>GBP 28,420</b></span>
-						<span>JOB FOLDER<br /><b>Mrs Patel</b></span>
-						<span>OUTSTANDING<br /><b>GBP 7,220</b></span>
-						<span>CERTIFICATES<br /><b>Ready</b></span>
-					</div>
-					<div class="pt-hero-col right">
-						<span>QUOTE SENT<br /><b>Accepted</b></span>
-						<span>TAX CENTRE<br /><b>Organised</b></span>
-						<span>CALENDAR<br /><b>Booked</b></span>
-						<span>INVOICE<br /><b>Filed</b></span>
-					</div>
-				</div>
 				<div class="pt-container pt-hero-inner">
-					<div class="pt-hero-copy">
-						<div class="pt-topline">
-							<span>Built for UK trades businesses</span>
-							<span>Pre-launch access</span>
-						</div>
-						<h1>Lovely jubbly admin, sorted from your van.</h1>
-						<p class="pt-hero-lead">
-							One quote. One accept tap from your customer. The paperwork stays organised so you
-							are not still doing admin at 9pm.
-						</p>
-						<p class="pt-trustline">Works on site. Works in the van. Works when you get home.</p>
-						<div class="pt-actions">
-							<a class="pt-btn primary" href="#waiting-list">Register Your Interest</a>
-							<a class="pt-btn ghost" href="#preview">See how it works</a>
-						</div>
+					<div class="pt-hero-menu" aria-label="President Trades tools">
+						{
+							heroButtons.map((item) => (
+								<button
+									type="button"
+									data-preview-src={item.image}
+									data-preview-alt={item.alt}
+								>
+									<b>{item.label}</b>
+								</button>
+							))
+						}
 					</div>
 					<div class="pt-hero-visual">
 						<img
-							src="/images/president-trades-van-worker.png"
-							alt="President Trades worker with branded van"
+							id="pt-hero-preview"
+							src="/images/president-trades-magic-room.png"
+							alt="President Trades Magic Room office with branded van"
 						/>
 					</div>
-				</div>
-			</section>
-
-			<section class="pt-trust">
-				<div class="pt-container pt-trust-grid">
-					{trustItems.map((item) => <span><b>✓</b>{item}</span>)}
+					<div class="pt-hero-points" aria-label="President Trades key benefits">
+						{trustItems.map((item) => <span><b>&check;</b>{item}</span>)}
+					</div>
 				</div>
 			</section>
 
@@ -292,6 +301,40 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			</section>
 		</main>
 		<Footer />
+		<script>
+			const previewImage = document.querySelector<HTMLImageElement>("#pt-hero-preview");
+			const previewMenu = document.querySelector<HTMLElement>(".pt-hero-menu");
+			const previewButtons = document.querySelectorAll<HTMLButtonElement>(".pt-hero-menu button");
+			const isPhone = () => window.matchMedia("(max-width: 720px)").matches;
+
+			previewButtons.forEach((button) => {
+				button.addEventListener("click", () => {
+					const nextSrc = button.dataset.previewSrc;
+					if (!previewImage || !nextSrc) return;
+
+					previewImage.src = nextSrc;
+					previewImage.alt = button.dataset.previewAlt || "President Trades app screen";
+					previewButtons.forEach((item) => item.classList.remove("is-active"));
+					button.classList.add("is-active");
+
+					if (isPhone()) {
+						previewImage.scrollIntoView({ behavior: "smooth", block: "center" });
+					}
+				});
+			});
+
+			previewImage?.addEventListener("click", () => {
+				if (!previewMenu) return;
+
+				previewImage.src = "/images/president-trades-magic-room.png";
+				previewImage.alt = "President Trades Magic Room office with branded van";
+				previewButtons.forEach((item) => item.classList.remove("is-active"));
+
+				if (isPhone()) {
+					previewMenu.scrollIntoView({ behavior: "smooth", block: "start" });
+				}
+			});
+		</script>
 	</body>
 </html>
 
@@ -346,61 +389,17 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-hero {
 		overflow: hidden;
-		padding: 72px 0 104px;
+		padding: 48px 0 76px;
 	}
 
 	.pt-hero-inner {
 		position: relative;
 		z-index: 2;
 		display: grid;
-		grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
-		gap: 48px;
+		grid-template-columns: minmax(180px, 230px) minmax(0, 1fr) minmax(240px, 320px);
+		gap: 28px;
 		align-items: center;
-	}
-
-	.pt-hero-bg {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		opacity: 0.7;
-		mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 80%, transparent 100%);
-	}
-
-	.pt-hero-col {
-		position: absolute;
-		top: 24px;
-		display: grid;
-		gap: 18px;
-		width: 210px;
-	}
-
-	.pt-hero-col.left {
-		left: 2vw;
-	}
-
-	.pt-hero-col.right {
-		right: 2vw;
-	}
-
-	.pt-hero-col span {
-		padding: 14px;
-		border: 1px solid var(--border);
-		border-radius: 4px;
-		background: linear-gradient(135deg, rgba(255, 107, 0, 0.05), rgba(30, 41, 59, 0.32));
-		color: var(--dim);
-		font-size: 0.65rem;
-		font-weight: 800;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-	}
-
-	.pt-hero-col b {
-		display: block;
-		margin-top: 5px;
-		color: var(--muted);
-		font-size: 1rem;
-		letter-spacing: 0;
-		text-transform: none;
+		width: min(1500px, calc(100% - 36px));
 	}
 
 	.pt-logo {
@@ -420,14 +419,102 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-hero-visual img {
 		width: 100%;
-		aspect-ratio: 16 / 10;
+		height: auto;
 		border: 1px solid rgba(255, 255, 255, 0.32);
-		border-radius: 18px;
+		border-radius: 22px;
 		background: rgba(255, 255, 255, 0.08);
 		box-shadow:
 			0 34px 90px rgba(0, 0, 0, 0.26),
 			0 0 0 8px rgba(255, 255, 255, 0.05);
-		object-fit: cover;
+		object-fit: contain;
+	}
+
+	.pt-hero-menu {
+		display: grid;
+		gap: 10px;
+	}
+
+	.pt-hero-menu button {
+		width: 100%;
+		appearance: none;
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		min-height: 46px;
+		padding: 11px 14px;
+		border: 1px solid rgba(255, 255, 255, 0.22);
+		border-radius: 10px;
+		background: rgba(255, 255, 255, 0.1);
+		color: var(--fg);
+		cursor: pointer;
+		font-size: 0.82rem;
+		font-weight: 900;
+		letter-spacing: 0;
+		line-height: 1.25;
+		text-align: left;
+		text-transform: none;
+		box-shadow: 0 12px 34px rgba(0, 0, 0, 0.12);
+		transition:
+			transform 180ms ease,
+			border-color 180ms ease,
+			background 180ms ease,
+			box-shadow 180ms ease;
+	}
+
+	.pt-hero-menu button:hover,
+	.pt-hero-menu button:focus-visible {
+		transform: translateY(-1px);
+		border-color: rgba(244, 151, 36, 0.65);
+		background: rgba(255, 255, 255, 0.16);
+		outline: none;
+	}
+
+	.pt-hero-menu button.is-active {
+		border-color: rgba(255, 177, 77, 0.88);
+		background: linear-gradient(135deg, #f47b20 0%, #ff8a24 52%, #ffae45 100%);
+		color: #111827;
+		box-shadow:
+			0 16px 38px rgba(244, 123, 32, 0.3),
+			inset 0 1px 0 rgba(255, 255, 255, 0.35);
+	}
+
+	.pt-hero-menu button.is-active:hover,
+	.pt-hero-menu button.is-active:focus-visible {
+		border-color: rgba(255, 194, 102, 0.95);
+		background: linear-gradient(135deg, #f47b20 0%, #ff8a24 52%, #ffae45 100%);
+		box-shadow:
+			0 18px 42px rgba(244, 123, 32, 0.36),
+			inset 0 1px 0 rgba(255, 255, 255, 0.4);
+	}
+
+	.pt-hero-menu b {
+		font: inherit;
+	}
+
+	.pt-hero-points {
+		display: grid;
+		gap: 18px;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.pt-hero-points span {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		gap: 12px;
+		align-items: start;
+		color: var(--fg);
+		font-size: 1rem;
+		font-weight: 850;
+		line-height: 1.35;
+	}
+
+	.pt-hero-points b {
+		color: var(--accent);
+		font-size: 1.05rem;
+		line-height: 1.35;
 	}
 
 	.pt-topline,
@@ -989,6 +1076,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	@media (max-width: 1000px) {
+		.pt-hero-inner,
 		.pt-section-head,
 		.pt-ai-grid,
 		.pt-pricing-grid {
@@ -1011,13 +1099,9 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			padding: 56px 0;
 		}
 
-		.pt-hero-bg {
-			display: none;
-		}
-
 		.pt-hero-inner {
-			grid-template-columns: 1fr;
-			gap: 34px;
+			gap: 22px;
+			width: min(100% - 24px, 620px);
 		}
 
 		.pt-hero-visual {
@@ -1026,18 +1110,18 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 		.pt-hero-visual img {
 			width: 100%;
-			aspect-ratio: 4 / 3;
+			height: auto;
 			border-radius: 14px;
+			cursor: pointer;
+		}
+
+		.pt-hero-points {
+			padding: 18px;
+			border-radius: 12px;
 		}
 
 		.pt-container {
 			width: min(100% - 28px, 620px);
-		}
-
-		.pt-logo {
-			width: 68px;
-			height: 68px;
-			margin-bottom: 22px;
 		}
 
 		h1 {
@@ -1055,13 +1139,8 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			line-height: 1.65;
 		}
 
-		.pt-actions,
 		form {
 			grid-template-columns: 1fr;
-		}
-
-		.pt-actions {
-			display: grid;
 		}
 
 		.pt-btn,
