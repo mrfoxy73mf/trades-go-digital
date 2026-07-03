@@ -144,6 +144,24 @@ const paperworkItems = [
 		alt: "President Trades invoice PDF preview",
 	},
 	{
+		title: "Dividends",
+		text: "Keep company paperwork ready for your accountant.",
+		image: "/images/president-trades-dividends-pdf.png",
+		alt: "President Trades dividends PDF preview",
+	},
+	{
+		title: "Accountant",
+		text: "Package the numbers your accountant needs.",
+		image: "/images/president-trades-accountant-pdf.png",
+		alt: "President Trades accountant report PDF preview",
+	},
+	{
+		title: "Wage Slip",
+		text: "Create clear wage records for the people you pay.",
+		image: "/images/president-trades-wage-slip.jpg",
+		alt: "President Trades wage slip preview",
+	},
+	{
 		title: "Certificates & Sign-Offs",
 		text: "Pick the right paperwork and keep certificates connected to the job.",
 		label: "SCREEN",
@@ -226,7 +244,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 					</div>
 					<div class="pt-paperwork-copy">
 						<p class="pt-eyebrow">Customer paperwork</p>
-						<h2>From your office tools to <span>customer-ready paperwork.</span></h2>
+						<h2>Once you've organised the work, President Trades turns it into the paperwork your customers and accountant need.</h2>
 						<p>
 							You've seen the tools inside President Trades. Now see what they create.
 							Quotes, invoices, job records and customer paperwork become clean documents
@@ -392,6 +410,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			const previewMenu = document.querySelector<HTMLElement>(".pt-hero-menu");
 			const previewButtons = document.querySelectorAll<HTMLButtonElement>(".pt-hero-menu button");
 			const paperworkImage = document.querySelector<HTMLImageElement>("#pt-paperwork-preview");
+			const paperworkFrame = document.querySelector<HTMLElement>(".pt-paperwork-visual");
 			const paperworkMenu = document.querySelector<HTMLElement>(".pt-paperwork-menu");
 			const paperworkButtons = document.querySelectorAll<HTMLButtonElement>(".pt-paperwork-menu button");
 			const isPhone = () => window.matchMedia("(max-width: 720px)").matches;
@@ -419,6 +438,9 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 					paperworkImage.src = nextSrc;
 					paperworkImage.alt = button.dataset.paperworkAlt || "President Trades paperwork preview";
+					if (paperworkFrame) {
+						paperworkFrame.scrollTop = 0;
+					}
 					paperworkButtons.forEach((item) => item.classList.remove("is-active"));
 					button.classList.add("is-active");
 
@@ -433,6 +455,9 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 				paperworkImage.src = "/images/president-trades-van-worker-large.png";
 				paperworkImage.alt = "President Trades worker standing beside branded van";
+				if (paperworkFrame) {
+					paperworkFrame.scrollTop = 0;
+				}
 				paperworkButtons.forEach((item) => item.classList.remove("is-active"));
 
 				if (isPhone()) {
@@ -897,20 +922,24 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	.pt-paperwork-visual {
-		display: grid;
-		place-items: center;
-	}
-
-	.pt-paperwork-visual > img {
-		width: 100%;
+		display: block;
 		max-height: 680px;
+		overflow-y: auto;
+		overflow-x: hidden;
 		border: 1px solid rgba(255, 255, 255, 0.32);
 		border-radius: 22px;
 		background: rgba(255, 255, 255, 0.84);
 		box-shadow:
 			0 34px 90px rgba(16, 32, 51, 0.14),
 			0 0 0 8px rgba(255, 255, 255, 0.65);
-		object-fit: contain;
+		scrollbar-gutter: stable;
+	}
+
+	.pt-paperwork-visual > img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 18px;
 	}
 
 	.pt-paperwork-copy p:last-child {
@@ -1376,12 +1405,13 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 		.pt-paperwork-visual {
 			grid-template-columns: 1fr;
+			max-height: 520px;
+			border-radius: 14px;
 		}
 
 		.pt-paperwork-visual > img {
 			width: 100%;
 			height: auto;
-			max-height: 520px;
 			border-radius: 14px;
 			cursor: pointer;
 		}
