@@ -1,39 +1,3 @@
----
-const services = [
-  {
-    title: "AI Websites",
-    text: "Modern websites built to convert visitors into calls, enquiries and booked jobs.",
-  },
-  {
-    title: "Local SEO",
-    text: "Improve search visibility across your town, service areas and high-value trade keywords.",
-  },
-  {
-    title: "Google Business Profile",
-    text: "Optimise your profile so more local customers trust you, call you and request quotes.",
-  },
-  {
-    title: "AI Voice Receptionists",
-    text: "Answer calls, capture job details and reduce missed opportunities while you are working.",
-  },
-  {
-    title: "Automation",
-    text: "Connect lead capture, follow-ups and simple admin so enquiries keep moving.",
-  },
-];
-
-const trades = [
-  "Plumbers",
-  "Electricians",
-  "Builders",
-  "Roofers",
-  "Landscapers",
-  "Heating engineers",
-  "Decorators",
-  "Local trade teams",
-];
----
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -53,9 +17,6 @@ const trades = [
       </a>
       <nav aria-label="Primary navigation">
         <a href="/president-trades/">President Trades</a>
-        <a href="#services">Services</a>
-        <a href="#who">Who we help</a>
-        <a href="#contact">Contact</a>
       </nav>
     </header>
 
@@ -65,84 +26,167 @@ const trades = [
         <div class="container hero-grid">
           <div class="hero-copy">
             <p class="eyebrow">Helping UK Trades Businesses Grow</p>
-            <h1>More leads. More jobs. Less admin.</h1>
+            <h1>Helping Trades Businesses Grow with Practical Digital Tools</h1>
             <p class="hero-text">
-              Trades Go Digital helps UK trades businesses win more work,
-              reduce admin and grow through practical digital solutions.
+              Trades Go Digital was created to help UK trades businesses grow through better
+              websites, clearer marketing and technology that makes day-to-day work easier.
             </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="mailto:mac@trades-go-digital.co.uk">
-                Register Your Interest
-              </a>
-              <a class="button button-secondary" href="#services">Explore services</a>
-            </div>
-          </div>
-
-          <div class="hero-visual" aria-label="Builder AI front cover artwork">
-            <div class="hero-image-frame">
-              <img
-                src="/images/company-builder-ai-front-cover.png"
-                alt="Business software concept showing a laptop with connected digital service panels"
-                width="1024"
-                height="1536"
-              />
-            </div>
+            <p class="hero-text">
+              After seeing skilled tradespeople struggle to generate consistent enquiries,
+              follow up with customers and keep pace with an increasingly digital world, we set
+              out to build simple, practical solutions designed specifically for the trade industry.
+            </p>
+            <p class="hero-text">
+              From professional websites to President Trades, our mission is simple: help
+              tradespeople win more work, save time and build businesses they are proud of.
+            </p>
+            <p class="hero-text hero-question">
+              Ready to move your trade business forward?
+            </p>
           </div>
         </div>
       </section>
 
-      <section id="services" class="section services-section">
-        <div class="container">
-          <div class="section-heading">
-            <p class="eyebrow">Services</p>
-            <h2>Everything your trade business needs to generate better local enquiries.</h2>
-          </div>
-
-          <div class="services-grid">
-            {
-              services.map((service) => (
-                <article class="service-card">
-                  <h3>{service.title}</h3>
-                  <p>{service.text}</p>
-                </article>
-              ))
-            }
-          </div>
+      <section class="section story-section">
+        <div class="container story-copy">
+          <p class="eyebrow">The Story</p>
+          <h2>Why Trades Go Digital Exists</h2>
+          <p>
+            Trades Go Digital didn't begin as a plan to start a digital agency. It started
+            with one simple request.
+          </p>
+          <p>
+            A tradesperson asked me if I could help organise their business. They were
+            brilliant at their trade, but they were juggling jobs, customers, paperwork and
+            enquiries every day. They needed a better system.
+          </p>
+          <p>
+            I started by creating Excel spreadsheets to organise quotes, jobs, customers and
+            day-to-day tasks. It was simple, but it made a real difference. The business
+            became easier to manage, and I realised many tradespeople were facing the same
+            problems.
+          </p>
+          <p>
+            Around that time, I was introduced to AI. I didn't see it as something to replace
+            people. I saw it as another tool in my toolbox. Used properly, it could help
+            reduce repetitive tasks, improve customer communication and make running a
+            business more efficient.
+          </p>
+          <p>
+            That was the turning point.
+          </p>
+          <p>
+            What started with a few spreadsheets grew into websites, digital marketing,
+            automation and practical business systems, all designed specifically for trade
+            businesses.
+          </p>
+          <p>
+            The more I worked on these problems, the clearer the pattern became. Tradespeople
+            didn't need dozens of disconnected apps or complicated software. They needed
+            practical tools built around the way they actually work.
+          </p>
+          <p>
+            That idea became President Trades: a business operating system created from
+            real-world trade problems, designed to help trade businesses save time, win more
+            work and grow with confidence.
+          </p>
         </div>
       </section>
 
-      <section id="who" class="section who-section">
-        <div class="container split">
-          <div>
-            <p class="eyebrow">Who we help</p>
-            <h2>Built for local trades that need reliable enquiry flow.</h2>
+      <section class="section problem-section">
+        <div class="container story-copy">
+          <p class="eyebrow">The Problem</p>
+          <h2>The Problem I Kept Seeing</h2>
+          <p>
+            As I spent more time learning how different trades worked, I looked closely at
+            the systems they used every day. I wanted to understand where time was being
+            lost and why so many businesses were working harder than they needed to.
+          </p>
+          <p>
+            One thing stood out time and time again.
+          </p>
+          <p class="standout-line">
+            Small gaps in organisation were costing real money.
+          </p>
+          <p>
+            Tradespeople were making extra trips to the builders' merchant because something
+            had been forgotten. Job details were scattered across notebooks, messages, photos
+            and memory. Quotes, receipts, customer information and paperwork were often dealt
+            with after a long day on site.
+          </p>
+          <p>
+            Every extra journey meant more time off the tools, more fuel, more frustration
+            and less profit. The price quoted for the job stayed the same, but the cost of
+            completing it kept increasing.
+          </p>
+          <p>
+            It wasn't because tradespeople weren't good at running businesses. They simply
+            didn't have the right systems to help them plan, prepare and manage every stage
+            of the job.
+          </p>
+          <p>
+            That made me realise the answer wasn't just another spreadsheet or another
+            disconnected app. Trade businesses needed practical tools that solved real
+            problems and saved time every single day.
+          </p>
+          <p>
+            That's what led to the creation of President Trades.
+          </p>
+          <p>
+            Every feature has been designed with one goal in mind: to help trade businesses
+            work smarter, reduce costly mistakes and keep more of the profit they earn.
+          </p>
+          <p>
+            And that's where the magic really begins.
+          </p>
+        </div>
+      </section>
+
+      <section class="section solution-section">
+        <div class="container story-copy">
+          <p class="eyebrow">The Solution</p>
+          <h2>The Solution: President Trades</h2>
+          <p>
+            President Trades is the result of everything I've learned while working with
+            trade businesses.
+          </p>
+          <p>
+            It wasn't built overnight, and it wasn't created from theory. Every idea came
+            from real conversations, real challenges and real problems that needed practical
+            solutions.
+          </p>
+          <p>
+            Instead of expecting tradespeople to juggle multiple apps, paperwork and
+            disconnected systems, President Trades brings the business office together in one
+            place. Jobs, customers, quotes, invoices, receipts, certificates and day-to-day
+            admin can all stay organised around the way trade businesses actually work.
+          </p>
+          <p>
+            The aim has always been simple: spend less time on administration, reduce costly
+            mistakes, win more work and give tradespeople more time to focus on what they do
+            best.
+          </p>
+          <p>
+            President Trades is more than another app. It's the next step in the Trades Go
+            Digital journey: a business operating system built to help trade businesses work
+            smarter, grow with confidence and prepare for the future.
+          </p>
+
+          <div class="magic-room">
+            <h2>Welcome to President Trades</h2>
+            <p>Your journey starts here.</p>
             <p>
-              We focus on practical digital systems for businesses where missed
-              calls, weak Google visibility and slow follow-up cost real jobs.
-              The aim is simple: more quality enquiries from the areas you
-              actually serve.
+              Behind the next button is something I call the <strong>President Trades Magic
+              Room</strong>.
             </p>
-          </div>
-          <div class="trade-list" aria-label="Trades we help">
-            {trades.map((trade) => <span>{trade}</span>)}
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="contact-section">
-        <div class="container contact-panel">
-          <div>
-            <p class="eyebrow">Start the conversation</p>
-            <h2>Ready to make your trade business easier to find and easier to book?</h2>
             <p>
-              Register your interest with your trade, location and current website
-              or Google profile. We will send updates and early access details as
-              new services become available.
+              It's where you'll discover a completely different way to run your trade
+              business.
             </p>
+            <p>I won't spoil the surprise.</p>
+            <p><strong>Step inside and experience it for yourself.</strong></p>
+            <a class="button button-primary" href="/president-trades/">Magic Room</a>
           </div>
-          <a class="button button-primary" href="mailto:mac@trades-go-digital.co.uk">
-            mac@trades-go-digital.co.uk
-          </a>
         </div>
       </section>
     </main>
@@ -260,15 +304,12 @@ const trades = [
   .hero-grid {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(520px, 1.1fr);
+    grid-template-columns: minmax(0, 820px);
     gap: 56px;
     align-items: center;
   }
 
-  .hero-copy,
-  .hero-visual,
-  .split > *,
-  .contact-panel > * {
+  .hero-copy {
     min-width: 0;
   }
 
@@ -354,165 +395,74 @@ const trades = [
     box-shadow: 0 16px 38px rgba(214, 169, 53, 0.24);
   }
 
-  .button-secondary {
-    border: 1px solid rgba(109, 199, 255, 0.45);
-    background: rgba(109, 199, 255, 0.08);
-    color: #ffffff;
-  }
-
-  .button-secondary:hover {
-    border-color: rgba(109, 199, 255, 0.9);
-    background: rgba(109, 199, 255, 0.14);
-  }
-
-  .hero-visual {
-    position: relative;
-    display: flex;
-    justify-content: center;
-  }
-
-  .hero-image-frame {
-    position: relative;
-    width: min(100%, 570px);
-    overflow: hidden;
-    border: 1px solid rgba(109, 199, 255, 0.24);
-    border-radius: 24px;
-    background: rgba(10, 25, 45, 0.54);
-    box-shadow:
-      0 32px 100px rgba(0, 0, 0, 0.38),
-      0 0 56px rgba(42, 178, 255, 0.18);
-  }
-
-  .hero-image-frame::after {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 0 70px rgba(7, 17, 31, 0.2);
-    content: "";
-    pointer-events: none;
-  }
-
-  .hero-image-frame img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 2 / 3;
-    object-fit: cover;
-  }
-
   .section {
     padding: 94px 0;
   }
 
-  .services-section {
-    background: #f5f8fb;
+  .story-section {
+    background: #ffffff;
     color: #0b1930;
   }
 
-  .section-heading {
+  .problem-section {
+    background: #eef6ff;
+    color: #0b1930;
+  }
+
+  .solution-section {
+    background: #ffffff;
+    color: #0b1930;
+  }
+
+  .story-copy {
     max-width: 860px;
-    margin-bottom: 34px;
   }
 
-  .services-section h2,
-  .who-section h2 {
+  .story-copy h2,
+  .problem-section h2,
+  .solution-section h2 {
     color: #0b1930;
   }
 
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 16px;
+  .story-copy p:not(.eyebrow) {
+    color: #334155;
+    font-size: 1.08rem;
   }
 
-  .service-card {
-    min-height: 235px;
-    padding: 24px;
-    border: 1px solid rgba(12, 31, 55, 0.1);
-    border-radius: 10px;
-    background: #ffffff;
-    box-shadow: 0 20px 50px rgba(12, 31, 55, 0.07);
-  }
-
-  .service-card h3 {
-    color: #0b1930;
-  }
-
-  .service-card p,
-  .who-section p,
-  .contact-section p {
-    color: #536174;
-  }
-
-  .who-section {
-    background: #ffffff;
-    color: #0b1930;
-  }
-
-  .split {
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
-    gap: 56px;
-    align-items: center;
-  }
-
-  .trade-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .trade-list span {
-    padding: 15px 16px;
-    border: 1px solid #d9e2ec;
-    border-radius: 8px;
-    background: #f5f8fb;
-    color: #0b1930;
-    font-weight: 850;
-  }
-
-  .contact-section {
-    padding: 92px 0;
-    background:
-      radial-gradient(circle at 12% 20%, rgba(105, 213, 255, 0.16), transparent 28%),
-      #07111f;
-  }
-
-  .contact-panel {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 34px;
-    align-items: center;
-    padding: 42px;
-    border: 1px solid rgba(109, 199, 255, 0.22);
-    border-radius: 18px;
-    background: linear-gradient(135deg, rgba(14, 35, 63, 0.92), rgba(8, 20, 35, 0.92));
-    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.32);
-  }
-
-  .contact-panel h2 {
-    max-width: 780px;
-  }
-
-  .contact-panel p {
+  .standout-line {
     max-width: 720px;
-    margin-bottom: 0;
-    color: #c7d8e8;
+    margin: 30px 0;
+    padding: 20px 24px;
+    border-left: 5px solid #d6a935;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #0b1930 !important;
+    font-size: clamp(1.35rem, 2.6vw, 2rem) !important;
+    font-weight: 900;
+    line-height: 1.2;
+    box-shadow: 0 18px 45px rgba(12, 31, 55, 0.08);
+  }
+
+  .magic-room {
+    margin-top: 52px;
+    padding: 34px;
+    border: 1px solid #d9e2ec;
+    border-radius: 16px;
+    background: #f8fbff;
+    box-shadow: 0 24px 60px rgba(12, 31, 55, 0.08);
+  }
+
+  .magic-room h2 {
+    font-size: clamp(2rem, 3.4vw, 3.2rem);
+  }
+
+  .magic-room .button {
+    margin-top: 18px;
   }
 
   @media (max-width: 1080px) {
-    .hero-grid,
-    .split,
-    .contact-panel {
+    .hero-grid {
       grid-template-columns: 1fr;
-    }
-
-    .services-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .contact-panel {
-      align-items: start;
     }
   }
 
@@ -557,32 +507,8 @@ const trades = [
       gap: 30px;
     }
 
-    .hero-visual {
-      padding-top: 12px;
-    }
-
-    .hero-image-frame {
-      width: min(100%, 430px);
-      border-radius: 18px;
-    }
-
-    .services-grid,
-    .trade-list {
-      grid-template-columns: 1fr;
-    }
-
-    .section,
-    .contact-section {
+    .section {
       padding: 62px 0;
-    }
-
-    .service-card {
-      min-height: auto;
-    }
-
-    .contact-panel {
-      padding: 26px;
-      border-radius: 12px;
     }
   }
 
