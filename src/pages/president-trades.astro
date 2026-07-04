@@ -1,8 +1,7 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { CONTACT_EMAIL, SITE_TITLE } from "../consts";
+import { SITE_TITLE } from "../consts";
 
 const trustItems = [
 	"Works from your phone",
@@ -176,7 +175,6 @@ const paperworkItems = [
 	},
 ];
 
-const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (optional)"];
 ---
 
 <!doctype html>
@@ -199,181 +197,108 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		<main class="pt-landing">
 			<section class="pt-hero pt-section">
 				<div class="pt-container pt-hero-inner">
-					<div class="pt-hero-menu" aria-label="President Trades tools">
-						{
-							heroButtons.map((item) => (
-								<button
-									type="button"
-									data-preview-src={item.image}
-									data-preview-alt={item.alt}
-									data-preview-description={item.description}
-								>
-									<b>{item.label}</b>
-								</button>
-							))
-						}
-					</div>
 					<div class="pt-hero-visual">
 						<img
 							id="pt-hero-preview"
-							src="/images/president-trades-magic-room.png"
+							src="/images/president-trades-office-drawers.png"
 							alt="President Trades Magic Room office with branded van"
 						/>
-					</div>
-					<div class="pt-hero-points" aria-label="President Trades key benefits">
-						<div id="pt-hero-copy" class="pt-hero-copy" hidden>
-							<h2 id="pt-hero-copy-title"></h2>
-							<p id="pt-hero-copy-text"></p>
+						<div class="pt-hero-cabinet-note">Open a drawer</div>
+						<div class="pt-hero-return-note" hidden>Press picture to return to office</div>
+						<div class="pt-hero-menu" aria-label="President Trades tools">
+							{
+								heroButtons.map((item) => (
+									<button
+										type="button"
+										data-preview-src={item.image}
+										data-preview-alt={item.alt}
+										data-preview-description={item.description}
+									>
+										<b>{item.label}</b>
+									</button>
+								))
+							}
 						</div>
-						{trustItems.map((item) => <span><b>&check;</b>{item}</span>)}
 					</div>
 				</div>
 			</section>
 
 			<section id="paperwork" class="pt-section pt-paperwork">
 				<div class="pt-container pt-paperwork-grid">
-					<div class="pt-paperwork-menu" aria-label="President Trades paperwork previews">
-						{
-							paperworkItems.map((item) => (
-								<button
-									type="button"
-									data-paperwork-src={item.image}
-									data-paperwork-alt={item.alt}
-								>
-									<b>{item.title}</b>
-									<span>{item.label || "PDF"}</span>
-								</button>
-							))
-						}
-					</div>
 					<div class="pt-paperwork-visual">
+						<div class="pt-paperwork-return-note" hidden>Press picture to return to files</div>
 						<img
 							id="pt-paperwork-preview"
-							src="/images/president-trades-van-worker-large.png"
-							alt="President Trades worker standing beside branded van"
+							src="/images/president-trades-phone-files.png"
+							alt="President Trades phone showing business document files"
 						/>
-					</div>
-					<div class="pt-paperwork-copy">
-						<p class="pt-eyebrow">Customer paperwork</p>
-						<h2>Once you've organised the work, President Trades turns it into the paperwork your customers and accountant need.</h2>
-						<p>
-							You've seen the tools inside President Trades. Now see what they create.
-							Quotes, invoices, job records and customer paperwork become clean documents
-							you can send, save and find again when you need them.
-						</p>
-						<p class="pt-paperwork-punch">
-							You do the job once. President Trades keeps the paperwork moving.
-						</p>
-					</div>
-				</div>
-			</section>
-
-			<section id="automatic" class="pt-section pt-auto">
-				<div class="pt-container">
-					<p class="pt-eyebrow">Time-saving flows</p>
-					<h2>Less admin.<br /><span>More time back.</span></h2>
-					<div class="pt-flow-grid">
-						{
-							flows.map((flow) => (
-								<article class="pt-flow-card">
-									<div><span>{flow.tag}</span><b>-&gt;</b></div>
-									<h3>{flow.title}</h3>
-									<p>{flow.text}</p>
-								</article>
-							))
-						}
-					</div>
-				</div>
-			</section>
-
-			<section id="features" class="pt-section pt-office">
-				<div class="pt-container">
-					<p class="pt-eyebrow">Business office</p>
-					<div class="pt-section-head">
-						<h2>Everything organised <span>around each job.</span></h2>
-					</div>
-					<div class="pt-trade-proof">
-						<img
-							src="/images/president-trades-worker-badge.png"
-							alt="President Trades worker and van"
-						/>
-						<div>
-							<p class="pt-eyebrow">Built around the work</p>
-							<h3>Made for trades businesses that live between site, van and home.</h3>
-							<p>
-								President Trades keeps the business office close by, so job records, paperwork
-								and follow-ups stay organised wherever the working day takes you.
-							</p>
+						<div class="pt-paperwork-menu" aria-label="President Trades paperwork previews">
+							{
+								paperworkItems.map((item) => (
+									<button
+										type="button"
+										data-paperwork-src={item.image}
+										data-paperwork-alt={item.alt}
+									>
+										<b>{item.title}</b>
+										<span>{item.label || "PDF"}</span>
+									</button>
+								))
+							}
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<section class="pt-section pt-ai">
-				<div class="pt-container pt-ai-grid">
-					<div>
-						<p class="pt-eyebrow">Notebook and voice tools</p>
-						<h2>Talk it through.<br /><span>Tidy it up later.</span></h2>
-						<p>
-							Capture job notes, customer updates, reminders and follow-ups while you are
-							working. President Trades helps turn rough notes into clearer records and
-							messages, without taking control away from you.
-						</p>
-					</div>
-					<div class="pt-ai-list">
-						{aiItems.map(([title, text]) => <article><h3>{title}</h3><p>{text}</p></article>)}
-					</div>
+			<section id="automatic" class="pt-section pt-auto">
+				<div class="pt-container pt-image-section">
+					<img
+						src="/images/president-trades-time-saving-flows.png"
+						alt="President Trades time-saving flows showing less admin and more time back"
+					/>
+				</div>
+			</section>
+
+			<section id="features" class="pt-section pt-office">
+				<div class="pt-container pt-image-section">
+					<img
+						src="/images/president-trades-business-office.png"
+						alt="President Trades Business Office organised around each job"
+					/>
 				</div>
 			</section>
 
 			<section class="pt-section pt-choose">
-				<div class="pt-container">
-					<p class="pt-eyebrow">Built for the way trades work</p>
-					<h2>Why businesses choose <span>President Trades</span></h2>
-					<div class="pt-choose-grid">
-						{chooseItems.map((item) => <article><span>&check;</span><p>{item}</p></article>)}
-					</div>
+				<div class="pt-container pt-image-section">
+					<img
+						src="/images/president-trades-built-for-trades.png"
+						alt="President Trades built for the way trades work"
+					/>
 				</div>
 			</section>
 
-			<section id="waiting-list" class="pt-section pt-final">
-				<div class="pt-container">
-					<img src="/president-trades-logo.png" alt="President Trades" />
-					<h2>Give yourself your evenings back.</h2>
-					<p>No paperwork pile-up. No shoebox. Just the work, organised.</p>
-					<form aria-label="President Trades waiting list form">
-						{
-							waitingListFields.map((field) => (
-								<label>
-									{field}
-									<input type={field === "Email" ? "email" : field.includes("Phone") ? "tel" : "text"} placeholder={field} />
-								</label>
-							))
-						}
-						<label class="full">
-							Message
-							<textarea rows="4" placeholder="What admin problem would you most like solved?"></textarea>
-						</label>
-						<button type="button">Register Your Interest</button>
-						<p class="form-note">Early access list opening soon. No spam. We'll only contact you about President Trades.</p>
-					</form>
-					<p class="email-note">
-						Prefer email? <a href={`mailto:${CONTACT_EMAIL}?subject=President%20Trades%20Early%20Access`}>{CONTACT_EMAIL}</a>
-					</p>
+			<section id="waiting-list" class="pt-section pt-site-footer-graphic">
+				<div class="pt-container pt-image-section">
+					<img
+						src="/images/trades-go-digital-footer.png"
+						alt="Trades Go Digital app features, app pages and contact footer"
+					/>
 				</div>
 			</section>
 		</main>
-		<Footer />
 		<script>
 			const previewImage = document.querySelector<HTMLImageElement>("#pt-hero-preview");
+			const previewVisual = document.querySelector<HTMLElement>(".pt-hero-visual");
 			const previewCopy = document.querySelector<HTMLElement>("#pt-hero-copy");
 			const previewCopyTitle = document.querySelector<HTMLElement>("#pt-hero-copy-title");
 			const previewCopyText = document.querySelector<HTMLElement>("#pt-hero-copy-text");
+			const previewReturnNote = document.querySelector<HTMLElement>(".pt-hero-return-note");
 			const previewMenu = document.querySelector<HTMLElement>(".pt-hero-menu");
 			const previewButtons = document.querySelectorAll<HTMLButtonElement>(".pt-hero-menu button");
 			const paperworkImage = document.querySelector<HTMLImageElement>("#pt-paperwork-preview");
 			const paperworkFrame = document.querySelector<HTMLElement>(".pt-paperwork-visual");
 			const paperworkMenu = document.querySelector<HTMLElement>(".pt-paperwork-menu");
+			const paperworkReturnNote = document.querySelector<HTMLElement>(".pt-paperwork-return-note");
 			const paperworkButtons = document.querySelectorAll<HTMLButtonElement>(".pt-paperwork-menu button");
 			const isPhone = () => window.matchMedia("(max-width: 720px)").matches;
 
@@ -392,6 +317,10 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 					}
 					previewButtons.forEach((item) => item.classList.remove("is-active"));
 					button.classList.add("is-active");
+					previewVisual?.classList.add("is-preview-open");
+					if (previewReturnNote) {
+						previewReturnNote.hidden = false;
+					}
 
 					if (isPhone()) {
 						previewImage.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -408,6 +337,10 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 					paperworkImage.alt = button.dataset.paperworkAlt || "President Trades paperwork preview";
 					if (paperworkFrame) {
 						paperworkFrame.scrollTop = 0;
+						paperworkFrame.classList.add("is-paperwork-open");
+					}
+					if (paperworkReturnNote) {
+						paperworkReturnNote.hidden = false;
 					}
 					paperworkButtons.forEach((item) => item.classList.remove("is-active"));
 					button.classList.add("is-active");
@@ -421,10 +354,14 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			paperworkImage?.addEventListener("click", () => {
 				if (!paperworkMenu) return;
 
-				paperworkImage.src = "/images/president-trades-van-worker-large.png";
-				paperworkImage.alt = "President Trades worker standing beside branded van";
+				paperworkImage.src = "/images/president-trades-phone-files.png";
+				paperworkImage.alt = "President Trades phone showing business document files";
 				if (paperworkFrame) {
 					paperworkFrame.scrollTop = 0;
+					paperworkFrame.classList.remove("is-paperwork-open");
+				}
+				if (paperworkReturnNote) {
+					paperworkReturnNote.hidden = true;
 				}
 				paperworkButtons.forEach((item) => item.classList.remove("is-active"));
 
@@ -436,10 +373,14 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			previewImage?.addEventListener("click", () => {
 				if (!previewMenu) return;
 
-				previewImage.src = "/images/president-trades-magic-room.png";
+				previewImage.src = "/images/president-trades-office-drawers.png";
 				previewImage.alt = "President Trades Magic Room office with branded van";
 				if (previewCopy) {
 					previewCopy.hidden = true;
+				}
+				previewVisual?.classList.remove("is-preview-open");
+				if (previewReturnNote) {
+					previewReturnNote.hidden = true;
 				}
 				previewButtons.forEach((item) => item.classList.remove("is-active"));
 
@@ -454,7 +395,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 <style>
 	body {
 		margin: 0;
-		background: #f4f6f8;
+		background: #02050a;
 		color: #102033;
 		font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 	}
@@ -465,20 +406,20 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	.pt-landing {
-		--bg: #f4f6f8;
-		--bg-1: #eef2f6;
-		--bg-2: #e8edf3;
-		--fg: #102033;
-		--muted: #425466;
-		--dim: #667085;
-		--border: #d3dce6;
-		--soft: #e3e8ef;
+		--bg: #02050a;
+		--bg-1: #070b12;
+		--bg-2: #0d1420;
+		--fg: #f8fafc;
+		--muted: #cbd5e1;
+		--dim: #94a3b8;
+		--border: rgba(148, 163, 184, 0.22);
+		--soft: rgba(148, 163, 184, 0.14);
 		--accent: #ff6b00;
 		--ok: #22c55e;
 		background:
-			radial-gradient(circle at 18% 0%, rgba(255, 107, 0, 0.08), transparent 28%),
-			radial-gradient(circle at 88% 12%, rgba(128, 151, 171, 0.16), transparent 32%),
-			linear-gradient(180deg, #fbfcfd 0%, var(--bg) 48%, #edf1f5 100%);
+			radial-gradient(circle at 18% 0%, rgba(255, 107, 0, 0.16), transparent 30%),
+			radial-gradient(circle at 88% 12%, rgba(59, 130, 246, 0.08), transparent 34%),
+			linear-gradient(180deg, #02050a 0%, #050914 48%, #02050a 100%);
 		color: var(--fg);
 		overflow-x: hidden;
 	}
@@ -502,17 +443,15 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-hero {
 		overflow: hidden;
-		padding: 48px 0 76px;
+		padding: 36px 0 76px;
 	}
 
 	.pt-hero-inner {
 		position: relative;
 		z-index: 2;
-		display: grid;
-		grid-template-columns: minmax(180px, 230px) minmax(0, 1fr) minmax(240px, 320px);
-		gap: 28px;
-		align-items: center;
-		width: min(1500px, calc(100% - 36px));
+		display: block;
+		width: min(1480px, calc(100% - 28px));
+		margin: 0 auto;
 	}
 
 	.pt-logo {
@@ -526,6 +465,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	.pt-hero-visual {
+		position: relative;
 		display: grid;
 		place-items: center;
 	}
@@ -533,40 +473,70 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	.pt-hero-visual img {
 		width: 100%;
 		height: auto;
-		border: 1px solid rgba(255, 255, 255, 0.32);
-		border-radius: 22px;
-		background: rgba(255, 255, 255, 0.84);
-		box-shadow:
-			0 34px 90px rgba(16, 32, 51, 0.14),
-			0 0 0 8px rgba(255, 255, 255, 0.65);
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+		box-shadow: none;
 		object-fit: contain;
 	}
 
+	.pt-hero-cabinet-note {
+		display: none;
+	}
+
+	.pt-hero-return-note {
+		position: absolute;
+		left: 50%;
+		bottom: 18px;
+		z-index: 4;
+		transform: translateX(-50%);
+		padding: 8px 13px;
+		border: 1px solid rgba(255, 159, 28, 0.45);
+		border-radius: 999px;
+		background: rgba(8, 13, 20, 0.82);
+		color: #ffb14d;
+		font-size: clamp(0.74rem, 0.85vw, 0.95rem);
+		font-weight: 900;
+		line-height: 1;
+		box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+		pointer-events: none;
+	}
+
 	.pt-hero-menu {
-		display: grid;
-		gap: 10px;
+		position: absolute;
+		inset: 0;
+		z-index: 3;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+		pointer-events: none;
 	}
 
 	.pt-hero-menu button {
-		width: 100%;
+		position: absolute;
+		left: 48.4%;
+		width: 7.6%;
+		height: 3.9%;
 		appearance: none;
 		display: flex;
 		align-items: center;
 		justify-content: flex-start;
-		min-height: 46px;
-		padding: 11px 14px;
-		border: 1px solid var(--border);
-		border-radius: 10px;
-		background: rgba(255, 255, 255, 0.72);
-		color: var(--fg);
+		min-height: 0;
+		padding: 0;
+		border: 0;
+		border-radius: 6px;
+		background: transparent;
+		color: transparent;
 		cursor: pointer;
-		font-size: 0.82rem;
+		font-size: 0;
 		font-weight: 900;
 		letter-spacing: 0;
-		line-height: 1.25;
+		line-height: 1.1;
 		text-align: left;
 		text-transform: none;
-		box-shadow: 0 12px 34px rgba(16, 32, 51, 0.08);
+		pointer-events: auto;
+		box-shadow: none;
 		transition:
 			transform 180ms ease,
 			border-color 180ms ease,
@@ -574,30 +544,75 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 			box-shadow 180ms ease;
 	}
 
+	.pt-hero-menu button::before {
+		display: none;
+	}
+
+	.pt-hero-menu button::after {
+		display: none;
+	}
+
 	.pt-hero-menu button:hover,
 	.pt-hero-menu button:focus-visible {
-		transform: translateY(-1px);
-		border-color: rgba(244, 151, 36, 0.65);
-		background: rgba(255, 255, 255, 0.96);
+		transform: none;
+		border-color: transparent;
+		background: transparent;
+		color: transparent;
 		outline: none;
 	}
 
 	.pt-hero-menu button.is-active {
-		border-color: rgba(255, 177, 77, 0.88);
-		background: linear-gradient(135deg, #f47b20 0%, #ff8a24 52%, #ffae45 100%);
-		color: #111827;
-		box-shadow:
-			0 16px 38px rgba(244, 123, 32, 0.3),
-			inset 0 1px 0 rgba(255, 255, 255, 0.35);
+		border-color: transparent;
+		background: transparent;
+		color: transparent;
+		box-shadow: none;
 	}
 
 	.pt-hero-menu button.is-active:hover,
 	.pt-hero-menu button.is-active:focus-visible {
-		border-color: rgba(255, 194, 102, 0.95);
-		background: linear-gradient(135deg, #f47b20 0%, #ff8a24 52%, #ffae45 100%);
-		box-shadow:
-			0 18px 42px rgba(244, 123, 32, 0.36),
-			inset 0 1px 0 rgba(255, 255, 255, 0.4);
+		border-color: transparent;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.pt-hero-visual.is-preview-open .pt-hero-menu {
+		display: none;
+	}
+
+	.pt-hero-menu button:nth-child(1) {
+		top: 21.1%;
+	}
+
+	.pt-hero-menu button:nth-child(2) {
+		top: 28.3%;
+	}
+
+	.pt-hero-menu button:nth-child(3) {
+		top: 35.5%;
+	}
+
+	.pt-hero-menu button:nth-child(4) {
+		top: 42.7%;
+	}
+
+	.pt-hero-menu button:nth-child(5) {
+		top: 49.9%;
+	}
+
+	.pt-hero-menu button:nth-child(6) {
+		top: 57%;
+	}
+
+	.pt-hero-menu button:nth-child(7) {
+		top: 64.2%;
+	}
+
+	.pt-hero-menu button:nth-child(8) {
+		top: 71.3%;
+	}
+
+	.pt-hero-menu button:nth-child(9) {
+		top: 78.5%;
 	}
 
 	.pt-hero-menu b {
@@ -605,7 +620,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	.pt-hero-points {
-		display: grid;
+		display: none;
 		gap: 18px;
 		padding: 0;
 		border: 0;
@@ -777,7 +792,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-trust {
 		padding: 30px 0;
-		background: #edf1f5;
+		background: #040812;
 		border-bottom: 1px solid var(--soft);
 	}
 
@@ -805,16 +820,14 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-paperwork {
 		background:
-			linear-gradient(135deg, rgba(255, 255, 255, 0.82), transparent 42%),
-			#eef2f6;
+			linear-gradient(135deg, rgba(255, 107, 0, 0.08), transparent 42%),
+			#02050a;
 	}
 
 	.pt-paperwork-grid {
-		display: grid;
-		grid-template-columns: minmax(180px, 230px) minmax(0, 1fr) minmax(280px, 0.72fr);
-		gap: 28px;
-		align-items: center;
-		width: min(1500px, calc(100% - 36px));
+		display: block;
+		width: min(1480px, calc(100% - 28px));
+		margin: 0 auto;
 	}
 
 	.pt-paperwork-punch {
@@ -824,28 +837,29 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	.pt-paperwork-menu {
-		display: grid;
-		gap: 10px;
+		position: absolute;
+		inset: 0;
+		z-index: 3;
+		pointer-events: none;
 	}
 
 	.pt-paperwork-menu button {
-		position: relative;
-		width: 100%;
+		position: absolute;
+		width: 6%;
+		height: 6%;
 		appearance: none;
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto;
-		gap: 8px 12px;
-		align-items: center;
-		min-height: 64px;
-		padding: 14px 14px 14px 18px;
+		display: block;
+		min-height: 0;
+		padding: 0;
 		overflow: hidden;
-		border: 1px solid rgba(16, 32, 51, 0.13);
-		border-radius: 8px;
-		background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.94));
-		color: var(--fg);
+		border: 0;
+		border-radius: 999px;
+		background: transparent;
+		color: transparent;
 		cursor: pointer;
+		pointer-events: auto;
 		text-align: left;
-		box-shadow: 0 10px 26px rgba(16, 32, 51, 0.08);
+		box-shadow: none;
 		transition:
 			transform 180ms ease,
 			border-color 180ms ease,
@@ -854,54 +868,44 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	.pt-paperwork-menu button::before {
-		position: absolute;
-		inset: 12px auto 12px 0;
-		width: 4px;
-		border-radius: 0 999px 999px 0;
-		background: rgba(255, 107, 0, 0.42);
-		content: "";
-		transition:
-			background 180ms ease,
-			inset 180ms ease;
+		display: none;
 	}
 
 	.pt-paperwork-menu button:hover,
 	.pt-paperwork-menu button:focus-visible {
-		transform: translateY(-2px);
-		border-color: rgba(255, 107, 0, 0.36);
-		background: #fff;
-		box-shadow: 0 16px 34px rgba(16, 32, 51, 0.12);
+		transform: none;
+		border-color: transparent;
+		background: transparent;
+		box-shadow: none;
 		outline: none;
 	}
 
 	.pt-paperwork-menu button.is-active {
-		border-color: rgba(255, 107, 0, 0.5);
-		background: linear-gradient(180deg, #fff8f1, #fff);
-		color: var(--fg);
-		box-shadow: 0 18px 38px rgba(255, 107, 0, 0.14);
+		border-color: transparent;
+		background: transparent;
+		color: transparent;
+		box-shadow: none;
 	}
 
 	.pt-paperwork-menu button.is-active::before {
-		inset: 8px auto 8px 0;
-		background: var(--accent);
+		display: none;
 	}
 
 	.pt-paperwork-menu b {
 		color: inherit;
-		font-size: 0.88rem;
+		font-size: 0;
 		font-weight: 900;
 		line-height: 1.25;
 		letter-spacing: 0;
 	}
 
 	.pt-paperwork-menu span {
-		justify-self: end;
-		display: inline-flex;
+		display: none;
 		align-items: center;
 		min-height: 24px;
 		padding: 4px 8px;
 		border-radius: 999px;
-		background: #eef2f6;
+		background: #111827;
 		color: var(--dim);
 		font-size: 0.62rem;
 		font-weight: 950;
@@ -909,29 +913,98 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	}
 
 	.pt-paperwork-menu button.is-active span {
-		background: rgba(255, 107, 0, 0.12);
-		color: #b45309;
+		display: none;
+	}
+
+	.pt-paperwork-menu button:nth-child(1) {
+		left: 87.8%;
+		top: 25.6%;
+	}
+
+	.pt-paperwork-menu button:nth-child(2) {
+		left: 87.2%;
+		top: 33.8%;
+	}
+
+	.pt-paperwork-menu button:nth-child(3) {
+		left: 86.6%;
+		top: 42%;
+	}
+
+	.pt-paperwork-menu button:nth-child(4) {
+		left: 86%;
+		top: 50.2%;
+	}
+
+	.pt-paperwork-menu button:nth-child(5) {
+		left: 85.3%;
+		top: 58.4%;
+	}
+
+	.pt-paperwork-menu button:nth-child(6) {
+		left: 84.6%;
+		top: 66.5%;
+	}
+
+	.pt-paperwork-menu button:nth-child(7) {
+		left: 83.8%;
+		top: 74.7%;
 	}
 
 	.pt-paperwork-visual {
+		position: relative;
 		display: block;
-		max-height: 680px;
+		max-height: none;
 		overflow-y: auto;
 		overflow-x: hidden;
-		border: 1px solid rgba(255, 255, 255, 0.32);
-		border-radius: 22px;
-		background: rgba(255, 255, 255, 0.84);
-		box-shadow:
-			0 34px 90px rgba(16, 32, 51, 0.14),
-			0 0 0 8px rgba(255, 255, 255, 0.65);
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+		box-shadow: none;
 		scrollbar-gutter: stable;
+	}
+
+	.pt-paperwork-visual.is-paperwork-open .pt-paperwork-menu {
+		display: none;
+	}
+
+	.pt-paperwork-visual.is-paperwork-open {
+		max-width: min(860px, calc(100vw - 32px));
+		max-height: 78vh;
+		margin: 0 auto;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 14px;
+		background: #fff;
+		box-shadow: 0 26px 70px rgba(0, 0, 0, 0.46);
+	}
+
+	.pt-paperwork-return-note {
+		position: sticky;
+		top: 14px;
+		z-index: 4;
+		display: table;
+		margin: 14px auto -48px;
+		padding: 8px 13px;
+		border: 1px solid rgba(255, 159, 28, 0.45);
+		border-radius: 999px;
+		background: rgba(8, 13, 20, 0.82);
+		color: #ffb14d;
+		font-size: clamp(0.74rem, 0.85vw, 0.95rem);
+		font-weight: 900;
+		line-height: 1;
+		box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+		pointer-events: none;
 	}
 
 	.pt-paperwork-visual > img {
 		display: block;
 		width: 100%;
 		height: auto;
-		border-radius: 18px;
+		border-radius: 0;
+	}
+
+	.pt-paperwork-visual.is-paperwork-open > img {
+		border-radius: 14px;
 	}
 
 	.pt-paperwork-copy p:last-child {
@@ -940,6 +1013,17 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-paperwork-copy h2 {
 		font-size: clamp(2rem, 4.3vw, 3.35rem);
+	}
+
+	.pt-image-section {
+		width: min(1480px, calc(100% - 28px));
+		margin: 0 auto;
+	}
+
+	.pt-image-section img {
+		display: block;
+		width: 100%;
+		height: auto;
 	}
 
 	.pt-preview,
@@ -961,8 +1045,8 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		padding: 32px;
 		border: 1px solid var(--border);
 		border-radius: 8px;
-		background: rgba(255, 255, 255, 0.78);
-		box-shadow: 0 18px 54px rgba(16, 32, 51, 0.08);
+		background: rgba(8, 13, 20, 0.78);
+		box-shadow: 0 18px 54px rgba(0, 0, 0, 0.28);
 	}
 
 	.pt-dashboard-bar,
@@ -1000,7 +1084,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-kpi-grid article,
 	.pt-panel {
-		background: #ffffff;
+		background: #0b111c;
 	}
 
 	.pt-kpi-grid article {
@@ -1102,7 +1186,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	.pt-price-card {
 		border: 1px solid var(--border);
 		border-radius: 8px;
-		background: linear-gradient(180deg, #ffffff, rgba(248, 250, 252, 0.94));
+		background: linear-gradient(180deg, #111827, rgba(8, 13, 20, 0.94));
 		transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 	}
 
@@ -1115,7 +1199,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 	.pt-price-card:hover {
 		transform: translateY(-4px);
 		border-color: rgba(255, 107, 0, 0.4);
-		box-shadow: 0 24px 70px rgba(16, 32, 51, 0.12);
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
 	}
 
 	.pt-flow-card div {
@@ -1163,15 +1247,15 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		padding: 22px;
 		border: 1px solid var(--border);
 		border-radius: 8px;
-		background: #ffffff;
-		box-shadow: 0 18px 45px rgba(16, 32, 51, 0.08);
+		background: #0b111c;
+		box-shadow: 0 18px 45px rgba(0, 0, 0, 0.26);
 		transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 	}
 
 	.pt-choose-grid article:hover {
 		transform: translateY(-3px);
 		border-color: rgba(255, 107, 0, 0.36);
-		box-shadow: 0 24px 70px rgba(16, 32, 51, 0.12);
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
 	}
 
 	.pt-choose-grid span {
@@ -1198,7 +1282,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		padding: 12px 18px;
 		border: 1px solid var(--border);
 		border-radius: 999px;
-		background: #ffffff;
+		background: #0b111c;
 	}
 
 	.pt-trade-proof {
@@ -1210,8 +1294,8 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		padding: 28px;
 		border: 1px solid var(--border);
 		border-radius: 18px;
-		background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72));
-		box-shadow: 0 24px 70px rgba(16, 32, 51, 0.1);
+		background: linear-gradient(135deg, rgba(17, 24, 39, 0.92), rgba(8, 13, 20, 0.72));
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
 	}
 
 	.pt-trade-proof img {
@@ -1256,7 +1340,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 	.pt-price-card {
 		padding: 42px;
-		background: #ffffff;
+		background: #0b111c;
 	}
 
 	.pt-price {
@@ -1360,7 +1444,7 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		min-height: 52px;
 		border: 1px solid rgba(148, 163, 184, 0.28);
 		border-radius: 8px;
-		background: #ffffff;
+		background: #0b111c;
 		color: var(--fg);
 		font: inherit;
 		font-size: 1rem;
@@ -1417,17 +1501,39 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 
 		.pt-hero-inner {
 			gap: 22px;
-			width: min(100% - 24px, 620px);
+			width: min(100% - 16px, 620px);
+			margin: 0 auto;
 		}
 
 		.pt-hero-visual {
 			justify-content: center;
 		}
 
+		.pt-hero-menu {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			pointer-events: none;
+		}
+
+		.pt-hero-menu button {
+			width: 22%;
+			height: 5.7%;
+			min-height: 0;
+			background: transparent;
+			color: transparent;
+			pointer-events: auto;
+		}
+
+		.pt-hero-menu button:hover,
+		.pt-hero-menu button:focus-visible {
+			transform: none;
+		}
+
 		.pt-hero-visual img {
 			width: 100%;
 			height: auto;
-			border-radius: 14px;
+			border-radius: 0;
 			cursor: pointer;
 		}
 
@@ -1437,15 +1543,47 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		}
 
 		.pt-paperwork-visual {
-			grid-template-columns: 1fr;
-			max-height: 520px;
-			border-radius: 14px;
+			max-height: none;
+			border-radius: 0;
+		}
+
+		.pt-paperwork-menu {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			pointer-events: none;
+		}
+
+		.pt-paperwork-visual.is-paperwork-open .pt-paperwork-menu {
+			display: none;
+		}
+
+		.pt-paperwork-menu button {
+			display: block;
+			width: 6%;
+			height: 6%;
+			min-height: 0;
+			padding: 0;
+			border: 0;
+			border-radius: 999px;
+			background: transparent;
+			color: transparent;
+			box-shadow: none;
+			pointer-events: auto;
+		}
+
+		.pt-paperwork-menu b {
+			font-size: 0;
+		}
+
+		.pt-paperwork-menu span {
+			display: none;
 		}
 
 		.pt-paperwork-visual > img {
 			width: 100%;
 			height: auto;
-			border-radius: 14px;
+			border-radius: 0;
 			cursor: pointer;
 		}
 
