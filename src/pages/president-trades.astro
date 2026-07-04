@@ -232,6 +232,7 @@ const paperworkItems = [
 							src="/images/president-trades-phone-files-v2.png"
 							alt="President Trades phone showing business document files"
 						/>
+						<p class="pt-scroll-hint">Scroll left to see PDFs</p>
 						<div class="pt-paperwork-menu" aria-label="President Trades paperwork previews">
 							{
 								paperworkItems.map((item) => (
@@ -841,6 +842,10 @@ const paperworkItems = [
 		display: block;
 		width: min(1480px, calc(100% - 28px));
 		margin: 0 auto;
+	}
+
+	.pt-scroll-hint {
+		display: none;
 	}
 
 	.pt-paperwork-punch {
@@ -1541,6 +1546,31 @@ const paperworkItems = [
 
 		.pt-paperwork-visual.is-paperwork-open > img {
 			width: 100%;
+		}
+
+		.pt-scroll-hint {
+			position: absolute;
+			left: 2.2%;
+			top: 73.5%;
+			z-index: 5;
+			display: table;
+			width: max-content;
+			max-width: 240px;
+			margin: 0;
+			padding: 9px 13px;
+			border: 1px solid rgba(255, 159, 28, 0.45);
+			border-radius: 999px;
+			background: rgba(8, 13, 20, 0.88);
+			color: #ffb14d;
+			font-size: 0.78rem;
+			font-weight: 900;
+			line-height: 1.15;
+			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+			pointer-events: none;
+		}
+
+		.pt-paperwork-visual.is-paperwork-open .pt-scroll-hint {
+			display: none;
 		}
 	}
 
