@@ -313,6 +313,17 @@ const paperworkItems = [
 				window.setTimeout(reset, 200);
 				window.setTimeout(reset, 700);
 			};
+			const scrollSectionEnd = (element?: HTMLElement | null) => {
+				const section = element?.closest<HTMLElement>(".pt-section");
+				if (!section) return;
+				const reset = () => {
+					section.scrollLeft = section.scrollWidth;
+				};
+				reset();
+				requestAnimationFrame(reset);
+				window.setTimeout(reset, 200);
+				window.setTimeout(reset, 700);
+			};
 
 			previewButtons.forEach((button) => {
 				button.addEventListener("click", () => {
@@ -382,6 +393,7 @@ const paperworkItems = [
 				if (isPhone()) {
 					paperworkMenu.scrollIntoView({ behavior: "smooth", block: "start" });
 				}
+				scrollSectionEnd(paperworkFrame);
 			});
 
 			previewImage?.addEventListener("click", () => {
