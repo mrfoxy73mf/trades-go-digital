@@ -1540,7 +1540,7 @@ const paperworkItems = [
 		}
 
 		.pt-paperwork-visual.is-paperwork-open {
-			width: clamp(760px, 112vw, 860px);
+			width: min(860px, calc(100vw - 28px));
 			max-width: none;
 		}
 
@@ -1551,7 +1551,7 @@ const paperworkItems = [
 		.pt-scroll-hint {
 			position: absolute;
 			left: 2.2%;
-			top: 73.5%;
+			top: 79.5%;
 			z-index: 5;
 			display: table;
 			width: max-content;
@@ -1592,6 +1592,10 @@ const paperworkItems = [
 			width: clamp(780px, 205vw, 980px);
 		}
 
+		.pt-hero-visual.is-preview-open {
+			width: calc(100vw - 16px);
+		}
+
 		.pt-hero-menu {
 			position: absolute;
 			inset: 0;
@@ -1630,6 +1634,10 @@ const paperworkItems = [
 			width: clamp(780px, 205vw, 980px);
 			max-height: none;
 			border-radius: 0;
+		}
+
+		.pt-paperwork-visual.is-paperwork-open {
+			width: calc(100vw - 16px);
 		}
 
 		.pt-paperwork-menu {
