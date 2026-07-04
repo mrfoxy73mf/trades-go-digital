@@ -301,6 +301,17 @@ const paperworkItems = [
 			const paperworkReturnNote = document.querySelector<HTMLElement>(".pt-paperwork-return-note");
 			const paperworkButtons = document.querySelectorAll<HTMLButtonElement>(".pt-paperwork-menu button");
 			const isPhone = () => window.matchMedia("(max-width: 720px)").matches;
+			const scrollSectionStart = (element?: HTMLElement | null) => {
+				const section = element?.closest<HTMLElement>(".pt-section");
+				if (!section) return;
+				const reset = () => {
+					section.scrollLeft = 0;
+				};
+				reset();
+				requestAnimationFrame(reset);
+				window.setTimeout(reset, 200);
+				window.setTimeout(reset, 700);
+			};
 
 			previewButtons.forEach((button) => {
 				button.addEventListener("click", () => {
@@ -325,6 +336,7 @@ const paperworkItems = [
 					if (isPhone()) {
 						previewImage.scrollIntoView({ behavior: "smooth", block: "center" });
 					}
+					scrollSectionStart(previewVisual);
 				});
 			});
 
@@ -348,6 +360,7 @@ const paperworkItems = [
 					if (isPhone()) {
 						paperworkImage.scrollIntoView({ behavior: "smooth", block: "center" });
 					}
+					scrollSectionStart(paperworkFrame);
 				});
 			});
 
@@ -1522,7 +1535,7 @@ const paperworkItems = [
 		}
 
 		.pt-paperwork-visual.is-paperwork-open {
-			width: min(860px, calc(100vw - 32px));
+			width: clamp(760px, 112vw, 860px);
 			max-width: none;
 		}
 
@@ -1557,8 +1570,9 @@ const paperworkItems = [
 		}
 
 		.pt-hero-menu button {
-			width: 22%;
-			height: 5.7%;
+			left: 48.4%;
+			width: 7.6%;
+			height: 3.9%;
 			min-height: 0;
 			background: transparent;
 			color: transparent;
