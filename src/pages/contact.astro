@@ -52,32 +52,10 @@ const faqs = [
 			<section class="contact-hero">
 				<p class="eyebrow">Contact</p>
 				<h1>Ask about President Trades.</h1>
-				<p>
-					Send your trade, how you currently manage admin and what slows you down most. We will
-					reply with the most useful next step for President Trades.
-				</p>
 				<a class="email-card" href={`mailto:${CONTACT_EMAIL}`}>
 					<span>Email Mac</span>
 					<strong>{CONTACT_EMAIL}</strong>
 				</a>
-			</section>
-
-			<section class="next-steps" aria-label="What to include in your email">
-				<h2>Helpful details to include</h2>
-				<div class="steps">
-					<div>
-						<strong>1. Your trade</strong>
-						<p>Example: plumber, electrician, roofer, builder, gas engineer or multi-trade business.</p>
-					</div>
-					<div>
-						<strong>2. How you do admin now</strong>
-						<p>Tell us if you use paper, spreadsheets, another app or a mix of different tools.</p>
-					</div>
-					<div>
-						<strong>3. Main admin problem</strong>
-						<p>Quotes, invoices, certificates, receipts, mileage, tax records or accountant paperwork.</p>
-					</div>
-				</div>
 			</section>
 
 			<section class="faq-section" aria-labelledby="faq-title">
@@ -178,34 +156,8 @@ const faqs = [
 		overflow-wrap: anywhere;
 	}
 
-	.next-steps {
-		margin-top: 66px;
-	}
-
 	.faq-section {
 		margin-top: 72px;
-	}
-
-	.steps {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 16px;
-	}
-
-	.steps div {
-		padding: 24px;
-		border: 1px solid rgba(109, 199, 255, 0.18);
-		border-radius: 12px;
-		background: rgba(255, 255, 255, 0.06);
-	}
-
-	.steps strong {
-		display: block;
-		margin-bottom: 10px;
-	}
-
-	.steps p {
-		margin: 0;
 	}
 
 	.faq-list {
@@ -230,7 +182,6 @@ const faqs = [
 			padding: 50px 0;
 		}
 
-		.steps,
 		.faq-list {
 			grid-template-columns: 1fr;
 		}
