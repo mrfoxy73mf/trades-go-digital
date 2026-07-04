@@ -121,6 +121,15 @@ const aiItems = [
 	["Built around UK trades admin", "Designed for the notes, paperwork and follow-ups UK trades businesses deal with every week."],
 ];
 
+const chooseItems = [
+	"Create a quote once, then let President Trades handle what happens next.",
+	"Automatically organise every job into its own Business Office.",
+	"Keep supplier invoices, receipts and paperwork linked to the right job.",
+	"Make tax time easier with organised records all year round.",
+	"Send your accountant everything they need in just a few clicks.",
+	"Spend less time on paperwork and more time running your business.",
+];
+
 const paperworkItems = [
 	{
 		title: "Quote PDF",
@@ -313,6 +322,16 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 					</div>
 					<div class="pt-ai-list">
 						{aiItems.map(([title, text]) => <article><h3>{title}</h3><p>{text}</p></article>)}
+					</div>
+				</div>
+			</section>
+
+			<section class="pt-section pt-choose">
+				<div class="pt-container">
+					<p class="pt-eyebrow">Built for the way trades work</p>
+					<h2>Why businesses choose <span>President Trades</span></h2>
+					<div class="pt-choose-grid">
+						{chooseItems.map((item) => <article><span>&check;</span><p>{item}</p></article>)}
 					</div>
 				</div>
 			</section>
@@ -1129,6 +1148,46 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		line-height: 1.65;
 	}
 
+	.pt-choose-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 16px;
+		margin-top: 34px;
+	}
+
+	.pt-choose-grid article {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		gap: 12px;
+		align-items: start;
+		padding: 22px;
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		background: #ffffff;
+		box-shadow: 0 18px 45px rgba(16, 32, 51, 0.08);
+		transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+	}
+
+	.pt-choose-grid article:hover {
+		transform: translateY(-3px);
+		border-color: rgba(255, 107, 0, 0.36);
+		box-shadow: 0 24px 70px rgba(16, 32, 51, 0.12);
+	}
+
+	.pt-choose-grid span {
+		color: var(--accent);
+		font-weight: 950;
+		line-height: 1.7;
+	}
+
+	.pt-choose-grid p {
+		margin: 0;
+		color: var(--fg);
+		font-size: 1rem;
+		font-weight: 800;
+		line-height: 1.55;
+	}
+
 	.pt-chip-grid {
 		display: flex;
 		flex-wrap: wrap;
@@ -1340,7 +1399,8 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		}
 
 		.pt-kpi-grid,
-		.pt-flow-grid {
+		.pt-flow-grid,
+		.pt-choose-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 
@@ -1424,7 +1484,8 @@ const waitingListFields = ["Name", "Business Name", "Trade", "Email", "Phone (op
 		.pt-dashboard-bar,
 		.pt-kpi-grid,
 		.pt-flow-grid,
-		.pt-ai-list {
+		.pt-ai-list,
+		.pt-choose-grid {
 			grid-template-columns: 1fr;
 		}
 
