@@ -1491,6 +1491,44 @@ const paperworkItems = [
 		.pt-dashboard-lower {
 			grid-template-columns: 1fr;
 		}
+
+		.pt-hero,
+		.pt-paperwork,
+		.pt-auto,
+		.pt-office,
+		.pt-choose,
+		.pt-site-footer-graphic {
+			overflow-x: auto;
+			overflow-y: hidden;
+			-webkit-overflow-scrolling: touch;
+			overscroll-behavior-x: contain;
+			scrollbar-color: rgba(255, 107, 0, 0.7) rgba(255, 255, 255, 0.1);
+			scrollbar-width: thin;
+		}
+
+		.pt-hero-inner,
+		.pt-paperwork-grid,
+		.pt-image-section {
+			width: max-content;
+			min-width: 100%;
+			padding-inline: 14px;
+		}
+
+		.pt-hero-visual,
+		.pt-paperwork-visual,
+		.pt-image-section img {
+			width: clamp(980px, 125vw, 1180px);
+			max-width: none;
+		}
+
+		.pt-paperwork-visual.is-paperwork-open {
+			width: min(860px, calc(100vw - 32px));
+			max-width: none;
+		}
+
+		.pt-paperwork-visual.is-paperwork-open > img {
+			width: 100%;
+		}
 	}
 
 	@media (max-width: 720px) {
@@ -1501,12 +1539,14 @@ const paperworkItems = [
 
 		.pt-hero-inner {
 			gap: 22px;
-			width: min(100% - 16px, 620px);
+			width: max-content;
 			margin: 0 auto;
+			padding-inline: 8px;
 		}
 
 		.pt-hero-visual {
 			justify-content: center;
+			width: clamp(780px, 205vw, 980px);
 		}
 
 		.pt-hero-menu {
@@ -1543,6 +1583,7 @@ const paperworkItems = [
 		}
 
 		.pt-paperwork-visual {
+			width: clamp(780px, 205vw, 980px);
 			max-height: none;
 			border-radius: 0;
 		}
@@ -1589,6 +1630,18 @@ const paperworkItems = [
 
 		.pt-container {
 			width: min(100% - 28px, 620px);
+		}
+
+		.pt-paperwork-grid,
+		.pt-image-section {
+			width: max-content;
+			min-width: 100%;
+			padding-inline: 8px;
+		}
+
+		.pt-image-section img {
+			width: clamp(780px, 205vw, 980px);
+			max-width: none;
 		}
 
 		h1 {
