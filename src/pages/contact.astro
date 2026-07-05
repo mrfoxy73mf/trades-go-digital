@@ -156,6 +156,7 @@ const faqs = [
 		color: #ffffff;
 		font-family:
 			Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+		overflow-x: hidden;
 	}
 
 	main {
@@ -251,6 +252,8 @@ const faqs = [
 		display: grid;
 		grid-template-columns: minmax(0, 1.02fr) minmax(380px, 0.98fr);
 		gap: 0;
+		width: 100%;
+		max-width: 100%;
 		margin-top: 72px;
 		overflow: hidden;
 		border: 1px solid rgba(109, 199, 255, 0.22);
@@ -283,6 +286,7 @@ const faqs = [
 
 	.message-panel {
 		align-self: center;
+		min-width: 0;
 		margin: 28px;
 		padding: 30px;
 		border: 1px solid rgba(148, 169, 189, 0.34);
@@ -402,7 +406,9 @@ const faqs = [
 
 	@media (max-width: 760px) {
 		main {
+			width: min(100% - 24px, 1120px);
 			padding: 50px 0;
+			overflow-x: hidden;
 		}
 
 		.faq-list,
@@ -416,26 +422,27 @@ const faqs = [
 		}
 
 		.contact-enquiry {
+			display: block;
 			border-radius: 14px;
 		}
 
 		.contact-visual {
-			min-height: 520px;
-		}
-
-		.contact-visual img {
-			object-position: 28% center;
+			display: none;
 		}
 
 		.message-panel {
 			margin: 0;
 			padding: 24px;
-			border-width: 1px 0 0;
-			border-radius: 0;
+			border: 0;
+			border-radius: 14px;
 		}
 
 		.message-intro {
 			grid-template-columns: 1fr;
+		}
+
+		.message-intro h2 {
+			font-size: clamp(2rem, 11vw, 3rem);
 		}
 	}
 </style>
