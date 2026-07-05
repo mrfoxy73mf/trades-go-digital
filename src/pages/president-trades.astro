@@ -1,6 +1,7 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import { SITE_TITLE } from "../consts";
 
 const heroButtons = [
@@ -283,6 +284,7 @@ const paperworkItems = [
 				</section>
 			</section>
 		</main>
+		<Footer />
 		<script>
 			const previewImage = document.querySelector<HTMLImageElement>("#pt-hero-preview");
 			const previewVisual = document.querySelector<HTMLElement>(".pt-hero-visual");
