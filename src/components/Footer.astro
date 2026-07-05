@@ -2,19 +2,70 @@
 import { CONTACT_EMAIL, SITE_DESCRIPTION } from "../consts";
 
 const today = new Date();
+
+const footerColumns = [
+	{
+		title: "Industries",
+		links: [
+			{
+				label: "Software world updates",
+				href: "/",
+				note: "Monthly notes on what is changing in software, AI and business tools.",
+			},
+		],
+	},
+	{
+		title: "Topics",
+		links: [
+			{ label: "New software", href: "/" },
+			{ label: "AI updates", href: "/" },
+			{ label: "President Trades updates", href: "/president-trades" },
+			{ label: "Business apps", href: "/" },
+		],
+	},
+	{
+		title: "About",
+		links: [
+			{ label: "About Trades Go Digital", href: "/" },
+			{ label: "President Trades", href: "/president-trades" },
+			{ label: "Pricing", href: "/pricing" },
+		],
+	},
+	{
+		title: "News",
+		links: [
+			{
+				label: "Monthly updates",
+				href: "/",
+				note: "Future plans, product progress and new features.",
+			},
+			{ label: "Contact us", href: "/contact" },
+		],
+	},
+];
 ---
 
 <footer>
 	<div class="footer-inner">
-		<div>
+		<div class="footer-brand">
 			<a class="brand" href="/">Trades Go Digital</a>
 			<p>{SITE_DESCRIPTION}</p>
+			<a class="email-link" href={`mailto:${CONTACT_EMAIL}`}>Email: {CONTACT_EMAIL}</a>
 		</div>
-		<div class="footer-links">
-			<a href="/president-trades">President Trades</a>
-			<a href="/pricing">Pricing</a>
-			<a href="/contact">Contact Trades Go Digital</a>
-			<a href={`mailto:${CONTACT_EMAIL}`}>Email: {CONTACT_EMAIL}</a>
+		<div class="footer-links" aria-label="Footer navigation">
+			{
+				footerColumns.map((column) => (
+					<section>
+						<h2>{column.title}</h2>
+						{column.links.map((link) => (
+							<a href={link.href}>
+								<span>{link.label}</span>
+								{link.note && <small>{link.note}</small>}
+							</a>
+						))}
+					</section>
+				))
+			}
 		</div>
 	</div>
 	<p class="copyright">Copyright &copy; {today.getFullYear()} Trades Go Digital</p>
@@ -29,11 +80,11 @@ const today = new Date();
 
 	.footer-inner {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto;
+		grid-template-columns: minmax(230px, 0.85fr) minmax(0, 1.65fr);
 		gap: 32px;
 		width: min(1120px, calc(100% - 32px));
 		margin: 0 auto;
-		padding: 42px 0 24px;
+		padding: 46px 0 28px;
 	}
 
 	.brand {
@@ -49,10 +100,15 @@ const today = new Date();
 		overflow-wrap: anywhere;
 	}
 
+	.email-link {
+		display: inline-flex;
+		margin-top: 18px;
+	}
+
 	.footer-links {
 		display: grid;
-		gap: 10px;
-		text-align: right;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 22px;
 	}
 
 	a {
@@ -62,9 +118,31 @@ const today = new Date();
 		text-decoration: none;
 	}
 
-	span {
+	h2 {
+		margin: 0 0 12px;
+		color: #ffffff;
+		font-size: 0.82rem;
+		font-weight: 900;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.footer-links section {
+		display: grid;
+		align-content: start;
+		gap: 10px;
+	}
+
+	.footer-links a {
+		display: grid;
+		gap: 3px;
+	}
+
+	small {
 		color: #7d91a8;
-		font-weight: 800;
+		font-size: 0.82rem;
+		font-weight: 700;
+		line-height: 1.35;
 	}
 
 	a:hover {
@@ -79,13 +157,20 @@ const today = new Date();
 		font-size: 0.9rem;
 	}
 
+	@media (max-width: 920px) {
+		.footer-inner,
+		.footer-links {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
 	@media (max-width: 720px) {
 		.footer-inner {
 			grid-template-columns: 1fr;
 		}
 
 		.footer-links {
-			text-align: left;
+			grid-template-columns: 1fr;
 		}
 	}
 </style>
