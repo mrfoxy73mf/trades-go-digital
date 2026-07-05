@@ -60,6 +60,47 @@ const pricingFeatures = [
 				<p>Join the early access list and get updates before President Trades launches.</p>
 				<a href="/president-trades/#waiting-list">Register Your Interest</a>
 			</section>
+
+			<section class="pricing-enquiry" aria-labelledby="pricing-enquiry-title">
+				<div>
+					<p class="eyebrow">Ask for information</p>
+					<h2 id="pricing-enquiry-title">Want to know if President Trades fits your business?</h2>
+					<p>
+						Send your details and what you want to know. We will reply with the most useful
+						next step for your trade business.
+					</p>
+				</div>
+				<form action={`mailto:${CONTACT_EMAIL}`} method="post" enctype="text/plain">
+					<label>
+						Your name
+						<input name="Name" type="text" autocomplete="name" placeholder="Your name" required />
+					</label>
+					<label>
+						Your trade
+						<input name="Trade" type="text" placeholder="Plumber, electrician, roofer..." required />
+					</label>
+					<label>
+						Email or phone
+						<input name="Contact" type="text" autocomplete="email" placeholder="How should we reply?" required />
+					</label>
+					<label>
+						Business size
+						<input name="Business size" type="text" placeholder="Sole trader, small team, company..." />
+					</label>
+					<label class="full">
+						What do you want to know?
+						<textarea
+							name="Message"
+							placeholder="Ask about pricing, setup, early access or how President Trades works."
+							required
+						></textarea>
+					</label>
+					<button type="submit">Send enquiry</button>
+					<p class="form-note">
+						This opens your email app so you can send the enquiry to {CONTACT_EMAIL}.
+					</p>
+				</form>
+			</section>
 		</main>
 		<Footer />
 	</body>
@@ -202,6 +243,83 @@ const pricingFeatures = [
 		overflow-wrap: anywhere;
 	}
 
+	.pricing-enquiry {
+		display: grid;
+		grid-template-columns: minmax(0, 0.8fr) minmax(340px, 1.2fr);
+		gap: 30px;
+		margin-top: 18px;
+		padding: 30px;
+		border: 1px solid #d9e2ec;
+		border-radius: 12px;
+		background: #ffffff;
+		box-shadow: 0 20px 50px rgba(12, 31, 55, 0.07);
+	}
+
+	.pricing-enquiry p {
+		margin-bottom: 0;
+	}
+
+	form {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 14px;
+	}
+
+	label {
+		display: grid;
+		gap: 8px;
+		color: #0b1930;
+		font-size: 0.94rem;
+		font-weight: 900;
+	}
+
+	label.full,
+	form button,
+	.form-note {
+		grid-column: 1 / -1;
+	}
+
+	input,
+	textarea {
+		width: 100%;
+		min-width: 0;
+		min-height: 52px;
+		border: 1px solid #cfd9e5;
+		border-radius: 8px;
+		background: #f8fbff;
+		color: #0b1930;
+		font: inherit;
+		font-size: 1rem;
+		padding: 14px;
+	}
+
+	textarea {
+		min-height: 132px;
+		resize: vertical;
+	}
+
+	input::placeholder,
+	textarea::placeholder {
+		color: #718096;
+	}
+
+	form button {
+		min-height: 54px;
+		border: 0;
+		border-radius: 8px;
+		background: #ff6b18;
+		color: #ffffff;
+		font: inherit;
+		font-weight: 900;
+		cursor: pointer;
+	}
+
+	.form-note {
+		margin: 0;
+		color: #536174;
+		font-size: 0.95rem;
+	}
+
 	@media (max-width: 760px) {
 		main {
 			padding: 48px 0;
@@ -214,6 +332,15 @@ const pricingFeatures = [
 
 		.pricing-card {
 			grid-template-columns: 1fr;
+		}
+
+		.pricing-enquiry,
+		form {
+			grid-template-columns: 1fr;
+		}
+
+		.pricing-enquiry {
+			padding: 24px;
 		}
 	}
 </style>
