@@ -86,7 +86,7 @@ const faqs = [
 			<section
 				id="president-trades-enquiry"
 				class="contact-enquiry"
-				aria-labelledby="president-trades-enquiry-title"
+				aria-label="President Trades enquiry form"
 			>
 				<div class="contact-visual">
 					<img
@@ -96,14 +96,14 @@ const faqs = [
 				</div>
 				<div class="message-panel">
 					<div class="message-intro">
-						<div class="message-icon" aria-hidden="true">PT</div>
+						<div class="message-icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24" role="img" aria-label="">
+								<path d="M7.5 11.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm9 0a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7ZM2.8 20c.6-3.4 2.7-5.2 6.1-5.2h1.2c1 0 1.9.2 2.7.6-1 1.1-1.6 2.6-1.9 4.6H2.8Zm9.8 0c.5-3.4 2.5-5.2 5.6-5.2h1c3 0 4.9 1.8 5.4 5.2h-12Z" />
+							</svg>
+						</div>
 						<div>
-							<p class="eyebrow">Get in touch</p>
-							<h2 id="president-trades-enquiry-title">Send a message to President Trades.</h2>
-							<p>
-								Tell us a little about your business and how President Trades could help.
-								We will get back to you as soon as we can.
-							</p>
+							<p class="message-lead">Join hundreds of trades preparing for launch.</p>
+							<p class="message-sub">Tell us how President Trades could help your business.</p>
 						</div>
 					</div>
 					<form action={`mailto:${CONTACT_EMAIL}`} method="post" enctype="text/plain">
@@ -138,8 +138,8 @@ const faqs = [
 						<p class="form-note">
 							This opens your email app so you can send the message to <strong>{CONTACT_EMAIL}</strong>.
 						</p>
-						<p class="safe-note">Your details are safe with us. We will never share your information.</p>
 					</form>
+					<p class="safe-note">Your details are safe with us. We will never share your information.</p>
 				</div>
 			</section>
 		</main>
@@ -251,17 +251,10 @@ const faqs = [
 	.contact-enquiry {
 		display: grid;
 		grid-template-columns: minmax(0, 1.02fr) minmax(380px, 0.98fr);
-		gap: 0;
+		gap: 28px;
 		width: 100%;
 		max-width: 100%;
 		margin-top: 72px;
-		overflow: hidden;
-		border: 1px solid rgba(109, 199, 255, 0.22);
-		border-radius: 20px;
-		background:
-			radial-gradient(circle at 35% 70%, rgba(255, 107, 24, 0.28), transparent 34%),
-			rgba(255, 255, 255, 0.06);
-		box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
 		scroll-margin-top: 90px;
 	}
 
@@ -272,7 +265,11 @@ const faqs = [
 	.contact-visual {
 		position: relative;
 		min-height: 680px;
+		overflow: hidden;
+		border: 1px solid rgba(109, 199, 255, 0.22);
+		border-radius: 20px;
 		background: #020813;
+		box-shadow: 0 28px 80px rgba(0, 0, 0, 0.3);
 	}
 
 	.contact-visual img {
@@ -287,19 +284,21 @@ const faqs = [
 	.message-panel {
 		align-self: center;
 		min-width: 0;
-		margin: 28px;
-		padding: 30px;
-		border: 1px solid rgba(148, 169, 189, 0.34);
-		border-radius: 18px;
-		background: rgba(4, 13, 25, 0.9);
-		box-shadow: 0 0 34px rgba(42, 178, 255, 0.14);
+		margin: 0;
+		padding: clamp(24px, 3vw, 40px);
+		border: 1px solid rgba(148, 169, 189, 0.38);
+		border-radius: 20px;
+		background:
+			linear-gradient(180deg, rgba(7, 18, 32, 0.96), rgba(3, 10, 20, 0.96)),
+			rgba(4, 13, 25, 0.92);
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32), 0 0 34px rgba(42, 178, 255, 0.12);
 	}
 
 	.message-intro {
 		display: grid;
 		grid-template-columns: auto minmax(0, 1fr);
 		gap: 18px;
-		align-items: start;
+		align-items: center;
 		margin-bottom: 26px;
 		padding-bottom: 24px;
 		border-bottom: 1px solid rgba(148, 169, 189, 0.25);
@@ -307,26 +306,40 @@ const faqs = [
 
 	.message-icon {
 		display: grid;
-		width: 58px;
-		height: 58px;
+		width: 64px;
+		height: 64px;
 		place-items: center;
 		border: 1px solid #ff6b18;
 		border-radius: 50%;
 		color: #ff6b18;
-		font-size: 0.92rem;
-		font-weight: 900;
 		box-shadow: 0 0 24px rgba(255, 107, 24, 0.16);
 	}
 
-	.message-intro h2 {
-		margin-bottom: 14px;
-		font-size: clamp(2rem, 4.2vw, 3.55rem);
+	.message-icon svg {
+		width: 28px;
+		height: 28px;
+		fill: currentColor;
+	}
+
+	.message-lead {
+		margin: 0;
+		color: #ffffff;
+		font-size: clamp(1.08rem, 2vw, 1.28rem);
+		font-weight: 800;
+		line-height: 1.45;
+	}
+
+	.message-sub {
+		margin: 4px 0 0;
+		color: #c7d8e8;
+		font-size: 0.98rem;
+		line-height: 1.55;
 	}
 
 	form {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 14px;
+		gap: 18px;
 	}
 
 	label {
@@ -372,12 +385,13 @@ const faqs = [
 		align-items: center;
 		justify-content: center;
 		gap: 12px;
-		min-height: 54px;
+		min-height: 60px;
 		border: 0;
-		border-radius: 8px;
+		border-radius: 10px;
 		background: linear-gradient(135deg, #ff7a1a, #f0470e);
 		color: #ffffff;
 		font: inherit;
+		font-size: 1.05rem;
 		font-weight: 900;
 		cursor: pointer;
 		box-shadow: 0 0 28px rgba(255, 107, 24, 0.28);
@@ -395,10 +409,12 @@ const faqs = [
 	}
 
 	.safe-note {
-		grid-column: 1 / -1;
-		margin: 4px 0 0;
-		padding-top: 14px;
-		border-top: 1px solid rgba(148, 169, 189, 0.18);
+		display: flex;
+		gap: 12px;
+		align-items: center;
+		margin: 22px 0 0;
+		padding-top: 20px;
+		border-top: 1px solid rgba(148, 169, 189, 0.22);
 		color: #c7d8e8;
 		font-size: 0.95rem;
 		font-weight: 900;
@@ -422,27 +438,24 @@ const faqs = [
 		}
 
 		.contact-enquiry {
-			display: block;
-			border-radius: 14px;
+			display: grid;
+			gap: 16px;
 		}
 
 		.contact-visual {
-			display: none;
+			min-height: auto;
+			aspect-ratio: 4 / 5;
+			border-radius: 14px;
 		}
 
 		.message-panel {
 			margin: 0;
 			padding: 24px;
-			border: 0;
 			border-radius: 14px;
 		}
 
 		.message-intro {
-			grid-template-columns: 1fr;
-		}
-
-		.message-intro h2 {
-			font-size: clamp(2rem, 11vw, 3rem);
+			grid-template-columns: auto minmax(0, 1fr);
 		}
 	}
 </style>
