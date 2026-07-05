@@ -5,12 +5,15 @@ import Footer from "../components/Footer.astro";
 import { CONTACT_EMAIL, SITE_TITLE } from "../consts";
 
 const pricingFeatures = [
-	"Quotes, jobs, invoices and certificates",
-	"Business Office with organised job records",
-	"Tax Centre and accountant bundle",
-	"Notebook, voice notes and useful AI tools",
-	"Vehicle, mileage and calendar",
-	"Business branding on paperwork",
+	"Voice-activated AI Assistant (say it -> app logs it)",
+	"HMRC MTD-compatible record-keeping",
+	"Digital customer sign-off (CP12, EICR, JSO)",
+	"Works offline in the van",
+	"Auto parts ordering to suppliers",
+	"Unlimited jobs, photos and PDFs",
+	"Real-time cash-flow dashboard",
+	"Import your history in one CSV upload",
+	"Cancel anytime - no contract",
 ];
 ---
 
@@ -50,9 +53,17 @@ const pricingFeatures = [
 				<div>
 					<h2>Included in the plan</h2>
 					<ul>
-						{pricingFeatures.map((item) => <li><span>✓</span>{item}</li>)}
+						{pricingFeatures.map((item) => <li><span aria-hidden="true">&#10003;</span>{item}</li>)}
 					</ul>
 				</div>
+			</section>
+
+			<section class="one-tap">
+				<h2>The one tap that runs your business.</h2>
+				<p>Your customer accepts a quote. That's it. That's the tap.</p>
+				<p>Job created. Parts ordered. Calendar booked. Paperwork filed. Accountant updated.</p>
+				<p>All while you're still on the ladder.</p>
+				<p>No other UK trade app does this. We built President Trades so you don't have to.</p>
 			</section>
 
 			<section class="cta">
@@ -172,6 +183,7 @@ const pricingFeatures = [
 	}
 
 	.pricing-card,
+	.one-tap,
 	.cta {
 		padding: 28px;
 		border: 1px solid #d9e2ec;
@@ -218,6 +230,27 @@ const pricingFeatures = [
 
 	li span {
 		color: #ff6b18;
+		font-weight: 900;
+	}
+
+	.one-tap {
+		margin-top: 18px;
+		text-align: center;
+	}
+
+	.one-tap h2 {
+		font-size: clamp(2rem, 4vw, 3.2rem);
+		line-height: 1;
+	}
+
+	.one-tap p {
+		max-width: 760px;
+		margin: 0 auto 10px;
+	}
+
+	.one-tap p:first-of-type,
+	.one-tap p:last-child {
+		color: #0b1930;
 		font-weight: 900;
 	}
 
