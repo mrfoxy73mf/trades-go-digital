@@ -3,130 +3,52 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import { SITE_TITLE } from "../consts";
 
-const trustItems = [
-	"Works from your phone",
-	"Built for UK trade businesses",
-	"Quotes, jobs and paperwork in one place",
-	"Your business office in your pocket",
-	"Simple admin. No clutter.",
-];
-
 const heroButtons = [
 	{
 		label: "Dashboard",
 		image: "/images/president-trades-dashboard.jpg",
 		alt: "President Trades dashboard screen",
-		description:
-			"See today's jobs, track your business performance and jump straight into the work that needs your attention.",
 	},
 	{
 		label: "Quote Page",
 		image: "/images/president-trades-quote-page.jpg",
 		alt: "President Trades quote page screen",
-		description:
-			"Create a quote once, then let President Trades take care of everything that happens next. The magic starts here.",
 	},
 	{
 		label: "Job Page",
 		image: "/images/president-trades-job-folder.jpg",
 		alt: "President Trades jobs screen",
-		description:
-			"Everything about the job lives here. Update details, add notes and photos, track progress, and let President Trades keep everything organised from start to finish.",
 	},
 	{
 		label: "Work Calendar",
 		image: "/images/president-trades-work-calendar.jpg",
 		alt: "President Trades work calendar screen",
-		description:
-			"Add your job dates when creating a quote. Once your customer accepts, President Trades automatically books the dates into your Work Calendar.",
 	},
 	{
 		label: "Suppliers Page",
 		image: "/images/president-trades-suppliers-page.jpg",
 		alt: "President Trades suppliers page screen",
-		description:
-			"Add your suppliers once. President Trades knows where to send your material lists and keeps every supplier invoice linked to the right job.",
 	},
 	{
 		label: "AI Assistant",
 		image: "/images/president-trades-ai-assistant.jpg",
 		alt: "President Trades AI Assistant screen",
-		description:
-			"Ask any question about President Trades, your business or your trade, and get answers in seconds.",
 	},
 	{
 		label: "Notebook",
 		image: "/images/president-trades-notebook.jpg",
 		alt: "President Trades notebook screen",
-		description:
-			"Speak naturally, then let President Trades turn your words into a professional email, letter or text message ready to send.",
 	},
 	{
 		label: "Business Office",
 		image: "/images/president-trades-business-office.jpg",
 		alt: "President Trades Business Office screen",
-		description:
-			"The Business Office is where President Trades works its magic, automatically organising every job, document, receipt, certificate and business record into one connected system.",
 	},
 	{
 		label: "Vehicles and Logs",
 		image: "/images/president-trades-vehicles-logs.jpg",
 		alt: "President Trades vehicles and mileage logs screen",
-		description:
-			"Log your business trips once, then let President Trades calculate your HMRC claim and keep everything ready for your accounts.",
 	},
-];
-
-const kpis = [
-	["INCOME - YTD", "GBP 28,420", "+12.4%"],
-	["YOU KEEP", "GBP 24,180", "+9.8%"],
-	["PROFIT", "GBP 18,940", "+15.1%"],
-	["OUTSTANDING", "GBP 7,220", "-2.3%"],
-];
-
-const activeJobs = [
-	["MRS PATEL - BOILER SERVICE", "GBP 280", "DONE"],
-	["RIVERSIDE ESTATE - AGENCY", "GBP 1,440", "OUTSTAND"],
-	["MR KHAN - TAP REPLACE", "GBP 120", "DONE"],
-];
-
-const flows = [
-	{
-		tag: "Instant",
-		title: "Quote to Job Pack in seconds",
-		text: "Customer accepts the quote and the invoice is created automatically and organised in the Business Office.",
-	},
-	{
-		tag: "Live",
-		title: "Job records stay organised",
-		text: "Quotes, invoices, certificates and customer details stay together so you can find what you need later.",
-	},
-	{
-		tag: "One-time",
-		title: "Materials ready when you need them",
-		text: "Build quotes faster with saved labour, materials and common part lists. Add your regular items once, reuse them on future jobs, and keep pricing more consistent across quotes and invoices.",
-	},
-	{
-		tag: "One tap",
-		title: "Month-end ready for your accountant",
-		text: "Choose the month, then download, share or email one tidy bundle with receipts, invoices, mileage and import-ready records.",
-	},
-];
-
-const aiItems = [
-	["Voice notes that tidy themselves", "Dictate job notes, customer updates and reminders, then turn them into clear wording when you need it."],
-	["Customer messages made easier", "Draft polite follow-ups, payment reminders and job updates without starting from a blank page."],
-	["Hands-free on site", "Capture details while you are working, then organise them properly when you have time."],
-	["Built around UK trades admin", "Designed for the notes, paperwork and follow-ups UK trades businesses deal with every week."],
-];
-
-const chooseItems = [
-	"Create a quote once, then let President Trades handle what happens next.",
-	"Automatically organise every job into its own Business Office.",
-	"Keep supplier invoices, receipts and paperwork linked to the right job.",
-	"HMRC MTD-ready. Every job, receipt and mile is stored digitally the way HMRC wants it. Come VAT return time, your figures are already in the right format - no last-minute spreadsheet panic.",
-	"Send your accountant everything they need in just a few clicks.",
-	"Spend less time on paperwork and more time running your business.",
 ];
 
 const paperworkItems = [
@@ -207,7 +129,6 @@ const paperworkItems = [
 										type="button"
 										data-preview-src={item.image}
 										data-preview-alt={item.alt}
-										data-preview-description={item.description}
 									>
 										<b>{item.label}</b>
 									</button>
@@ -365,9 +286,6 @@ const paperworkItems = [
 		<script>
 			const previewImage = document.querySelector<HTMLImageElement>("#pt-hero-preview");
 			const previewVisual = document.querySelector<HTMLElement>(".pt-hero-visual");
-			const previewCopy = document.querySelector<HTMLElement>("#pt-hero-copy");
-			const previewCopyTitle = document.querySelector<HTMLElement>("#pt-hero-copy-title");
-			const previewCopyText = document.querySelector<HTMLElement>("#pt-hero-copy-text");
 			const previewReturnNote = document.querySelector<HTMLElement>(".pt-hero-return-note");
 			const previewMenu = document.querySelector<HTMLElement>(".pt-hero-menu");
 			const previewButtons = document.querySelectorAll<HTMLButtonElement>(".pt-hero-menu button");
@@ -407,12 +325,6 @@ const paperworkItems = [
 
 					previewImage.src = nextSrc;
 					previewImage.alt = button.dataset.previewAlt || "President Trades app screen";
-					if (previewCopy && previewCopyTitle && previewCopyText) {
-						const description = button.dataset.previewDescription || "";
-						previewCopy.hidden = !description;
-						previewCopyTitle.textContent = button.textContent?.trim() || "";
-						previewCopyText.textContent = description;
-					}
 					previewButtons.forEach((item) => item.classList.remove("is-active"));
 					button.classList.add("is-active");
 					previewVisual?.classList.add("is-preview-open");
@@ -476,9 +388,6 @@ const paperworkItems = [
 
 				previewImage.src = "/images/president-trades-office-drawers-v2.png";
 				previewImage.alt = "President Trades Magic Room office with branded van";
-				if (previewCopy) {
-					previewCopy.hidden = true;
-				}
 				previewVisual?.classList.remove("is-preview-open");
 				if (previewReturnNote) {
 					previewReturnNote.hidden = true;
@@ -732,27 +641,6 @@ const paperworkItems = [
 		border: 0;
 		background: transparent;
 		box-shadow: none;
-	}
-
-	.pt-hero-copy {
-		margin-bottom: 4px;
-		padding-bottom: 20px;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-	}
-
-	.pt-hero-copy h2 {
-		margin: 0 0 10px;
-		color: var(--fg);
-		font-size: clamp(1.8rem, 3vw, 2.7rem);
-		line-height: 1;
-	}
-
-	.pt-hero-copy p {
-		margin: 0;
-		color: var(--muted);
-		font-size: 1rem;
-		font-weight: 750;
-		line-height: 1.55;
 	}
 
 	.pt-hero-points span {
