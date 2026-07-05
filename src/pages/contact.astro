@@ -82,6 +82,51 @@ const faqs = [
 					}
 				</div>
 			</section>
+
+			<section
+				id="president-trades-enquiry"
+				class="contact-enquiry"
+				aria-labelledby="president-trades-enquiry-title"
+			>
+				<div>
+					<p class="eyebrow">Register your interest</p>
+					<h2 id="president-trades-enquiry-title">Send a message about President Trades.</h2>
+					<p>
+						Tell us a bit about your trade business and what you want President Trades to help
+						with. Your message will open in your email app ready to send.
+					</p>
+				</div>
+				<form action={`mailto:${CONTACT_EMAIL}`} method="post" enctype="text/plain">
+					<label>
+						Your name
+						<input name="Name" type="text" autocomplete="name" placeholder="Your name" required />
+					</label>
+					<label>
+						Business name
+						<input name="Business name" type="text" placeholder="Your business name" />
+					</label>
+					<label>
+						Your trade
+						<input name="Trade" type="text" placeholder="Plumber, electrician, builder..." required />
+					</label>
+					<label>
+						Email or phone
+						<input name="Contact" type="text" autocomplete="email" placeholder="How should we reply?" required />
+					</label>
+					<label class="full">
+						Message
+						<textarea
+							name="Message"
+							placeholder="Tell us what you want to know about President Trades."
+							required
+						></textarea>
+					</label>
+					<button type="submit">Send message</button>
+					<p class="form-note">
+						This opens your email app so you can send the message to {CONTACT_EMAIL}.
+					</p>
+				</form>
+			</section>
 		</main>
 		<Footer />
 	</body>
@@ -187,17 +232,101 @@ const faqs = [
 		margin: 0;
 	}
 
+	.contact-enquiry {
+		display: grid;
+		grid-template-columns: minmax(0, 0.82fr) minmax(340px, 1.18fr);
+		gap: 30px;
+		margin-top: 72px;
+		padding: 30px;
+		border: 1px solid rgba(109, 199, 255, 0.22);
+		border-radius: 14px;
+		background: rgba(255, 255, 255, 0.07);
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2);
+		scroll-margin-top: 90px;
+	}
+
+	.contact-enquiry p {
+		margin-bottom: 0;
+	}
+
+	form {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 14px;
+	}
+
+	label {
+		display: grid;
+		gap: 8px;
+		color: #ffffff;
+		font-size: 0.94rem;
+		font-weight: 900;
+	}
+
+	label.full,
+	form button,
+	.form-note {
+		grid-column: 1 / -1;
+	}
+
+	input,
+	textarea {
+		width: 100%;
+		min-width: 0;
+		min-height: 52px;
+		border: 1px solid rgba(109, 199, 255, 0.28);
+		border-radius: 8px;
+		background: rgba(7, 17, 31, 0.76);
+		color: #ffffff;
+		font: inherit;
+		font-size: 1rem;
+		padding: 14px;
+	}
+
+	textarea {
+		min-height: 132px;
+		resize: vertical;
+	}
+
+	input::placeholder,
+	textarea::placeholder {
+		color: #94a9bd;
+	}
+
+	form button {
+		min-height: 54px;
+		border: 0;
+		border-radius: 8px;
+		background: #ff6b18;
+		color: #ffffff;
+		font: inherit;
+		font-weight: 900;
+		cursor: pointer;
+	}
+
+	.form-note {
+		margin: 0;
+		color: #c7d8e8;
+		font-size: 0.95rem;
+	}
+
 	@media (max-width: 760px) {
 		main {
 			padding: 50px 0;
 		}
 
-		.faq-list {
+		.faq-list,
+		.contact-enquiry,
+		form {
 			grid-template-columns: 1fr;
 		}
 
 		.email-card {
 			width: 100%;
+		}
+
+		.contact-enquiry {
+			padding: 24px;
 		}
 	}
 </style>
