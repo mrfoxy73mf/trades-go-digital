@@ -1,0 +1,286 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE } from "../consts";
+
+export const prerender = false;
+
+const policies = [
+	{
+		title: "Terms & Conditions",
+		paragraphs: [
+			"By creating an account and using President Trades (the 'Service'), you agree to these Terms. The Service is provided by President Trades (the 'Operator') to UK self-employed tradespeople, sole traders and small businesses (the 'Customer').",
+			"Your account is personal to your business and must not be shared. You are responsible for keeping your login credentials secure and for all activity carried out under your account.",
+			"The Service is provided 'as is'. We work hard to keep it available and accurate, but we do not warrant that the Service will be uninterrupted, error-free, or fit for any specific business purpose. Nothing in the app constitutes legal, tax, or regulatory advice.",
+			"To the maximum extent permitted by law, the Operator's total liability to you in any 12-month period is limited to the subscription fees you paid in that period. We are not liable for indirect or consequential loss, including lost profits, lost contracts, or business interruption.",
+			"We may suspend or terminate your account if you breach these Terms, abuse the Service, or fail to pay. You may terminate at any time by cancelling your subscription (see Refund / Cancellation Policy).",
+			"These Terms are governed by the laws of England and Wales, and disputes will be subject to the exclusive jurisdiction of the English courts.",
+		],
+	},
+	{
+		title: "Privacy Policy",
+		paragraphs: [
+			"We take your privacy seriously. President Trades is a UK-focused service designed to keep your business data isolated and under your control.",
+			"Data we collect: account details (name, business name, email), subscription / payment metadata (handled by Stripe - we never see your card number), and the business data you enter (jobs, quotes, invoices, certificates, expenses, mileage, receipt photos, customer contact details).",
+			"How we use it: solely to operate the Service for you - display your data back to you, generate PDFs, calculate tax / VAT, send reminders, and process subscription payments. We do not sell your data and we do not share it with third parties for marketing.",
+			"Where it's stored: encrypted at rest and accessed over HTTPS. Each tenant's data is logically isolated - your records are never visible to any other account.",
+			"AI processing: when you use the AI Assistant or voice transcription, the relevant message is sent to our LLM provider (Anthropic, OpenAI or Google) under their standard processing terms. Providers are contractually prevented from training on your data.",
+			"Your rights under UK GDPR: you can request a copy of your data, ask us to correct it, or ask us to delete it. Use Settings -> Backup to export, or contact support@pipetrack.app for any subject-access request. We respond within 30 days.",
+			"Cookies: we use only essential cookies to keep you logged in. We do not use advertising or cross-site tracking cookies.",
+		],
+	},
+	{
+		title: "AI Assistant Disclaimer",
+		paragraphs: [
+			"The AI Assistant inside President Trades is a productivity tool. It can help you draft messages, summarise records, suggest workflow steps and answer general questions about the app and UK trade workflows.",
+			"It is NOT a substitute for professional advice. The AI's responses must not be relied on for legal, tax, accounting, health-and-safety, gas-safe, electrical, or any other regulated matters. Always check with your accountant, solicitor, regulator or qualified professional before acting.",
+			"AI outputs can be inaccurate or out of date. UK rates, allowances and rules change - we strongly recommend cross-checking any tax / HMRC information against the current gov.uk guidance.",
+			"You remain fully responsible for the content of any quote, invoice, certificate or message you send to a customer, regardless of whether the AI helped draft it.",
+			"When you use the voice or chat features, the relevant content is sent securely to our AI provider for processing. See the Privacy Policy section above for detail.",
+		],
+	},
+	{
+		title: "Subscription & Billing",
+		paragraphs: [
+			"President Trades is a paid subscription. Pricing on launch: £28 / month for the first 3 months as an introductory rate, then £60 / month thereafter. Prices are inclusive of VAT where applicable and are billed in GBP.",
+			"Payments are processed by Stripe. Your card details are never stored on our servers - Stripe is PCI-DSS compliant and handles all card processing.",
+			"Your subscription auto-renews on the same day each month until you cancel. You will be billed automatically for each renewal period.",
+			"If a payment fails, we will retry over a short grace period. If we still cannot collect payment, your account will be paused: your data remains safe but new entries and AI features will be disabled until billing is restored.",
+			"You can view invoices, update your payment method, or cancel your subscription at any time via the Stripe Customer Portal (Settings -> Billing -> Manage subscription).",
+			"We may change pricing for future billing periods with at least 30 days' notice by email. Current subscribers will see the new price applied at their next renewal after the notice period.",
+		],
+	},
+	{
+		title: "Refund / Cancellation Policy",
+		paragraphs: [
+			"You can cancel your subscription at any time from Settings -> Billing -> Manage subscription. Cancellation takes effect at the end of your current paid period - you keep full access until then.",
+			"We do not offer pro-rated refunds for partial months. If you cancel mid-period, your subscription will simply not renew at the next billing date.",
+			"Refund exceptions: if you were charged due to a clear technical fault on our side (e.g. you cancelled successfully and were billed anyway), contact support@pipetrack.app within 14 days and we will refund in full.",
+			"Under UK consumer law, where the Service is supplied to a consumer (rather than a business), you have a 14-day right of withdrawal from the date of first signup. By starting to use the Service within that period you agree we may begin supplying it and you waive your right to withdrawal once the Service has been substantially used.",
+			"After cancellation, your data is retained for 30 days so you can re-subscribe and pick up where you left off, then permanently deleted (see Data & Backups).",
+		],
+	},
+	{
+		title: "Data & Backups",
+		paragraphs: [
+			"Your business data belongs to you. You can export a full JSON backup at any time from Settings -> Backup. This includes jobs, quotes, invoices, expenses, certificates, customers, mileage, payslips and dividends.",
+			"We take regular automated backups of the underlying database for disaster recovery only. These backups are encrypted and held in UK / EU regions.",
+			"Receipt photos and PDFs are stored as part of your records and are included in your JSON export.",
+			"Retention on cancellation: 30 days after cancellation, your data is permanently deleted from our active systems. Encrypted disaster-recovery backups are rotated out within a further 90 days.",
+			"You can request immediate deletion of your account and all associated data at any time by emailing support@pipetrack.app from your registered address. We will confirm completion in writing.",
+			"We strongly recommend you download a JSON backup periodically and store it somewhere safe - it's a one-tap insurance policy.",
+		],
+	},
+	{
+		title: "Acceptable Use",
+		paragraphs: [
+			"President Trades is intended for genuine UK trades businesses. You agree to use it only for lawful purposes and in line with these Terms.",
+			"You must not: use the Service to send spam, phishing or unsolicited bulk messages; attempt to access another tenant's data; reverse-engineer, scrape, or overload the Service; upload illegal, infringing, or grossly offensive content; or impersonate another business or person.",
+			"Each subscription covers one business. Multi-business operators should run a separate account per business so records, branding and tax data stay clean.",
+			"The Service is single-user per account. If your business needs multiple operatives logging into one shared account, please contact us - multi-seat plans may be available.",
+			"We may suspend accounts that repeatedly trigger abuse detection (e.g. excessive API calls, brute-force login attempts, or AI prompt-injection attempts). We will always try to reach you before suspension, except in clear bad-faith cases.",
+		],
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Legal & Policies | ${SITE_TITLE}`}
+			description="Terms, privacy, billing, AI use and data handling policies for President Trades."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="terms-hero">
+				<p class="eyebrow">Legal &amp; Policies</p>
+				<h1>Legal information for President Trades.</h1>
+				<p>Terms, privacy, billing, AI use and data handling for President Trades.</p>
+				<p class="updated">Last updated 17 February 2026.</p>
+			</section>
+
+			<section class="policy-list" aria-label="Legal and policy dropdowns">
+				{
+					policies.map((policy, index) => (
+						<details class="policy-item" open={index === 0}>
+							<summary>
+								<span>{policy.title}</span>
+								<span class="summary-icon" aria-hidden="true">&gt;</span>
+							</summary>
+							<div class="policy-content">
+								{policy.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+							</div>
+						</details>
+					))
+				}
+			</section>
+		</main>
+		<Footer />
+		<script>
+			const policyItems = document.querySelectorAll(".policy-item");
+
+			policyItems.forEach((item) => {
+				item.addEventListener("toggle", () => {
+					if (!item.open) return;
+
+					policyItems.forEach((otherItem) => {
+						if (otherItem !== item) {
+							otherItem.removeAttribute("open");
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	body {
+		min-height: 100vh;
+		margin: 0;
+		background: #f5f8fb;
+		color: #0b1930;
+		font-family:
+			Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	}
+
+	main {
+		width: min(960px, calc(100% - 32px));
+		margin: 0 auto;
+		padding: 72px 0;
+	}
+
+	.terms-hero {
+		margin-bottom: 30px;
+	}
+
+	.eyebrow {
+		margin: 0 0 12px;
+		color: #b58a1f;
+		font-size: 0.78rem;
+		font-weight: 900;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		max-width: 860px;
+		margin: 0 0 14px;
+		font-size: clamp(1.85rem, 4vw, 2.6rem);
+		font-weight: 800;
+		line-height: 1.15;
+	}
+
+	.terms-hero p {
+		max-width: 760px;
+		margin: 0 0 10px;
+		color: #536174;
+		font-size: 1.05rem;
+		line-height: 1.7;
+	}
+
+	.updated {
+		font-weight: 900;
+	}
+
+	.policy-list {
+		display: grid;
+		gap: 14px;
+	}
+
+	details {
+		overflow: hidden;
+		border: 1px solid rgba(7, 17, 31, 0.11);
+		border-radius: 12px;
+		background: #ffffff;
+		box-shadow: 0 14px 34px rgba(12, 31, 55, 0.06);
+		transition:
+			border-color 180ms ease,
+			box-shadow 180ms ease,
+			transform 180ms ease;
+	}
+
+	details[open] {
+		border-color: rgba(255, 107, 24, 0.4);
+		box-shadow: 0 20px 46px rgba(12, 31, 55, 0.1), 0 0 0 1px rgba(255, 107, 24, 0.08);
+		transform: translateY(-1px);
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 21px 22px;
+		color: #0b1930;
+		font-size: 1.08rem;
+		font-weight: 900;
+		cursor: pointer;
+		list-style: none;
+		outline: none;
+		transition: background 180ms ease;
+	}
+
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary:hover,
+	summary:focus-visible {
+		background: #f8fbff;
+	}
+
+	summary:focus-visible {
+		box-shadow: inset 0 0 0 3px rgba(105, 213, 255, 0.32);
+	}
+
+	.summary-icon {
+		flex: 0 0 auto;
+		color: #ff6b18;
+		font-size: 1.35rem;
+		font-weight: 900;
+		line-height: 1;
+		transition: transform 180ms ease;
+	}
+
+	details[open] .summary-icon {
+		transform: rotate(90deg);
+	}
+
+	.policy-content {
+		display: grid;
+		gap: 12px;
+		padding: 0 22px 24px;
+		border-top: 1px solid rgba(7, 17, 31, 0.08);
+		background:
+			linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+	}
+
+	.policy-content p {
+		margin: 0;
+		color: #536174;
+		font-size: 1rem;
+		line-height: 1.7;
+	}
+
+	.policy-content p:first-child {
+		padding-top: 20px;
+	}
+
+	@media (max-width: 720px) {
+		main {
+			padding: 48px 0;
+		}
+
+		summary {
+			padding: 18px;
+		}
+
+		.policy-content {
+			padding: 0 18px 20px;
+		}
+	}
+</style>

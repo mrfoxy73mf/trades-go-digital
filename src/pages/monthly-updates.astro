@@ -1,0 +1,284 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE } from "../consts";
+
+export const prerender = false;
+
+const updates = [
+	{
+		title: "Demo Video Maker Update",
+		kicker: "July 2026",
+		paragraphs: [
+			"Demo Video Maker is currently in active build and testing.",
+			"The main slideshow maker is now working with photo and video uploads, music selection, preview generation, and download. The gift intro feature has also been built, with several themed present-box openings including Luxury, Playful, Floral, Christmas, and Modern.",
+			"Recent work has focused on improving video quality and making screenshots clearer in the finished demo videos. The app now handles sharper text, better preview sizing, reduced black bars, and clearer phone-screen screenshots.",
+			"The next stage is polishing the media library and editing workflow so saved photo sets, timings, captions, and slideshow settings reload exactly as they were created. Sound effects and final UX polish are also still to be completed before calling this feature finished.",
+		],
+		images: [
+			{
+				src: "/images/demo-video-maker-slideshow.jpeg",
+				alt: "Demo Video Maker slideshow maker screen",
+			},
+			{
+				src: "/images/demo-video-maker-cards.jpeg",
+				alt: "Demo Video Maker use case cards",
+			},
+		],
+	},
+	{
+		title: "Business App Builder Update",
+		kicker: "July 2026",
+		paragraphs: [
+			"Business App Builder, previously called Builder AI, is a local app-building workspace for creating practical business apps without starting from a blank project. It lets you plan an app, choose pages and features, design the layout, test the result, and generate a working local app from the same dashboard.",
+			"The app currently includes a visual builder, template tools, generated business pages, login protection, saved project state, admin/testing tools, and code generation for new apps. It is being developed as a workspace where trades, self-employed users, service businesses, and other small businesses can build apps for dashboards, customers, jobs, quotes, invoices, reports, documents, and business workflows.",
+			"How it works is simple: the user describes the business app they want, chooses or edits the pages, designs the layout in the sandbox, tests the app, then generates a working project. Business App Builder keeps the design, templates, and saved app data together so changes can be reviewed and improved before the final app is used.",
+			"The main work left is to polish the user interface, finish the landing/login experience, improve the generated app quality, strengthen testing, tidy the admin tools, and make the full build-and-generate flow feel smoother from start to finish. The aim is to complete it as a reliable local builder for producing business apps quickly, while still allowing each app to be customised for the exact business.",
+		],
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Monthly Updates | ${SITE_TITLE}`}
+			description="Monthly updates from Trades Go Digital on apps, software tools, President Trades progress and new features being built."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="updates-hero">
+				<p class="eyebrow">News</p>
+				<h1>Monthly updates</h1>
+				<p>Progress notes on the apps, software tools and features being built by Trades Go Digital.</p>
+			</section>
+
+			<section class="update-list" aria-label="Monthly app and software updates">
+				{
+					updates.map((update, index) => (
+						<details class="update-item" open={index === 0}>
+							<summary>
+								<span>
+									<small>{update.kicker}</small>
+									<strong>{update.title}</strong>
+								</span>
+								<span class="summary-icon" aria-hidden="true">&gt;</span>
+							</summary>
+							<div class="update-content">
+								{update.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+								{
+									update.images && (
+										<div class="update-images">
+											{update.images.map((image) => (
+												<img src={image.src} alt={image.alt} loading="lazy" />
+											))}
+										</div>
+									)
+								}
+							</div>
+						</details>
+					))
+				}
+			</section>
+		</main>
+		<Footer />
+		<script>
+			const updateItems = document.querySelectorAll(".update-item");
+
+			updateItems.forEach((item) => {
+				item.addEventListener("toggle", () => {
+					if (!item.open) return;
+
+					updateItems.forEach((otherItem) => {
+						if (otherItem !== item) {
+							otherItem.removeAttribute("open");
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	body {
+		min-height: 100vh;
+		margin: 0;
+		background: #f5f8fb;
+		color: #0b1930;
+		font-family:
+			Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	}
+
+	main {
+		width: min(960px, calc(100% - 32px));
+		margin: 0 auto;
+		padding: 72px 0;
+	}
+
+	.updates-hero {
+		margin-bottom: 30px;
+	}
+
+	.eyebrow {
+		margin: 0 0 12px;
+		color: #b58a1f;
+		font-size: 0.78rem;
+		font-weight: 900;
+		text-transform: uppercase;
+	}
+
+	h1 {
+		margin: 0 0 14px;
+		font-size: clamp(1.9rem, 4vw, 2.7rem);
+		font-weight: 800;
+		line-height: 1.15;
+	}
+
+	.updates-hero p {
+		max-width: 720px;
+		margin: 0;
+		color: #536174;
+		font-size: 1.05rem;
+		line-height: 1.7;
+	}
+
+	.update-list {
+		display: grid;
+		gap: 14px;
+	}
+
+	details {
+		overflow: hidden;
+		border: 1px solid rgba(7, 17, 31, 0.11);
+		border-radius: 12px;
+		background: #ffffff;
+		box-shadow: 0 14px 34px rgba(12, 31, 55, 0.06);
+		transition:
+			border-color 180ms ease,
+			box-shadow 180ms ease,
+			transform 180ms ease;
+	}
+
+	details[open] {
+		border-color: rgba(255, 107, 24, 0.4);
+		box-shadow: 0 20px 46px rgba(12, 31, 55, 0.1), 0 0 0 1px rgba(255, 107, 24, 0.08);
+		transform: translateY(-1px);
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 21px 22px;
+		cursor: pointer;
+		list-style: none;
+		outline: none;
+		transition: background 180ms ease;
+	}
+
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary:hover,
+	summary:focus-visible {
+		background: #f8fbff;
+	}
+
+	summary:focus-visible {
+		box-shadow: inset 0 0 0 3px rgba(105, 213, 255, 0.32);
+	}
+
+	summary span:first-child {
+		display: grid;
+		gap: 4px;
+	}
+
+	summary small {
+		color: #b58a1f;
+		font-size: 0.76rem;
+		font-weight: 900;
+		text-transform: uppercase;
+	}
+
+	summary strong {
+		color: #0b1930;
+		font-size: 1.08rem;
+		line-height: 1.35;
+	}
+
+	.summary-icon {
+		flex: 0 0 auto;
+		color: #ff6b18;
+		font-size: 1.35rem;
+		font-weight: 900;
+		line-height: 1;
+		transition: transform 180ms ease;
+	}
+
+	details[open] .summary-icon {
+		transform: rotate(90deg);
+	}
+
+	.update-content {
+		display: grid;
+		gap: 12px;
+		padding: 20px 22px 24px;
+		border-top: 1px solid rgba(7, 17, 31, 0.08);
+		background:
+			linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+	}
+
+	.update-content p {
+		margin: 0;
+		color: #536174;
+		font-size: 1rem;
+		line-height: 1.7;
+	}
+
+	.update-images {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(180px, 260px));
+		gap: 18px;
+		justify-content: start;
+		margin-top: 10px;
+	}
+
+	.update-images img {
+		width: 100%;
+		max-height: 360px;
+		border: 1px solid #d9e2ec;
+		border-radius: 10px;
+		background: #07111f;
+		object-fit: contain;
+		box-shadow: 0 14px 28px rgba(12, 31, 55, 0.08);
+	}
+
+	@media (max-width: 720px) {
+		main {
+			padding: 48px 0;
+		}
+
+		summary {
+			padding: 18px;
+		}
+
+		.update-content {
+			padding: 18px;
+		}
+
+		.update-images {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.update-images img {
+			max-height: 280px;
+		}
+	}
+</style>

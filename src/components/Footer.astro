@@ -8,17 +8,22 @@ const footerColumns = [
 		title: "Industries",
 		links: [
 			{
-				label: "Software world updates",
-				href: "/",
-				note: "Monthly notes on what is changing in software, AI and business tools.",
+				label: "Software world",
+				href: "https://www.bing.com/search?q=software%20world%20&qs=n&form=QBRE&sp=-1&ghc=1&lq=0&pq=software%20world%20&sc=12-15&sk=&cvid=EA1DBDF48C4248458660888CA9BCDB59",
 			},
 		],
 	},
 	{
 		title: "Topics",
 		links: [
-			{ label: "New software", href: "/" },
-			{ label: "AI updates", href: "/" },
+			{
+				label: "New software",
+				href: "https://www.bing.com/search?q=new+software+update&form=ANNTH1&refig=6a4ad0de5ac442d9a470170b07b21121&pc=HCTS&pq=new+software+&pqlth=13&assgl=19&sgcn=new+software+update&qs=AS&sgtpv=AS&smvpcn=0&swbcn=10&sctcn=0&sc=10-13&sp=1&ghc=0&cvid=6a4ad0de5ac442d9a470170b07b21121&clckatsg=1&hsmssg=0",
+			},
+			{
+				label: "AI updates",
+				href: "https://www.bing.com/search?qs=UT&pq=AI+updates+&sk=CSYN1LT2&sc=10-11&pglt=425&q=ai+updates+news&cvid=d417d3fb337e4151b42da7469c7b8bf0&gs_lcrp=EgRlZGdlKgYIAxAAGEAyBggAEEUYOTIGCAEQABhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQg5MzE2ajBqN6gCALACAA&FORM=ANNTA1&PC=HCTS",
+			},
 			{ label: "President Trades updates", href: "/president-trades" },
 			{ label: "Business apps", href: "/" },
 		],
@@ -36,7 +41,7 @@ const footerColumns = [
 		links: [
 			{
 				label: "Monthly updates",
-				href: "/",
+				href: "/monthly-updates",
 				note: "Future plans, product progress and new features.",
 			},
 			{ label: "Contact us", href: "/contact" },
@@ -68,7 +73,13 @@ const footerColumns = [
 			}
 		</div>
 	</div>
-	<p class="copyright">Copyright &copy; {today.getFullYear()} Trades Go Digital</p>
+	<div class="footer-bottom">
+		<p>Copyright &copy; {today.getFullYear()} Trades Go Digital</p>
+		<p class="site-credit">
+			Website by Trades Go Digital Ltd, Colchester. Software and app builder in Colchester.
+		</p>
+		<a href="/terms-and-conditions">Terms &amp; Conditions</a>
+	</div>
 </footer>
 
 <style>
@@ -80,11 +91,11 @@ const footerColumns = [
 
 	.footer-inner {
 		display: grid;
-		grid-template-columns: minmax(230px, 0.85fr) minmax(0, 1.65fr);
-		gap: 32px;
+		grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.6fr);
+		gap: 48px;
 		width: min(1120px, calc(100% - 32px));
 		margin: 0 auto;
-		padding: 46px 0 28px;
+		padding: 46px 0 34px;
 	}
 
 	.brand {
@@ -108,7 +119,7 @@ const footerColumns = [
 	.footer-links {
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 22px;
+		gap: 28px;
 	}
 
 	a {
@@ -149,19 +160,54 @@ const footerColumns = [
 		color: #ffffff;
 	}
 
-	.copyright {
+	.footer-bottom {
+		display: grid;
+		grid-template-columns: minmax(180px, 1fr) minmax(260px, 1.25fr) minmax(150px, auto);
 		width: min(1120px, calc(100% - 32px));
+		align-items: flex-start;
+		gap: 36px;
 		margin: 0 auto;
-		padding: 0 0 30px;
+		padding: 22px 0 30px;
+		border-top: 1px solid rgba(109, 199, 255, 0.12);
 		color: #7d91a8;
 		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
+	.footer-bottom p {
+		margin: 0;
+	}
+
+	.site-credit {
+		max-width: 500px;
+		justify-self: center;
+		text-align: center;
+	}
+
+	.footer-bottom a {
+		color: #c7d8e8;
+		font-weight: 900;
+		justify-self: end;
+		white-space: nowrap;
+	}
+
+	.footer-bottom a:hover {
+		color: #ffffff;
 	}
 
 	@media (max-width: 920px) {
-		.footer-inner,
+		.footer-inner {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
 		.footer-links {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
+
+		.footer-bottom {
+			display: grid;
+		}
+
 	}
 
 	@media (max-width: 720px) {
@@ -171,6 +217,18 @@ const footerColumns = [
 
 		.footer-links {
 			grid-template-columns: 1fr;
+		}
+
+		.footer-bottom {
+			display: grid;
+			grid-template-columns: 1fr;
+			justify-items: start;
+		}
+
+		.site-credit,
+		.footer-bottom a {
+			justify-self: start;
+			text-align: left;
 		}
 	}
 </style>
