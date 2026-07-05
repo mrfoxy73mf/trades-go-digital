@@ -2,7 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { CONTACT_EMAIL, SITE_TITLE } from "../consts";
+import { SITE_TITLE } from "../consts";
 
 const pricingFeatures = [
 	"Voice-activated AI Assistant (say it -> app logs it)",
@@ -72,45 +72,47 @@ const pricingFeatures = [
 				<a href="/president-trades/#waiting-list">Register Your Interest</a>
 			</section>
 
-			<section class="pricing-enquiry" aria-labelledby="pricing-enquiry-title">
-				<div>
-					<p class="eyebrow">Ask for information</p>
-					<h2 id="pricing-enquiry-title">Want to know if President Trades fits your business?</h2>
-					<p>
-						Send your details and what you want to know. We will reply with the most useful
-						next step for your trade business.
-					</p>
+			<section class="pt-comparison" aria-label="What's included at GBP 60 per month">
+				<h2>What you get for &pound;60/month vs. cheaper competitors</h2>
+				<p class="lead">
+					Most trade apps advertise low base prices, then charge extra for the features you
+					actually need. President Trades has one price, one plan, every feature included.
+				</p>
+
+				<div class="pt-table-wrap">
+					<table class="pt-compare-table">
+						<thead>
+							<tr>
+								<th>Feature</th>
+								<th class="pt-us">President Trades <br /><span>&pound;60/month</span></th>
+								<th>Cheaper competitors</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td>Quotes &amp; invoices</td><td class="pt-us">&#10003; Included</td><td>&#10003; Usually</td></tr>
+							<tr><td>Job scheduling &amp; calendar</td><td class="pt-us">&#10003; Included</td><td>&#10003; Usually</td></tr>
+							<tr><td>Certificates (CP12, EICR, JSO)</td><td class="pt-us">&#10003; Included</td><td>Add-on / higher tier</td></tr>
+							<tr><td>Digital customer sign-off</td><td class="pt-us">&#10003; Included</td><td>Add-on / higher tier</td></tr>
+							<tr><td>Multi-user / employee seats</td><td class="pt-us">&#10003; Included (V2)</td><td>Per-seat pricing</td></tr>
+							<tr><td>Voice-activated AI Assistant</td><td class="pt-us">&#10003; Included</td><td>Not offered</td></tr>
+							<tr><td>Auto parts ordering to suppliers</td><td class="pt-us">&#10003; Included</td><td>Not offered</td></tr>
+							<tr><td>One-tap quote &rarr; job &rarr; paperwork done</td><td class="pt-us">&#10003; Included</td><td>Not offered</td></tr>
+							<tr><td>HMRC MTD-compatible record keeping</td><td class="pt-us">&#10003; Included</td><td>Add-on</td></tr>
+							<tr><td>Business Office document filing</td><td class="pt-us">&#10003; Included</td><td>Higher tier</td></tr>
+							<tr><td>Custom PDF branding</td><td class="pt-us">&#10003; Included</td><td>Higher tier</td></tr>
+							<tr><td>Unlimited jobs, photos &amp; PDFs</td><td class="pt-us">&#10003; Included</td><td>Job / storage caps</td></tr>
+							<tr><td>Works offline in the van</td><td class="pt-us">&#10003; Included</td><td>Rarely</td></tr>
+							<tr><td>HMRC mileage claim (45p / 25p bands)</td><td class="pt-us">&#10003; Included</td><td>Add-on</td></tr>
+							<tr><td>Monthly accountant bundle (auto)</td><td class="pt-us">&#10003; Included</td><td>Not offered</td></tr>
+							<tr><td>Cancel anytime &mdash; no contract</td><td class="pt-us">&#10003; Yes</td><td>Usually 12-month tie-ins</td></tr>
+						</tbody>
+					</table>
 				</div>
-				<form action={`mailto:${CONTACT_EMAIL}`} method="post" enctype="text/plain">
-					<label>
-						Your name
-						<input name="Name" type="text" autocomplete="name" placeholder="Your name" required />
-					</label>
-					<label>
-						Your trade
-						<input name="Trade" type="text" placeholder="Plumber, electrician, roofer..." required />
-					</label>
-					<label>
-						Email or phone
-						<input name="Contact" type="text" autocomplete="email" placeholder="How should we reply?" required />
-					</label>
-					<label>
-						Business size
-						<input name="Business size" type="text" placeholder="Sole trader, small team, company..." />
-					</label>
-					<label class="full">
-						What do you want to know?
-						<textarea
-							name="Message"
-							placeholder="Ask about pricing, setup, early access or how President Trades works."
-							required
-						></textarea>
-					</label>
-					<button type="submit">Send enquiry</button>
-					<p class="form-note">
-						This opens your email app so you can send the enquiry to {CONTACT_EMAIL}.
-					</p>
-				</form>
+
+				<p class="pt-footnote">
+					Comparison based on publicly-listed pricing for popular UK trade apps as of 2026.
+					Feature availability changes &mdash; always check the competitor's current tier before switching.
+				</p>
 			</section>
 		</main>
 		<Footer />
@@ -276,81 +278,79 @@ const pricingFeatures = [
 		overflow-wrap: anywhere;
 	}
 
-	.pricing-enquiry {
-		display: grid;
-		grid-template-columns: minmax(0, 0.8fr) minmax(340px, 1.2fr);
-		gap: 30px;
-		margin-top: 18px;
-		padding: 30px;
-		border: 1px solid #d9e2ec;
-		border-radius: 12px;
-		background: #ffffff;
-		box-shadow: 0 20px 50px rgba(12, 31, 55, 0.07);
+	.pt-comparison {
+		max-width: 960px;
+		margin: 60px auto 0;
+		padding: 0 20px;
 	}
 
-	.pricing-enquiry p {
-		margin-bottom: 0;
+	.pt-comparison h2 {
+		margin: 0 0 10px;
+		font-size: clamp(1.5rem, 4vw, 2.15rem);
+		line-height: 1.1;
 	}
 
-	form {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 14px;
-	}
-
-	label {
-		display: grid;
-		gap: 8px;
-		color: #0b1930;
-		font-size: 0.94rem;
-		font-weight: 900;
-	}
-
-	label.full,
-	form button,
-	.form-note {
-		grid-column: 1 / -1;
-	}
-
-	input,
-	textarea {
-		width: 100%;
-		min-width: 0;
-		min-height: 52px;
-		border: 1px solid #cfd9e5;
-		border-radius: 8px;
-		background: #f8fbff;
-		color: #0b1930;
-		font: inherit;
+	.pt-comparison .lead {
+		margin: 0 0 24px;
+		color: #64748b;
 		font-size: 1rem;
-		padding: 14px;
 	}
 
-	textarea {
-		min-height: 132px;
-		resize: vertical;
+	.pt-table-wrap {
+		overflow-x: auto;
+		border-radius: 12px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 	}
 
-	input::placeholder,
-	textarea::placeholder {
-		color: #718096;
-	}
-
-	form button {
-		min-height: 54px;
-		border: 0;
-		border-radius: 8px;
-		background: #ff6b18;
-		color: #ffffff;
-		font: inherit;
-		font-weight: 900;
-		cursor: pointer;
-	}
-
-	.form-note {
-		margin: 0;
-		color: #536174;
+	.pt-compare-table {
+		width: 100%;
+		min-width: 760px;
+		border-collapse: collapse;
+		background: #ffffff;
 		font-size: 0.95rem;
+	}
+
+	.pt-compare-table th,
+	.pt-compare-table td {
+		padding: 12px 16px;
+		border-bottom: 1px solid #e5e7eb;
+		text-align: left;
+		vertical-align: top;
+	}
+
+	.pt-compare-table thead th {
+		background: #0f172a;
+		color: #ffffff;
+		font-weight: 900;
+	}
+
+	.pt-compare-table thead th.pt-us {
+		background: #ea580c;
+	}
+
+	.pt-compare-table thead th span {
+		display: block;
+		margin-top: 2px;
+		font-size: 0.82rem;
+		font-weight: 600;
+		opacity: 0.85;
+	}
+
+	.pt-compare-table td.pt-us {
+		background: #fff7ed;
+		color: #0f172a;
+		font-weight: 900;
+	}
+
+	.pt-compare-table tbody tr:last-child td {
+		border-bottom: 0;
+	}
+
+	.pt-footnote {
+		margin: 12px 0 0;
+		color: #94a3b8;
+		font-size: 0.78rem;
+		line-height: 1.6;
 	}
 
 	@media (max-width: 760px) {
@@ -367,13 +367,9 @@ const pricingFeatures = [
 			grid-template-columns: 1fr;
 		}
 
-		.pricing-enquiry,
-		form {
-			grid-template-columns: 1fr;
-		}
-
-		.pricing-enquiry {
-			padding: 24px;
+		.pt-comparison {
+			margin-top: 42px;
+			padding: 0;
 		}
 	}
 </style>
