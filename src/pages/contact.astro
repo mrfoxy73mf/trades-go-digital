@@ -88,44 +88,59 @@ const faqs = [
 				class="contact-enquiry"
 				aria-labelledby="president-trades-enquiry-title"
 			>
-				<div>
-					<p class="eyebrow">Register your interest</p>
-					<h2 id="president-trades-enquiry-title">Send a message about President Trades.</h2>
-					<p>
-						Tell us a bit about your trade business and what you want President Trades to help
-						with. Your message will open in your email app ready to send.
-					</p>
+				<div class="contact-visual">
+					<img
+						src="/images/president-trades-contact-message.png"
+						alt="President Trades contact message and business office visual"
+					/>
 				</div>
-				<form action={`mailto:${CONTACT_EMAIL}`} method="post" enctype="text/plain">
-					<label>
-						Your name
-						<input name="Name" type="text" autocomplete="name" placeholder="Your name" required />
-					</label>
-					<label>
-						Business name
-						<input name="Business name" type="text" placeholder="Your business name" />
-					</label>
-					<label>
-						Your trade
-						<input name="Trade" type="text" placeholder="Plumber, electrician, builder..." required />
-					</label>
-					<label>
-						Email or phone
-						<input name="Contact" type="text" autocomplete="email" placeholder="How should we reply?" required />
-					</label>
-					<label class="full">
-						Message
-						<textarea
-							name="Message"
-							placeholder="Tell us what you want to know about President Trades."
-							required
-						></textarea>
-					</label>
-					<button type="submit">Send message</button>
-					<p class="form-note">
-						This opens your email app so you can send the message to {CONTACT_EMAIL}.
-					</p>
-				</form>
+				<div class="message-panel">
+					<div class="message-intro">
+						<div class="message-icon" aria-hidden="true">PT</div>
+						<div>
+							<p class="eyebrow">Get in touch</p>
+							<h2 id="president-trades-enquiry-title">Send a message to President Trades.</h2>
+							<p>
+								Tell us a little about your business and how President Trades could help.
+								We will get back to you as soon as we can.
+							</p>
+						</div>
+					</div>
+					<form action={`mailto:${CONTACT_EMAIL}`} method="post" enctype="text/plain">
+						<label>
+							Your name
+							<input name="Name" type="text" autocomplete="name" placeholder="Your name" required />
+						</label>
+						<label>
+							Business name
+							<input name="Business name" type="text" placeholder="Your business name" />
+						</label>
+						<label>
+							Your trade
+							<input name="Trade" type="text" placeholder="Plumber, electrician, builder..." required />
+						</label>
+						<label>
+							Email or phone
+							<input name="Contact" type="text" autocomplete="email" placeholder="How should we reply?" required />
+						</label>
+						<label class="full">
+							Message
+							<textarea
+								name="Message"
+								placeholder="Tell us what you want to know about President Trades."
+								required
+							></textarea>
+						</label>
+						<button type="submit">
+							<span>Send message</span>
+							<span aria-hidden="true">-&gt;</span>
+						</button>
+						<p class="form-note">
+							This opens your email app so you can send the message to <strong>{CONTACT_EMAIL}</strong>.
+						</p>
+						<p class="safe-note">Your details are safe with us. We will never share your information.</p>
+					</form>
+				</div>
 			</section>
 		</main>
 		<Footer />
@@ -234,19 +249,74 @@ const faqs = [
 
 	.contact-enquiry {
 		display: grid;
-		grid-template-columns: minmax(0, 0.82fr) minmax(340px, 1.18fr);
-		gap: 30px;
+		grid-template-columns: minmax(0, 1.02fr) minmax(380px, 0.98fr);
+		gap: 0;
 		margin-top: 72px;
-		padding: 30px;
+		overflow: hidden;
 		border: 1px solid rgba(109, 199, 255, 0.22);
-		border-radius: 14px;
-		background: rgba(255, 255, 255, 0.07);
-		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2);
+		border-radius: 20px;
+		background:
+			radial-gradient(circle at 35% 70%, rgba(255, 107, 24, 0.28), transparent 34%),
+			rgba(255, 255, 255, 0.06);
+		box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34);
 		scroll-margin-top: 90px;
 	}
 
 	.contact-enquiry p {
 		margin-bottom: 0;
+	}
+
+	.contact-visual {
+		position: relative;
+		min-height: 680px;
+		background: #020813;
+	}
+
+	.contact-visual img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: left center;
+	}
+
+	.message-panel {
+		align-self: center;
+		margin: 28px;
+		padding: 30px;
+		border: 1px solid rgba(148, 169, 189, 0.34);
+		border-radius: 18px;
+		background: rgba(4, 13, 25, 0.9);
+		box-shadow: 0 0 34px rgba(42, 178, 255, 0.14);
+	}
+
+	.message-intro {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		gap: 18px;
+		align-items: start;
+		margin-bottom: 26px;
+		padding-bottom: 24px;
+		border-bottom: 1px solid rgba(148, 169, 189, 0.25);
+	}
+
+	.message-icon {
+		display: grid;
+		width: 58px;
+		height: 58px;
+		place-items: center;
+		border: 1px solid #ff6b18;
+		border-radius: 50%;
+		color: #ff6b18;
+		font-size: 0.92rem;
+		font-weight: 900;
+		box-shadow: 0 0 24px rgba(255, 107, 24, 0.16);
+	}
+
+	.message-intro h2 {
+		margin-bottom: 14px;
+		font-size: clamp(2rem, 4.2vw, 3.55rem);
 	}
 
 	form {
@@ -294,20 +364,40 @@ const faqs = [
 	}
 
 	form button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
 		min-height: 54px;
 		border: 0;
 		border-radius: 8px;
-		background: #ff6b18;
+		background: linear-gradient(135deg, #ff7a1a, #f0470e);
 		color: #ffffff;
 		font: inherit;
 		font-weight: 900;
 		cursor: pointer;
+		box-shadow: 0 0 28px rgba(255, 107, 24, 0.28);
 	}
 
 	.form-note {
 		margin: 0;
 		color: #c7d8e8;
 		font-size: 0.95rem;
+	}
+
+	.form-note strong {
+		color: #ffffff;
+		overflow-wrap: anywhere;
+	}
+
+	.safe-note {
+		grid-column: 1 / -1;
+		margin: 4px 0 0;
+		padding-top: 14px;
+		border-top: 1px solid rgba(148, 169, 189, 0.18);
+		color: #c7d8e8;
+		font-size: 0.95rem;
+		font-weight: 900;
 	}
 
 	@media (max-width: 760px) {
@@ -326,7 +416,26 @@ const faqs = [
 		}
 
 		.contact-enquiry {
+			border-radius: 14px;
+		}
+
+		.contact-visual {
+			min-height: 520px;
+		}
+
+		.contact-visual img {
+			object-position: 28% center;
+		}
+
+		.message-panel {
+			margin: 0;
 			padding: 24px;
+			border-width: 1px 0 0;
+			border-radius: 0;
+		}
+
+		.message-intro {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>
