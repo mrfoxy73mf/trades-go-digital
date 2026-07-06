@@ -162,7 +162,7 @@ const footerColumns = [
 
 	.footer-bottom {
 		display: grid;
-		grid-template-columns: minmax(180px, 1fr) minmax(260px, 1.25fr) minmax(150px, auto);
+		grid-template-columns: minmax(180px, 0.75fr) minmax(520px, 1.5fr) minmax(150px, auto);
 		width: min(1120px, calc(100% - 32px));
 		align-items: flex-start;
 		gap: 36px;
@@ -179,9 +179,10 @@ const footerColumns = [
 	}
 
 	.site-credit {
-		max-width: 500px;
-		justify-self: center;
-		text-align: center;
+		max-width: none;
+		justify-self: start;
+		text-align: left;
+		white-space: nowrap;
 	}
 
 	.footer-bottom a {
