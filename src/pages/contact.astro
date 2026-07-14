@@ -102,7 +102,7 @@ const faqs = [
 							<p class="message-sub">Tell us how President Trades could help your business.</p>
 						</div>
 					</div>
-					<form action={`mailto:${CONTACT_EMAIL}`} method="post" enctype="text/plain">
+					<form id="president-trades-form" data-email={CONTACT_EMAIL}>
 						<label>
 							Your name
 							<input name="Name" type="text" autocomplete="name" placeholder="Your name" required />
@@ -404,6 +404,21 @@ const faqs = [
 			overflow-x: hidden;
 		}
 
+		h1 {
+			font-size: clamp(2.35rem, 13vw, 3.4rem);
+			line-height: 0.98;
+		}
+
+		h2 {
+			font-size: clamp(1.7rem, 9vw, 2.2rem);
+			line-height: 1.05;
+		}
+
+		p {
+			font-size: 1rem;
+			line-height: 1.65;
+		}
+
 		.faq-list,
 		.contact-enquiry,
 		form {
@@ -429,4 +444,63 @@ const faqs = [
 			grid-template-columns: auto minmax(0, 1fr);
 		}
 	}
+
+	@media (max-width: 420px) {
+		main {
+			width: min(100% - 20px, 1120px);
+			padding: 40px 0;
+		}
+
+		.faq-section,
+		.contact-enquiry {
+			margin-top: 48px;
+		}
+
+		.email-card,
+		.faq-list article,
+		.message-panel {
+			border-radius: 10px;
+		}
+
+		.email-card,
+		.faq-list article {
+			padding: 18px;
+		}
+
+		.message-panel {
+			padding: 18px;
+		}
+
+		.message-intro {
+			grid-template-columns: 1fr;
+			gap: 12px;
+		}
+
+		.message-icon {
+			width: 52px;
+			height: 52px;
+		}
+	}
 </style>
+
+<script>
+	const form = document.querySelector("#president-trades-form");
+
+	form?.addEventListener("submit", (event) => {
+		event.preventDefault();
+
+		const target = event.currentTarget;
+		if (!(target instanceof HTMLFormElement)) return;
+
+		const email = target.dataset.email;
+		if (!email) return;
+
+		const data = new FormData(target);
+		const subject = "President Trades enquiry";
+		const body = ["Name", "Business name", "Trade", "Contact", "Message"]
+			.map((field) => `${field}: ${data.get(field) ?? ""}`)
+			.join("\n\n");
+
+		window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+	});
+</script>

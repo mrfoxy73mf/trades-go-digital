@@ -1,52 +1,26 @@
 ---
-import { CONTACT_EMAIL, SITE_DESCRIPTION } from "../consts";
-
 const today = new Date();
 
-const footerColumns = [
-	{
-		title: "Industries",
-		links: [
-			{
-				label: "Software world",
-				href: "https://www.bing.com/search?q=software%20world%20&qs=n&form=QBRE&sp=-1&ghc=1&lq=0&pq=software%20world%20&sc=12-15&sk=&cvid=EA1DBDF48C4248458660888CA9BCDB59",
-			},
-		],
-	},
-	{
-		title: "Topics",
-		links: [
-			{
-				label: "New software",
-				href: "https://www.bing.com/search?q=new+software+update&form=ANNTH1&refig=6a4ad0de5ac442d9a470170b07b21121&pc=HCTS&pq=new+software+&pqlth=13&assgl=19&sgcn=new+software+update&qs=AS&sgtpv=AS&smvpcn=0&swbcn=10&sctcn=0&sc=10-13&sp=1&ghc=0&cvid=6a4ad0de5ac442d9a470170b07b21121&clckatsg=1&hsmssg=0",
-			},
-			{
-				label: "AI updates",
-				href: "https://www.bing.com/search?qs=UT&pq=AI+updates+&sk=CSYN1LT2&sc=10-11&pglt=425&q=ai+updates+news&cvid=d417d3fb337e4151b42da7469c7b8bf0&gs_lcrp=EgRlZGdlKgYIAxAAGEAyBggAEEUYOTIGCAEQABhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQg5MzE2ajBqN6gCALACAA&FORM=ANNTA1&PC=HCTS",
-			},
-			{ label: "President Trades updates", href: "/president-trades" },
-			{ label: "Business apps", href: "/" },
-		],
-	},
-	{
-		title: "About",
-		links: [
-			{ label: "About Trades Go Digital", href: "/" },
-			{ label: "President Trades", href: "/president-trades" },
-			{ label: "Pricing", href: "/pricing" },
-		],
-	},
-	{
-		title: "News",
-		links: [
-			{
-				label: "Monthly updates",
-				href: "/monthly-updates",
-				note: "Future plans, product progress and new features.",
-			},
-			{ label: "Contact us", href: "/contact" },
-		],
-	},
+const footerContacts = [
+	{ label: "General Enquiries", email: "hello@trades-go-digital.co.uk" },
+	{ label: "Customer Support", email: "support@trades-go-digital.co.uk" },
+	{ label: "Report a Bug", email: "feedback@trades-go-digital.co.uk" },
+	{ label: "Accounts & Invoices", email: "invoices@trades-go-digital.co.uk" },
+];
+
+const companyLinks = [
+	{ label: "About Us", href: "/" },
+	{ label: "Pricing", href: "/pricing" },
+	{ label: "President Trades", href: "/president-trades" },
+	{ label: "Contact", href: "/contact" },
+];
+
+const resourceLinks = [
+	{ label: "Business Apps", href: "/" },
+	{ label: "Software Updates", href: "/monthly-updates" },
+	{ label: "AI Updates", href: "/monthly-updates" },
+	{ label: "Blog", href: "/monthly-updates" },
+	{ label: "Monthly News", href: "/monthly-updates" },
 ];
 ---
 
@@ -54,30 +28,38 @@ const footerColumns = [
 	<div class="footer-inner">
 		<div class="footer-brand">
 			<a class="brand" href="/">Trades Go Digital</a>
-			<p>{SITE_DESCRIPTION}</p>
-			<a class="email-link" href={`mailto:${CONTACT_EMAIL}`}>Email: {CONTACT_EMAIL}</a>
+			<p>Helping UK trade businesses grow through websites, local SEO, automation and bespoke software.</p>
+			<a class="footer-cta" href="/contact/#president-trades-enquiry">Get a Free Consultation</a>
 		</div>
-		<div class="footer-links" aria-label="Footer navigation">
-			{
-				footerColumns.map((column) => (
-					<section>
-						<h2>{column.title}</h2>
-						{column.links.map((link) => (
-							<a href={link.href}>
-								<span>{link.label}</span>
-								{link.note && <small>{link.note}</small>}
-							</a>
-						))}
-					</section>
-				))
-			}
+
+		<div class="footer-columns">
+			<section class="footer-contact-list" aria-label="Footer contact emails">
+				<h2>Contact</h2>
+				{
+					footerContacts.map((item) => (
+						<p>
+							<span>{item.label}</span>
+							<a href={`mailto:${item.email}`}>{item.email}</a>
+						</p>
+					))
+				}
+			</section>
+
+			<section class="footer-links" aria-label="Company links">
+				<h2>Company</h2>
+				{companyLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+			</section>
+
+			<section class="footer-links" aria-label="Resource links">
+				<h2>Resources</h2>
+				{resourceLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+			</section>
 		</div>
 	</div>
+
 	<div class="footer-bottom">
-		<p>Copyright &copy; {today.getFullYear()} Trades Go Digital</p>
-		<p class="site-credit">
-			Website by Trades Go Digital Ltd, Colchester. Software and app builder in Colchester.
-		</p>
+		<p>&copy; {today.getFullYear()} Trades Go Digital Ltd.</p>
+		<p>Built in the UK 🇬🇧</p>
 		<a href="/terms-and-conditions">Terms &amp; Conditions</a>
 	</div>
 </footer>
@@ -91,35 +73,92 @@ const footerColumns = [
 
 	.footer-inner {
 		display: grid;
-		grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.6fr);
-		gap: 48px;
+		gap: 34px;
 		width: min(1120px, calc(100% - 32px));
 		margin: 0 auto;
-		padding: 46px 0 34px;
+		padding: 54px 0 34px;
+		align-items: start;
+	}
+
+	.footer-brand {
+		display: grid;
+		justify-items: center;
+		gap: 14px;
+		max-width: 720px;
+		margin: 0 auto;
+		padding-bottom: 34px;
+		text-align: center;
+		border-bottom: 1px solid rgba(109, 199, 255, 0.14);
 	}
 
 	.brand {
+		display: inline-flex;
 		color: #ffffff;
-		font-size: 1.1rem;
+		font-size: clamp(1.45rem, 3vw, 2rem);
 		font-weight: 900;
 		text-decoration: none;
 	}
 
 	p {
 		max-width: 620px;
-		margin: 10px 0 0;
+		margin: 0;
 		overflow-wrap: anywhere;
 	}
 
-	.email-link {
+	.footer-cta {
 		display: inline-flex;
-		margin-top: 18px;
+		align-items: center;
+		justify-content: center;
+		min-height: 46px;
+		padding: 12px 18px;
+		border-radius: 8px;
+		background: linear-gradient(135deg, #f0c85a, #d6a935);
+		color: #07111f;
+		font-weight: 900;
+		text-decoration: none;
+		box-shadow: 0 14px 30px rgba(214, 169, 53, 0.18);
 	}
 
+	.footer-columns {
+		display: grid;
+		grid-template-columns: minmax(280px, 1.35fr) repeat(2, minmax(160px, 0.65fr));
+		gap: 24px;
+		align-items: stretch;
+	}
+
+	.footer-contact-list,
 	.footer-links {
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 28px;
+		gap: 10px;
+		min-width: 0;
+		height: 100%;
+		padding: 22px;
+		border: 1px solid rgba(109, 199, 255, 0.24);
+		border-radius: 10px;
+		background: linear-gradient(180deg, rgba(11, 25, 48, 0.92), rgba(5, 14, 27, 0.92));
+		box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
+	}
+
+	.footer-contact-list p {
+		display: grid;
+		gap: 5px;
+		padding: 8px 0 0;
+		border-top: 1px solid rgba(109, 199, 255, 0.12);
+	}
+
+	.footer-contact-list p:first-of-type {
+		border-top: 0;
+		padding-top: 0;
+	}
+
+	.footer-contact-list span {
+		color: #ffffff;
+		font-weight: 900;
+	}
+
+	.footer-contact-list a {
+		color: #d8ecff;
+		font-weight: 900;
 	}
 
 	a {
@@ -131,29 +170,15 @@ const footerColumns = [
 
 	h2 {
 		margin: 0 0 12px;
-		color: #ffffff;
+		color: #69d5ff;
 		font-size: 0.82rem;
 		font-weight: 900;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
 	}
 
-	.footer-links section {
-		display: grid;
-		align-content: start;
-		gap: 10px;
-	}
-
 	.footer-links a {
-		display: grid;
-		gap: 3px;
-	}
-
-	small {
-		color: #7d91a8;
-		font-size: 0.82rem;
-		font-weight: 700;
-		line-height: 1.35;
+		display: inline-flex;
 	}
 
 	a:hover {
@@ -162,10 +187,10 @@ const footerColumns = [
 
 	.footer-bottom {
 		display: grid;
-		grid-template-columns: minmax(180px, 0.75fr) minmax(520px, 1.5fr) minmax(150px, auto);
+		grid-template-columns: 1fr auto auto;
 		width: min(1120px, calc(100% - 32px));
-		align-items: flex-start;
-		gap: 36px;
+		align-items: center;
+		gap: 24px;
 		margin: 0 auto;
 		padding: 22px 0 30px;
 		border-top: 1px solid rgba(109, 199, 255, 0.12);
@@ -178,17 +203,9 @@ const footerColumns = [
 		margin: 0;
 	}
 
-	.site-credit {
-		max-width: none;
-		justify-self: start;
-		text-align: left;
-		white-space: nowrap;
-	}
-
 	.footer-bottom a {
 		color: #c7d8e8;
 		font-weight: 900;
-		justify-self: end;
 		white-space: nowrap;
 	}
 
@@ -196,40 +213,52 @@ const footerColumns = [
 		color: #ffffff;
 	}
 
-	@media (max-width: 920px) {
-		.footer-inner {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+	@media (min-width: 921px) {
+		.footer-columns {
+			grid-template-columns: minmax(520px, 1.4fr) repeat(2, minmax(170px, 0.55fr));
 		}
 
-		.footer-links {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+		.footer-contact-list p {
+			grid-template-columns: minmax(148px, 0.42fr) minmax(0, 1fr);
+			gap: 16px;
+			align-items: center;
+		}
+
+		.footer-contact-list span,
+		.footer-contact-list a,
+		.footer-links a {
+			white-space: nowrap;
+		}
+	}
+
+	@media (max-width: 920px) {
+		.footer-columns {
+			grid-template-columns: 1fr;
 		}
 
 		.footer-bottom {
-			display: grid;
+			grid-template-columns: 1fr;
+			gap: 8px;
+			justify-items: start;
 		}
-
 	}
 
 	@media (max-width: 720px) {
 		.footer-inner {
-			grid-template-columns: 1fr;
+			gap: 26px;
+			padding: 38px 0 28px;
 		}
 
-		.footer-links {
-			grid-template-columns: 1fr;
-		}
-
-		.footer-bottom {
-			display: grid;
-			grid-template-columns: 1fr;
+		.footer-brand {
 			justify-items: start;
-		}
-
-		.site-credit,
-		.footer-bottom a {
-			justify-self: start;
 			text-align: left;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.footer-links,
+		.footer-contact-list {
+			padding: 18px;
 		}
 	}
 </style>

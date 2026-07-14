@@ -200,3 +200,7 @@ dist
 
 ### Astro ###
 .astro/
+
+# Local scratch/generated files
+/scrap yard file/
+/tmp/

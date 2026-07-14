@@ -1547,20 +1547,15 @@ const paperworkItems = [
 		.pt-office,
 		.pt-choose,
 		.pt-site-footer-graphic {
-			overflow-x: auto;
-			overflow-y: hidden;
-			-webkit-overflow-scrolling: touch;
-			overscroll-behavior-x: contain;
-			scrollbar-color: rgba(255, 107, 0, 0.7) rgba(255, 255, 255, 0.1);
-			scrollbar-width: thin;
+			overflow-x: hidden;
 		}
 
 		.pt-hero-inner,
 		.pt-paperwork-grid,
 		.pt-image-section {
-			width: max-content;
+			width: min(100% - 28px, 1180px);
 			min-width: 100%;
-			padding-inline: 14px;
+			padding-inline: 0;
 		}
 
 		.pt-image-caption {
@@ -1571,8 +1566,8 @@ const paperworkItems = [
 		.pt-hero-visual,
 		.pt-paperwork-visual,
 		.pt-image-section img {
-			width: clamp(980px, 125vw, 1180px);
-			max-width: none;
+			width: 100%;
+			max-width: 100%;
 		}
 
 		.pt-paperwork-visual.is-paperwork-open {
@@ -1618,14 +1613,14 @@ const paperworkItems = [
 
 		.pt-hero-inner {
 			gap: 22px;
-			width: max-content;
+			width: min(100% - 16px, 620px);
 			margin: 0 auto;
-			padding-inline: 8px;
+			padding-inline: 0;
 		}
 
 		.pt-hero-visual {
 			justify-content: center;
-			width: clamp(780px, 205vw, 980px);
+			width: 100%;
 		}
 
 		.pt-hero-visual.is-preview-open {
@@ -1667,7 +1662,7 @@ const paperworkItems = [
 		}
 
 		.pt-paperwork-visual {
-			width: clamp(780px, 205vw, 980px);
+			width: 100%;
 			max-height: none;
 			border-radius: 0;
 		}
@@ -1722,14 +1717,14 @@ const paperworkItems = [
 
 		.pt-paperwork-grid,
 		.pt-image-section {
-			width: max-content;
+			width: min(100% - 16px, 620px);
 			min-width: 100%;
-			padding-inline: 8px;
+			padding-inline: 0;
 		}
 
 		.pt-image-section img {
-			width: clamp(780px, 205vw, 980px);
-			max-width: none;
+			width: 100%;
+			max-width: 100%;
 		}
 
 		.pt-image-caption {

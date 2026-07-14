@@ -1,6 +1,4 @@
-interface Env {
-	SITE_PASSWORD: string;
-}
+interface Env {}
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
 
