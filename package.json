@@ -20,7 +20,7 @@
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
-		"wrangler": "4.88.0"
+		"wrangler": "^4.115.0"
 	},
 	"engines": {
 		"node": ">=22"
@@ -30,10 +30,12 @@
 		"astro": "astro",
 		"build": "astro build && node scripts/lock-routes.mjs && node scripts/create-locked-worker.mjs",
 		"cf-typegen": "wrangler types",
-		"check": "npm run build && tsc && wrangler deploy --dry-run",
+		"check": "npm run test:fulfilment && npm run build && tsc && wrangler deploy --dry-run",
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
-		"preview": "astro build && wrangler dev"
+		"preview": "astro build && wrangler dev",
+		"smoke:fulfilment": "node scripts/run-fulfilment-smoke.mjs",
+		"test:fulfilment": "node --test tests/fulfilment.test.mjs"
 	},
 	"type": "module"
 }

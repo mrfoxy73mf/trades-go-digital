@@ -1,4 +1,7 @@
 interface Env {
+	FULFILMENT_DB: D1Database;
+	FULFILMENT_FILES: KVNamespace;
+	STRIPE_WEBHOOK_SECRET: string;
 	INVITE_TOKEN: string;
 	SITE_PASSWORD: string;
 }

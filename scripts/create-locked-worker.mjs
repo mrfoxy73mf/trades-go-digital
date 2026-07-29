@@ -8,6 +8,8 @@ const worker = String.raw`import astroWorker from "./_worker.js/index.js";
 const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
+const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook"]);
+const PUBLIC_PATH_PREFIXES = ["/api/fulfilment/", "/fulfilment/", "/_astro/"];
 
 const unauthorized = () =>
 	new Response("Password required.", {
@@ -60,6 +62,14 @@ const isAuthorized = (request, env) => {
 export default {
 	fetch(request, env, ctx) {
 		const url = new URL(request.url);
+		const isPublicFulfilmentRoute =
+			PUBLIC_EXACT_PATHS.has(url.pathname) ||
+			PUBLIC_PATH_PREFIXES.some((prefix) => url.pathname.startsWith(prefix));
+
+		if (isPublicFulfilmentRoute) {
+			return astroWorker.fetch(request, env, ctx);
+		}
+
 		const inviteToken = env.INVITE_TOKEN;
 		const invite = url.searchParams.get("invite");
 

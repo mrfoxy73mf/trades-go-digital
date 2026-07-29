@@ -1,6 +1,6 @@
 {
 	"name": "trades-go-digital",
-	"compatibility_date": "2025-10-08",
+	"compatibility_date": "2026-07-29",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./dist/locked-worker.js",
 	"assets": {
@@ -8,6 +8,20 @@
 		"binding": "ASSETS",
 		"run_worker_first": true
 	},
+	"d1_databases": [
+		{
+			"binding": "FULFILMENT_DB",
+			"database_name": "tgd-lettingdesk-fulfilment",
+			"database_id": "c8e1dff0-4a66-4872-8fc6-754abb819a64",
+			"migrations_dir": "./migrations"
+		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "FULFILMENT_FILES",
+			"id": "674b196bfbd347229fc879b6c1071d53"
+		}
+	],
 	"observability": {
 		"enabled": true
 	},

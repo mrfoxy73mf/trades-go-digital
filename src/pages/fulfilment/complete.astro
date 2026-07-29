@@ -1,0 +1,138 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+
+export const prerender = false;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Complete your TGD LettingDesk order"
+			description="Secure TGD LettingDesk purchase fulfilment."
+		/>
+	</head>
+	<body>
+		<main>
+			<p class="eyebrow">Trades Go Digital</p>
+			<h1>Payment received.</h1>
+			<section id="loading" class="card">
+				<h2>Confirming your order…</h2>
+				<p>Stripe is securely confirming the payment. This normally takes only a few seconds.</p>
+			</section>
+
+			<section id="licence" class="card" hidden>
+				<h2>Your source package is ready.</h2>
+				<p>Your private download is available for seven days and may be downloaded up to three times.</p>
+				<a id="download-link" class="button" href="#">Download TGD LettingDesk</a>
+				<p class="small">Keep the package private. The commercial licence does not permit redistribution.</p>
+			</section>
+
+			<section id="installation" class="card" hidden>
+				<h2>Tell us how to prepare your installation.</h2>
+				<p>Your source package will be supplied after setup, acceptance testing and handover.</p>
+				<form method="post" action="/api/fulfilment/installation">
+					<input id="setup-token" name="token" type="hidden" />
+					<label>Contact name <input name="contact_name" autocomplete="name" required /></label>
+					<label>Business name <input name="business_name" autocomplete="organization" required /></label>
+					<label>Contact email <input name="contact_email" type="email" autocomplete="email" required /></label>
+					<label>Phone <input name="phone" type="tel" autocomplete="tel" /></label>
+					<label class="wide">Agency address <textarea name="agency_address" autocomplete="street-address"></textarea></label>
+					<label>Preferred domain <input name="preferred_domain" placeholder="examplelettings.co.uk" /></label>
+					<label>Administrator email <input name="administrator_email" type="email" required /></label>
+					<label class="wide">Branding: company name, colours and logo notes <textarea name="branding_notes"></textarea></label>
+					<label class="wide">Hosting or deployment requirements <textarea name="hosting_notes"></textarea></label>
+					<label class="wide">Required integrations: email, Sentry, AI, backups <textarea name="integration_notes"></textarea></label>
+					<label>Preferred start date <input name="preferred_start_date" type="date" /></label>
+					<label class="wide">Anything else we should know? <textarea name="additional_notes"></textarea></label>
+					<label class="wide consent">
+						<input name="accepted_scope" type="checkbox" value="yes" required />
+						<span>I understand the managed-installation scope and that hosting, domains, third-party services, API usage and future support are separate.</span>
+					</label>
+					<button class="button" type="submit">Send setup information</button>
+				</form>
+			</section>
+
+			<section id="error" class="card error" hidden>
+				<h2>We could not open this order.</h2>
+				<p id="error-message">Please contact support@trades-go-digital.co.uk.</p>
+			</section>
+		</main>
+	</body>
+</html>
+
+<script>
+	const params = new URLSearchParams(window.location.search);
+	const sessionId = params.get("session_id");
+	const loading = document.querySelector("#loading");
+	const errorPanel = document.querySelector("#error");
+	const errorMessage = document.querySelector("#error-message");
+
+	const showError = (message) => {
+		if (loading instanceof HTMLElement) loading.hidden = true;
+		if (errorPanel instanceof HTMLElement) errorPanel.hidden = false;
+		if (errorMessage) errorMessage.textContent = message;
+	};
+
+	const loadOrder = async (attempt = 0) => {
+		if (!sessionId) return showError("The Stripe order reference is missing. Please contact support.");
+		const response = await fetch(`/api/fulfilment/status?session_id=${encodeURIComponent(sessionId)}`, {
+			headers: { Accept: "application/json" },
+		});
+		const result = await response.json();
+		if (response.status === 202 && attempt < 10) {
+			window.setTimeout(() => loadOrder(attempt + 1), 1500);
+			return;
+		}
+		if (!response.ok) return showError(result.error || "Please contact support@trades-go-digital.co.uk.");
+		if (loading instanceof HTMLElement) loading.hidden = true;
+
+		if (result.fulfilmentType === "licence_download") {
+			const panel = document.querySelector("#licence");
+			const link = document.querySelector("#download-link");
+			if (panel instanceof HTMLElement) panel.hidden = false;
+			if (link instanceof HTMLAnchorElement) {
+				link.href = `/api/fulfilment/download?token=${encodeURIComponent(result.token)}`;
+			}
+			return;
+		}
+
+		if (result.fulfilmentType === "managed_installation") {
+			if (result.formSubmitted) {
+				window.location.href = "/fulfilment/setup-received";
+				return;
+			}
+			const panel = document.querySelector("#installation");
+			const token = document.querySelector("#setup-token");
+			if (panel instanceof HTMLElement) panel.hidden = false;
+			if (token instanceof HTMLInputElement) token.value = result.token;
+			return;
+		}
+
+		showError("This order does not have a recognised fulfilment route.");
+	};
+
+	loadOrder().catch(() => showError("The order service is temporarily unavailable. Please try again."));
+</script>
+
+<style>
+	:global(body) { margin: 0; background: #081426; color: #fff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+	main { width: min(860px, calc(100% - 32px)); margin: 0 auto; padding: 72px 0; }
+	.eyebrow { color: #f97316; font-size: .78rem; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
+	h1 { margin: 10px 0 30px; font-size: clamp(2.6rem, 7vw, 5rem); line-height: 1; }
+	h2 { margin-top: 0; }
+	p { color: #bdc9da; line-height: 1.65; }
+	.card { padding: clamp(24px, 5vw, 44px); border: 1px solid #2a3e59; border-radius: 22px; background: #101f34; box-shadow: 0 24px 70px rgba(0,0,0,.28); }
+	.error { border-color: #8f3442; }
+	.button { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; padding: 0 22px; border: 0; border-radius: 999px; background: linear-gradient(135deg, #f97316, #ff9b45); color: #101827; font-weight: 950; text-decoration: none; cursor: pointer; }
+	.small { font-size: .84rem; }
+	form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+	label { display: grid; gap: 8px; color: #fff; font-size: .9rem; font-weight: 850; }
+	.wide, form button { grid-column: 1 / -1; }
+	input, textarea { min-width: 0; padding: 13px; border: 1px solid #405574; border-radius: 9px; background: #09172a; color: #fff; font: inherit; }
+	textarea { min-height: 100px; resize: vertical; }
+	.consent { grid-template-columns: auto 1fr; align-items: start; }
+	.consent input { margin-top: 4px; }
+	@media (max-width: 660px) { form { grid-template-columns: 1fr; } .wide, form button { grid-column: auto; } }
+</style>
+

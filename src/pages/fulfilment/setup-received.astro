@@ -1,0 +1,34 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+
+export const prerender = false;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Installation details received | Trades Go Digital"
+			description="Your TGD LettingDesk installation information has been received."
+		/>
+	</head>
+	<body>
+		<main>
+			<p class="eyebrow">Trades Go Digital</p>
+			<h1>Setup information received.</h1>
+			<p>Thank you. Your managed TGD LettingDesk installation is now ready to be scheduled.</p>
+			<p>We will contact you using the details supplied. Your private source package will be delivered after installation, acceptance testing and handover.</p>
+			<a href="mailto:support@trades-go-digital.co.uk">Contact support</a>
+		</main>
+	</body>
+</html>
+
+<style>
+	:global(body) { margin: 0; background: #081426; color: #fff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+	main { width: min(760px, calc(100% - 32px)); margin: 0 auto; padding: 90px 0; }
+	.eyebrow { color: #f97316; font-size: .78rem; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
+	h1 { margin: 10px 0 28px; font-size: clamp(2.7rem, 7vw, 5rem); line-height: 1; }
+	p { color: #bdc9da; font-size: 1.1rem; line-height: 1.7; }
+	a { display: inline-flex; margin-top: 20px; color: #ff9b45; font-weight: 900; }
+</style>
+

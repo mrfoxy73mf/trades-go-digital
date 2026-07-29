@@ -1,0 +1,3 @@
+STRIPE_WEBHOOK_SECRET=whsec_replace_with_stripe_endpoint_secret
+SITE_PASSWORD=replace_with_local_test_password
+INVITE_TOKEN=replace_with_local_invite_token
