@@ -1,5 +1,6 @@
 ---
 const today = new Date();
+const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
 
 const footerContacts = [
 	{ label: "General Enquiries", email: "hello@trades-go-digital.co.uk" },
@@ -12,6 +13,7 @@ const companyLinks = [
 	{ label: "About Us", href: "/" },
 	{ label: "Pricing", href: "/pricing" },
 	{ label: "President Trades", href: "/president-trades" },
+	{ label: "TGD LettingDesk", href: "/tgd-lettingdesk" },
 	{ label: "Contact", href: "/contact" },
 ];
 
@@ -27,9 +29,13 @@ const resourceLinks = [
 <footer>
 	<div class="footer-inner">
 		<div class="footer-brand">
-			<a class="brand" href="/">Trades Go Digital</a>
+			<a class="brand" href="/">
+				<img src="/images/trades-go-digital-logo-stripe.png" alt="Trades Go Digital" />
+			</a>
 			<p>Helping UK trade businesses grow through websites, local SEO, automation and bespoke software.</p>
-			<a class="footer-cta" href="/contact/#president-trades-enquiry">Get a Free Consultation</a>
+			<a class="footer-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : "/contact/#president-trades-enquiry"}>
+				{isLettingDesk ? "Enquire about TGD LettingDesk" : "Get a Free Consultation"}
+			</a>
 		</div>
 
 		<div class="footer-columns">
@@ -93,10 +99,16 @@ const resourceLinks = [
 
 	.brand {
 		display: inline-flex;
-		color: #ffffff;
-		font-size: clamp(1.45rem, 3vw, 2rem);
-		font-weight: 900;
+		padding: 8px 12px;
+		border-radius: 12px;
+		background: #ffffff;
 		text-decoration: none;
+	}
+
+	.brand img {
+		display: block;
+		width: min(330px, 72vw);
+		height: auto;
 	}
 
 	p {

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-label="LettingDesk work queue">
+  <rect width="1280" height="800" fill="#F8FAFC"/>
+  <rect width="220" height="800" fill="#101A2E"/>
+  <rect x="24" y="28" width="36" height="36" rx="8" fill="#F97316"/>
+  <text x="72" y="52" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">LettingDesk</text>
+  <rect x="16" y="180" width="188" height="36" rx="8" fill="#F97316"/>
+  <text x="36" y="131" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="13">Dashboard</text>
+  <text x="36" y="203" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Work queue</text>
+  <text x="36" y="248" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="13">Contractors</text>
+  <text x="248" y="52" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="800">Work queue</text>
+  <text x="248" y="78" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="13">Quote approval, job tracking and contractor panel</text>
+  <rect x="248" y="104" width="120" height="34" rx="17" fill="#101A2E"/>
+  <text x="278" y="126" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">All jobs</text>
+  <rect x="380" y="104" width="132" height="34" rx="17" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="402" y="126" fill="#475569" font-family="Segoe UI, Arial, sans-serif" font-size="13">Awaiting quote</text>
+  <rect x="524" y="104" width="128" height="34" rx="17" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="546" y="126" fill="#475569" font-family="Segoe UI, Arial, sans-serif" font-size="13">Needs approval</text>
+  <rect x="248" y="160" width="988" height="600" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <rect x="272" y="188" width="940" height="72" rx="12" fill="#FFF7ED" stroke="#FED7AA"/>
+  <text x="292" y="220" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">14 Sample Street · Boiler service</text>
+  <text x="292" y="242" fill="#9A3412" font-family="Segoe UI, Arial, sans-serif" font-size="12">Quote received · £240 incl. VAT · Awaiting approval</text>
+  <rect x="1040" y="208" width="140" height="34" rx="8" fill="#F97316"/>
+  <text x="1068" y="230" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Review quote</text>
+  <rect x="272" y="280" width="940" height="72" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="292" y="312" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">9 Oak Avenue · Leak investigation</text>
+  <text x="292" y="334" fill="#475569" font-family="Segoe UI, Arial, sans-serif" font-size="12">Assigned contractor · Job pack issued · In progress</text>
+  <rect x="1040" y="300" width="140" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="1074" y="322" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Open job</text>
+  <rect x="272" y="372" width="940" height="72" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="292" y="404" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">2 River Close · EPC renewal</text>
+  <text x="292" y="426" fill="#475569" font-family="Segoe UI, Arial, sans-serif" font-size="12">Landlord approved · Contractor booked for Thursday</text>
+  <rect x="1040" y="392" width="140" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="1074" y="414" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Open job</text>
+  <rect x="272" y="464" width="940" height="72" rx="12" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="292" y="496" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">81 Park Road · Garden clearance</text>
+  <text x="292" y="518" fill="#475569" font-family="Segoe UI, Arial, sans-serif" font-size="12">Awaiting contractor quotes · 2 invited</text>
+  <rect x="1040" y="484" width="140" height="34" rx="8" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="1068" y="506" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">View panel</text>
+  <rect x="272" y="560" width="300" height="160" rx="12" fill="#EFF6FF" stroke="#BFDBFE"/>
+  <text x="294" y="598" fill="#1E3A8A" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Contractor panel</text>
+  <text x="294" y="628" fill="#1E40AF" font-family="Segoe UI, Arial, sans-serif" font-size="13">Heating · Plumbing · Electrics</text>
+  <text x="294" y="656" fill="#1E40AF" font-family="Segoe UI, Arial, sans-serif" font-size="13">Invite · Quote · Appoint</text>
+  <rect x="592" y="560" width="300" height="160" rx="12" fill="#ECFDF5" stroke="#A7F3D0"/>
+  <text x="614" y="598" fill="#065F46" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Job-pack PDFs</text>
+  <text x="614" y="628" fill="#047857" font-family="Segoe UI, Arial, sans-serif" font-size="13">Access notes · Scope · Photos</text>
+  <text x="614" y="656" fill="#047857" font-family="Segoe UI, Arial, sans-serif" font-size="13">Ready for contractor download</text>
+</svg>

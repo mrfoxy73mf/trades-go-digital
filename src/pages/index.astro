@@ -23,6 +23,7 @@ export const prerender = false;
       </a>
       <nav aria-label="Primary navigation">
         <a href="/president-trades/">President Trades</a>
+        <a href="/tgd-lettingdesk/">TGD LettingDesk</a>
       </nav>
     </header>
 
@@ -49,6 +50,30 @@ export const prerender = false;
             <p class="hero-text hero-question">
               Ready to move your trade business forward?
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section products-section">
+        <div class="container">
+          <div class="products-heading">
+            <p class="eyebrow">Our Software</p>
+            <h2>Practical business systems built around real work.</h2>
+            <p>Choose the platform designed for your type of business.</p>
+          </div>
+          <div class="product-grid">
+            <article class="product-card">
+              <span class="product-tag">For UK trades</span>
+              <h3>President Trades</h3>
+              <p>Quotes, jobs, customers, paperwork, accounts and supplier orders connected in one business office.</p>
+              <a class="button button-primary" href="/president-trades/">Explore President Trades</a>
+            </article>
+            <article class="product-card lettingdesk-card">
+              <span class="product-tag">For letting agencies</span>
+              <h3>TGD LettingDesk</h3>
+              <p>Properties, maintenance, contractors, rent, finances and customer portals connected in one agency platform.</p>
+              <a class="button button-lettingdesk" href="/tgd-lettingdesk/">Explore TGD LettingDesk</a>
+            </article>
           </div>
         </div>
       </section>
@@ -223,6 +248,80 @@ export const prerender = false;
   .container {
     width: min(1180px, calc(100% - 32px));
     margin: 0 auto;
+  }
+
+  .products-section {
+    background:
+      radial-gradient(circle at 85% 20%, rgba(37, 99, 235, 0.18), transparent 26rem),
+      #091727;
+    border-block: 1px solid rgba(109, 199, 255, 0.14);
+  }
+
+  .products-heading {
+    max-width: 780px;
+    margin-bottom: 34px;
+  }
+
+  .products-heading h2 {
+    margin-bottom: 14px;
+  }
+
+  .products-heading > p:last-child {
+    margin: 0;
+    color: #b8cadb;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .product-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 34px;
+    border: 1px solid rgba(109, 199, 255, 0.22);
+    border-radius: 18px;
+    background: linear-gradient(160deg, rgba(17, 42, 69, 0.95), rgba(5, 16, 29, 0.96));
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+  }
+
+  .product-card h3 {
+    margin: 12px 0;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+  }
+
+  .product-card p {
+    flex: 1;
+    margin: 0 0 24px;
+    color: #c3d2e1;
+  }
+
+  .product-tag {
+    color: #69d5ff;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .lettingdesk-card {
+    border-color: rgba(249, 115, 22, 0.42);
+    background:
+      radial-gradient(circle at 100% 0, rgba(249, 115, 22, 0.17), transparent 18rem),
+      linear-gradient(160deg, rgba(20, 36, 64, 0.98), rgba(7, 18, 34, 0.98));
+  }
+
+  .lettingdesk-card .product-tag {
+    color: #ff9a52;
+  }
+
+  .button-lettingdesk {
+    background: linear-gradient(135deg, #f97316, #ff9c4a);
+    color: #07111f;
   }
 
   .site-header {
@@ -471,6 +570,14 @@ export const prerender = false;
   }
 
   @media (max-width: 760px) {
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .product-card {
+      padding: 26px;
+    }
+
     .site-header {
       position: static;
       flex-direction: column;

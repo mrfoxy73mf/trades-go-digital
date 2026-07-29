@@ -1,21 +1,26 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE, CONTACT_EMAIL } from "../consts";
+
+const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
 ---
 
 <header>
 	<nav aria-label="Primary navigation">
 		<a class="brand" href="/">
-			<span class="brand-mark">TG</span>
+			<img class="brand-mark" src="/images/trades-go-digital-icon-stripe.png" alt="" />
 			<span>{SITE_TITLE}</span>
 		</a>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/president-trades">President Trades</HeaderLink>
+			<HeaderLink href="/tgd-lettingdesk">TGD LettingDesk</HeaderLink>
 			<HeaderLink href="/pricing">Pricing</HeaderLink>
 			<HeaderLink href="/contact">Contact</HeaderLink>
 		</div>
-		<a class="nav-cta" href="/contact/#president-trades-enquiry">Register Your Interest</a>
+		<a class="nav-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : "/contact/#president-trades-enquiry"}>
+			{isLettingDesk ? "Enquire about LettingDesk" : "Register Your Interest"}
+		</a>
 	</nav>
 </header>
 
@@ -51,16 +56,13 @@ import { SITE_TITLE, CONTACT_EMAIL } from "../consts";
 	}
 
 	.brand-mark {
-		display: grid;
 		width: 38px;
 		height: 38px;
-		place-items: center;
 		border: 1px solid rgba(109, 199, 255, 0.5);
 		border-radius: 9px;
-		background: linear-gradient(135deg, #132c4f, #07111f);
-		color: #69d5ff;
+		background: #ffffff;
 		box-shadow: 0 0 24px rgba(42, 178, 255, 0.35);
-		font-size: 0.84rem;
+		object-fit: cover;
 	}
 
 	.internal-links {

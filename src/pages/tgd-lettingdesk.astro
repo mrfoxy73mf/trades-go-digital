@@ -1,0 +1,360 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { CONTACT_EMAIL, SITE_TITLE } from "../consts";
+
+export const prerender = false;
+
+const workflow = ["Property", "Work Queue", "Contractor", "Paperwork", "Business Office", "Landlord & Tenant Portals"];
+
+const features = [
+	{
+		title: "Agency Operations",
+		items: ["Properties and lettings", "Contacts and compliance", "Calendar", "Staff management"],
+	},
+	{
+		title: "Maintenance & Trades",
+		items: ["Work queue", "Contractor panel", "Quote approval", "Job tracking and job-pack PDFs"],
+	},
+	{
+		title: "Business Office",
+		items: ["Documents and job packs", "Expenses and wages", "Invoices and receipts", "Vehicle and insurance records"],
+	},
+	{
+		title: "Finance & Reporting",
+		items: ["Rent and arrears", "Agency fees", "Landlord payments", "VAT records and accountant reports"],
+	},
+	{
+		title: "Connected Portals",
+		items: ["Manager", "Administrator", "Staff", "Contractor", "Landlord and tenant"],
+	},
+	{
+		title: "System Monitoring",
+		items: ["Health checks", "Error monitoring", "GitHub recovery", "AI-assisted sandbox investigation"],
+	},
+];
+
+const screenshots = [
+	{ title: "Manager Dashboard", src: "/images/tgd-lettingdesk/dashboard.svg", alt: "TGD LettingDesk manager dashboard" },
+	{ title: "Work Queue", src: "/images/tgd-lettingdesk/work-queue.svg", alt: "TGD LettingDesk maintenance work queue" },
+	{ title: "Business Office", src: "/images/tgd-lettingdesk/business-office.svg", alt: "TGD LettingDesk Business Office" },
+	{ title: "Finance", src: "/images/tgd-lettingdesk/finance.svg", alt: "TGD LettingDesk finance reporting" },
+	{ title: "Portals", src: "/images/tgd-lettingdesk/portals.svg", alt: "TGD LettingDesk landlord and tenant portals" },
+];
+
+const faqs = [
+	["Do I receive the complete source code?", "Yes. You receive a private copy of the complete TGD LettingDesk application for commercial use by one business."],
+	["Is there a compulsory monthly licence?", "No. The software licence is a one-time purchase. Hosting and third-party services are paid separately."],
+	["Can the application use my agency branding?", "Yes. Company name, logo, colours, address and VAT details can appear throughout the application, portals and PDFs."],
+	["Is managed installation included?", "Self-installation guidance is included. Managed installation is an optional separate service."],
+	["Can I resell the source code?", "No. The licence is non-exclusive and permits use by one business, but not resale, sublicensing or redistribution."],
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="TGD LettingDesk | Property Operations Software | Trades Go Digital"
+			description="TGD LettingDesk connects properties, maintenance, contractors, rent, paperwork, finance and customer portals in one UK letting-agency operations platform."
+			image="/images/tgd-lettingdesk/dashboard.svg"
+		/>
+		<meta property="og:site_name" content={SITE_TITLE} />
+		<meta property="og:locale" content="en_GB" />
+	</head>
+	<body>
+		<Header />
+		<main class="ld">
+			<section class="hero">
+				<div class="container hero-grid">
+					<div>
+						<img class="hero-brand-logo" src="/images/trades-go-digital-logo-stripe.png" alt="Trades Go Digital" />
+						<p class="eyebrow">TGD LettingDesk</p>
+						<h1>Run your letting agency from one connected office.</h1>
+						<p class="lead">Manage properties, maintenance, contractors, rent, documents, finances and customer portals through one complete operations platform.</p>
+						<div class="actions">
+							<a class="button primary" href="#pricing">View pricing</a>
+							<a class="button secondary" href="#enquire">Request a demonstration</a>
+						</div>
+						<p class="licence-note">Complete source code · One-time licence · Built for UK letting operations</p>
+					</div>
+					<div class="hero-shot">
+						<div class="shot-label"><span></span> Manager dashboard</div>
+						<img src="/images/tgd-lettingdesk/dashboard.svg" alt="TGD LettingDesk manager dashboard" />
+					</div>
+				</div>
+			</section>
+
+			<section class="trust" aria-label="TGD LettingDesk highlights">
+				<div class="container trust-grid">
+					<span>Complete source code</span>
+					<span>One-time licence</span>
+					<span>No compulsory monthly software fee</span>
+					<span>Customer-controlled data</span>
+				</div>
+			</section>
+
+			<section class="section">
+				<div class="container">
+					<div class="section-head">
+						<p class="eyebrow">Connected workflow</p>
+						<h2>One job. One complete operational record.</h2>
+						<p>A maintenance issue moves through the agency without being copied between spreadsheets, inboxes and disconnected systems.</p>
+					</div>
+					<div class="workflow">
+						{workflow.map((step, index) => (
+							<div class="workflow-step">
+								<b>{String(index + 1).padStart(2, "0")}</b>
+								<span>{step}</span>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section id="screenshots" class="section tinted">
+				<div class="container">
+					<div class="section-head">
+						<p class="eyebrow">Inside the platform</p>
+						<h2>Built around the way a letting agency works.</h2>
+					</div>
+					<div class="gallery">
+						{screenshots.map((shot) => (
+							<article>
+								<img src={shot.src} alt={shot.alt} loading="lazy" />
+								<h3>{shot.title}</h3>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section id="features" class="section">
+				<div class="container">
+					<div class="section-head">
+						<p class="eyebrow">The complete office</p>
+						<h2>Every team and every record stays connected.</h2>
+					</div>
+					<div class="feature-grid">
+						{features.map((feature) => (
+							<article>
+								<h3>{feature.title}</h3>
+								<ul>{feature.items.map((item) => <li>{item}</li>)}</ul>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section branding">
+				<div class="container branding-grid">
+					<div>
+						<p class="eyebrow">Your agency, not ours</p>
+						<h2>Make it your agency’s system.</h2>
+						<p>Configure your company name, logo, colours, address and VAT details. Your branding can appear throughout the platform, customer portals, invoices, reports, receipts and PDFs.</p>
+					</div>
+					<div class="brand-card">
+						<span>Your logo</span>
+						<strong>Your Agency</strong>
+						<small>Professional documents and portals carrying your identity.</small>
+					</div>
+				</div>
+			</section>
+
+			<section id="pricing" class="section pricing">
+				<div class="container">
+					<div class="section-head">
+						<p class="eyebrow">Straightforward ownership</p>
+						<h2>Buy the software once. Choose how it is installed.</h2>
+					</div>
+					<div class="price-grid">
+						<article class="price-card featured">
+							<p class="price-label">Source-code licence</p>
+							<p class="price">£2,990 <span>one-time</span></p>
+							<ul>
+								<li>Complete TGD LettingDesk application</li>
+								<li>Private customer copy</li>
+								<li>Commercial use for one business</li>
+								<li>Buyer and rebranding documentation</li>
+								<li>Current stable version</li>
+								<li>No compulsory monthly TGD licence</li>
+							</ul>
+							<a
+								class="button primary"
+								href="https://buy.stripe.com/28E8wQcPU6C37Wa4mC8Zq01"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Buy software licence
+							</a>
+						</article>
+						<article class="price-card">
+							<p class="price-label">Managed installation</p>
+							<p class="price">£1,000 <span>optional</span></p>
+							<ul>
+								<li>Private GitHub repository setup</li>
+								<li>Database and environment configuration</li>
+								<li>Company branding</li>
+								<li>Initial administrator setup</li>
+								<li>Main workflow acceptance testing</li>
+								<li>Customer handover</li>
+							</ul>
+							<a
+								class="button secondary"
+								href="https://buy.stripe.com/cNibJ2aHM5xZ7Wa7yO8Zq00"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Buy managed installation
+							</a>
+						</article>
+					</div>
+					<p class="price-footnote">Hosting, domains, third-party services, API usage and future support are not included unless agreed separately. Additional work is charged at £300 per day.</p>
+				</div>
+			</section>
+
+			<section class="section">
+				<div class="container">
+					<div class="section-head">
+						<p class="eyebrow">Questions</p>
+						<h2>What buyers need to know.</h2>
+					</div>
+					<div class="faq">
+						{faqs.map(([question, answer]) => (
+							<details>
+								<summary>{question}</summary>
+								<p>{answer}</p>
+							</details>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section id="enquire" class="section final">
+				<div class="container final-card">
+					<img class="final-brand-logo" src="/images/trades-go-digital-logo-stripe.png" alt="Trades Go Digital" loading="lazy" />
+					<p class="eyebrow">TGD LettingDesk</p>
+					<h2>Give your agency one connected place to work.</h2>
+					<p>Tell us about your agency and whether you want the source-code licence, managed installation or a demonstration.</p>
+					<a class="button primary" href={`mailto:${CONTACT_EMAIL}?subject=TGD%20LettingDesk%20enquiry`}>Email {CONTACT_EMAIL}</a>
+					<p class="legal-note">Non-exclusive software licence for one business. The source code may not be resold or redistributed.</p>
+					<nav class="legal-links" aria-label="TGD LettingDesk legal information">
+						<a href="/tgd-lettingdesk/buyer-terms">Buyer terms</a>
+						<a href="/tgd-lettingdesk/commercial-licence">Commercial licence</a>
+						<a href="/tgd-lettingdesk/privacy">Privacy</a>
+						<a href="/tgd-lettingdesk/terms">Website terms</a>
+					</nav>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	:global(body) {
+		margin: 0;
+		background: #f8f5ef;
+		color: #101a2e;
+		font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	}
+
+	.ld {
+		--navy: #101a2e;
+		--blue: #2563eb;
+		--orange: #f97316;
+		--green: #15976c;
+		--paper: #faf7f2;
+		--line: rgba(16, 26, 46, 0.13);
+		overflow: hidden;
+		background:
+			radial-gradient(circle at 90% 4%, rgba(37, 99, 235, 0.11), transparent 24rem),
+			linear-gradient(180deg, #fff 0, var(--paper) 32rem);
+	}
+
+	.ld * { box-sizing: border-box; }
+	.container { width: min(1160px, calc(100% - 36px)); margin: 0 auto; }
+	.hero { padding: 86px 0 74px; }
+	.hero-grid, .branding-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 58px; align-items: center; }
+	.eyebrow { margin: 0 0 16px; color: var(--orange); font-size: .78rem; font-weight: 950; letter-spacing: .13em; text-transform: uppercase; }
+	.hero-brand-logo, .final-brand-logo { display: block; width: min(360px, 78vw); height: auto; padding: 8px 12px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+	.hero-brand-logo { margin-bottom: 24px; box-shadow: 0 14px 34px rgba(16, 26, 46, .09); }
+	.final-brand-logo { margin: 0 auto 24px; }
+	h1, h2, h3, p { overflow-wrap: anywhere; }
+	h1 { max-width: 760px; margin: 0; font-size: clamp(2.65rem, 6vw, 5.4rem); line-height: .98; letter-spacing: -.055em; }
+	h2 { margin: 0; font-size: clamp(2rem, 4.5vw, 3.7rem); line-height: 1.03; letter-spacing: -.04em; }
+	h3 { margin: 0; }
+	.lead, .section-head > p:last-child, .branding p, .final-card > p { color: #536077; font-size: 1.12rem; line-height: 1.72; }
+	.lead { max-width: 680px; margin: 26px 0; }
+	.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+	.button { display: inline-flex; min-height: 50px; align-items: center; justify-content: center; padding: 13px 20px; border: 1px solid transparent; border-radius: 999px; font-weight: 900; text-decoration: none; }
+	.primary { background: linear-gradient(135deg, var(--orange), #ff9a3c); color: #111827; box-shadow: 0 16px 34px rgba(249, 115, 22, .25); }
+	.secondary { border-color: var(--line); background: #fff; color: var(--navy); }
+	.licence-note { margin: 20px 0 0; color: #6d7789; font-size: .82rem; font-weight: 800; }
+	.hero-shot, .gallery article, .feature-grid article, .price-card, .brand-card, .faq details { border: 1px solid var(--line); background: rgba(255,255,255,.92); box-shadow: 0 24px 65px rgba(16, 26, 46, .10); }
+	.hero-shot { overflow: hidden; border-radius: 24px; transform: rotate(1deg); }
+	.hero-shot img, .gallery img { display: block; width: 100%; height: auto; }
+	.shot-label { display: flex; gap: 8px; align-items: center; padding: 12px 16px; color: #647087; font-size: .78rem; font-weight: 900; }
+	.shot-label span { width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+	.trust { border-block: 1px solid var(--line); background: var(--navy); }
+	.trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding-block: 22px; color: #fff; text-align: center; font-size: .82rem; font-weight: 850; }
+	.section { padding: 92px 0; }
+	.tinted, .pricing { background: #eef4ff; }
+	.section-head { max-width: 800px; margin-bottom: 42px; }
+	.section-head > p:last-child { margin: 18px 0 0; }
+	.workflow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+	.workflow-step { position: relative; padding: 22px 16px; border-radius: 16px; background: var(--navy); color: #fff; text-align: center; }
+	.workflow-step b { display: block; margin-bottom: 8px; color: #7db1ff; font-size: .7rem; }
+	.workflow-step span { font-size: .86rem; font-weight: 850; }
+	.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+	.gallery article { overflow: hidden; border-radius: 20px; }
+	.gallery article:first-child { grid-column: 1 / -1; }
+	.gallery h3 { padding: 18px 20px; }
+	.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+	.feature-grid article { padding: 25px; border-radius: 18px; }
+	.feature-grid h3 { color: var(--blue); font-size: 1.15rem; }
+	.feature-grid ul, .price-card ul { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; color: #5b6577; }
+	.feature-grid li::before, .price-card li::before { content: "✓"; margin-right: 9px; color: var(--green); font-weight: 950; }
+	.branding { background: var(--navy); color: #fff; }
+	.branding p { color: #c2ccdc; }
+	.brand-card { display: grid; justify-items: center; gap: 12px; padding: 44px; border-color: rgba(255,255,255,.16); border-radius: 24px; background: linear-gradient(145deg, #fff, #eff5ff); color: var(--navy); text-align: center; }
+	.brand-card span { display: grid; width: 72px; height: 72px; place-items: center; border-radius: 20px; background: linear-gradient(135deg, var(--blue), var(--green)); color: #fff; font-size: .72rem; font-weight: 900; }
+	.brand-card strong { font-size: 2rem; }
+	.brand-card small { color: #69758a; }
+	.price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+	.price-card { padding: 34px; border-radius: 22px; }
+	.price-card.featured { border: 2px solid var(--orange); }
+	.price-label { color: var(--blue); font-weight: 950; text-transform: uppercase; letter-spacing: .08em; }
+	.price { margin: 10px 0; color: var(--navy); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 950; letter-spacing: -.06em; }
+	.price span { color: #768195; font-size: .8rem; letter-spacing: 0; text-transform: uppercase; }
+	.price-card ul { margin: 24px 0 30px; }
+	.price-footnote, .legal-note { margin: 22px auto 0; color: #6a7486; font-size: .83rem; line-height: 1.6; }
+	.faq { display: grid; gap: 12px; max-width: 880px; }
+	.faq details { padding: 20px 22px; border-radius: 14px; }
+	.faq summary { cursor: pointer; font-weight: 900; }
+	.faq p { margin: 14px 0 0; color: #5f697b; line-height: 1.65; }
+	.final { padding-top: 30px; }
+	.final-card { padding: 58px; border-radius: 28px; background: linear-gradient(135deg, #101a2e, #18345d); color: #fff; text-align: center; box-shadow: 0 28px 80px rgba(16,26,46,.24); }
+	.final-card > p { max-width: 720px; margin: 18px auto 26px; color: #d0d9e8; }
+	.final-card .legal-note { color: #aebbd0; }
+	.legal-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 18px; margin-top: 18px; }
+	.legal-links a { color: #d8e5f8; font-size: .84rem; font-weight: 850; }
+
+	@media (max-width: 900px) {
+		.hero-grid, .branding-grid, .price-grid { grid-template-columns: 1fr; }
+		.feature-grid { grid-template-columns: repeat(2, 1fr); }
+		.workflow { grid-template-columns: repeat(3, 1fr); }
+		.trust-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	@media (max-width: 620px) {
+		.hero, .section { padding: 58px 0; }
+		.hero-grid { gap: 34px; }
+		.actions, .button { width: 100%; }
+		.gallery, .feature-grid, .workflow { grid-template-columns: 1fr; }
+		.gallery article:first-child { grid-column: auto; }
+		.trust-grid { grid-template-columns: 1fr; text-align: left; }
+		.price-card, .final-card { padding: 26px 20px; }
+	}
+</style>

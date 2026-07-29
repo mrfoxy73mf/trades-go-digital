@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-label="LettingDesk manager dashboard">
+  <rect width="1280" height="800" fill="#F8FAFC"/>
+  <rect width="220" height="800" fill="#101A2E"/>
+  <rect x="24" y="28" width="36" height="36" rx="8" fill="#F97316"/>
+  <text x="72" y="52" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">LettingDesk</text>
+  <text x="72" y="70" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="11">Manager</text>
+  <rect x="16" y="108" width="188" height="36" rx="8" fill="#F97316"/>
+  <text x="36" y="131" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Dashboard</text>
+  <text x="36" y="176" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="13">Properties</text>
+  <text x="36" y="212" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="13">Work queue</text>
+  <text x="36" y="248" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="13">Business Office</text>
+  <text x="36" y="284" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="13">Finance</text>
+  <text x="36" y="320" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="13">Staff</text>
+  <text x="248" y="52" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="800">Dashboard</text>
+  <text x="248" y="78" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="13">Today's agency overview</text>
+  <rect x="248" y="110" width="220" height="110" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="270" y="145" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Active properties</text>
+  <text x="270" y="185" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800">42</text>
+  <rect x="488" y="110" width="220" height="110" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="510" y="145" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Open work items</text>
+  <text x="510" y="185" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800">11</text>
+  <rect x="728" y="110" width="220" height="110" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="750" y="145" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Rent due this week</text>
+  <text x="750" y="185" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800">�18.4k</text>
+  <rect x="968" y="110" width="268" height="110" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="990" y="145" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Compliance alerts</text>
+  <text x="990" y="185" fill="#F97316" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="800">3</text>
+  <rect x="248" y="246" width="988" height="510" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="272" y="286" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Recent work queue</text>
+  <rect x="272" y="310" width="940" height="1" fill="#E2E8F0"/>
+  <text x="272" y="350" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">PROPERTY</text>
+  <text x="560" y="350" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">JOB</text>
+  <text x="860" y="350" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">STATUS</text>
+  <text x="272" y="396" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">14 Sample Street, Leeds</text>
+  <text x="560" y="396" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="14">Boiler service</text>
+  <rect x="860" y="378" width="88" height="26" rx="13" fill="#FFEDD5"/>
+  <text x="878" y="396" fill="#C2410C" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600">Quoted</text>
+  <text x="272" y="448" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">9 Oak Avenue, York</text>
+  <text x="560" y="448" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="14">Leak investigation</text>
+  <rect x="860" y="430" width="102" height="26" rx="13" fill="#DBEAFE"/>
+  <text x="874" y="448" fill="#1D4ED8" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600">In progress</text>
+  <text x="272" y="500" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">2 River Close, Hull</text>
+  <text x="560" y="500" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="14">EPC renewal</text>
+  <rect x="860" y="482" width="96" height="26" rx="13" fill="#DCFCE7"/>
+  <text x="878" y="500" fill="#15803D" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600">Approved</text>
+  <text x="272" y="552" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">81 Park Road, Bradford</text>
+  <text x="560" y="552" fill="#334155" font-family="Segoe UI, Arial, sans-serif" font-size="14">Garden clearance</text>
+  <rect x="860" y="534" width="88" height="26" rx="13" fill="#F1F5F9"/>
+  <text x="878" y="552" fill="#475569" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600">Queued</text>
+  <rect x="272" y="600" width="420" height="120" rx="12" fill="#FAF7F2" stroke="#E7E0D5"/>
+  <text x="294" y="640" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">Today's schedule</text>
+  <text x="294" y="670" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="13">09:30 � Contractor visit � Sample Street</text>
+  <text x="294" y="698" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="13">14:00 � Landlord call � Oak Avenue</text>
+</svg>
