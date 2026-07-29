@@ -8,6 +8,13 @@ import {
 	resolveFulfilmentType,
 	verifyStripeSignature,
 } from "../src/lib/fulfilment.mjs";
+import {
+	buildBuyerEmail,
+	buildFulfilmentUrl,
+	buildSellerEmail,
+	escapeHtml,
+	formatGbp,
+} from "../src/lib/fulfilment-email.mjs";
 
 test("resolves explicit Stripe fulfilment metadata", () => {
 	assert.equal(
@@ -67,3 +74,25 @@ test("validates fulfilment tokens and email addresses", () => {
 	assert.equal(isEmail("buyer-at-example"), false);
 });
 
+test("builds secure buyer and seller order emails", () => {
+	const order = {
+		sessionId: "cs_live_123",
+		customerEmail: "buyer@example.com",
+		customerName: "<Buyer>",
+		businessName: "Buyer & Co",
+		fulfilmentType: FULFILMENT_TYPES.LICENCE,
+		amountTotal: 299000,
+	};
+	const buyer = buildBuyerEmail(order);
+	const seller = buildSellerEmail(order);
+
+	assert.equal(formatGbp(299000), "£2,990.00");
+	assert.equal(
+		buildFulfilmentUrl(order.sessionId),
+		"https://trades-go-digital.co.uk/fulfilment/complete?session_id=cs_live_123",
+	);
+	assert.match(buyer.html, /Open secure download/);
+	assert.match(buyer.html, /&lt;Buyer&gt;/);
+	assert.match(seller.subject, /£2,990.00/);
+	assert.equal(escapeHtml("A&B"), "A&amp;B");
+});

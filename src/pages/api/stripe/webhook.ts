@@ -5,6 +5,7 @@ import {
 	resolveFulfilmentType,
 	verifyStripeSignature,
 } from "../../../lib/fulfilment.mjs";
+import { sendOrderEmails } from "../../../lib/fulfilment-email.mjs";
 
 export const prerender = false;
 
@@ -45,7 +46,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 	const expires = new Date(now.getTime() + expiryDays * 86400000);
 	const token = makeAccessToken();
 
-	await env.FULFILMENT_DB.prepare(
+	const insert = await env.FULFILMENT_DB.prepare(
 		`INSERT OR IGNORE INTO fulfilment_orders (
 			session_id, event_id, customer_email, customer_name, business_name,
 			fulfilment_type, amount_total, currency, payment_status, access_token,
@@ -68,6 +69,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		)
 		.run();
 
+	if (insert.meta.changes > 0) {
+		const order = {
+			sessionId: session.id,
+			customerEmail: email,
+			customerName: session.customer_details?.name || null,
+			businessName:
+				session.custom_fields?.find((field: any) => field.key === "business_name")?.text?.value ||
+				null,
+			fulfilmentType,
+			amountTotal: session.amount_total,
+		};
+		locals.runtime.ctx.waitUntil(sendOrderEmails(env, order));
+	}
+
 	return Response.json({ received: true });
 };
-
