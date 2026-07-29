@@ -95,6 +95,22 @@ const faqs = [
 				</div>
 			</section>
 
+			<section class="section demo-section" aria-labelledby="lettingdesk-demo-title">
+				<div class="container">
+					<div class="section-head">
+						<p class="eyebrow">Two-minute demonstration</p>
+						<h2 id="lettingdesk-demo-title">See TGD LettingDesk in action.</h2>
+						<p>Take a quick guided look through the manager dashboard, properties, work queue, contractors, Business Office, agency money, tax centre and system maintenance.</p>
+					</div>
+					<div class="demo-video-frame">
+						<video controls preload="metadata" playsinline aria-label="Two-minute TGD LettingDesk product demonstration">
+							<source src="/videos/tgd-lettingdesk-demo.mp4" type="video/mp4" />
+							Your browser does not support embedded video.
+						</video>
+					</div>
+				</div>
+			</section>
+
 			<section class="section">
 				<div class="container">
 					<div class="section-head">
@@ -300,6 +316,21 @@ const faqs = [
 	.trust { border-block: 1px solid var(--line); background: var(--navy); }
 	.trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding-block: 22px; color: #fff; text-align: center; font-size: .82rem; font-weight: 850; }
 	.section { padding: 92px 0; }
+	.demo-section { background: #fff; }
+	.demo-video-frame {
+		overflow: hidden;
+		border: 1px solid var(--line);
+		border-radius: 24px;
+		background: var(--navy);
+		box-shadow: 0 28px 75px rgba(16, 26, 46, .16);
+	}
+	.demo-video-frame video {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		background: var(--navy);
+	}
 	.tinted, .pricing { background: #eef4ff; }
 	.section-head { max-width: 800px; margin-bottom: 42px; }
 	.section-head > p:last-child { margin: 18px 0 0; }
