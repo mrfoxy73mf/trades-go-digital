@@ -15,7 +15,7 @@ const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/tgd">TGD</HeaderLink>
 			<HeaderLink href="/tgd-lettingdesk">TGD LettingDesk</HeaderLink>
-			<HeaderLink href="/pricing">Pricing</HeaderLink>
+			<HeaderLink href={isLettingDesk ? "/tgd-lettingdesk/#pricing" : "/tgd/#pricing"}>Pricing</HeaderLink>
 			<HeaderLink href="/contact">Contact</HeaderLink>
 		</div>
 		<a class="nav-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : "/contact/#tgd-enquiry"}>
