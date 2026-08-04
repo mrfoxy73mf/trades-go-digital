@@ -1,5 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
+import { TGD_APP_URL } from "../consts";
 
 export const prerender = false;
 ---
@@ -45,7 +46,7 @@ export const prerender = false;
             </p>
             <div class="hero-actions">
               <a class="button button-primary" href="/tgd/">See TGD in action</a>
-              <a class="button button-secondary" href="/contact/#tgd-enquiry">Register your interest</a>
+              <a class="button button-secondary" href={TGD_APP_URL}>Start with TGD</a>
             </div>
             <ul class="hero-proof" aria-label="TGD benefits">
               <li>Built around real working businesses</li>

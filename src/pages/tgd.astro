@@ -2,7 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE, TGD_APP_URL } from "../consts";
 
 export const prerender = false;
 
@@ -118,7 +118,7 @@ const pricingFeatures = [
 	<head>
 		<BaseHead
 			title="TGD - Business Software Built for UK Tradesmen | Trades Go Digital"
-			description="TGD is a business operating system for UK trades. One quote creates your job, calendar, PDFs, accounts and supplier orders automatically. Register your interest for early access."
+			description="TGD is a business operating system for UK trades. One quote creates your job, calendar, PDFs, accounts and supplier orders automatically. Start your subscription online."
 		/>
 		<meta property="og:site_name" content={SITE_TITLE} />
 		<meta property="og:locale" content="en_GB" />
@@ -258,12 +258,12 @@ const pricingFeatures = [
 			<section id="pricing" class="pt-pricing pt-section" aria-labelledby="pricing-title">
 				<div class="pt-container pt-pricing-grid">
 					<div class="pt-price-card-new">
-						<p class="pt-eyebrow">Early access pricing</p>
+						<p class="pt-eyebrow">Subscription pricing</p>
 						<h2 id="pricing-title">Simple pricing. The whole business office included.</h2>
 						<div class="pt-price-new"><strong>&pound;28</strong><span>/month</span></div>
-						<p class="pt-price-highlight">For your first two months.</p>
+						<p class="pt-price-highlight">For your first three months.</p>
 						<p class="pt-price-after-new">Then &pound;60 per month. Cancel anytime—no long contract.</p>
-						<a class="pt-action pt-action-primary" href="/contact/#tgd-enquiry">Register your interest</a>
+						<a class="pt-action pt-action-primary" href={TGD_APP_URL}>Start TGD subscription</a>
 					</div>
 					<div class="pt-included">
 						<h3>Everything you need to run the job</h3>
@@ -276,10 +276,10 @@ const pricingFeatures = [
 
 			<section id="waiting-list" class="pt-final-cta">
 				<div class="pt-container">
-					<p class="pt-eyebrow">Early access</p>
-					<h2>Be one of the first UK trades on TGD.</h2>
-					<p>Register your interest to receive product updates and hear when early access opens.</p>
-					<a class="pt-action pt-action-primary" href="/contact/#tgd-enquiry">Register your interest</a>
+					<p class="pt-eyebrow">Ready to begin?</p>
+					<h2>Put TGD to work in your business.</h2>
+					<p>Create your account in the TGD app, choose your subscription and let Stripe handle the payment securely.</p>
+					<a class="pt-action pt-action-primary" href={TGD_APP_URL}>Open TGD and subscribe</a>
 				</div>
 			</section>
 		</main>

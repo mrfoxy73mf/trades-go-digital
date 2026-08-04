@@ -1,6 +1,6 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE, CONTACT_EMAIL } from "../consts";
+import { SITE_TITLE, TGD_APP_URL } from "../consts";
 
 const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
 ---
@@ -18,8 +18,8 @@ const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
 			<HeaderLink href={isLettingDesk ? "/tgd-lettingdesk/#pricing" : "/tgd/#pricing"}>Pricing</HeaderLink>
 			<HeaderLink href="/contact">Contact</HeaderLink>
 		</div>
-		<a class="nav-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : "/contact/#tgd-enquiry"}>
-			{isLettingDesk ? "Enquire about LettingDesk" : "Register Your Interest"}
+		<a class="nav-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : TGD_APP_URL}>
+			{isLettingDesk ? "Enquire about LettingDesk" : "Open TGD"}
 		</a>
 	</nav>
 </header>
