@@ -30,7 +30,7 @@ const faqs = [
 	{
 		question: "I am not great with tech. Will I get lost?",
 		answer:
-			"If you can send a WhatsApp, you can use President Trades. The AI Assistant works like texting a mate: log diesel, book a customer in, or ask how much you earned this month.",
+			"If you can send a WhatsApp, you can use TGD. The AI Assistant works like texting a mate: log diesel, book a customer in, or ask how much you earned this month.",
 	},
 	{
 		question: "Will HMRC be happy with it?",
@@ -40,7 +40,7 @@ const faqs = [
 	{
 		question: "Can I bring my last few months' records in from another app?",
 		answer:
-			"Yes. Go to Settings, then Bring Your History, and upload a CSV export from Xero, QuickBooks, Sage or your spreadsheet. President Trades auto-maps the columns and imports jobs, expenses and mileage in one shot.",
+			"Yes. Go to Settings, then Bring Your History, and upload a CSV export from Xero, QuickBooks, Sage or your spreadsheet. TGD auto-maps the columns and imports jobs, expenses and mileage in one shot.",
 	},
 	{
 		question: "What happens if I lose my phone?",
@@ -55,7 +55,7 @@ const faqs = [
 	<head>
 		<BaseHead
 			title={`Contact | ${SITE_TITLE}`}
-			description="Contact Trades Go Digital about President Trades, the business operating system for UK trade businesses."
+			description="Contact Trades Go Digital about TGD, the business operating system for UK trade businesses."
 		/>
 	</head>
 	<body>
@@ -63,7 +63,7 @@ const faqs = [
 		<main>
 			<section class="contact-hero">
 				<p class="eyebrow">Contact</p>
-				<h1>Ask about President Trades.</h1>
+				<h1>Ask about TGD.</h1>
 				<a class="email-card" href={`mailto:${CONTACT_EMAIL}`}>
 					<span>Email Mac</span>
 					<strong>{CONTACT_EMAIL}</strong>
@@ -86,9 +86,9 @@ const faqs = [
 			</section>
 
 			<section
-				id="president-trades-enquiry"
+				id="tgd-enquiry"
 				class="contact-enquiry"
-				aria-label="President Trades enquiry form"
+				aria-label="TGD enquiry form"
 			>
 				<div class="message-panel">
 					<div class="message-intro">
@@ -99,10 +99,10 @@ const faqs = [
 						</div>
 						<div>
 							<p class="message-lead">Join hundreds of trades preparing for launch.</p>
-							<p class="message-sub">Tell us how President Trades could help your business.</p>
+							<p class="message-sub">Tell us how TGD could help your business.</p>
 						</div>
 					</div>
-					<form id="president-trades-form" data-email={CONTACT_EMAIL}>
+					<form id="tgd-form" data-email={CONTACT_EMAIL}>
 						<label>
 							Your name
 							<input name="Name" type="text" autocomplete="name" placeholder="Your name" required />
@@ -123,7 +123,7 @@ const faqs = [
 							Message
 							<textarea
 								name="Message"
-								placeholder="Tell us what you want to know about President Trades."
+								placeholder="Tell us what you want to know about TGD."
 								required
 							></textarea>
 						</label>
@@ -484,7 +484,7 @@ const faqs = [
 </style>
 
 <script>
-	const form = document.querySelector("#president-trades-form");
+	const form = document.querySelector("#tgd-form");
 
 	form?.addEventListener("submit", (event) => {
 		event.preventDefault();
@@ -496,7 +496,7 @@ const faqs = [
 		if (!email) return;
 
 		const data = new FormData(target);
-		const subject = "President Trades enquiry";
+		const subject = "TGD enquiry";
 		const body = ["Name", "Business name", "Trade", "Contact", "Message"]
 			.map((field) => `${field}: ${data.get(field) ?? ""}`)
 			.join("\n\n");
