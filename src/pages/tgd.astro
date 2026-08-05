@@ -145,10 +145,6 @@ const pricingFeatures = [
 							<li>Built for work on the move</li>
 						</ul>
 					</div>
-					<div class="pt-intro-art">
-						<img src="/images/tgd-trade-poster.webp" alt="TGD Trades Go Digital runs the business" />
-						<span>Built for UK trades</span>
-					</div>
 				</div>
 			</section>
 			<section id="explore" class="pt-hero pt-section">
@@ -737,9 +733,7 @@ const pricingFeatures = [
 
 	.pt-intro-inner {
 		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
-		gap: clamp(34px, 6vw, 80px);
-		align-items: center;
+		justify-items: start;
 	}
 
 	.pt-intro-copy {
@@ -812,38 +806,6 @@ const pricingFeatures = [
 		content: "✓";
 		margin-right: 8px;
 		color: #26bfff;
-	}
-
-	.pt-intro-art {
-		position: relative;
-		padding: 10px;
-		border: 1px solid rgba(38, 191, 255, 0.32);
-		border-radius: 16px;
-		background: linear-gradient(145deg, rgba(38, 191, 255, 0.1), rgba(126, 63, 220, 0.12));
-		box-shadow: 0 30px 80px rgba(0, 0, 0, 0.48), 0 0 42px rgba(38, 191, 255, 0.12);
-		transform: rotate(1deg);
-	}
-
-	.pt-intro-art img {
-		display: block;
-		width: 100%;
-		height: auto;
-		border-radius: 10px;
-	}
-
-	.pt-intro-art span {
-		position: absolute;
-		right: 22px;
-		bottom: 22px;
-		padding: 8px 11px;
-		border: 1px solid rgba(38, 191, 255, 0.5);
-		border-radius: 4px;
-		background: rgba(2, 5, 10, 0.9);
-		color: #69d5ff;
-		font-size: 0.68rem;
-		font-weight: 950;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
 	}
 
 	.pt-summary {
@@ -1827,7 +1789,6 @@ const pricingFeatures = [
 	}
 
 	@media (max-width: 1000px) {
-		.pt-intro-inner,
 		.pt-hero-inner,
 		.pt-section-head,
 		.pt-paperwork-grid,
@@ -1929,11 +1890,6 @@ const pricingFeatures = [
 		.pt-benefit-grid,
 		.pt-pricing-grid {
 			grid-template-columns: 1fr;
-		}
-
-		.pt-intro-art {
-			width: min(620px, 100%);
-			transform: none;
 		}
 
 		.pt-benefit-grid {
