@@ -128,21 +128,27 @@ const pricingFeatures = [
 		<main class="pt-landing">
 			<section class="pt-intro" aria-labelledby="tgd-title">
 				<div class="pt-container pt-intro-inner">
-					<p class="pt-eyebrow">TGD by Trades Go Digital</p>
-					<h1 id="tgd-title">Run your trade business from one place.</h1>
-					<p class="pt-intro-lead">
-						TGD connects quotes, jobs, customers, paperwork, calendars and business records
-						in one practical system built around the way UK trades actually work.
-					</p>
-					<div class="pt-intro-actions">
-						<a class="pt-action pt-action-primary" href="#explore">Explore the app</a>
-						<a class="pt-action pt-action-secondary" href="#pricing">See pricing</a>
+					<div class="pt-intro-copy">
+						<p class="pt-eyebrow">TGD by Trades Go Digital</p>
+						<h1 id="tgd-title">Run your trade business from one place.</h1>
+						<p class="pt-intro-lead">
+							TGD connects quotes, jobs, customers, paperwork, calendars and business records
+							in one practical system built around the way UK trades actually work.
+						</p>
+						<div class="pt-intro-actions">
+							<a class="pt-action pt-action-primary" href="#explore">Explore the app</a>
+							<a class="pt-action pt-action-secondary" href="#pricing">See pricing</a>
+						</div>
+						<ul class="pt-intro-points" aria-label="TGD highlights">
+							<li>Less repeated admin</li>
+							<li>Clear records for every job</li>
+							<li>Built for work on the move</li>
+						</ul>
 					</div>
-					<ul class="pt-intro-points" aria-label="TGD highlights">
-						<li>Less repeated admin</li>
-						<li>Clear records for every job</li>
-						<li>Built for work on the move</li>
-					</ul>
+					<div class="pt-intro-art">
+						<img src="/images/tgd-trade-poster.webp" alt="TGD Trades Go Digital runs the business" />
+						<span>Built for UK trades</span>
+					</div>
 				</div>
 			</section>
 			<section id="explore" class="pt-hero pt-section">
@@ -718,16 +724,26 @@ const pricingFeatures = [
 	}
 
 	.pt-intro {
+		position: relative;
+		overflow: hidden;
 		padding: 92px 0 76px;
 		border-bottom: 1px solid var(--soft);
 		background:
-			radial-gradient(circle at 82% 20%, rgba(255, 107, 0, 0.18), transparent 30%),
+			radial-gradient(circle at 92% 12%, rgba(0, 174, 255, 0.2), transparent 28%),
+			radial-gradient(circle at 72% 86%, rgba(125, 55, 220, 0.18), transparent 28%),
+			repeating-linear-gradient(135deg, transparent 0 16px, rgba(255, 255, 255, 0.012) 16px 17px),
 			linear-gradient(135deg, #050810, #0b111c 58%, #050810);
 	}
 
 	.pt-intro-inner {
 		display: grid;
-		justify-items: start;
+		grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+		gap: clamp(34px, 6vw, 80px);
+		align-items: center;
+	}
+
+	.pt-intro-copy {
+		min-width: 0;
 	}
 
 	.pt-intro h1 {
@@ -795,7 +811,39 @@ const pricingFeatures = [
 	.pt-intro-points li::before {
 		content: "✓";
 		margin-right: 8px;
-		color: var(--accent);
+		color: #26bfff;
+	}
+
+	.pt-intro-art {
+		position: relative;
+		padding: 10px;
+		border: 1px solid rgba(38, 191, 255, 0.32);
+		border-radius: 16px;
+		background: linear-gradient(145deg, rgba(38, 191, 255, 0.1), rgba(126, 63, 220, 0.12));
+		box-shadow: 0 30px 80px rgba(0, 0, 0, 0.48), 0 0 42px rgba(38, 191, 255, 0.12);
+		transform: rotate(1deg);
+	}
+
+	.pt-intro-art img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 10px;
+	}
+
+	.pt-intro-art span {
+		position: absolute;
+		right: 22px;
+		bottom: 22px;
+		padding: 8px 11px;
+		border: 1px solid rgba(38, 191, 255, 0.5);
+		border-radius: 4px;
+		background: rgba(2, 5, 10, 0.9);
+		color: #69d5ff;
+		font-size: 0.68rem;
+		font-weight: 950;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 	}
 
 	.pt-summary {
@@ -810,10 +858,28 @@ const pricingFeatures = [
 	}
 
 	.pt-benefit-grid article {
+		position: relative;
+		overflow: hidden;
 		padding: 28px;
 		border: 1px solid var(--border);
 		border-radius: 10px;
 		background: rgba(13, 20, 32, 0.86);
+	}
+
+	.pt-benefit-grid article::before {
+		content: "";
+		position: absolute;
+		inset: 0 auto 0 0;
+		width: 4px;
+		background: var(--accent);
+	}
+
+	.pt-benefit-grid article:nth-child(2)::before {
+		background: #26bfff;
+	}
+
+	.pt-benefit-grid article:nth-child(3)::before {
+		background: #8b5cf6;
 	}
 
 	.pt-benefit-grid article > span {
@@ -1761,6 +1827,7 @@ const pricingFeatures = [
 	}
 
 	@media (max-width: 1000px) {
+		.pt-intro-inner,
 		.pt-hero-inner,
 		.pt-section-head,
 		.pt-paperwork-grid,
@@ -1862,6 +1929,11 @@ const pricingFeatures = [
 		.pt-benefit-grid,
 		.pt-pricing-grid {
 			grid-template-columns: 1fr;
+		}
+
+		.pt-intro-art {
+			width: min(620px, 100%);
+			transform: none;
 		}
 
 		.pt-benefit-grid {
