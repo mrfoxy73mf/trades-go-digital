@@ -14,7 +14,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
 	const rawBody = await request.text();
 	const signature = request.headers.get("stripe-signature") || "";
 
-	if (!(await verifyStripeSignature(rawBody, signature, env.STRIPE_WEBHOOK_SECRET))) {
+	const validLiveSignature = await verifyStripeSignature(
+		rawBody,
+		signature,
+		env.STRIPE_WEBHOOK_SECRET,
+	);
+	const validTestSignature = env.STRIPE_TEST_WEBHOOK_SECRET
+		? await verifyStripeSignature(rawBody, signature, env.STRIPE_TEST_WEBHOOK_SECRET)
+		: false;
+	if (!validLiveSignature && !validTestSignature) {
 		return new Response("Invalid signature", { status: 400 });
 	}
 
