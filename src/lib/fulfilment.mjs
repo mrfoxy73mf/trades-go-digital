@@ -10,8 +10,8 @@ export function resolveFulfilmentType(session) {
 	if (Object.values(FULFILMENT_TYPES).includes(explicit)) return explicit;
 
 	if (session?.currency?.toLowerCase() !== "gbp") return null;
-	if (session?.amount_total === 299000) return FULFILMENT_TYPES.LICENCE;
-	if (session?.amount_total === 399000) return FULFILMENT_TYPES.INSTALLATION;
+	if (session?.amount_total === 499000) return FULFILMENT_TYPES.LICENCE;
+	if (session?.amount_total === 649000) return FULFILMENT_TYPES.INSTALLATION;
 	return null;
 }
 
@@ -75,4 +75,3 @@ export function cleanText(value, maxLength = 1000) {
 export function isEmail(value) {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || "").trim());
 }
-

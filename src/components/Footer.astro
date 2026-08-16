@@ -1,6 +1,7 @@
 ---
 const today = new Date();
 const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
+const isTgdTrades = Astro.url.pathname === "/tgd" || Astro.url.pathname.startsWith("/tgd/");
 
 const footerContacts = [
 	{ label: "General Enquiries", email: "hello@trades-go-digital.co.uk" },
@@ -12,8 +13,10 @@ const footerContacts = [
 const companyLinks = [
 	{ label: "About Us", href: "/" },
 	{ label: "Pricing", href: "/pricing" },
-	{ label: "TGD", href: "/tgd" },
+	{ label: "TAD The Business", href: "/tad-the-business" },
+	{ label: "TGD Trades", href: "/tgd" },
 	{ label: "TGD LettingDesk", href: "/tgd-lettingdesk" },
+	{ label: "PDF Maker", href: "/pdf-maker" },
 	{ label: "Contact", href: "/contact" },
 ];
 
@@ -26,7 +29,7 @@ const resourceLinks = [
 ];
 ---
 
-<footer>
+<footer class:list={{ "footer-tgd-trades": isTgdTrades }}>
 	<div class="footer-inner">
 		<div class="footer-brand">
 			<a class="brand" href="/">
@@ -75,6 +78,45 @@ const resourceLinks = [
 		background: #07111f;
 		color: #c7d8e8;
 		border-top: 1px solid rgba(109, 199, 255, 0.16);
+	}
+
+	footer.footer-tgd-trades {
+		background:
+			linear-gradient(180deg, rgba(2, 4, 7, 0.58), rgba(2, 4, 7, 0.76)),
+			url("/images/tgd-footer-workshop-tools.png") center bottom / cover no-repeat,
+			#05070a;
+		border-top-color: rgba(255, 107, 0, 0.5);
+	}
+
+	footer.footer-tgd-trades .footer-brand {
+		border-bottom-color: rgba(255, 107, 0, 0.3);
+	}
+
+	footer.footer-tgd-trades .brand {
+		display: none;
+	}
+
+	footer.footer-tgd-trades .footer-cta {
+		background: linear-gradient(135deg, #ff7a00, #ff5a00);
+		color: #080a0d;
+		box-shadow: 0 14px 34px rgba(255, 107, 0, 0.28);
+	}
+
+	footer.footer-tgd-trades .footer-contact-list,
+	footer.footer-tgd-trades .footer-links {
+		border-color: rgba(255, 107, 0, 0.38);
+		background: linear-gradient(180deg, rgba(12, 14, 18, 0.94), rgba(4, 6, 9, 0.94));
+		box-shadow: 0 18px 44px rgba(0, 0, 0, 0.48);
+		backdrop-filter: blur(3px);
+	}
+
+	footer.footer-tgd-trades h2 {
+		color: #ff7a00;
+	}
+
+	footer.footer-tgd-trades .footer-contact-list p,
+	footer.footer-tgd-trades .footer-bottom {
+		border-color: rgba(255, 107, 0, 0.22);
 	}
 
 	.footer-inner {

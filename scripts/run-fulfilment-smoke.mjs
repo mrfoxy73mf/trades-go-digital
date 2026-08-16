@@ -64,7 +64,7 @@ const getStatus = async (sessionId) => {
 const lockedPage = await fetch(`${baseUrl}/tgd-lettingdesk`, { redirect: "manual" });
 assert.equal(lockedPage.status, 401, "The main website lock was bypassed.");
 
-const licenceSession = await stripePost("licence_download", 299000);
+const licenceSession = await stripePost("licence_download", 499000);
 const licenceStatus = await getStatus(licenceSession);
 assert.equal(licenceStatus.fulfilmentType, "licence_download");
 assert.match(licenceStatus.token, /^[a-f0-9]{64}$/);
@@ -80,7 +80,7 @@ const packageBytes = new Uint8Array(await download.arrayBuffer());
 assert.equal(packageBytes[0], 0x50);
 assert.equal(packageBytes[1], 0x4b);
 
-const installationSession = await stripePost("managed_installation", 399000);
+const installationSession = await stripePost("managed_installation", 649000);
 const installationStatus = await getStatus(installationSession);
 assert.equal(installationStatus.fulfilmentType, "managed_installation");
 

@@ -24,9 +24,9 @@ test("resolves explicit Stripe fulfilment metadata", () => {
 });
 
 test("uses exact GBP prices only as a controlled fallback", () => {
-	assert.equal(resolveFulfilmentType({ currency: "gbp", amount_total: 299000 }), FULFILMENT_TYPES.LICENCE);
-	assert.equal(resolveFulfilmentType({ currency: "gbp", amount_total: 399000 }), FULFILMENT_TYPES.INSTALLATION);
-	assert.equal(resolveFulfilmentType({ currency: "usd", amount_total: 299000 }), null);
+	assert.equal(resolveFulfilmentType({ currency: "gbp", amount_total: 499000 }), FULFILMENT_TYPES.LICENCE);
+	assert.equal(resolveFulfilmentType({ currency: "gbp", amount_total: 649000 }), FULFILMENT_TYPES.INSTALLATION);
+	assert.equal(resolveFulfilmentType({ currency: "usd", amount_total: 499000 }), null);
 	assert.equal(resolveFulfilmentType({ currency: "gbp", amount_total: 100000 }), null);
 });
 
@@ -81,18 +81,18 @@ test("builds secure buyer and seller order emails", () => {
 		customerName: "<Buyer>",
 		businessName: "Buyer & Co",
 		fulfilmentType: FULFILMENT_TYPES.LICENCE,
-		amountTotal: 299000,
+		amountTotal: 499000,
 	};
 	const buyer = buildBuyerEmail(order);
 	const seller = buildSellerEmail(order);
 
-	assert.equal(formatGbp(299000), "£2,990.00");
+	assert.equal(formatGbp(499000), "£4,990.00");
 	assert.equal(
 		buildFulfilmentUrl(order.sessionId),
 		"https://trades-go-digital.co.uk/fulfilment/complete?session_id=cs_live_123",
 	);
 	assert.match(buyer.html, /Open secure download/);
 	assert.match(buyer.html, /&lt;Buyer&gt;/);
-	assert.match(seller.subject, /£2,990.00/);
+	assert.match(seller.subject, /£4,990.00/);
 	assert.equal(escapeHtml("A&B"), "A&amp;B");
 });

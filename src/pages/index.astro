@@ -23,8 +23,9 @@ export const prerender = false;
         <span>Trades Go Digital</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="/tgd/">TGD</a>
+        <a href="/tgd/">TGD Trades</a>
         <a href="/tgd-lettingdesk/">TGD LettingDesk</a>
+        <a href="/pdf-maker/">PDF Maker</a>
         <a href="/tgd/#pricing">Pricing</a>
         <a href="/contact/">Contact</a>
       </nav>
@@ -45,10 +46,10 @@ export const prerender = false;
               Less time chasing information. More time doing the work that moves your business forward.
             </p>
             <div class="hero-actions">
-              <a class="button button-primary" href="/tgd/">See TGD in action</a>
-              <a class="button button-secondary" href={TGD_APP_URL}>Start with TGD</a>
+              <a class="button button-primary" href="/tgd/">See TGD Trades in action</a>
+              <a class="button button-secondary" href={TGD_APP_URL}>Start with TGD Trades</a>
             </div>
-            <ul class="hero-proof" aria-label="TGD benefits">
+            <ul class="hero-proof" aria-label="TGD Trades benefits">
               <li>Built around real working businesses</li>
               <li>Clear pricing</li>
               <li>Friendly UK support</li>
@@ -67,15 +68,21 @@ export const prerender = false;
           <div class="product-grid">
             <article class="product-card">
               <span class="product-tag">For UK trades</span>
-              <h3>TGD</h3>
+              <h3>TGD Trades</h3>
               <p>Quotes, jobs, customers, paperwork, accounts and supplier orders connected in one business office.</p>
-              <a class="button button-primary" href="/tgd/">Explore TGD</a>
+              <a class="button button-primary" href="/tgd/">Explore TGD Trades</a>
             </article>
             <article class="product-card lettingdesk-card">
               <span class="product-tag">For letting agencies</span>
               <h3>TGD LettingDesk</h3>
               <p>Properties, maintenance, contractors, rent, finances and customer portals connected in one agency platform.</p>
               <a class="button button-lettingdesk" href="/tgd-lettingdesk/">Explore TGD LettingDesk</a>
+            </article>
+            <article class="product-card pdf-card">
+              <span class="product-tag">Design your own documents</span>
+              <h3>TGD PDF Maker</h3>
+              <p>Create professional invoices, quotes, wage slips, certificates and job sign-off sheets with your own logo and branding.</p>
+              <a class="button button-pdf" href="/pdf-maker/">Open the PDF Maker</a>
             </article>
           </div>
         </div>
@@ -95,7 +102,7 @@ export const prerender = false;
             much information scattered across messages, notebooks and memory.
           </p>
           <p>
-            That first solution grew into TGD: practical business software shaped around how
+            That first solution grew into TGD Trades: practical business software shaped around how
             people actually work, designed to reduce admin and give owners more control of their day.
           </p>
         </div>
@@ -123,19 +130,19 @@ export const prerender = false;
       <section class="section solution-section">
         <div class="container story-copy">
           <p class="eyebrow">The Solution</p>
-          <h2>The Solution: TGD</h2>
+          <h2>The Solution: TGD Trades</h2>
           <p>
             Instead of expecting tradespeople to juggle multiple apps, paperwork and
-            disconnected systems, TGD brings the business office together in one
+            disconnected systems, TGD Trades brings the business office together in one
             place. Jobs, customers, quotes, invoices, receipts, certificates and day-to-day
             admin can all stay organised around the way trade businesses actually work.
           </p>
           <p>Quote once, then keep the job, calendar, paperwork and business records connected.</p>
 
           <div class="magic-room">
-            <h2>Welcome to TGD</h2>
+            <h2>Welcome to TGD Trades</h2>
             <p>Explore the real screens and see how quotes, jobs, paperwork and your Business Office work together.</p>
-            <a class="button button-primary" href="/tgd/">Explore TGD</a>
+            <a class="button button-primary" href="/tgd/">Explore TGD Trades</a>
           </div>
         </div>
       </section>
@@ -195,7 +202,7 @@ export const prerender = false;
 
   .product-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 22px;
   }
 
@@ -420,6 +427,20 @@ export const prerender = false;
     box-shadow: 0 16px 38px rgba(214, 169, 53, 0.24);
   }
 
+  .pdf-card {
+    border-color: rgba(214, 169, 53, 0.48);
+    background:
+      radial-gradient(circle at 100% 0, rgba(214, 169, 53, 0.18), transparent 18rem),
+      linear-gradient(160deg, rgba(20, 36, 64, 0.98), rgba(7, 18, 34, 0.98));
+  }
+
+  .pdf-card .product-tag { color: #f0c85a; }
+
+  .button-pdf {
+    background: linear-gradient(135deg, #f0c85a, #d6a935);
+    color: #07111f;
+  }
+
   .button-secondary {
     border: 1px solid rgba(109, 213, 255, 0.55);
     background: rgba(7, 17, 31, 0.62);
@@ -525,6 +546,8 @@ export const prerender = false;
     .hero-grid {
       grid-template-columns: 1fr;
     }
+
+    .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media (max-width: 760px) {

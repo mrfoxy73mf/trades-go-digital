@@ -8,8 +8,8 @@ const worker = String.raw`import astroWorker from "./_worker.js/index.js";
 const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
-const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook"]);
-const PUBLIC_PATH_PREFIXES = ["/api/fulfilment/", "/fulfilment/", "/_astro/"];
+const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook", "/pdf-maker"]);
+const PUBLIC_PATH_PREFIXES = ["/api/fulfilment/", "/fulfilment/", "/api/pdf-payment/", "/pdf-maker/", "/_astro/"];
 
 const unauthorized = () =>
 	new Response("Password required.", {

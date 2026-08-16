@@ -10,47 +10,47 @@ const heroButtons = [
 	{
 		label: "Dashboard",
 		image: "/images/tgd-dashboard.png",
-		alt: "TGD dashboard screen",
+		alt: "TGD Trades dashboard screen",
 	},
 	{
-		label: "Quote Page",
+		label: "Quotes & Materials",
 		image: "/images/tgd-quote-page.png",
-		alt: "TGD quote page screen",
+		alt: "TGD Trades quote page screen",
 	},
 	{
 		label: "Job Page",
 		image: "/images/tgd-job-folder.png",
-		alt: "TGD jobs screen",
+		alt: "TGD Trades jobs screen",
 	},
 	{
 		label: "Work Calendar",
 		image: "/images/tgd-work-calendar.png",
-		alt: "TGD work calendar screen",
+		alt: "TGD Trades work calendar screen",
 	},
 	{
 		label: "Suppliers Page",
 		image: "/images/tgd-suppliers-page.png",
-		alt: "TGD suppliers page screen",
+		alt: "TGD Trades suppliers page screen",
 	},
 	{
 		label: "AI Assistant",
 		image: "/images/tgd-ai-assistant.png",
-		alt: "TGD AI Assistant screen",
+		alt: "TGD Trades AI Assistant screen",
 	},
 	{
-		label: "Notebook",
-		image: "/images/tgd-notebook.png",
-		alt: "TGD notebook screen",
+		label: "Office Mailroom",
+		image: "/images/tgd-office-mailroom-safe.png",
+		alt: "TGD Trades Office Mailroom with AI receipt scanning and Business Office filing",
 	},
 	{
 		label: "Business Office",
 		image: "/images/tgd-business-office.png",
-		alt: "TGD Business Office screen",
+		alt: "TGD Trades Business Office screen",
 	},
 	{
-		label: "Vehicles and Logs",
+		label: "Vehicles & Mileage",
 		image: "/images/tgd-vehicles-logs.png",
-		alt: "TGD vehicles and mileage logs screen",
+		alt: "TGD Trades vehicles and mileage logs screen",
 	},
 ];
 
@@ -59,56 +59,88 @@ const paperworkItems = [
 		title: "Quote PDF",
 		text: "Send a clear, professional quote to the customer.",
 		image: "/images/tgd-quote-pdf.png",
-		alt: "TGD quote PDF preview",
+		alt: "TGD Trades quote PDF preview",
 	},
 	{
 		title: "Job Sign-Off PDF",
 		text: "Get the work signed off and keep the record with the job.",
 		image: "/images/tgd-job-signoff-pdf.png",
-		alt: "TGD job sign-off PDF preview",
+		alt: "TGD Trades job sign-off PDF preview",
 	},
 	{
 		title: "Invoice PDF",
 		text: "Create the invoice without typing everything again.",
 		image: "/images/tgd-invoice-pdf.png",
-		alt: "TGD invoice PDF preview",
+		alt: "TGD Trades invoice PDF preview",
 	},
 	{
 		title: "Dividends",
 		text: "Keep company paperwork ready for your accountant.",
 		image: "/images/tgd-dividends-pdf.png",
-		alt: "TGD dividends PDF preview",
+		alt: "TGD Trades dividends PDF preview",
 	},
 	{
 		title: "Accountant",
 		text: "Package the numbers your accountant needs.",
 		image: "/images/tgd-accountant-pdf.png",
-		alt: "TGD accountant report PDF preview",
+		alt: "TGD Trades accountant report PDF preview",
 	},
 	{
 		title: "Wage Slip",
 		text: "Create clear wage records for the people you pay.",
 		image: "/images/tgd-wage-slip.jpg",
-		alt: "TGD wage slip preview",
+		alt: "TGD Trades wage slip preview",
 	},
 	{
 		title: "Certificates & Sign-Offs",
 		text: "Pick the right paperwork and keep certificates connected to the job.",
 		label: "SCREEN",
 		image: "/images/tgd-certificates-screen.jpg",
-		alt: "TGD certificates and sign-off screen",
+		alt: "TGD Trades certificates and sign-off screen",
 	},
 ];
 
 const pricingFeatures = [
-	"Quotes, invoices and digital customer sign-off",
-	"Jobs, calendar, photos and paperwork in one place",
-	"Voice-activated AI Assistant",
-	"Business Office records and accountant exports",
-	"Vehicle, mileage and expense tracking",
-	"Works offline and syncs when signal returns",
-	"Unlimited jobs, photos and PDFs",
-	"Cancel anytime with no long contract",
+	"Run your jobs from phone, tablet or computer",
+	"Keep customers informed through their own portal",
+	"Reduce paperwork and repeated typing",
+	"Keep supplier costs and material prices current",
+	"Prepare accountant records automatically",
+	"Keep working offline and sync automatically when reconnected",
+	"Unlimited jobs, photos and PDFs—with no long contract",
+];
+
+const operationsFeatures = [
+	{
+		label: "OFFICE MAILROOM",
+		title: "Supplier invoices and receipts land in the right place",
+		text: "Each trader can use a private receipts address. Supplier PDFs and images are read, checked, held for review when figures do not match, and filed into Business Office with the matching expense and VAT records.",
+	},
+	{
+		label: "CUSTOMER PORTAL",
+		title: "Customers get a private link, not another account",
+		text: "Share a secure branded portal where customers can view their job pack, open quotes, invoices and certificates, send messages, approve documents and see payment status.",
+	},
+	{
+		label: "VAN STOCK",
+		title: "Know what is already on the van",
+		text: "Track stocktakes, low-stock warnings and material movements. Quote materials can come from supplier lists or van stock, with stock deducted when a quote becomes a job.",
+	},
+	{
+		label: "PEOPLE",
+		title: "Keep employee and subcontractor records together",
+		text: "Store worker records, job allocation, wages, payslips and CIS deductions alongside the jobs and reports they belong to.",
+	},
+	{
+		label: "ACCOUNTANT TOOLS",
+		title: "Reports are built as the work happens",
+		text: "Expenses, mileage, wages, invoices and VAT records feed accountant reports, CSV/PDF exports and tax-year records without hunting through old messages.",
+	},
+	{
+		label: "INSTALLABLE APP",
+		title: "Use it on phone, tablet or desktop",
+		text: "Install TGD Trades from Safari, Chrome, Edge or your mobile browser. The app still connects to the secure backend, so the business data is not trapped on one device.",
+	},
 ];
 
 ---
@@ -117,8 +149,8 @@ const pricingFeatures = [
 <html lang="en">
 	<head>
 		<BaseHead
-			title="TGD - Business Software Built for UK Tradesmen | Trades Go Digital"
-			description="TGD is a business operating system for UK trades. One quote creates your job, calendar, PDFs, accounts and supplier orders automatically. Start your subscription online."
+			title="TGD Trades - Business Software Built for UK Tradesmen | Trades Go Digital"
+			description="TGD Trades is a business operating system for UK trades. One quote creates your job, calendar, PDFs, accounts and supplier orders automatically. Start your subscription online."
 		/>
 		<meta property="og:site_name" content={SITE_TITLE} />
 		<meta property="og:locale" content="en_GB" />
@@ -129,20 +161,20 @@ const pricingFeatures = [
 			<section class="pt-intro" aria-labelledby="tgd-title">
 				<div class="pt-container pt-intro-inner">
 					<div class="pt-intro-copy">
-						<p class="pt-eyebrow">TGD by Trades Go Digital</p>
-						<h1 id="tgd-title">Run your trade business from one place.</h1>
+						<p class="pt-eyebrow">TGD Trades by Trades Go Digital</p>
+						<h1 id="tgd-title">Quote the job once. Keep the whole business moving.</h1>
 						<p class="pt-intro-lead">
-							TGD connects quotes, jobs, customers, paperwork, calendars and business records
-							in one practical system built around the way UK trades actually work.
+							From customer acceptance to the calendar, invoice, sign-off and accounts,
+							TGD Trades keeps every stage connected without entering the same details again.
 						</p>
 						<div class="pt-intro-actions">
 							<a class="pt-action pt-action-primary" href="#explore">Explore the app</a>
 							<a class="pt-action pt-action-secondary" href="#pricing">See pricing</a>
 						</div>
-						<ul class="pt-intro-points" aria-label="TGD highlights">
+						<ul class="pt-intro-points" aria-label="TGD Trades highlights">
+							<li>Win work and book it faster</li>
 							<li>Less repeated admin</li>
-							<li>Clear records for every job</li>
-							<li>Built for work on the move</li>
+							<li>Know what is paid and outstanding</li>
 						</ul>
 					</div>
 					<div class="pt-intro-art">
@@ -151,111 +183,132 @@ const pricingFeatures = [
 				</div>
 			</section>
 			<section id="explore" class="pt-hero pt-section">
-				<div class="pt-container pt-hero-inner">
-					<div class="pt-hero-visual">
-						<img
-							id="pt-hero-preview"
-							src="/images/tgd-office-drawers.png"
-							alt="TGD Magic Room office with branded van"
-						/>
-						<div class="pt-hero-cabinet-note">Open a drawer</div>
-						<div class="pt-hero-return-note" hidden>Press picture to return to office</div>
-						<div class="pt-hero-menu" aria-label="TGD tools">
-							{
-								heroButtons.map((item) => (
-									<button
-										type="button"
-										data-preview-src={item.image}
-										data-preview-alt={item.alt}
-									>
-										<b>{item.label}</b>
-									</button>
-								))
-							}
-						</div>
+				<div class="pt-container pt-chain-heading">
+			<p class="pt-eyebrow">Everything in its place</p>
+			<h2>Everything you need—right where you need it.</h2>
+			<p>Your jobs, customers, materials and paperwork—all organised and ready when you need them.</p>
+				</div>
+				<div class="pt-app-chain" aria-label="TGD Trades app screens">
+					<div class="pt-app-chain-track">
+						{[...heroButtons, ...heroButtons].map((item, index) => (
+							<figure class="pt-app-chain-card" aria-hidden={index >= heroButtons.length ? "true" : undefined}>
+								<div><img src={item.image} alt={index < heroButtons.length ? item.alt : ""} loading="lazy" /></div>
+								<figcaption>{item.label}</figcaption>
+							</figure>
+						))}
 					</div>
 				</div>
-				<section class="pt-image-caption" aria-label="TGD introduction">
-					<h2>TGD - the business operating system built for UK trades</h2>
-					<p>
-						You already know how to run the job. TGD runs the office. Quote once,
-						and every job, PDF, calendar entry, supplier email and tax record falls into place
-						automatically, right from your phone.
-					</p>
-					<ul>
-						<li><strong>Dashboard</strong> - today's jobs, this week's takings and what needs your attention.</li>
-						<li><strong>Quotes</strong> - create once, then let TGD handle what happens next.</li>
-						<li><strong>Jobs</strong> - every detail, note, photo and PDF lives with the job.</li>
-						<li><strong>Work Calendar</strong> - accepted quotes can become booked work dates.</li>
-						<li><strong>Suppliers</strong> - material lists and supplier invoices stay linked to the right job.</li>
-						<li><strong>AI Assistant</strong> - ask about your business, your trade or the app.</li>
-						<li><strong>Notebook</strong> - speak naturally and turn notes into proper messages.</li>
-						<li><strong>Business Office</strong> - jobs, receipts, certificates and records organised together.</li>
-						<li><strong>Vehicles and Mileage</strong> - log trips and keep mileage ready for your records.</li>
-					</ul>
-				</section>
+				<div class="pt-container pt-chain-benefits" aria-label="TGD Trades key benefits">
+					<span>Quote once</span><span>Book the work</span><span>Automate the paperwork</span><span>Know what is paid</span>
+				</div>
+			</section>
+
+			<section class="pt-section pt-demo" aria-labelledby="demo-title">
+				<div class="pt-container pt-demo-inner">
+					<div class="pt-demo-copy">
+						<p class="pt-eyebrow">See the connected workflow</p>
+						<h2 id="demo-title">Take a guided tour of TGD Trades.</h2>
+						<p id="demo-description">Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.</p>
+						<div class="pt-demo-selector" role="group" aria-label="Choose a TGD Trades demonstration">
+							<button class="is-active" type="button" data-demo="tour" aria-pressed="true">Full TGD Tour</button>
+							<button type="button" data-demo="quote" aria-pressed="false">Quote to Job Demo</button>
+						</div>
+					</div>
+					<div class="pt-demo-video">
+						<video id="pt-demo-player" controls playsinline preload="metadata" poster="/images/tgd-trades-demo-poster.jpg">
+							<source src="/videos/tgd-trades-demo-music.mp4" type="video/mp4" />
+							Your browser does not support embedded video.
+						</video>
+					</div>
+				</div>
 			</section>
 
 			<section id="paperwork" class="pt-section pt-paperwork">
-				<div class="pt-container pt-paperwork-grid">
+				<div class="pt-container pt-paperwork-heading">
+					<p class="pt-eyebrow">Created from the job</p>
+					<h2>Professional paperwork—straight from your phone.</h2>
+					<p>Quotes, invoices, sign-offs, certificates and accountant records use information already held in TGD Trades—without entering everything again.</p>
+				</div>
+				<div class="pt-paperwork-grid">
 					<div class="pt-paperwork-visual">
-						<div class="pt-paperwork-return-note" hidden>Press picture to return to files</div>
-						<img
-							id="pt-paperwork-preview"
-							src="/images/tgd-phone-files.png"
-							alt="TGD phone showing business document files"
-						/>
-						<p class="pt-scroll-hint">Scroll left to see PDFs</p>
-						<div class="pt-paperwork-menu" aria-label="TGD paperwork previews">
-							{
-								paperworkItems.map((item) => (
-									<button
-										type="button"
-										data-paperwork-src={item.image}
-										data-paperwork-alt={item.alt}
-									>
-										<b>{item.title}</b>
-										<span>{item.label || "PDF"}</span>
-									</button>
-								))
-							}
+						<div class="pt-pdf-machine" aria-label="TGD Trades paperwork previews">
+							<div class="pt-fake-phone" aria-label="TGD Trades mobile app creating business documents">
+								<span class="pt-phone-speaker"></span>
+								<div class="pt-phone-screen">
+									<div class="pt-phone-brand">TGD</div>
+									<small>BUSINESS OFFICE</small>
+									<strong>Your paperwork</strong>
+									<ul><li>Quotes</li><li>Invoices</li><li>Sign-offs</li><li>Reports</li></ul>
+									<span>Ready to send</span>
+								</div>
+								<div class="pt-phone-home"></div>
+							</div>
+							<div class="pt-document-wall">
+								{paperworkItems.map((item) => (
+									<article class="pt-document-card">
+										<img src={item.image} alt={item.alt} loading="lazy" />
+										<div>
+											<h3>{item.title}</h3>
+											<p>{item.text}</p>
+										</div>
+									</article>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>
-				<section class="pt-image-caption" aria-label="TGD paperwork">
-					<h2>All your paperwork - done, organised and ready to hand over</h2>
-					<p>
-						Every quote, invoice, sign-off, wage slip and certificate is created from the data
-						you already put in. No copying, no re-typing and no chasing bits of paper.
-					</p>
-					<ul>
-						<li><strong>Quote PDF</strong> - sent with one tap.</li>
-						<li><strong>Job Sign-Off PDF</strong> - customer sign-off kept with the job.</li>
-						<li><strong>Invoice PDF</strong> - created without typing everything again.</li>
-						<li><strong>Dividends PDF</strong> - company paperwork ready for your records.</li>
-						<li><strong>Accountant Report PDF</strong> - a tidy bundle for your accountant.</li>
-						<li><strong>Wage Slips</strong> - clear wage records for people you pay.</li>
-						<li><strong>Certificates and Sign-Offs</strong> - regulated paperwork connected to the job.</li>
-					</ul>
-				</section>
 			</section>
 
 			<section id="features" class="pt-summary pt-section">
 				<div class="pt-container">
-					<p class="pt-eyebrow">One connected workflow</p>
-					<h2>Do the job once. Keep the business moving.</h2>
-					<p class="pt-summary-lead">
-						When a quote is accepted, TGD keeps the next steps connected—job details,
-						calendar, documents and customer records—without making you enter everything again.
+			<p class="pt-eyebrow">Built for working trades</p>
+			<h2>Another tool for your toolbox.</h2>
+			<p class="pt-summary-lead">
+				Once your customer accepts the quote, TGD Trades gets the next steps ready
+				and keeps you informed—all with a few taps.
 					</p>
-					<div class="pt-benefit-grid">
-						<article><span>01</span><h3>Plan the work</h3><p>Keep quotes, jobs, dates, customers and notes together from the start.</p></article>
-						<article><span>02</span><h3>Finish the paperwork</h3><p>Create clear quotes, invoices, sign-offs and records from information already entered.</p></article>
-						<article><span>03</span><h3>Know where you stand</h3><p>See what is booked, outstanding and ready for your accountant without chasing folders.</p></article>
+					<div class="pt-smart-features">
+						<article>
+							<span>CLIENT PORTAL</span>
+							<h3>Give every customer one clear place</h3>
+							<p>Customers can use a private magic link to see their job pack, send messages, approve paperwork, complete sign-offs and confirm payment status.</p>
+						</article>
+						<article>
+							<span>AI MAILROOM</span>
+							<h3>Supplier paperwork gets checked before filing</h3>
+							<p>Supplier invoices and receipts can be read from email or upload. Complete documents file automatically; missing or inconsistent figures stay in Needs Review.</p>
+						</article>
+						<article>
+							<span>MATERIAL PRICES</span>
+							<h3>Your quote list stays connected</h3>
+							<p>Upload materials and prices once. Quote materials can use supplier prices or van stock, so the quote stays clean while the buying list stays useful.</p>
+						</article>
+						<article>
+							<span>ACCOUNTANT</span>
+							<h3>Monthly reports without the monthly chase</h3>
+							<p>Expenses, wages, mileage, VAT records and invoices feed reports your accountant can use, with PDF and CSV exports when needed.</p>
+						</article>
 					</div>
 					<div class="pt-reassurance">
 						<strong>Built for real working days</strong>
-						<span>Works offline</span><span>Voice-friendly</span><span>Phone and desktop</span><span>Cancel anytime</span>
+						<span>Works offline</span><span>Voice-friendly</span><span>Phone and desktop</span><span>Installable app</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="pt-section pt-operations" aria-labelledby="operations-title">
+				<div class="pt-container">
+					<p class="pt-eyebrow">More than job sheets</p>
+					<h2 id="operations-title">Run the back office from the same app.</h2>
+					<p class="pt-operations-lead">TGD Trades connects the everyday work on site with the records your business needs later: customers, staff, suppliers, stock, wages, tax and accountant paperwork.</p>
+					<div class="pt-operations-grid">
+						{operationsFeatures.map((item) => (
+							<article>
+								<span>{item.label}</span>
+								<h3>{item.title}</h3>
+								<p>{item.text}</p>
+							</article>
+						))}
 					</div>
 				</div>
 			</section>
@@ -266,9 +319,9 @@ const pricingFeatures = [
 						<p class="pt-eyebrow">Subscription pricing</p>
 						<h2 id="pricing-title">Simple pricing. The whole business office included.</h2>
 						<div class="pt-price-new"><strong>&pound;28</strong><span>/month</span></div>
-						<p class="pt-price-highlight">For your first three months.</p>
+						<p class="pt-price-highlight">Less than &pound;1 a day for your first 3 months.</p>
 						<p class="pt-price-after-new">Then &pound;60 per month. Cancel anytime—no long contract.</p>
-						<a class="pt-action pt-action-primary" href={TGD_APP_URL}>Start TGD subscription</a>
+						<a class="pt-action pt-action-primary" href={TGD_APP_URL}>Start TGD Trades subscription</a>
 					</div>
 					<div class="pt-included">
 						<h3>Everything you need to run the job</h3>
@@ -279,27 +332,73 @@ const pricingFeatures = [
 				</div>
 			</section>
 
+			<section class="pt-section pt-faq" aria-labelledby="faq-title">
+				<div class="pt-container">
+					<p class="pt-eyebrow">Straight answers</p>
+					<h2 id="faq-title">Before you get started</h2>
+					<div class="pt-faq-grid">
+						<article><h3>Can I use it on site?</h3><p>Yes. TGD Trades is designed for phones, tablets and computers, so your job details stay close wherever you are working.</p></article>
+						<article><h3>Does it replace my accountant?</h3><p>No. It keeps your records organised and produces clear reports that make working with your accountant easier.</p></article>
+						<article><h3>What happens to supplier emails?</h3><p>The AI Mailroom reads attached invoices and receipts, files them in the Business Office and helps keep connected material prices current.</p></article>
+			<article><h3>Am I tied into a contract?</h3><p>No. You can cancel anytime—there is no long-term contract.</p></article>
+					</div>
+				</div>
+			</section>
+
 			<section id="waiting-list" class="pt-final-cta">
 				<div class="pt-container">
 					<p class="pt-eyebrow">Ready to begin?</p>
-					<h2>Put TGD to work in your business.</h2>
-					<p>Create your account in the TGD app, choose your subscription and let Stripe handle the payment securely.</p>
-					<a class="pt-action pt-action-primary" href={TGD_APP_URL}>Open TGD and subscribe</a>
+					<h2>Put TGD Trades to work in your business.</h2>
+					<p>Create your account in the TGD Trades app, choose your subscription and let Stripe handle the payment securely.</p>
+					<a class="pt-action pt-action-primary" href={TGD_APP_URL}>Open TGD Trades and subscribe</a>
 				</div>
 			</section>
 		</main>
 		<Footer />
 		<script>
-			const previewImage = document.querySelector<HTMLImageElement>("#pt-hero-preview");
-			const previewVisual = document.querySelector<HTMLElement>(".pt-hero-visual");
-			const previewReturnNote = document.querySelector<HTMLElement>(".pt-hero-return-note");
-			const previewMenu = document.querySelector<HTMLElement>(".pt-hero-menu");
-			const previewButtons = document.querySelectorAll<HTMLButtonElement>(".pt-hero-menu button");
+			const demoPlayer = document.querySelector<HTMLVideoElement>("#pt-demo-player");
+			const demoTitle = document.querySelector<HTMLElement>("#demo-title");
+			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
+			const demoButtons = document.querySelectorAll<HTMLButtonElement>("[data-demo]");
+			const demos = {
+				tour: {
+					title: "Take a guided tour of TGD Trades.",
+					description: "Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.",
+					src: "/videos/tgd-trades-demo-music.mp4",
+					poster: "/images/tgd-trades-demo-poster.jpg",
+				},
+				quote: {
+					title: "See what happens when the customer says yes.",
+					description: "Build the quote, send it for approval and watch TGD create the job, Client Portal and paperwork automatically.",
+					src: "/videos/tgd-quote-demo-hard-hit.mp4",
+					poster: "/images/tgd-quote-demo-poster.jpg",
+				},
+			};
+
+			demoButtons.forEach((button) => {
+				button.addEventListener("click", () => {
+					const key = button.dataset.demo as keyof typeof demos;
+					const demo = demos[key];
+					if (!demo || !demoPlayer || !demoTitle || !demoDescription) return;
+					demoPlayer.pause();
+					demoPlayer.src = demo.src;
+					demoPlayer.poster = demo.poster;
+					demoPlayer.load();
+					demoTitle.textContent = demo.title;
+					demoDescription.textContent = demo.description;
+					demoButtons.forEach((item) => {
+						const active = item === button;
+						item.classList.toggle("is-active", active);
+						item.setAttribute("aria-pressed", String(active));
+					});
+				});
+			});
+
 			const paperworkImage = document.querySelector<HTMLImageElement>("#pt-paperwork-preview");
 			const paperworkFrame = document.querySelector<HTMLElement>(".pt-paperwork-visual");
-			const paperworkMenu = document.querySelector<HTMLElement>(".pt-paperwork-menu");
+			const paperworkMenu = document.querySelector<HTMLElement>(".pt-pdf-machine");
 			const paperworkReturnNote = document.querySelector<HTMLElement>(".pt-paperwork-return-note");
-			const paperworkButtons = document.querySelectorAll<HTMLButtonElement>(".pt-paperwork-menu button");
+			const paperworkButtons = document.querySelectorAll<HTMLButtonElement>(".pt-pdf-stream-button");
 			const isPhone = () => window.matchMedia("(max-width: 720px)").matches;
 			const scrollSectionStart = (element?: HTMLElement | null) => {
 				const section = element?.closest<HTMLElement>(".pt-section");
@@ -324,34 +423,15 @@ const pricingFeatures = [
 				window.setTimeout(reset, 700);
 			};
 
-			previewButtons.forEach((button) => {
-				button.addEventListener("click", () => {
-					const nextSrc = button.dataset.previewSrc;
-					if (!previewImage || !nextSrc) return;
-
-					previewImage.src = nextSrc;
-					previewImage.alt = button.dataset.previewAlt || "TGD app screen";
-					previewButtons.forEach((item) => item.classList.remove("is-active"));
-					button.classList.add("is-active");
-					previewVisual?.classList.add("is-preview-open");
-					if (previewReturnNote) {
-						previewReturnNote.hidden = false;
-					}
-
-					if (isPhone()) {
-						previewImage.scrollIntoView({ behavior: "smooth", block: "center" });
-					}
-					scrollSectionStart(previewVisual);
-				});
-			});
-
 			paperworkButtons.forEach((button) => {
 				button.addEventListener("click", () => {
 					const nextSrc = button.dataset.paperworkSrc;
 					if (!paperworkImage || !nextSrc) return;
 
 					paperworkImage.src = nextSrc;
-					paperworkImage.alt = button.dataset.paperworkAlt || "TGD paperwork preview";
+					paperworkImage.alt = button.dataset.paperworkAlt || "TGD Trades paperwork preview";
+					paperworkImage.hidden = false;
+					if (paperworkMenu) paperworkMenu.hidden = true;
 					if (paperworkFrame) {
 						paperworkFrame.scrollTop = 0;
 						paperworkFrame.classList.add("is-paperwork-open");
@@ -372,8 +452,9 @@ const pricingFeatures = [
 			paperworkImage?.addEventListener("click", () => {
 				if (!paperworkMenu) return;
 
-				paperworkImage.src = "/images/tgd-phone-files.png";
-				paperworkImage.alt = "TGD phone showing business document files";
+				paperworkImage.hidden = true;
+				paperworkImage.alt = "TGD Trades paperwork preview";
+				paperworkMenu.hidden = false;
 				if (paperworkFrame) {
 					paperworkFrame.scrollTop = 0;
 					paperworkFrame.classList.remove("is-paperwork-open");
@@ -389,21 +470,6 @@ const pricingFeatures = [
 				scrollSectionEnd(paperworkFrame);
 			});
 
-			previewImage?.addEventListener("click", () => {
-				if (!previewMenu) return;
-
-				previewImage.src = "/images/tgd-office-drawers.png";
-				previewImage.alt = "TGD Magic Room office with branded van";
-				previewVisual?.classList.remove("is-preview-open");
-				if (previewReturnNote) {
-					previewReturnNote.hidden = true;
-				}
-				previewButtons.forEach((item) => item.classList.remove("is-active"));
-
-				if (isPhone()) {
-					previewMenu.scrollIntoView({ behavior: "smooth", block: "start" });
-				}
-			});
 		</script>
 	</body>
 </html>
@@ -433,11 +499,15 @@ const pricingFeatures = [
 		--accent: #ff6b00;
 		--ok: #22c55e;
 		background:
-			radial-gradient(circle at 18% 0%, rgba(255, 107, 0, 0.16), transparent 30%),
-			radial-gradient(circle at 88% 12%, rgba(59, 130, 246, 0.08), transparent 34%),
-			linear-gradient(180deg, #02050a 0%, #050914 48%, #02050a 100%);
+			linear-gradient(180deg, rgba(2, 5, 10, 0.12), rgba(2, 5, 10, 0.48) 52%, rgba(2, 5, 10, 0.7)),
+			url("/images/tgd-tools-background.png") center top / cover fixed,
+			#05080d;
 		color: var(--fg);
 		overflow-x: hidden;
+	}
+
+	.pt-landing > section {
+		background: transparent;
 	}
 
 	.pt-landing *,
@@ -454,12 +524,134 @@ const pricingFeatures = [
 	.pt-section {
 		position: relative;
 		padding: 96px 0;
-		border-bottom: 1px solid var(--soft);
+		border-bottom: 0;
 	}
 
 	.pt-hero {
 		overflow: hidden;
-		padding: 36px 0 76px;
+		padding: 76px 0;
+	}
+
+	.pt-chain-heading {
+		margin-bottom: 34px;
+		text-align: center;
+	}
+
+	.pt-chain-heading .pt-eyebrow,
+	.pt-chain-heading h2,
+	.pt-chain-heading p {
+		justify-content: center;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.pt-chain-heading h2 {
+		max-width: 880px;
+	}
+
+	.pt-app-chain {
+		position: relative;
+		overflow: hidden;
+		width: 100%;
+		padding: 12px 0 20px;
+	}
+
+	.pt-app-chain::before,
+	.pt-app-chain::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		z-index: 2;
+		width: min(9vw, 150px);
+		pointer-events: none;
+	}
+
+	.pt-app-chain::before {
+		left: 0;
+		background: linear-gradient(90deg, #05080d, rgba(5, 8, 13, 0));
+	}
+
+	.pt-app-chain::after {
+		right: 0;
+		background: linear-gradient(270deg, #05080d, rgba(5, 8, 13, 0));
+	}
+
+	.pt-app-chain-track {
+		display: flex;
+		gap: 18px;
+		width: max-content;
+		padding-left: 18px;
+		animation: pt-app-chain-scroll 68s linear infinite;
+		will-change: transform;
+	}
+
+	.pt-app-chain:hover .pt-app-chain-track {
+		animation-play-state: paused;
+	}
+
+	.pt-app-chain-card {
+		flex: 0 0 clamp(300px, 34vw, 470px);
+		margin: 0;
+		padding: 8px;
+		border: 1px solid rgba(255, 107, 0, 0.38);
+		border-radius: 14px;
+		background: rgba(4, 8, 13, 0.92);
+		box-shadow: 0 22px 54px rgba(0, 0, 0, 0.38);
+	}
+
+	.pt-app-chain-card > div {
+		display: grid;
+		place-items: center;
+		height: 270px;
+		overflow: hidden;
+		border-radius: 9px;
+		background: #eef2f6;
+	}
+
+	.pt-app-chain-card img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	.pt-app-chain-card figcaption {
+		padding: 13px 10px 8px;
+		color: var(--fg);
+		font-size: 0.86rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.pt-chain-benefits {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 10px;
+		margin-top: 24px;
+	}
+
+	.pt-chain-benefits span {
+		padding: 9px 14px;
+		border: 1px solid rgba(255, 107, 0, 0.28);
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--muted);
+		font-size: 0.86rem;
+		font-weight: 850;
+	}
+
+	.pt-chain-benefits span::before {
+		content: "✓";
+		margin-right: 7px;
+		color: #26bfff;
+	}
+
+	@keyframes pt-app-chain-scroll {
+		to { transform: translateX(calc(-50% - 9px)); }
 	}
 
 	.pt-hero-inner {
@@ -726,15 +918,19 @@ const pricingFeatures = [
 		position: relative;
 		overflow: hidden;
 		padding: 92px 0 76px;
-		border-bottom: 1px solid var(--soft);
+		border-bottom: 0;
 		background:
-			linear-gradient(90deg, rgba(2, 4, 8, 0.62) 0%, rgba(2, 4, 8, 0.34) 52%, rgba(2, 4, 8, 0.1) 100%),
-			linear-gradient(180deg, rgba(3, 6, 10, 0.02), rgba(3, 6, 10, 0.22)),
-			url("/images/tgd-workshop-hero-background.webp") center 48% / cover no-repeat,
-			#05080d;
+			radial-gradient(circle at 78% 28%, rgba(255, 107, 0, 0.12), transparent 30%),
+			linear-gradient(90deg, rgba(2, 4, 8, 0.54) 0%, rgba(2, 4, 8, 0.22) 52%, rgba(2, 4, 8, 0.04) 100%);
+	}
+
+	.pt-intro::after {
+		display: none;
 	}
 
 	.pt-intro-inner {
+		position: relative;
+		z-index: 1;
 		display: grid;
 		grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
 		gap: clamp(34px, 5vw, 68px);
@@ -832,7 +1028,7 @@ const pricingFeatures = [
 	}
 
 	.pt-summary {
-		background: linear-gradient(180deg, #070b12, #02050a);
+		background: transparent;
 	}
 
 	.pt-benefit-grid {
@@ -840,6 +1036,178 @@ const pricingFeatures = [
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 18px;
 		margin-top: 42px;
+	}
+
+	.pt-workflow-grid {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+	}
+
+	.pt-workflow-grid article {
+		padding: 24px 20px;
+	}
+
+	.pt-smart-features {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px;
+		margin-top: 40px;
+	}
+
+	.pt-smart-features article {
+		padding: 28px;
+		border: 1px solid rgba(255, 107, 0, 0.4);
+		border-radius: 10px;
+		background: linear-gradient(145deg, rgba(17, 20, 25, 0.95), rgba(4, 6, 9, 0.94));
+		box-shadow: 0 22px 54px rgba(0, 0, 0, 0.3);
+	}
+
+	.pt-smart-features span {
+		display: block;
+		margin-bottom: 13px;
+		color: var(--accent);
+		font-size: 0.68rem;
+		font-weight: 950;
+		letter-spacing: 0.16em;
+	}
+
+	.pt-smart-features h3 {
+		margin-bottom: 12px;
+	}
+
+	.pt-smart-features p {
+		font-size: 0.96rem;
+		line-height: 1.65;
+	}
+
+	.pt-operations {
+		background: radial-gradient(circle at 82% 18%, rgba(255, 107, 0, 0.12), transparent 28%);
+	}
+
+	.pt-operations-lead {
+		max-width: 820px;
+	}
+
+	.pt-operations-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 18px;
+		margin-top: 38px;
+	}
+
+	.pt-operations-grid article {
+		padding: 26px;
+		border: 1px solid rgba(255, 107, 0, 0.28);
+		border-radius: 10px;
+		background: rgba(7, 10, 15, 0.88);
+		box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
+	}
+
+	.pt-operations-grid span {
+		display: block;
+		margin-bottom: 12px;
+		color: var(--accent);
+		font-size: 0.66rem;
+		font-weight: 950;
+		letter-spacing: 0.16em;
+	}
+
+	.pt-operations-grid h3 {
+		margin-bottom: 10px;
+		font-size: 1.2rem;
+	}
+
+	.pt-operations-grid p {
+		font-size: 0.94rem;
+		line-height: 1.62;
+	}
+
+	.pt-demo-inner {
+		display: grid;
+		grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.55fr);
+		gap: clamp(28px, 5vw, 64px);
+		align-items: center;
+	}
+
+	.pt-demo-copy p:last-child {
+		margin-top: 18px;
+	}
+
+	.pt-demo-selector {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 24px;
+		padding: 6px;
+		border: 1px solid rgba(255, 107, 0, 0.34);
+		border-radius: 12px;
+		background: rgba(3, 7, 12, 0.72);
+	}
+
+	.pt-demo-selector button {
+		padding: 11px 16px;
+		border: 1px solid transparent;
+		border-radius: 8px;
+		background: transparent;
+		color: #d8e1ec;
+		font: inherit;
+		font-weight: 800;
+		cursor: pointer;
+	}
+
+	.pt-demo-selector button:hover,
+	.pt-demo-selector button:focus-visible {
+		border-color: rgba(255, 107, 0, 0.65);
+		outline: none;
+	}
+
+	.pt-demo-selector button.is-active {
+		background: #ff6b00;
+		color: #07101b;
+		box-shadow: 0 8px 24px rgba(255, 107, 0, 0.24);
+	}
+
+	.pt-demo-video {
+		overflow: hidden;
+		padding: 7px;
+		border: 1px solid rgba(255, 107, 0, 0.46);
+		border-radius: 14px;
+		background: rgba(3, 5, 8, 0.9);
+		box-shadow: 0 26px 72px rgba(0, 0, 0, 0.48), 0 0 34px rgba(255, 107, 0, 0.1);
+	}
+
+	.pt-demo-video video {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		height: auto;
+		object-fit: cover;
+		border-radius: 9px;
+		background: #030508;
+	}
+
+	.pt-faq-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px;
+		margin-top: 38px;
+	}
+
+	.pt-faq-grid article {
+		padding: 26px;
+		border: 1px solid rgba(255, 107, 0, 0.28);
+		border-radius: 10px;
+		background: rgba(7, 10, 15, 0.9);
+		box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
+	}
+
+	.pt-faq-grid h3 {
+		margin-bottom: 10px;
+		color: var(--fg);
+	}
+
+	.pt-faq-grid p {
+		font-size: 0.98rem;
+		line-height: 1.65;
 	}
 
 	.pt-benefit-grid article {
@@ -913,7 +1281,7 @@ const pricingFeatures = [
 	.pt-pricing {
 		background:
 			radial-gradient(circle at 10% 20%, rgba(255, 107, 0, 0.14), transparent 30%),
-			#050914;
+			rgba(5, 9, 20, 0.2);
 	}
 
 	.pt-pricing-grid {
@@ -990,7 +1358,7 @@ const pricingFeatures = [
 
 	.pt-final-cta {
 		padding: 90px 0;
-		background: linear-gradient(135deg, #0d1420, #050810);
+		background: radial-gradient(circle at 50% 40%, rgba(255, 107, 0, 0.08), transparent 36%);
 		text-align: center;
 	}
 
@@ -1306,6 +1674,274 @@ const pricingFeatures = [
 		font-size: clamp(2rem, 4.3vw, 3.35rem);
 	}
 
+	.pt-paperwork-heading {
+		margin-bottom: 34px;
+		text-align: center;
+	}
+
+	.pt-paperwork-heading .pt-eyebrow,
+	.pt-paperwork-heading h2,
+	.pt-paperwork-heading p {
+		justify-content: center;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.pt-paperwork-heading h2 {
+		max-width: 900px;
+	}
+
+	.pt-paperwork-grid {
+		width: 100%;
+	}
+
+	.pt-paperwork-visual {
+		overflow: hidden;
+	}
+
+	.pt-paperwork-preview[hidden] {
+		display: none;
+	}
+
+	.pt-pdf-machine[hidden] {
+		display: none;
+	}
+
+	.pt-paperwork-visual.is-paperwork-open .pt-pdf-machine {
+		display: none;
+	}
+
+	.pt-paperwork-visual.is-paperwork-open {
+		display: grid;
+		place-items: center;
+		width: min(520px, calc(100vw - 32px));
+		height: min(76vh, 760px);
+		max-width: 520px;
+		max-height: 760px;
+		overflow: hidden;
+		background: #08101b;
+	}
+
+	.pt-paperwork-visual.is-paperwork-open > .pt-paperwork-preview {
+		width: 100%;
+		height: 100%;
+		max-height: 100%;
+		object-fit: contain;
+		object-position: center;
+		background: #fff;
+		cursor: pointer;
+	}
+
+	.pt-paperwork-visual.is-paperwork-open .pt-paperwork-return-note {
+		position: absolute;
+		left: 50%;
+		top: 14px;
+		z-index: 6;
+		transform: translateX(-50%);
+		width: max-content;
+		margin: 0;
+	}
+
+	.pt-pdf-machine {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+		gap: clamp(24px, 4vw, 52px);
+		align-items: center;
+		width: min(1120px, calc(100% - 36px));
+		margin: 0 auto;
+		min-height: 0;
+		padding: clamp(22px, 4vw, 42px);
+		border: 1px solid rgba(255, 107, 0, 0.22);
+		border-radius: 14px;
+		background: rgba(3, 6, 11, 0.58);
+		box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+		overflow: visible;
+		isolation: isolate;
+	}
+
+	.pt-pdf-machine::before {
+		display: none;
+	}
+
+	.pt-pdf-machine::after {
+		content: "Documents created and ready to send";
+		position: static;
+		grid-column: 1 / -1;
+		z-index: 5;
+		width: 100%;
+		max-width: none;
+		margin-top: -8px;
+		color: var(--dim);
+		font-size: 0.78rem;
+		font-weight: 900;
+		letter-spacing: 0.12em;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.pt-fake-phone {
+		position: relative;
+		left: auto;
+		top: auto;
+		z-index: 4;
+		justify-self: center;
+		width: 274px;
+		height: 548px;
+		transform: rotate(-1deg);
+		padding: 24px 13px 28px;
+		border: 3px solid #57606b;
+		border-radius: 42px;
+		background: linear-gradient(145deg, #151b23, #030507 62%);
+		box-shadow: 0 38px 90px rgba(0, 0, 0, 0.72), 0 0 0 2px #000, 0 0 44px rgba(255, 107, 0, 0.24);
+	}
+
+	.pt-fake-phone::before {
+		content: "";
+		position: absolute;
+		inset: -28px -42px;
+		z-index: -1;
+		border-radius: 58px;
+		background: radial-gradient(circle, rgba(2, 5, 10, 0.88), rgba(2, 5, 10, 0.48) 58%, transparent 72%);
+		pointer-events: none;
+	}
+
+	.pt-document-wall {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 16px;
+		width: 100%;
+	}
+
+	.pt-document-card {
+		display: grid;
+		grid-template-columns: 86px minmax(0, 1fr);
+		gap: 14px;
+		align-items: center;
+		min-height: 136px;
+		padding: 12px;
+		border: 1px solid rgba(255, 107, 0, 0.28);
+		border-radius: 10px;
+		background: rgba(7, 12, 20, 0.88);
+		box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+	}
+
+	.pt-document-card img {
+		display: block;
+		width: 86px;
+		height: 112px;
+		object-fit: contain;
+		border-radius: 5px;
+		background: #f8fafc;
+	}
+
+	.pt-document-card h3 {
+		margin-bottom: 6px;
+		font-size: 1rem;
+	}
+
+	.pt-document-card p {
+		margin: 0;
+		font-size: 0.86rem;
+		line-height: 1.45;
+	}
+
+	.pt-phone-speaker {
+		position: absolute;
+		left: 50%;
+		top: 10px;
+		width: 72px;
+		height: 6px;
+		transform: translateX(-50%);
+		border-radius: 999px;
+		background: #000;
+	}
+
+	.pt-phone-screen {
+		height: 100%;
+		padding: 52px 20px 22px;
+		border-radius: 28px;
+		background:
+			radial-gradient(circle at 78% 12%, rgba(255, 107, 0, 0.25), transparent 28%),
+			linear-gradient(160deg, #0b1422, #03070d 70%);
+		color: #fff;
+	}
+
+	.pt-phone-brand {
+		margin-bottom: 38px;
+		color: #ff6b00;
+		font-size: 2.7rem;
+		font-weight: 1000;
+		letter-spacing: -0.08em;
+	}
+
+	.pt-phone-screen small {
+		display: block;
+		margin-bottom: 8px;
+		color: #ff9a45;
+		font-size: 0.58rem;
+		font-weight: 950;
+		letter-spacing: 0.16em;
+	}
+
+	.pt-phone-screen strong {
+		display: block;
+		margin-bottom: 20px;
+		font-size: 1.42rem;
+		line-height: 1.05;
+	}
+
+	.pt-phone-screen ul {
+		display: grid;
+		gap: 8px;
+		margin: 0 0 24px;
+		padding: 0;
+		list-style: none;
+	}
+
+	.pt-phone-screen li {
+		padding: 10px 12px;
+		border: 1px solid rgba(255, 255, 255, 0.09);
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.05);
+		font-size: 0.74rem;
+		font-weight: 850;
+	}
+
+	.pt-phone-screen li::after {
+		content: "PDF";
+		float: right;
+		color: #ff8a26;
+		font-size: 0.58rem;
+	}
+
+	.pt-phone-screen > span {
+		display: block;
+		padding: 11px;
+		border-radius: 8px;
+		background: #ff6b00;
+		color: #05070a;
+		font-size: 0.72rem;
+		font-weight: 950;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.pt-phone-home {
+		position: absolute;
+		left: 50%;
+		bottom: 10px;
+		width: 74px;
+		height: 5px;
+		transform: translateX(-50%);
+		border-radius: 999px;
+		background: #6b7280;
+	}
+
+	@keyframes pt-pdf-flow {
+		to { transform: translateX(calc(-50% - 11px)); }
+	}
+
 	.pt-image-section {
 		width: min(1480px, calc(100% - 28px));
 		margin: 0 auto;
@@ -1367,7 +2003,7 @@ const pricingFeatures = [
 	.pt-preview,
 	.pt-office,
 	.pt-pricing {
-		background: var(--bg-1);
+		background: transparent;
 	}
 
 	.pt-section-head {
@@ -1812,6 +2448,22 @@ const pricingFeatures = [
 	}
 
 	@media (max-width: 1000px) {
+		.pt-smart-features {
+			grid-template-columns: 1fr;
+		}
+
+		.pt-operations-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.pt-demo-inner {
+			grid-template-columns: 1fr;
+		}
+
+		.pt-workflow-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
 		.pt-intro-inner,
 		.pt-hero-inner,
 		.pt-section-head,
@@ -1896,6 +2548,76 @@ const pricingFeatures = [
 	}
 
 	@media (max-width: 720px) {
+		.pt-app-chain-track {
+			gap: 12px;
+			padding-left: 12px;
+			animation-duration: 52s;
+		}
+
+		.pt-app-chain-card {
+			flex-basis: min(82vw, 360px);
+		}
+
+		.pt-app-chain-card > div {
+			height: 215px;
+		}
+
+		.pt-chain-benefits {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.pt-chain-benefits span {
+			text-align: center;
+		}
+
+		.pt-paperwork-heading {
+			width: min(100% - 28px, 620px);
+		}
+
+		.pt-pdf-machine {
+			grid-template-columns: 1fr;
+			gap: 18px;
+			width: min(100% - 28px, 620px);
+			padding: 22px;
+		}
+
+		.pt-document-wall {
+			grid-template-columns: 1fr;
+		}
+
+		.pt-fake-phone {
+			width: 210px;
+			height: 430px;
+			padding: 20px 10px 24px;
+			border-radius: 34px;
+		}
+
+		.pt-phone-screen {
+			padding: 40px 14px 16px;
+			border-radius: 22px;
+		}
+
+		.pt-phone-brand {
+			margin-bottom: 24px;
+			font-size: 2.1rem;
+		}
+
+		.pt-phone-screen strong {
+			margin-bottom: 13px;
+			font-size: 1.08rem;
+		}
+
+		.pt-phone-screen ul {
+			gap: 5px;
+			margin-bottom: 14px;
+		}
+
+		.pt-phone-screen li {
+			padding: 7px 9px;
+			font-size: 0.63rem;
+		}
+
 		.pt-intro,
 		.pt-final-cta {
 			padding: 62px 0;
@@ -1912,6 +2634,8 @@ const pricingFeatures = [
 		}
 
 		.pt-benefit-grid,
+		.pt-operations-grid,
+		.pt-faq-grid,
 		.pt-pricing-grid {
 			grid-template-columns: 1fr;
 		}
@@ -1926,6 +2650,7 @@ const pricingFeatures = [
 		}
 
 		.pt-benefit-grid article,
+		.pt-operations-grid article,
 		.pt-price-card-new,
 		.pt-included {
 			padding: 24px;
@@ -2171,6 +2896,12 @@ const pricingFeatures = [
 		}
 	}
 
+	@media (prefers-reduced-motion: reduce) {
+		.pt-app-chain-track {
+			animation: pt-app-chain-scroll 70s linear infinite;
+		}
+	}
+
 	@media (max-width: 420px) {
 		.pt-container {
 			width: min(100% - 24px, 420px);
@@ -2235,5 +2966,20 @@ const pricingFeatures = [
 		textarea {
 			min-height: 104px;
 		}
+	}
+
+	/* Keep an opened portrait document contained at every breakpoint. */
+	.pt-paperwork .pt-paperwork-visual.is-paperwork-open {
+		width: min(520px, calc(100vw - 32px));
+		max-width: 520px;
+		height: min(76vh, 760px);
+		max-height: 760px;
+		overflow: hidden;
+	}
+
+	.pt-paperwork .pt-paperwork-visual.is-paperwork-open > .pt-paperwork-preview {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
 	}
 </style>

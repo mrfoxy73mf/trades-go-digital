@@ -1,3 +1,7 @@
 STRIPE_WEBHOOK_SECRET=whsec_replace_with_stripe_endpoint_secret
 SITE_PASSWORD=replace_with_local_test_password
 INVITE_TOKEN=replace_with_local_invite_token
+PUBLIC_SITE_URL=https://trades-go-digital.co.uk
+PDF_DOWNLOAD_PRICE_PENCE=499
+# Use `wrangler secret put STRIPE_SECRET_KEY` for production.
+STRIPE_SECRET_KEY=sk_test_replace_me
