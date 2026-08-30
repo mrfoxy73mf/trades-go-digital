@@ -216,10 +216,14 @@ const operationsFeatures = [
 					</div>
 					<div class="pt-demo-video">
 						<video id="pt-demo-player" controls playsinline preload="metadata" poster="/images/tgd-trades-demo-poster.jpg">
-							<source src="/videos/tgd-trades-demo-music.mp4" type="video/mp4" />
+							<source src="/videos/tgd-trades-demo-music.mp4?v=20260830-clear" type="video/mp4" />
 							Your browser does not support embedded video.
 						</video>
 					</div>
+					<figure id="pt-demo-proof" class="pt-demo-proof" hidden>
+						<img src="/images/tgd-quote-page.png" alt="TGD Trades quote builder with staff, vehicle, plant, material and PDF preview controls" />
+						<figcaption>Quote builder view: customer details, proposed work dates, staff, vehicles, plant, materials and the live customer quote preview.</figcaption>
+					</figure>
 				</div>
 			</section>
 
@@ -359,19 +363,22 @@ const operationsFeatures = [
 			const demoPlayer = document.querySelector<HTMLVideoElement>("#pt-demo-player");
 			const demoTitle = document.querySelector<HTMLElement>("#demo-title");
 			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
+			const demoProof = document.querySelector<HTMLElement>("#pt-demo-proof");
 			const demoButtons = document.querySelectorAll<HTMLButtonElement>("[data-demo]");
 			const demos = {
 				tour: {
 					title: "Take a guided tour of TGD Trades.",
 					description: "Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.",
-					src: "/videos/tgd-trades-demo-music.mp4",
+					src: "/videos/tgd-trades-demo-music.mp4?v=20260830-clear",
 					poster: "/images/tgd-trades-demo-poster.jpg",
+					showProof: false,
 				},
 				quote: {
-					title: "See what happens when the customer says yes.",
-					description: "Build the quote, send it for approval and watch TGD create the job, Client Portal and paperwork automatically.",
-					src: "/videos/tgd-quote-demo-hard-hit.mp4",
-					poster: "/images/tgd-quote-demo-poster.jpg",
+					title: "See the quote system become a job.",
+					description: "Start inside the quote builder, add the work details, then send it for approval and let TGD create the job, Client Portal and paperwork.",
+					src: "/videos/tgd-quote-demo.mp4",
+					poster: "/images/tgd-quote-page.png",
+					showProof: true,
 				},
 			};
 
@@ -386,6 +393,9 @@ const operationsFeatures = [
 					demoPlayer.load();
 					demoTitle.textContent = demo.title;
 					demoDescription.textContent = demo.description;
+					if (demoProof) {
+						demoProof.hidden = !demo.showProof;
+					}
 					demoButtons.forEach((item) => {
 						const active = item === button;
 						item.classList.toggle("is-active", active);
@@ -1123,13 +1133,19 @@ const operationsFeatures = [
 
 	.pt-demo-inner {
 		display: grid;
-		grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.55fr);
-		gap: clamp(28px, 5vw, 64px);
-		align-items: center;
+		gap: 30px;
 	}
 
-	.pt-demo-copy p:last-child {
-		margin-top: 18px;
+	.pt-demo-copy {
+		max-width: 800px;
+	}
+
+	.pt-demo-copy h2 {
+		max-width: 760px;
+	}
+
+	.pt-demo-copy #demo-description {
+		max-width: 680px;
 	}
 
 	.pt-demo-selector {
@@ -1168,11 +1184,11 @@ const operationsFeatures = [
 
 	.pt-demo-video {
 		overflow: hidden;
-		padding: 7px;
+		width: 100%;
 		border: 1px solid rgba(255, 107, 0, 0.46);
-		border-radius: 14px;
-		background: rgba(3, 5, 8, 0.9);
-		box-shadow: 0 26px 72px rgba(0, 0, 0, 0.48), 0 0 34px rgba(255, 107, 0, 0.1);
+		border-radius: 12px;
+		background: #030508;
+		box-shadow: 0 28px 90px rgba(0, 0, 0, 0.5), 0 0 46px rgba(255, 107, 0, 0.14);
 	}
 
 	.pt-demo-video video {
@@ -1181,8 +1197,32 @@ const operationsFeatures = [
 		aspect-ratio: 16 / 9;
 		height: auto;
 		object-fit: cover;
-		border-radius: 9px;
 		background: #030508;
+	}
+
+	.pt-demo-proof {
+		margin: 0;
+		overflow: hidden;
+		border: 1px solid rgba(255, 107, 0, 0.34);
+		border-radius: 12px;
+		background: rgba(3, 5, 8, 0.92);
+		box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+	}
+
+	.pt-demo-proof img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		object-position: left center;
+		background: #030508;
+	}
+
+	.pt-demo-proof figcaption {
+		padding: 14px 18px;
+		color: #cbd6e4;
+		font-size: 0.95rem;
+		line-height: 1.55;
 	}
 
 	.pt-faq-grid {

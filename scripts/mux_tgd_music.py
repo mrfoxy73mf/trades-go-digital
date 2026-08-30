@@ -1,7 +1,8 @@
 from pathlib import Path
 import subprocess
 
-import imageio_ffmpeg
+import os
+import shutil
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,7 +13,9 @@ OUTPUT = ROOT / "public" / "videos" / "tgd-trades-demo-music.mp4"
 if not MUSIC.exists():
     raise SystemExit(f"Music file not found: {MUSIC}")
 
-ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+ffmpeg = os.environ.get("FFMPEG_BINARY") or shutil.which("ffmpeg")
+if not ffmpeg:
+    raise SystemExit("Install FFmpeg or set FFMPEG_BINARY to its executable path.")
 command = [
     ffmpeg, "-y",
     "-i", str(VIDEO),

@@ -1,7 +1,8 @@
 from pathlib import Path
 import subprocess
 
-import imageio_ffmpeg
+import os
+import shutil
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
 
 
@@ -72,17 +73,19 @@ def frame_for(slide_index, progress):
 
     overlay = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
-    draw.rectangle((0, 0, WIDTH, HEIGHT), fill=(2, 5, 9, 68))
-    draw.rectangle((0, 425, WIDTH, HEIGHT), fill=(2, 5, 9, 205))
-    draw.rectangle((0, 425, 9, HEIGHT), fill=(255, 107, 0, 255))
-    draw.rectangle((62, 464, 160, 469), fill=(255, 107, 0, 255))
+    draw.rectangle((0, 500, 9, 646), fill=(255, 107, 0, 255))
+    draw.rectangle((62, 486, 160, 491), fill=(255, 107, 0, 255))
 
     heading_font = font(48, True)
     caption_font = font(26, False)
     small_font = font(18, True)
-    draw.text((62, 485), heading, font=heading_font, fill=(255, 255, 255, 255))
+    for offset in ((3, 3), (0, 4), (4, 0)):
+        draw.text((62 + offset[0], 505 + offset[1]), heading, font=heading_font, fill=(0, 0, 0, 180))
+    draw.text((62, 505), heading, font=heading_font, fill=(255, 255, 255, 255))
     for i, line in enumerate(wrap_text(draw, caption, caption_font, 1050)):
-        draw.text((64, 554 + i * 36), line, font=caption_font, fill=(221, 229, 237, 255))
+        for offset in ((2, 2), (0, 3), (3, 0)):
+            draw.text((64 + offset[0], 574 + i * 36 + offset[1]), line, font=caption_font, fill=(0, 0, 0, 170))
+        draw.text((64, 574 + i * 36), line, font=caption_font, fill=(232, 238, 246, 255))
     draw.text((1030, 668), "TRADES GO DIGITAL", font=small_font, fill=(255, 122, 0, 255))
 
     fade = min(1.0, progress / 0.16, (1.0 - progress) / 0.16)
@@ -94,7 +97,9 @@ def frame_for(slide_index, progress):
 
 
 def main():
-    ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+    ffmpeg = os.environ.get("FFMPEG_BINARY") or shutil.which("ffmpeg")
+    if not ffmpeg:
+        raise SystemExit("Install FFmpeg or set FFMPEG_BINARY to its executable path.")
     command = [
         ffmpeg, "-y", "-f", "rawvideo", "-vcodec", "rawvideo",
         "-pix_fmt", "rgb24", "-s", f"{WIDTH}x{HEIGHT}", "-r", str(FPS),

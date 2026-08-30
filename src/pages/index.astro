@@ -32,6 +32,9 @@ export const prerender = false;
               letting agencies—bringing jobs, customers, paperwork and day-to-day admin together.
             </p>
             <p class="hero-text">
+              We can also build custom business apps for any trade when an off-the-shelf system does not fit the way you work.
+            </p>
+            <p class="hero-text">
               Less time chasing information. More time doing the work that moves your business forward.
             </p>
             <div class="hero-actions">
@@ -64,20 +67,35 @@ export const prerender = false;
             <article class="product-card pdf-maker-card">
               <span class="product-tag">Document Studio</span>
               <h3>PDF Maker</h3>
+              <p class="tool-price">£7.99 <span>one-off</span></p>
               <p>Build trade quotes, invoices, receipts and job sign-off PDFs from a live A4 document preview.</p>
               <a class="button button-primary" href="/pdf-maker/">Open PDF Maker</a>
             </article>
             <article class="product-card logo-maker-card">
               <span class="product-tag">Brand Studio</span>
               <h3>Logo Maker</h3>
+              <p class="tool-price">£1.99 <span>one-off</span></p>
               <p>Create a trade logo, test it on simple mockups and download SVG or PNG files.</p>
               <a class="button button-primary" href="/logo-maker/">Open Logo Maker</a>
+            </article>
+            <article class="product-card maker-bundle-card">
+              <span class="product-tag">Best value</span>
+              <h3>Logo + PDF Bundle</h3>
+              <p class="tool-price">£8.99 <span>one-off</span></p>
+              <p>Create the business logo, send it into the PDF Maker, then download branded trade documents.</p>
+              <a class="button button-primary" href="/logo-maker/">Start Bundle</a>
             </article>
             <article class="product-card lettingdesk-card">
               <span class="product-tag">For letting agencies</span>
               <h3>TGD LettingDesk</h3>
               <p>Properties, maintenance, contractors, rent, finances and customer portals connected in one agency platform.</p>
               <a class="button button-lettingdesk" href="/tgd-lettingdesk/">Explore TGD LettingDesk</a>
+            </article>
+            <article class="product-card custom-app-card">
+              <span class="product-tag">Custom Builds</span>
+              <h3>Business Apps for Any Trade</h3>
+              <p>Need something built around your own work? We can design custom apps for builders, plumbers, electricians, landscapers, roofers, cleaners and other trade businesses.</p>
+              <a class="button button-primary" href="/contact/#tgd-enquiry">Talk About an App</a>
             </article>
           </div>
         </div>
@@ -222,6 +240,22 @@ export const prerender = false;
     flex: 1;
     margin: 0 0 24px;
     color: #c3d2e1;
+  }
+
+  .product-card .tool-price {
+    flex: 0;
+    margin: 0 0 14px;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 950;
+    line-height: 1;
+  }
+
+  .product-card .tool-price span {
+    color: #f0c85a;
+    font-size: 0.86rem;
+    letter-spacing: 0;
+    text-transform: uppercase;
   }
 
   .product-tag {
