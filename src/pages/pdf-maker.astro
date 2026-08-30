@@ -1,0 +1,139 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+---
+
+<!doctype html>
+<html lang="en-GB">
+<head>
+	<BaseHead title="PDF Maker | Trades Go Digital" description="A structured Word-style PDF maker for trade quotes and invoices." />
+</head>
+<body>
+	<Header />
+	<main class="pdf-studio">
+		<header class="studio-top no-print">
+			<a class="studio-brand" href="/"><img src="/images/trades-go-digital-icon-stripe.png" alt="" /><span><strong>Trades Go Digital</strong><small>PDF Maker</small></span></a>
+			<div class="studio-actions"><span id="status">Draft saved on this device</span><button id="save" type="button">Save</button><button id="download" type="button">Download PDF</button></div>
+		</header>
+
+		<div class="studio-grid">
+			<aside class="builder no-print">
+				<section class="builder-intro">
+					<p>Option 4</p>
+					<h1>Word-style PDF builder.</h1>
+					<span>Structured fields on the left. Finished A4 document on the right.</span>
+				</section>
+
+				<section class="panel open">
+					<h2><button class="drawer-toggle" type="button">Document <span>Template</span></button></h2>
+					<div class="choice-grid" id="doc-types"></div>
+				</section>
+
+				<section class="panel two">
+					<h2><button class="drawer-toggle" type="button">Business <span>Company details</span></button></h2>
+					<label class="wide logo-row">Logo <span><figure id="logo-preview">TGD</figure><em><label class="upload">Choose logo<input id="logo" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" /></label><button id="import-logo" type="button">Import from Logo Maker</button><button id="remove-logo" type="button">Remove</button></em></span></label>
+					<label>Business name<input id="business" /></label>
+					<label>Email<input id="email" /></label>
+					<label>Phone<input id="phone" /></label>
+					<label>VAT number<input id="vatNumber" /></label>
+					<label>Logo size<select id="logoSize"><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option><option value="wide">Wide</option></select></label>
+					<label>Logo shape<select id="logoShape"><option value="rounded">Rounded</option><option value="square">Square</option><option value="circle">Circle</option><option value="none">No box</option></select></label>
+					<label class="wide">Address<textarea id="businessAddress" rows="3"></textarea></label>
+				</section>
+
+				<section class="panel two">
+					<h2><button class="drawer-toggle" type="button">Customer <span>Job details</span></button></h2>
+					<label>Customer<input id="customer" /></label>
+					<label>Reference<input id="reference" /></label>
+					<label>Date<input id="date" /></label>
+					<label>Due / valid until<input id="due" /></label>
+					<label class="wide">Site address<textarea id="siteAddress" rows="3"></textarea></label>
+					<label class="wide">Scope of work<textarea id="scope" rows="4"></textarea></label>
+				</section>
+
+				<section class="panel">
+					<h2><button class="drawer-toggle" type="button">Line Items <span>Rows and totals</span></button></h2>
+					<div class="items" id="items"></div>
+					<button class="add" id="add-item" type="button">+ Add item</button>
+					<div class="two mini">
+						<label>VAT %<input id="vatRate" type="number" step="1" /></label>
+						<label>Deposit paid<input id="deposit" type="number" step="0.01" /></label>
+					</div>
+				</section>
+
+				<section class="panel two">
+					<h2><button class="drawer-toggle" type="button">Content <span>Notes and signatures</span></button></h2>
+					<label class="wide">Terms<textarea id="terms" rows="4"></textarea></label>
+					<label class="wide">Notes<textarea id="notes" rows="3"></textarea></label>
+					<label class="wide check-row"><input id="signatures" type="checkbox" /> Show signature boxes</label>
+				</section>
+
+				<section class="panel two">
+					<h2><button class="drawer-toggle" type="button">Design <span>Change the PDF</span></button></h2>
+					<label>Design<select id="design"><option value="letterhead">Premium letterhead</option><option value="trade">Bold trade</option><option value="accounts">Accounts office</option><option value="minimal">Clean minimal</option><option value="executive">Executive slate</option><option value="site">Site pack</option></select></label>
+					<label>Font<select id="font"><option value="inter">Modern sans</option><option value="serif">Formal serif</option><option value="mono">Technical mono</option></select></label>
+					<label>Spacing<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="spacious">Spacious</option></select></label>
+					<label>Header<select id="headerStyle"><option value="standard">Standard</option><option value="banner">Full banner</option><option value="boxed">Boxed details</option></select></label>
+					<label>Accent<input id="accent" type="color" /></label>
+					<label class="wide">Watermark<input id="watermark" placeholder="Optional watermark, e.g. DRAFT" /></label>
+				</section>
+			</aside>
+
+			<section class="preview">
+				<div class="preview-head no-print">
+					<span>Live A4 preview</span>
+					<label class="zoom-control">Zoom
+						<input id="previewZoom" type="range" min="0.45" max="1.3" step="0.01" />
+						<output id="previewZoomValue">80%</output>
+					</label>
+					<strong id="preview-total">£0.00</strong>
+				</div>
+				<div class="sheet-stage" id="sheet-stage">
+					<article class="sheet" id="sheet"></article>
+				</div>
+			</section>
+		</div>
+	</main>
+
+	<script>
+		const docs = {
+			quote: { label: "Quote", title: "Quotation", ref: "Q-001", due: "Valid for 30 days", terms: "This quotation is valid for 30 days. Price assumes clear access, normal working hours and no hidden defects unless stated.", notes: "Customer acceptance confirms the scope, price and proposed dates are agreed." },
+			invoice: { label: "Invoice", title: "Invoice", ref: "INV-001", due: "Due within 14 days", terms: "Payment is due within 14 days. Please use the invoice reference when paying by bank transfer.", notes: "Thank you for your business." },
+			receipt: { label: "Receipt", title: "Payment Receipt", ref: "REC-001", due: "Paid in full", terms: "This receipt confirms payment has been received for the work or invoice stated.", notes: "Keep this receipt for your records." },
+			signoff: { label: "Sign-off", title: "Job Sign-off", ref: "JOB-001", due: "Customer approval", terms: "Customer sign-off confirms that the listed works have been completed and handed over.", notes: "Any snagging items should be listed before final approval." },
+			rams: { label: "RAMS", title: "RAMS Pack", ref: "RAMS-001", due: "Site safety pack", terms: "All operatives must read the risk assessments and method statement before starting work.", notes: "Emergency access, PPE and site-specific hazards must be confirmed on arrival." },
+			permit: { label: "Permit", title: "Permit to Work", ref: "PTW-001", due: "Controlled work", terms: "This permit must be authorised before controlled work starts and closed once work is complete.", notes: "Supervisor to confirm isolation, controls and final checks." }
+		};
+		const fresh = () => ({ doc:"quote", design:"letterhead", font:"inter", density:"comfortable", headerStyle:"standard", previewZoom:0.8, logoSize:"large", logoShape:"rounded", accent:"#f97316", watermark:"", signatures:true, logo:"", business:"Your Business", email:"hello@yourbusiness.co.uk", phone:"01234 567890", vatNumber:"VAT 000 0000 00", businessAddress:"Business address\nTown / City\nPostcode", customer:"Customer name", reference:"Q-001", date:new Intl.DateTimeFormat("en-GB").format(new Date()), due:"Valid for 30 days", siteAddress:"Site address\nTown / City\nPostcode", scope:"Supply labour, materials and plant to complete the works described in this document.", items:[{desc:"Labour",qty:2,unit:"days",price:280},{desc:"Materials",qty:1,unit:"sum",price:325},{desc:"Waste removal",qty:1,unit:"sum",price:85}], vatRate:20, deposit:0, terms:docs.quote.terms, notes:docs.quote.notes });
+		let state = fresh();
+		const $ = id => document.getElementById(id);
+		const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+		const money = n => new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP"}).format(Number(n||0));
+		const initials = v => String(v||"TGD").split(/\s+/).map(w=>w[0]).join("").slice(0,3).toUpperCase();
+		function totals(){const subtotal=state.items.reduce((a,i)=>a+(Number(i.qty)||0)*(Number(i.price)||0),0);const vat=subtotal*(Number(state.vatRate)||0)/100;return{subtotal,vat,total:subtotal+vat-(Number(state.deposit)||0)}}
+		function setDoc(key){state.doc=key;state.reference=docs[key].ref;state.due=docs[key].due;state.terms=docs[key].terms;state.notes=docs[key].notes;state.vatRate=["signoff","rams","permit"].includes(key)?0:20;if(key==="signoff")state.items=[{desc:"Works completed",qty:1,unit:"job",price:0},{desc:"Handover completed",qty:1,unit:"item",price:0}];if(key==="rams")state.items=[{desc:"Risk assessments",qty:1,unit:"pack",price:0},{desc:"Method statement",qty:1,unit:"pack",price:0},{desc:"COSHH assessments",qty:1,unit:"pack",price:0}];if(key==="permit")state.items=[{desc:"Permit controls checked",qty:1,unit:"item",price:0},{desc:"Permit authorised",qty:1,unit:"item",price:0}];render()}
+		function renderControls(){
+			$("doc-types").innerHTML=Object.entries(docs).map(([k,d])=>`<button class="${state.doc===k?"active":""}" data-doc="${k}"><strong>${d.label}</strong><small>${d.title}</small></button>`).join("");
+			["business","email","phone","vatNumber","logoSize","logoShape","businessAddress","customer","reference","date","due","siteAddress","scope","vatRate","deposit","terms","notes","design","font","density","headerStyle","accent","watermark","previewZoom"].forEach(k=>$(k).value=state[k]);
+			$("signatures").checked=Boolean(state.signatures);
+			$("logo-preview").innerHTML=state.logo?`<img src="${state.logo}" alt="" />`:initials(state.business);
+			$("items").innerHTML=state.items.map((i,n)=>`<div class="item"><input data-i="${n}" data-f="desc" value="${esc(i.desc)}" /><input data-i="${n}" data-f="qty" type="number" step="0.01" value="${i.qty}" /><input data-i="${n}" data-f="unit" value="${esc(i.unit)}" /><input data-i="${n}" data-f="price" type="number" step="0.01" value="${i.price}" /><button data-remove="${n}" type="button">x</button></div>`).join("");
+		}
+		function render(updateControls=true){
+			if(updateControls)renderControls();const d=docs[state.doc],t=totals(),sheet=$("sheet"),zoom=Number(state.previewZoom)||0.8;$("preview-total").textContent=money(t.total);$("previewZoomValue").textContent=`${Math.round(zoom*100)}%`;$("sheet-stage").style.height=`${1123*zoom}px`;sheet.className=`sheet design-${state.design} font-${state.font} density-${state.density} header-${state.headerStyle} logo-${state.logoSize} logo-shape-${state.logoShape}`;sheet.style.setProperty("--accent",state.accent);sheet.style.setProperty("--preview-zoom",zoom);
+			sheet.innerHTML=`${state.watermark?`<div class="watermark">${esc(state.watermark)}</div>`:""}<header><div class="identity"><figure>${state.logo?`<img src="${state.logo}" alt="" />`:initials(state.business)}</figure><div><strong>${esc(state.business)}</strong><span>${esc(state.email)} · ${esc(state.phone)}</span><span>${esc(state.vatNumber)}</span></div></div><div class="doc-meta"><b>${esc(d.title)}</b><span>${esc(state.reference)}</span><span>${esc(state.date)}</span></div></header><section class="hero"><div><small>${esc(d.label)}</small><h2>${esc(d.title)}</h2><p>${esc(state.due)}</p></div><aside><small>Prepared for</small><strong>${esc(state.customer)}</strong><p>${esc(state.siteAddress)}</p></aside></section><section class="scope"><small>Scope of work</small><p>${esc(state.scope)}</p></section><table><thead><tr><th>Description</th><th>Qty</th><th>Unit</th><th>Price</th><th>Total</th></tr></thead><tbody>${state.items.map(i=>`<tr><td>${esc(i.desc)}</td><td>${esc(i.qty)}</td><td>${esc(i.unit)}</td><td>${money(i.price)}</td><td>${money((Number(i.qty)||0)*(Number(i.price)||0))}</td></tr>`).join("")}</tbody></table><section class="lower"><div class="terms"><h3>Terms</h3><p>${esc(state.terms)}</p>${state.notes?`<h3>Notes</h3><p>${esc(state.notes)}</p>`:""}${state.signatures?`<div class="signatures"><span>Prepared by</span><span>Customer signature</span></div>`:""}</div><div class="summary"><p><span>Subtotal</span><b>${money(t.subtotal)}</b></p><p><span>VAT ${state.vatRate}%</span><b>${money(t.vat)}</b></p><p><span>Deposit</span><b>${money(state.deposit)}</b></p><strong><span>Total</span><em>${money(t.total)}</em></strong></div></section><footer><span>${esc(state.businessAddress)}</span><span>Page 1</span></footer>`;
+			localStorage.setItem("tgd-word-style-pdf",JSON.stringify(state));
+		}
+		document.addEventListener("click",e=>{const toggle=e.target.closest(".drawer-toggle");if(toggle){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("open"));toggle.closest(".panel").classList.add("open");return}const doc=e.target.closest("[data-doc]");if(doc)setDoc(doc.dataset.doc);const rem=e.target.closest("[data-remove]");if(rem){state.items.splice(Number(rem.dataset.remove),1);render()}});
+		document.addEventListener("input",e=>{const el=e.target;if(el.dataset?.i){state.items[Number(el.dataset.i)][el.dataset.f]=["qty","price"].includes(el.dataset.f)?Number(el.value):el.value}else if(el.id in state){state[el.id]=el.type==="checkbox"?el.checked:(["vatRate","deposit","previewZoom"].includes(el.id)?Number(el.value):el.value)}render(false)});
+		$("add-item").onclick=()=>{state.items.push({desc:"New item",qty:1,unit:"each",price:0});render()};$("save").onclick=()=>{$("status").textContent="Saved just now";localStorage.setItem("tgd-word-style-pdf",JSON.stringify(state))};$("download").onclick=()=>window.print();$("logo").onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.logo=String(r.result);render()};r.readAsDataURL(f)};$("import-logo").onclick=()=>{const logo=localStorage.getItem("tgd-logo-maker-export");if(logo){state.logo=logo;$("status").textContent="Logo imported from Logo Maker";render()}else{$("status").textContent="Create a logo first in Logo Maker"}};$("remove-logo").onclick=()=>{state.logo="";render()};try{const saved=JSON.parse(localStorage.getItem("tgd-word-style-pdf"));if(saved?.business)state={...fresh(),...saved}}catch{}render();
+	</script>
+</body>
+</html>
+
+<style is:global>
+	*{box-sizing:border-box}body{margin:0;background:#e8eef5;color:#08111f;font-family:Arial,sans-serif}.studio-top{height:74px;background:#07111f;border-bottom:3px solid #f97316;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:14px 24px}.studio-brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}.studio-brand img{width:42px;height:42px;border-radius:8px}.studio-brand span{display:grid}.studio-brand small{color:#f97316;font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.studio-actions{display:flex;align-items:center;gap:10px}.studio-actions span{color:#aab8ca;font-size:12px}.studio-actions button{border:1px solid #2d4058;background:#12233a;color:#fff;border-radius:8px;padding:10px 14px;font-weight:900}.studio-actions #download{background:#f97316;border-color:#f97316;color:#111827}.studio-grid{height:calc(100vh - 149px);display:grid;grid-template-columns:430px minmax(720px,1fr);overflow:hidden}.builder{overflow:auto;background:#f8fafc;border-right:1px solid #cbd7e4;padding:20px;display:grid;align-content:start;gap:14px}.builder-intro{background:#0d2b45;color:#fff;border-radius:14px;padding:22px}.builder-intro p{margin:0;color:#f97316;font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.builder-intro h1{font-size:30px;line-height:1;margin:7px 0}.builder-intro span{color:#d5e4f2;font-size:13px}.panel{background:#fff;border:1px solid #d9e3ee;border-radius:14px;padding:14px;box-shadow:0 8px 24px rgba(8,17,31,.06);display:grid;gap:12px}.panel h2{margin:0;background:#07111f;color:#fff;border-radius:10px;padding:13px;font-size:16px}.two{grid-template-columns:1fr 1fr}.two h2,.wide{grid-column:1/-1}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice-grid button{border:1px solid #d5dfeb;background:#f8fafc;border-radius:9px;padding:12px;text-align:left}.choice-grid button.active{border-color:#f97316;background:#fff7ed;box-shadow:inset 4px 0 #f97316}.choice-grid strong{display:block}.choice-grid small{color:#6c7b91}label{display:grid;gap:6px;color:#40516a;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}input,textarea,select{width:100%;border:1px solid #ced9e6;border-radius:8px;padding:11px;font:inherit;font-size:13px}.logo-row span{display:flex;gap:12px;align-items:center;border:1px dashed #bfccd9;border-radius:10px;padding:12px}.logo-row figure{width:58px;height:58px;margin:0;background:#07111f;color:#fff;border-radius:10px;display:grid;place-items:center;font-weight:900;overflow:hidden}.logo-row img{width:100%;height:100%;object-fit:contain;background:white}.logo-row em{display:grid;gap:8px;font-style:normal}.upload{width:max-content;background:#07111f;color:#fff;border-radius:7px;padding:8px 10px}.upload input{display:none}.logo-row button{border:0;background:transparent;color:#c2410c;font-weight:900;text-align:left}.items{display:grid;gap:8px}.item{display:grid;grid-template-columns:1.5fr .5fr .6fr .7fr 34px;gap:6px}.item button{border:0;background:#ef4444;color:#fff;border-radius:8px;font-weight:900}.add{background:#f97316;border:0;border-radius:8px;padding:11px;font-weight:900}.mini{border-top:1px solid #e2e8f0;padding-top:12px}.preview{overflow:auto;padding:28px 44px}.preview-head{width:794px;margin:0 auto 14px;background:#fff;border:1px solid #d5dfeb;border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;font-size:12px;font-weight:900}.preview-head strong{background:#07111f;color:white;border-radius:99px;padding:6px 12px}.sheet{--accent:#f97316;width:794px;min-height:1123px;margin:0 auto;background:#fff;padding:54px 60px;box-shadow:0 24px 80px rgba(8,17,31,.2);display:flex;flex-direction:column;gap:25px;position:relative}.sheet:before{content:"";position:absolute;inset:0 0 auto;height:10px;background:var(--accent)}.sheet header{display:flex;justify-content:space-between;border-bottom:1px solid #dde5ee;padding-bottom:20px}.identity{display:flex;gap:12px}.identity figure{width:54px;height:54px;margin:0;background:#07111f;color:white;border-radius:10px;display:grid;place-items:center;font-weight:900;overflow:hidden}.identity img{width:100%;height:100%;object-fit:contain;background:#fff}.identity div{display:grid;gap:3px}.identity strong{font-size:18px}.identity span,.doc-meta span{color:#657389;font-size:11px;white-space:pre-line}.doc-meta{text-align:right;display:grid;gap:4px}.doc-meta b{font-size:25px;text-transform:uppercase;color:var(--accent)}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}.hero small,.scope small{color:var(--accent);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.hero h2{font-size:54px;line-height:.95;margin:8px 0}.hero p,.hero aside p,.scope p,.terms p{white-space:pre-line;color:#45566f;line-height:1.55;font-size:13px}.hero aside,.scope{background:#f8fafc;border:1px solid #dce5ee;border-radius:12px;padding:18px}.hero aside strong{display:block;font-size:18px;margin:7px 0}table{width:100%;border-collapse:collapse;font-size:12px}th{background:#07111f;color:white;text-align:left;padding:12px;text-transform:uppercase;font-size:10px;letter-spacing:.08em}td{border-bottom:1px solid #e2e8f0;padding:12px}th:nth-child(n+2),td:nth-child(n+2){text-align:right}.lower{display:grid;grid-template-columns:1fr 260px;gap:28px}.terms h3{margin:0 0 8px}.summary{background:#f8fafc;border:1px solid #dce5ee;border-radius:12px;padding:18px}.summary p,.summary strong{display:flex;justify-content:space-between;margin:0;padding:9px 0;border-bottom:1px solid #dce5ee}.summary strong{border:0}.summary em{font-style:normal;color:var(--accent);font-size:24px}.signatures{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}.signatures span{border-top:2px solid #111827;padding-top:9px;color:#6b778a;font-size:11px}.sheet footer{margin-top:auto;border-top:1px solid #dde5ee;padding-top:12px;display:flex;justify-content:space-between;color:#7b8798;font-size:10px;white-space:pre-line}.design-trade{background:#fff7ed}.design-trade .hero{background:#07111f;color:#fff;margin:0 -24px;padding:28px 24px;border-left:10px solid var(--accent)}.design-trade .hero p,.design-trade .hero aside p{color:#d9e5f2}.design-trade .hero aside{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}.design-accounts .summary{background:#07111f;color:#fff}.design-accounts .summary span{color:#d0d8e4}.design-minimal:before{height:4px}.design-minimal .hero aside,.design-minimal .scope,.design-minimal .summary{background:#fff}.design-minimal th{background:#fff;color:#07111f;border-bottom:2px solid #07111f}.design-minimal td{border-bottom:1px solid #111827}.design-minimal .doc-meta b{color:#07111f}
+	.drawer-toggle{width:100%;border:0;background:transparent;color:inherit;padding:0;font:inherit;font-weight:900;display:flex;align-items:center;justify-content:space-between;text-align:left}.drawer-toggle span{font-size:10px;color:#9eb5ce;letter-spacing:.12em;text-transform:uppercase}.panel:not(.open)>:not(h2){display:none}.panel.open{border-color:#f97316;box-shadow:0 14px 34px rgba(249,115,22,.12)}.panel.open h2{background:#f97316;color:#07111f}.panel.open .drawer-toggle span{color:#7c2d12}.check-row{display:flex;grid-column:1/-1;align-items:center;gap:10px;padding:12px;border:1px solid #d9e3ee;border-radius:10px;background:#f8fafc}.check-row input{width:18px;height:18px}.sheet.font-serif{font-family:Georgia,"Times New Roman",serif}.sheet.font-mono{font-family:"Courier New",monospace}.sheet.font-mono .hero h2{font-size:46px}.sheet.density-compact{gap:16px;padding:44px 54px}.sheet.density-compact .hero h2{font-size:44px}.sheet.density-compact td,.sheet.density-compact th{padding:8px 10px}.sheet.density-spacious{gap:34px;padding:66px}.sheet.density-spacious .hero h2{font-size:60px}.header-banner header{margin:-54px -60px 0;padding:30px 60px 24px;background:#07111f;color:#fff;border-bottom:0}.header-banner .identity span,.header-banner .doc-meta span{color:#d8e5f2}.header-boxed header{border:2px solid var(--accent);border-radius:14px;padding:18px;background:#fffaf5}.design-executive{background:#f7f8fb}.design-executive:before{height:18px;background:linear-gradient(90deg,#07111f 0 65%,var(--accent) 65%)}.design-executive .doc-meta b{color:#07111f}.design-executive .hero aside,.design-executive .summary{border-color:#07111f}.design-site{background:#fffdf8}.design-site:before{height:14px;background:repeating-linear-gradient(135deg,#07111f 0 16px,var(--accent) 16px 32px)}.design-site th{background:var(--accent);color:#111827}.design-site .scope{border-left:8px solid var(--accent)}.watermark{position:absolute;inset:40% 0 auto;text-align:center;font-size:96px;font-weight:900;color:rgba(8,17,31,.055);transform:rotate(-18deg);text-transform:uppercase;pointer-events:none;letter-spacing:.08em}.font-mono .watermark{font-size:72px}.design-trade .watermark,.header-banner .watermark{color:rgba(255,255,255,.08)}
+	.zoom-control{display:flex;grid-auto-flow:column;align-items:center;gap:10px;width:auto;color:#40516a;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.zoom-control input{width:210px;padding:0;accent-color:#f97316;cursor:pointer}.zoom-control output{min-width:42px;padding:6px 8px;border-radius:8px;background:#eef4fb;color:#07111f;text-align:center}.sheet-stage{width:794px;margin:0 auto}.sheet{transform:scale(var(--preview-zoom,.8));transform-origin:top center}.logo-medium .identity figure{width:72px;height:72px}.logo-large .identity figure{width:98px;height:98px}.logo-wide .identity figure{width:170px;height:82px}.logo-medium .identity,.logo-large .identity,.logo-wide .identity{align-items:center}.logo-large .identity strong,.logo-wide .identity strong{font-size:22px}.logo-shape-square .identity figure{border-radius:0}.logo-shape-circle .identity figure{border-radius:999px}.logo-shape-none .identity figure{background:transparent;border-radius:0}.logo-shape-none .identity img{background:transparent}.logo-wide .identity img,.logo-large .identity img{object-fit:contain;padding:4px}.header-banner.logo-large header,.header-banner.logo-wide header{padding-top:24px;padding-bottom:24px}
+	@media(max-width:1050px){.studio-grid{display:block;height:auto;overflow:visible}.builder,.preview{height:auto;overflow:visible}.preview{padding:24px 8px}.preview-head{width:min(794px,calc(100vw - 24px));flex-wrap:wrap}.sheet-stage{width:min(794px,calc(100vw - 24px));overflow:visible}}@media(max-width:700px){.studio-top{height:auto;align-items:flex-start}.studio-actions span,.studio-actions #save{display:none}.two,.hero,.lower,.signatures{grid-template-columns:1fr}.choice-grid{grid-template-columns:1fr}.item{grid-template-columns:1fr 1fr}.item input:first-child{grid-column:1/-1}.preview-head{width:365px}.zoom-control{order:3;width:100%;justify-content:space-between}.zoom-control input{width:170px}}@media print{@page{size:A4 portrait;margin:0}.no-print{display:none!important}body,main,.studio-grid,.preview,.sheet-stage{display:block;background:#fff;margin:0;padding:0;width:auto;height:auto!important}.sheet{width:210mm;min-height:297mm;margin:0;box-shadow:none;transform:none!important;padding:14mm 15mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}.sheet *{break-inside:avoid}}
+</style>

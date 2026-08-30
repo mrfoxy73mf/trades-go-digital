@@ -1,0 +1,154 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+---
+
+<!doctype html>
+<html lang="en-GB">
+<head>
+	<BaseHead title="Logo Maker | Trades Go Digital" description="Design a simple business logo and export it as SVG or PNG." />
+</head>
+<body>
+	<Header />
+	<main class="logo-studio">
+		<header class="studio-top">
+			<a class="brand" href="/"><img src="/images/trades-go-digital-icon-stripe.png" alt="" /><span><strong>Trades Go Digital</strong><small>Logo Maker</small></span></a>
+			<div class="actions"><button id="reset" type="button">Reset</button><button id="use-pdf" type="button">Use in PDF Maker</button><button id="svg" type="button">Download SVG</button><button id="png" type="button">Download PNG</button></div>
+		</header>
+		<div class="studio-grid">
+			<aside class="tools">
+				<section class="intro">
+					<p>Brand Studio</p>
+					<h1>Build a sharp trade logo.</h1>
+					<span>Create a clean logo mark for vans, quotes, invoices, websites and social posts.</span>
+				</section>
+				<section class="panel open">
+					<h2><button class="drawer" type="button">Business <span>Words</span></button></h2>
+					<label>Business name<input id="name" /></label>
+					<label>Short mark<input id="mark" maxlength="4" /></label>
+					<label>Tagline<input id="tagline" /></label>
+					<label>Trade type<select id="trade"><option>Construction</option><option>Plumbing</option><option>Electrical</option><option>Landscaping</option><option>Roofing</option><option>Groundworks</option><option>Cleaning</option><option>General Trades</option></select></label>
+				</section>
+				<section class="panel">
+					<h2><button class="drawer" type="button">Templates <span>Starting point</span></button></h2>
+					<div class="choice-grid" id="templates"></div>
+				</section>
+				<section class="panel">
+					<h2><button class="drawer" type="button">Style <span>Layout</span></button></h2>
+					<div class="choice-grid" id="layouts"></div>
+					<label>Shape<select id="shape"><option value="badge">Rounded badge</option><option value="shield">Shield</option><option value="circle">Circle</option><option value="slab">Slab</option><option value="hex">Hexagon</option><option value="diamond">Diamond</option><option value="tab">Tool tab</option><option value="pill">Long pill</option><option value="house">House badge</option><option value="ribbon">Ribbon</option><option value="gear">Gear edge</option><option value="bolt">Lightning</option></select></label>
+					<label>Finish<select id="finish"><option value="clean">Clean</option><option value="metal">Metal</option><option value="stamp">Stamp</option><option value="neon">Neon</option><option value="cutout">Cut-out</option><option value="plate">Name plate</option><option value="carbon">Carbon</option><option value="hazard">Hazard stripe</option><option value="outline">Double outline</option><option value="luxury">Luxury foil</option><option value="glass">Glass panel</option></select></label>
+				</section>
+				<section class="panel two">
+					<h2><button class="drawer" type="button">Text <span>Size and position</span></button></h2>
+					<label>Mark size<input id="markSize" type="range" min="18" max="72" /></label>
+					<label>Name size<input id="nameSize" type="range" min="40" max="110" /></label>
+					<label>Tagline size<input id="taglineSize" type="range" min="12" max="36" /></label>
+					<label>Letter spacing<input id="letterSpace" type="range" min="0" max="14" /></label>
+					<label>Text X<input id="textX" type="range" min="-120" max="120" /></label>
+					<label>Text Y<input id="textY" type="range" min="-120" max="120" /></label>
+					<label>Mark X<input id="markX" type="range" min="-140" max="140" /></label>
+					<label>Mark Y<input id="markY" type="range" min="-100" max="120" /></label>
+				</section>
+				<section class="panel two">
+					<h2><button class="drawer" type="button">Colours <span>Brand</span></button></h2>
+					<label>Accent<input id="accent" type="color" /></label>
+					<label>Secondary<input id="secondary" type="color" /></label>
+					<label>Background<input id="background" type="color" /></label>
+					<label>Text<input id="text" type="color" /></label>
+				</section>
+				<section class="panel">
+					<h2><button class="drawer" type="button">Preview <span>Mockups</span></button></h2>
+					<div class="mock-tabs" id="mockups"></div>
+				</section>
+			</aside>
+			<section class="preview">
+				<div class="canvas-wrap" id="canvas-wrap">
+					<div id="logo-preview"></div>
+				</div>
+				<div class="mockup" id="mockup"></div>
+			</section>
+		</div>
+	</main>
+	<script>
+		const fresh=()=>({name:"TGD Trades",mark:"TGD",tagline:"TRADES GO DIGITAL",trade:"Construction",layout:"stacked",shape:"badge",finish:"metal",accent:"#ff6b00",secondary:"#f8fafc",background:"#05070a",text:"#ffffff",markSize:30,nameSize:78,taglineSize:24,letterSpace:7,textX:0,textY:0,markX:0,markY:0,mockup:"van"});
+		const templates={
+			trade:{label:"Trade Strong",layout:"stacked",shape:"badge",finish:"metal",accent:"#ff6b00",secondary:"#f8fafc",background:"#05070a",text:"#ffffff",markSize:30,nameSize:78,taglineSize:24,letterSpace:7,textX:0,textY:0,markX:0,markY:0},
+			shield:{label:"Safety Shield",layout:"emblem",shape:"shield",finish:"plate",accent:"#f97316",secondary:"#facc15",background:"#111827",text:"#ffffff",markSize:34,nameSize:72,taglineSize:22,letterSpace:6,textX:0,textY:8,markX:0,markY:0},
+			van:{label:"Van Side",layout:"wide",shape:"tab",finish:"clean",accent:"#ff6b00",secondary:"#93c5fd",background:"#07111f",text:"#ffffff",markSize:32,nameSize:72,taglineSize:20,letterSpace:5,textX:0,textY:0,markX:0,markY:0},
+			premium:{label:"Premium Black",layout:"minimal",shape:"diamond",finish:"neon",accent:"#f59e0b",secondary:"#ffffff",background:"#030712",text:"#ffffff",markSize:28,nameSize:82,taglineSize:20,letterSpace:10,textX:0,textY:-8,markX:0,markY:0},
+			local:{label:"Local Trader",layout:"wide",shape:"circle",finish:"stamp",accent:"#16a34a",secondary:"#dcfce7",background:"#052e16",text:"#f8fafc",markSize:28,nameSize:64,taglineSize:18,letterSpace:3,textX:0,textY:0,markX:0,markY:0},
+			certified:{label:"Certified",layout:"emblem",shape:"hex",finish:"cutout",accent:"#2563eb",secondary:"#e0f2fe",background:"#0f172a",text:"#ffffff",markSize:36,nameSize:68,taglineSize:19,letterSpace:8,textX:0,textY:10,markX:0,markY:0},
+			power:{label:"Power Tools",layout:"wide",shape:"bolt",finish:"hazard",accent:"#f97316",secondary:"#fbbf24",background:"#0b0f14",text:"#ffffff",markSize:34,nameSize:78,taglineSize:20,letterSpace:5,textX:10,textY:0,markX:0,markY:-2},
+			workshop:{label:"Workshop",layout:"stacked",shape:"gear",finish:"carbon",accent:"#ff6b00",secondary:"#94a3b8",background:"#06080c",text:"#f8fafc",markSize:30,nameSize:74,taglineSize:22,letterSpace:7,textX:0,textY:4,markX:0,markY:0},
+			property:{label:"Property",layout:"emblem",shape:"house",finish:"glass",accent:"#0ea5e9",secondary:"#ffffff",background:"#082f49",text:"#ffffff",markSize:30,nameSize:70,taglineSize:19,letterSpace:6,textX:0,textY:12,markX:0,markY:0},
+			classic:{label:"Classic Ribbon",layout:"seal",shape:"ribbon",finish:"outline",accent:"#b45309",secondary:"#fef3c7",background:"#1c1208",text:"#ffffff",markSize:30,nameSize:64,taglineSize:18,letterSpace:7,textX:0,textY:22,markX:0,markY:-12},
+			modern:{label:"Modern Pill",layout:"wide",shape:"pill",finish:"luxury",accent:"#f59e0b",secondary:"#ffffff",background:"#09090b",text:"#ffffff",markSize:30,nameSize:70,taglineSize:18,letterSpace:5,textX:0,textY:0,markX:0,markY:0}
+		};
+		const layouts={stacked:"Stacked",wide:"Wide",emblem:"Emblem",minimal:"Minimal",seal:"Seal",corner:"Corner"};
+		const mockups={van:"Van side",quote:"Quote header",social:"Social avatar",workwear:"Workwear"};
+		let state=fresh();
+		const $=id=>document.getElementById(id);
+		const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+		function icon(){return {Plumbing:"M12 3v18M5 10h14M8 6h8",Electrical:"M13 2 4 14h7l-2 8 9-12h-7l2-8z",Landscaping:"M4 18c6-1 10-6 16-14 0 10-4 17-14 14z",Roofing:"M3 12 12 4l9 8M6 10v9h12v-9",Groundworks:"M4 18h16M7 18l4-12h2l4 12",Cleaning:"M5 18c5 2 9 2 14 0M8 17l2-10h4l2 10","General Trades":"M6 18 18 6M14 6l4 4M6 6h5v5"}[state.trade]||"M4 18h16M8 18V8h8v10"}
+		function logoSvg(){
+			const wide=state.layout==="wide",emblem=state.layout==="emblem",minimal=state.layout==="minimal",seal=state.layout==="seal",corner=state.layout==="corner";
+			const w=wide?900:720,h=wide?320:520,markSize=emblem||seal?190:wide?150:170;
+			const markX=(wide?54:(w-markSize)/2)+Number(state.markX||0),markY=(wide?82:54)+Number(state.markY||0);
+			const textAnchor=wide||corner?"start":"middle";
+			const textBaseX=(wide?250:corner?70:w/2)+Number(state.textX||0),textBaseY=(wide?86:corner?88:minimal?246:260)+Number(state.textY||0);
+			const pathShapes=["shield","hex","diamond","tab","house","ribbon","gear","bolt"];
+			const shapeTag=pathShapes.includes(state.shape)?"path":"rect";
+			const gear=Array.from({length:16},(_,i)=>{const a=(-90+i*22.5)*Math.PI/180,r=i%2?markSize*.47:markSize*.56;return `${i?"L":"M"}${markSize/2+Math.cos(a)*r} ${markSize/2+Math.sin(a)*r}`}).join(" ")+"Z";
+			const shapeAttrs=state.shape==="shield"?`d="M${markSize/2} 0 L${markSize} 32 V126 Q${markSize/2} ${markSize} 0 126 V32Z"`:state.shape==="hex"?`d="M${markSize*.25} 0 H${markSize*.75} L${markSize} ${markSize*.5} L${markSize*.75} ${markSize} H${markSize*.25} L0 ${markSize*.5}Z"`:state.shape==="diamond"?`d="M${markSize/2} 0 L${markSize} ${markSize/2} L${markSize/2} ${markSize} L0 ${markSize/2}Z"`:state.shape==="tab"?`d="M0 28 Q0 0 28 0 H${markSize} V${markSize} H0Z"`:state.shape==="house"?`d="M${markSize/2} 0 L${markSize} ${markSize*.38} V${markSize} H0 V${markSize*.38}Z"`:state.shape==="ribbon"?`d="M0 16 Q0 0 16 0 H${markSize-16} Q${markSize} 0 ${markSize} 16 V${markSize} L${markSize*.5} ${markSize*.78} L0 ${markSize}Z"`:state.shape==="gear"?`d="${gear}"`:state.shape==="bolt"?`d="M${markSize*.58} 0 L${markSize*.16} ${markSize*.55} H${markSize*.45} L${markSize*.32} ${markSize} L${markSize*.84} ${markSize*.38} H${markSize*.54}Z"`:`width="${markSize}" height="${markSize}" rx="${state.shape==="circle"?markSize/2:state.shape==="pill"?markSize/2:state.shape==="slab"?12:30}"`;
+			return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+				<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="${state.accent}"/><stop offset="1" stop-color="${state.secondary}"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-opacity=".35"/></filter></defs>
+				<rect width="100%" height="100%" rx="${state.shape==="circle"?h/2:state.shape==="slab"?24:34}" fill="${state.background}"/>
+				${state.finish==="metal"?`<path d="M0 ${h*.72}  ${w} ${h*.48} V${h} H0Z" fill="#fff" opacity=".06"/>`:""}
+				${state.finish==="stamp"?`<rect x="26" y="26" width="${w-52}" height="${h-52}" rx="22" fill="none" stroke="${state.accent}" stroke-width="6" stroke-dasharray="18 12"/>`:""}
+				${state.finish==="neon"?`<rect x="20" y="20" width="${w-40}" height="${h-40}" rx="28" fill="none" stroke="${state.accent}" stroke-width="4" filter="url(#s)"/>`:""}
+				${state.finish==="plate"?`<rect x="36" y="${h-92}" width="${w-72}" height="48" rx="10" fill="${state.accent}" opacity=".18" />`:""}
+				${state.finish==="cutout"?`<path d="M40 40 H${w-40} V${h-40} H40Z" fill="none" stroke="${state.secondary}" stroke-width="2" opacity=".55"/>`:""}
+				${state.finish==="carbon"?`<pattern id="c" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M0 18 18 0M-5 5 5-5M13 23 23 13" stroke="${state.secondary}" opacity=".08" stroke-width="4"/></pattern><rect width="100%" height="100%" fill="url(#c)"/>`:""}
+				${state.finish==="hazard"?`<path d="M0 ${h-50} H${w} V${h} H0Z" fill="${state.accent}"/><g opacity=".45">${Array.from({length:18},(_,i)=>`<path d="M${i*70-80} ${h} L${i*70-30} ${h-50} H${i*70+5} L${i*70-45} ${h}Z" fill="${state.background}"/>`).join("")}</g>`:""}
+				${state.finish==="outline"?`<rect x="18" y="18" width="${w-36}" height="${h-36}" rx="28" fill="none" stroke="${state.accent}" stroke-width="5"/><rect x="34" y="34" width="${w-68}" height="${h-68}" rx="20" fill="none" stroke="${state.secondary}" stroke-width="2" opacity=".8"/>`:""}
+				${state.finish==="luxury"?`<circle cx="${w*.82}" cy="${h*.18}" r="130" fill="${state.accent}" opacity=".12"/><path d="M40 ${h-58} H${w-40}" stroke="${state.accent}" stroke-width="6"/><path d="M80 ${h-38} H${w-80}" stroke="${state.secondary}" stroke-width="2" opacity=".7"/>`:""}
+				${state.finish==="glass"?`<rect x="34" y="34" width="${w-68}" height="${h-68}" rx="30" fill="#fff" opacity=".08"/><path d="M0 0 H${w} L0 ${h*.42}Z" fill="#fff" opacity=".12"/>`:""}
+				<g transform="translate(${markX} ${markY})">
+					<${shapeTag} ${shapeAttrs} fill="url(#g)" filter="url(#s)"/>
+					<path d="${icon()}" transform="translate(${markSize*.28} ${markSize*.28}) scale(${markSize/28})" fill="none" stroke="${state.background}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+				</g>
+				${seal?`<circle cx="${w/2}" cy="${h/2}" r="225" fill="none" stroke="${state.accent}" stroke-width="8"/><circle cx="${w/2}" cy="${h/2}" r="195" fill="none" stroke="${state.secondary}" stroke-width="2" stroke-dasharray="10 10"/>`:""}
+				<g transform="translate(${textBaseX} ${textBaseY})" text-anchor="${textAnchor}">
+					<text x="0" y="0" fill="${state.accent}" font-family="Arial Black, Arial" font-size="${Number(state.markSize)||30}" letter-spacing="${Math.max(0,Number(state.letterSpace)||0)}">${esc(state.mark)}</text>
+					<text x="0" y="${minimal?76:92}" fill="${state.text}" font-family="Arial Black, Arial" font-size="${Number(state.nameSize)||78}" font-weight="900">${esc(state.name)}</text>
+					<text x="0" y="${minimal?124:150}" fill="${state.secondary}" font-family="Arial" font-size="${Number(state.taglineSize)||24}" font-weight="800" letter-spacing="${Math.max(0,Number(state.letterSpace)||0)}">${esc(state.tagline)}</text>
+				</g>
+			</svg>`;
+		}
+		const logoData=()=>"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(logoSvg());
+		function render(){
+			["name","mark","tagline","trade","shape","finish","accent","secondary","background","text","markSize","nameSize","taglineSize","letterSpace","textX","textY","markX","markY"].forEach(k=>$(k).value=state[k]);
+			$("templates").innerHTML=Object.entries(templates).map(([k,v])=>`<button data-template="${k}"><strong>${v.label}</strong><small>${v.layout} / ${v.shape}</small></button>`).join("");
+			$("layouts").innerHTML=Object.entries(layouts).map(([k,v])=>`<button class="${state.layout===k?"active":""}" data-layout="${k}"><strong>${v}</strong><small>${k}</small></button>`).join("");
+			$("mockups").innerHTML=Object.entries(mockups).map(([k,v])=>`<button class="${state.mockup===k?"active":""}" data-mockup="${k}">${v}</button>`).join("");
+			$("logo-preview").innerHTML=logoSvg();
+			$("mockup").className=`mockup mockup-${state.mockup}`;
+			$("mockup").innerHTML=`<div class="mock-logo">${logoSvg()}</div><strong>${mockups[state.mockup]}</strong>`;
+			localStorage.setItem("tgd-logo-maker",JSON.stringify(state));
+			localStorage.setItem("tgd-logo-maker-export",logoData());
+		}
+		document.addEventListener("click",e=>{const d=e.target.closest(".drawer");if(d){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("open"));d.closest(".panel").classList.add("open");return}const t=e.target.closest("[data-template]");if(t){state={...state,...templates[t.dataset.template]};render()}const l=e.target.closest("[data-layout]");if(l){state.layout=l.dataset.layout;render()}const m=e.target.closest("[data-mockup]");if(m){state.mockup=m.dataset.mockup;render()}});
+		document.addEventListener("input",e=>{if(e.target.id in state){state[e.target.id]=e.target.type==="range"?Number(e.target.value):e.target.value;render()}});
+		function download(name,type,data){const a=document.createElement("a");a.href=data;a.download=name;a.click()}
+		$("use-pdf").onclick=()=>{const pdf=JSON.parse(localStorage.getItem("tgd-word-style-pdf")||"{}");localStorage.setItem("tgd-word-style-pdf",JSON.stringify({...pdf,logo:logoData(),business:state.name}));location.href="/pdf-maker/"};
+		$("svg").onclick=()=>download("logo.svg","image/svg+xml",logoData());
+		$("png").onclick=()=>{const img=new Image(),svg=logoSvg();img.onload=()=>{const c=document.createElement("canvas");c.width=1400;c.height=900;const x=c.getContext("2d");x.fillStyle=state.background;x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);download("logo.png","image/png",c.toDataURL("image/png"))};img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)};
+		$("reset").onclick=()=>{state=fresh();render()};try{const saved=JSON.parse(localStorage.getItem("tgd-logo-maker"));if(saved?.name)state={...fresh(),...saved}}catch{}render();
+	</script>
+</body>
+</html>
+
+<style is:global>
+*{box-sizing:border-box}body{margin:0;background:#e7edf4;color:#07111f;font-family:Arial,sans-serif}.studio-top{height:74px;background:#07111f;border-bottom:3px solid #ff6b00;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:14px 24px}.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}.brand img{width:42px;height:42px;border-radius:8px}.brand span{display:grid}.brand small{color:#ff6b00;font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.actions{display:flex;gap:10px}.actions button,.panel button,.mock-tabs button{border:1px solid #2b4058;background:#12233a;color:#fff;border-radius:8px;padding:10px 13px;font-weight:900}.actions button:last-child{background:#ff6b00;border-color:#ff6b00;color:#111}.studio-grid{height:calc(100vh - 149px);display:grid;grid-template-columns:410px minmax(720px,1fr);overflow:hidden}.tools{overflow:auto;background:#f8fafc;border-right:1px solid #ccd8e5;padding:20px;display:grid;align-content:start;gap:14px}.intro{background:#0d2b45;color:#fff;border-radius:14px;padding:22px}.intro p{margin:0;color:#ff6b00;font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.intro h1{font-size:30px;line-height:1;margin:7px 0}.intro span{color:#d5e4f2;font-size:13px}.panel{background:#fff;border:1px solid #d9e3ee;border-radius:14px;padding:12px;box-shadow:0 8px 24px rgba(8,17,31,.06);display:grid;gap:12px}.panel h2{margin:0;background:#07111f;color:#fff;border-radius:10px;padding:13px;font-size:16px}.drawer{width:100%;border:0!important;background:transparent!important;color:inherit!important;padding:0!important;display:flex;justify-content:space-between;text-align:left}.drawer span{font-size:10px;color:#9eb5ce;letter-spacing:.12em;text-transform:uppercase}.panel:not(.open)>:not(h2){display:none}.panel.open{border-color:#ff6b00}.panel.open h2{background:#ff6b00;color:#07111f}.two{grid-template-columns:1fr 1fr}.two h2{grid-column:1/-1}label{display:grid;gap:6px;color:#40516a;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}input,select{width:100%;border:1px solid #ced9e6;border-radius:8px;padding:11px;font:inherit;font-size:13px}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice-grid button{background:#f8fafc;color:#07111f;border-color:#d5dfeb;text-align:left}.choice-grid button.active,.mock-tabs button.active{border-color:#ff6b00;background:#fff2e8;box-shadow:inset 4px 0 #ff6b00}.choice-grid strong{display:block}.choice-grid small{color:#6c7b91}.mock-tabs{display:grid;grid-template-columns:1fr 1fr;gap:9px}.mock-tabs button{background:#f8fafc;color:#07111f;border-color:#d5dfeb}.preview{overflow:auto;padding:34px;display:grid;gap:24px;align-content:start}.canvas-wrap{min-height:540px;border-radius:24px;background:radial-gradient(circle at 50% 20%,rgba(255,107,0,.18),transparent 30rem),#111827;display:grid;place-items:center;padding:36px;box-shadow:0 24px 80px rgba(8,17,31,.2)}#logo-preview svg{width:min(720px,100%);height:auto;display:block}.mockup{min-height:260px;border-radius:22px;background:#fff;border:1px solid #cfd9e6;padding:28px;position:relative;overflow:hidden}.mockup strong{position:absolute;left:24px;bottom:18px;color:#5a6b82}.mock-logo{display:grid;place-items:center}.mock-logo svg{display:block;width:260px;max-height:190px}.mockup-van{background:linear-gradient(100deg,#f8fafc 0 62%,#dfe7f0 62%)}.mockup-van .mock-logo{position:absolute;left:48px;top:46px;width:360px;height:150px}.mockup-van .mock-logo svg{width:320px;max-height:140px}.mockup-quote .mock-logo{position:absolute;left:36px;top:34px;width:300px;height:120px;justify-items:start}.mockup-quote .mock-logo svg{width:260px;max-height:104px}.mockup-quote:after{content:"QUOTE";position:absolute;right:42px;top:42px;font-size:34px;font-weight:900;color:#07111f}.mockup-social{display:grid;place-items:center;background:#07111f}.mockup-social .mock-logo svg{width:210px;max-height:210px;border-radius:50%}.mockup-workwear{background:linear-gradient(135deg,#111827,#384252)}.mockup-workwear .mock-logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}.mockup-workwear .mock-logo svg{width:220px;max-height:170px}@media(max-width:1000px){.studio-grid{display:block;height:auto;overflow:visible}.tools,.preview{overflow:visible}.studio-top{height:auto;align-items:flex-start}.canvas-wrap{min-height:360px}}@media(max-width:640px){.studio-top{display:grid;gap:12px}.actions{flex-wrap:wrap}.two,.choice-grid,.mock-tabs{grid-template-columns:1fr}}
+</style>
