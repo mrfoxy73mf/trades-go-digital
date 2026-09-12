@@ -1,138 +1,57 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE, TGD_APP_URL } from "../consts";
-
-const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
+import { TGD_APP_URL } from "../consts";
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isLettingDesk = path.startsWith("/tgd-lettingdesk");
+const apps = [
+ {name:"TGD Trades",href:"/tgd",detail:"Jobs, quotes and your business office"},
+ {name:"TAD The Business",href:"/tad-the-business",detail:"Business management for your team"},
+ {name:"Health & Safety",href:"/health-and-safety",detail:"SafeWork AI and work-pack preparation"},
+ {name:"PDF Maker",href:"/pdf-maker",detail:"Branded quotes, invoices and documents"},
+ {name:"Logo Maker",href:"/logo-maker",detail:"Create your business identity"},
+ {name:"TGD LettingDesk",href:"/tgd-lettingdesk",detail:"Property and agency management"},
+];
+const active = (href: string) => path === href || (href === "/health-and-safety" && path.startsWith("/safework"));
 ---
-
-<header>
-	<nav aria-label="Primary navigation">
-		<a class="brand" href="/">
-			<img class="brand-mark" src="/images/trades-go-digital-icon-stripe.png" alt="" />
-			<span>{SITE_TITLE}</span>
-		</a>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/tad-the-business">TAD The Business</HeaderLink>
-			<HeaderLink href="/tgd">TGD Trades</HeaderLink>
-			<HeaderLink href="/pdf-maker">PDF Maker</HeaderLink>
-			<HeaderLink href="/logo-maker">Logo Maker</HeaderLink>
-			<HeaderLink href="/tgd-lettingdesk">TGD LettingDesk</HeaderLink>
-			<HeaderLink href={isLettingDesk ? "/tgd-lettingdesk/#pricing" : "/tgd/#pricing"}>Pricing</HeaderLink>
-			<HeaderLink href="/contact">Contact</HeaderLink>
-		</div>
-		<a class="nav-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : TGD_APP_URL}>
-			{isLettingDesk ? "Enquire about LettingDesk" : "Open TGD Trades"}
-		</a>
-	</nav>
+<header class="tgd-navigation">
+ <nav class="navigation-shell" aria-label="Primary navigation">
+  <a class="navigation-brand" href="/" aria-label="Trades Go Digital home"><img src="/images/trades-go-digital-icon-stripe.png" width="46" height="46" alt="" /><span>Trades <b>Go</b> Digital<small>Tools for your working day</small></span></a>
+  <button class="navigation-toggle" type="button" aria-expanded="false" aria-controls="tgd-navigation-links" hidden>Menu <span aria-hidden="true">☰</span></button>
+  <div class="navigation-links" id="tgd-navigation-links">
+   <a class="navigation-link" href="/" aria-current={active("/") ? "page" : undefined}>Home</a>
+   <details class="navigation-apps">
+    <summary class:list={{"apps-active":apps.some(app=>active(app.href))}}>Apps &amp; Tools <span aria-hidden="true">⌄</span></summary>
+    <div class="apps-panel"><p class="apps-label">Find the right tool for your business</p><div class="apps-grid">{apps.map(app=><a href={app.href} aria-current={active(app.href) ? "page" : undefined}><strong>{app.name}<span aria-hidden="true">↗</span></strong><small>{app.detail}</small></a>)}</div><a class="all-tools" href="/#explore">Explore everything <span aria-hidden="true">→</span></a></div>
+   </details>
+   <a class="navigation-link" href="/pricing" aria-current={active("/pricing") ? "page" : undefined}>Pricing</a>
+   <a class="navigation-link" href="/monthly-updates" aria-current={active("/monthly-updates") ? "page" : undefined}>Updates</a>
+   <a class="navigation-link" href="/contact" aria-current={active("/contact") ? "page" : undefined}>Contact</a>
+   <a class="navigation-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : TGD_APP_URL}>{isLettingDesk ? "Enquire about LettingDesk" : "Open TGD Trades"}<span aria-hidden="true">↗</span></a>
+  </div>
+ </nav>
 </header>
-
+<script>
+ const header=document.querySelector<HTMLElement>('.tgd-navigation');
+ if(header){
+  const toggle=header.querySelector<HTMLButtonElement>('.navigation-toggle')!;
+  const apps=header.querySelector<HTMLDetailsElement>('.navigation-apps')!;
+  toggle.hidden=false;header.classList.add('navigation-ready');
+  const close=()=>{header.classList.remove('navigation-open');toggle.setAttribute('aria-expanded','false');apps.open=false;};
+  toggle.addEventListener('click',()=>{const open=header.classList.toggle('navigation-open');toggle.setAttribute('aria-expanded',String(open));if(!open)apps.open=false;});
+  document.addEventListener('click',event=>{if(event.target instanceof Node&&!header.contains(event.target))close();});
+  header.addEventListener('keydown',event=>{if(event.key==='Escape'){if(apps.open){apps.open=false;apps.querySelector('summary')?.focus();}else{close();toggle.focus();}}});
+  header.querySelectorAll('a').forEach(link=>link.addEventListener('click',close));
+  matchMedia('(min-width: 1081px)').addEventListener('change',close);
+ }
+</script>
 <style>
-	header {
-		background: #07111f;
-		border-bottom: 1px solid rgba(109, 199, 255, 0.18);
-	}
-
-	nav {
-		display: flex;
-		min-width: 0;
-		align-items: center;
-		justify-content: space-between;
-		gap: 24px;
-		width: min(1120px, calc(100% - 32px));
-		margin: 0 auto;
-		padding: 16px 0;
-	}
-
-	a {
-		text-decoration: none;
-	}
-
-	.brand {
-		display: inline-flex;
-		min-width: 0;
-		align-items: center;
-		gap: 10px;
-		color: #ffffff;
-		font-weight: 900;
-		overflow-wrap: anywhere;
-	}
-
-	.brand-mark {
-		width: 38px;
-		height: 38px;
-		border: 1px solid rgba(109, 199, 255, 0.5);
-		border-radius: 9px;
-		background: #ffffff;
-		box-shadow: 0 0 24px rgba(42, 178, 255, 0.35);
-		object-fit: cover;
-	}
-
-	.internal-links {
-		display: flex;
-		min-width: 0;
-		flex-wrap: wrap;
-		gap: 18px;
-		align-items: center;
-	}
-
-	.internal-links a {
-		color: #c7d8e8;
-		font-size: 0.95rem;
-		font-weight: 800;
-	}
-
-	.internal-links a:hover,
-	.internal-links a.active {
-		color: #ffffff;
-	}
-
-	.nav-cta {
-		display: inline-flex;
-		min-height: 42px;
-		align-items: center;
-		justify-content: center;
-		padding: 10px 16px;
-		border-radius: 8px;
-		background: linear-gradient(135deg, #f0c85a, #d6a935);
-		color: #07111f;
-		font-weight: 900;
-		box-shadow: 0 12px 28px rgba(214, 169, 53, 0.2);
-		transition:
-			transform 180ms ease,
-			box-shadow 180ms ease;
-	}
-
-	.nav-cta:hover {
-		transform: translateY(-1px);
-		box-shadow: 0 0 26px rgba(214, 169, 53, 0.34);
-	}
-
-	@media (max-width: 720px) {
-		nav {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		.internal-links {
-			width: 100%;
-			justify-content: flex-start;
-			gap: 10px 16px;
-		}
-
-		.nav-cta {
-			width: 100%;
-		}
-	}
-
-	@media (max-width: 380px) {
-		.internal-links {
-			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-
-		.internal-links a {
-			font-size: 0.9rem;
-		}
-	}
+.tgd-navigation{position:relative;z-index:50;background:#07111f!important;color:#f8fafc;border:0;box-shadow:0 5px 22px #07111f24;font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+.tgd-navigation *{box-sizing:border-box}.navigation-shell{width:min(1440px,calc(100% - 48px));min-height:88px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:28px}
+a{text-decoration:none;color:inherit}.navigation-brand{display:flex;align-items:center;gap:12px;flex-shrink:0;font-size:20px;font-weight:850;letter-spacing:-.5px;line-height:1.25}.navigation-brand img{border-radius:11px;background:white;object-fit:contain}.navigation-brand b{color:#ff8a36}.navigation-brand small{display:block;margin-top:5px;color:#aebdcc;font-size:10px;font-weight:600;letter-spacing:1.1px;text-transform:uppercase}
+.navigation-links{display:flex;align-items:center;gap:6px}.navigation-link,summary{display:flex;align-items:center;gap:9px;padding:12px 14px;border-radius:8px;color:#d5dfeb;font-size:14px;font-weight:750;white-space:nowrap;cursor:pointer;line-height:1.5}
+.navigation-link:hover,summary:hover,.navigation-link[aria-current],summary.apps-active{background:#ffffff0e;color:#ffad70}summary{list-style:none}summary::-webkit-details-marker{display:none}summary>span{font-size:20px;line-height:1}.navigation-apps[open] summary>span{transform:rotate(180deg)}
+.navigation-apps{position:relative}.apps-panel{position:absolute;top:calc(100% + 14px);left:0;width:610px;padding:22px;background:#fff;color:#07111f;border:1px solid #e4e9ef;border-radius:16px;box-shadow:0 20px 60px #0004}.apps-label{margin:0 0 14px;color:#687487;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.8px}.apps-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.apps-grid a{padding:14px;border-radius:9px;background:#f5f7fa}.apps-grid a:hover,.apps-grid a[aria-current]{background:#fff0e3}.apps-grid strong{display:flex;justify-content:space-between;gap:8px;font-size:14px}.apps-grid strong span{color:#b34b00}.apps-grid small{display:block;margin-top:5px;color:#526174;font-size:12px;line-height:1.5}.all-tools{display:flex;justify-content:space-between;margin-top:16px;padding:10px 14px 0;font-size:13px;font-weight:800;color:#a84400}
+.navigation-cta{display:flex;align-items:center;justify-content:center;gap:14px;margin-left:12px;padding:13px 18px;border-radius:9px;background:#ff8a36;color:#07111f;font-size:13px;font-weight:850;white-space:nowrap}.navigation-cta:hover{background:#ffa25e}.navigation-toggle{display:none}a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid #ff8a36;outline-offset:4px}
+@media(max-width:1080px){.navigation-shell{flex-wrap:wrap;gap:0;min-height:80px;padding:16px 0}.navigation-toggle:not([hidden]){display:flex;align-items:center;gap:10px;border:1px solid #536174;border-radius:8px;padding:10px 14px;color:#fff;background:transparent;font:inherit;font-size:14px;cursor:pointer}.navigation-links{width:100%;align-items:stretch;flex-direction:column;padding-top:18px}.navigation-ready:not(.navigation-open) .navigation-links{display:none}.navigation-apps summary{justify-content:space-between}.apps-panel{position:static;width:100%;margin:8px 0;box-shadow:none}.navigation-cta{margin:10px 0 0}.navigation-link,summary{min-height:44px}}
+@media(max-width:520px){.navigation-shell{width:calc(100% - 28px)}.navigation-brand{font-size:17px;gap:9px}.navigation-brand img{width:40px;height:40px}.navigation-brand small{font-size:8px;letter-spacing:.6px}.apps-grid{grid-template-columns:1fr}.apps-panel{padding:14px}.navigation-toggle:not([hidden]){padding:9px 10px}}
+@media print{.tgd-navigation{display:none!important}}
 </style>

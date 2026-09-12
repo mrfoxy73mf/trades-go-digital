@@ -39,7 +39,7 @@ const officeCards = [
 		<meta property="og:site_name" content={SITE_TITLE} />
 		<meta property="og:locale" content="en_GB" />
 	</head>
-	<body>
+	<body class="tad-site-background">
 		<Header />
 		<main class="tad-page">
 			<section class="tad-hero" aria-labelledby="tad-title">
@@ -347,4 +347,14 @@ const officeCards = [
 			width: 100%;
 		}
 	}
+</style>
+
+<style is:global>
+body.tad-site-background{position:relative;isolation:isolate;background:#030407}
+body.tad-site-background::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(3,4,7,.02),rgba(3,4,7,.24) 42%,rgba(3,4,7,.36)),url('/images/tad-building-site-bg.png') center top / cover no-repeat}
+body.tad-site-background .tad-page,body.tad-site-background>footer{background:transparent}
+body.tad-site-background>footer{border-top:0}
+body.tad-site-background footer .footer-brand,body.tad-site-background footer .footer-contact-list,body.tad-site-background footer .footer-links,body.tad-site-background footer .footer-bottom{background:rgba(10,13,18,.84);border:0;border-radius:10px;padding:24px;color:#c7d0dc}
+body.tad-site-background footer h2{color:#ff8a36}
+body.tad-site-background footer .footer-contact-list p{border:0}
 </style>

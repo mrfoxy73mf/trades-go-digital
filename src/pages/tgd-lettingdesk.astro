@@ -47,7 +47,7 @@ const faqs = [
 	["Do I receive the complete source code?", "Yes. You receive a private copy of the complete TGD LettingDesk application for commercial use by one business."],
 	["Is there a compulsory monthly licence?", "No. The software licence is a one-time purchase. Hosting and third-party services are paid separately."],
 	["Can the application use my agency branding?", "Yes. Company name, logo, colours, address and VAT details can appear throughout the application, portals and PDFs."],
-	["Is managed installation included?", "It is included only with the £6,490 Licence + Remote Installation package. The £4,990 licence-only purchase includes self-installation guidance. No on-site attendance is provided."],
+	["Is managed installation included?", "It is included only with the Licence + Remote Installation package. The licence-only purchase includes self-installation guidance. No on-site attendance is provided."],
 	["Can I resell the source code?", "No. The licence is non-exclusive and permits use by one business, but not resale, sublicensing or redistribution."],
 ];
 ---
@@ -63,7 +63,7 @@ const faqs = [
 		<meta property="og:site_name" content={SITE_TITLE} />
 		<meta property="og:locale" content="en_GB" />
 	</head>
-	<body>
+	<body class="tgd-letting-office">
 		<Header />
 		<main class="ld">
 			<section class="hero">
@@ -74,7 +74,7 @@ const faqs = [
 						<h1>Run your letting agency from one connected office.</h1>
 						<p class="lead">Manage properties, maintenance, contractors, rent, documents, finances and customer portals through one complete operations platform.</p>
 						<div class="actions">
-							<a class="button primary" href="#pricing">View pricing</a>
+							<a class="button primary" href="/pricing#lettingdesk">View pricing</a>
 							<a class="button secondary" href="#enquire">Request a demonstration</a>
 						</div>
 						<p class="licence-note">Complete source code · One-time licence · Built for UK letting operations</p>
@@ -178,62 +178,7 @@ const faqs = [
 				</div>
 			</section>
 
-			<section id="pricing" class="section pricing">
-				<div class="container">
-					<div class="section-head">
-						<p class="eyebrow">Straightforward ownership</p>
-						<h2>Choose immediate delivery or remote installation.</h2>
-						<p><strong>One-time prices.</strong> Trades Go Digital is not VAT registered, so no VAT is charged.</p>
-					</div>
-					<div class="price-grid">
-						<article class="price-card featured">
-							<p class="price-label">Source-code licence</p>
-							<p class="price">£4,990 <span>one-time</span></p>
-							<ul>
-								<li>Complete TGD LettingDesk application</li>
-								<li>Private customer copy</li>
-								<li>Commercial use for one business</li>
-								<li>Buyer and rebranding documentation</li>
-								<li>Current stable version</li>
-								<li>Secure download supplied automatically after payment</li>
-								<li>No compulsory monthly TGD licence</li>
-							</ul>
-							<a
-								class="button primary"
-								href="https://buy.stripe.com/7sY3cwbLQ1hJgsGcT88Zq04"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								Buy software licence
-							</a>
-						</article>
-						<article class="price-card">
-							<p class="price-label">Licence + Remote Installation</p>
-							<p class="price">£6,490 <span>one-time</span></p>
-							<ul>
-								<li>Complete source-code licence for one business</li>
-								<li>Private GitHub repository setup</li>
-								<li>Database and environment configuration</li>
-								<li>Company branding</li>
-								<li>Initial administrator setup</li>
-								<li>Main workflow acceptance testing</li>
-								<li>Remote service only — no on-site attendance</li>
-								<li>Setup form after payment</li>
-								<li>Source package supplied after installation and handover</li>
-							</ul>
-							<a
-								class="button secondary"
-								href="https://buy.stripe.com/7sYbJ22bg9Of5O206m8Zq05"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								Buy licence + remote installation
-							</a>
-						</article>
-					</div>
-					<p class="price-footnote">Licence-only customers receive the secure source download after cleared payment. Remote-installation customers complete a setup form and receive their source package after installation, acceptance testing and handover. The customer must provide a compatible Windows computer, internet connection and authorised remote access. No on-site attendance is provided. Hosting, domains, third-party services, API usage and future support are not included unless agreed separately. Additional work is charged at £300 per day. Trades Go Digital is not VAT registered, so no VAT is charged.</p>
-				</div>
-			</section>
+			<section id="pricing" class="section"><div class="container"><h2>TGD LettingDesk packages</h2><p>Compare the software licence and remote installation options on our pricing page.</p><a class="button primary" href="/pricing#lettingdesk">View LettingDesk pricing</a></div></section>
 
 			<section class="section">
 				<div class="container">
@@ -393,4 +338,21 @@ const faqs = [
 		.trust-grid { grid-template-columns: 1fr; text-align: left; }
 		.price-card, .final-card { padding: 26px 20px; }
 	}
+</style>
+
+<style is:global>
+body.tgd-letting-office{position:relative;isolation:isolate;background:#f8f5ef}
+body.tgd-letting-office::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(#ffffff0d,#ffffff0d),url('/images/tgd-letting-office.png') center / cover no-repeat}
+body.tgd-letting-office .ld,body.tgd-letting-office .ld>section{background:transparent;border:0}
+body.tgd-letting-office .hero-grid>div:first-child,body.tgd-letting-office .section-head,body.tgd-letting-office .branding-grid>div:first-child,body.tgd-letting-office #pricing>.container{box-sizing:border-box;padding:28px;background:rgba(255,255,255,.95);border-radius:16px;color:#101a2e}
+body.tgd-letting-office .branding h2,body.tgd-letting-office .branding p{color:#101a2e}
+body.tgd-letting-office .trust-grid{background:rgba(16,26,46,.92);border-radius:12px}
+body.tgd-letting-office.tgd-letting-office footer{background:transparent;border:0;color:#07111f}
+body.tgd-letting-office.tgd-letting-office footer *{box-sizing:border-box}
+body.tgd-letting-office.tgd-letting-office footer .footer-brand,body.tgd-letting-office.tgd-letting-office footer .footer-contact-list,body.tgd-letting-office.tgd-letting-office footer .footer-links,body.tgd-letting-office.tgd-letting-office footer .footer-bottom{background:rgba(255,255,255,.95);border:0;border-radius:12px;padding:24px;color:#334155}
+body.tgd-letting-office.tgd-letting-office footer .footer-contact-list span,body.tgd-letting-office.tgd-letting-office footer .footer-contact-list a,body.tgd-letting-office.tgd-letting-office footer .footer-links a,body.tgd-letting-office.tgd-letting-office footer .footer-bottom a{color:#07111f;white-space:normal;overflow-wrap:anywhere}
+body.tgd-letting-office.tgd-letting-office footer h2{color:#984000}
+body.tgd-letting-office.tgd-letting-office footer .footer-contact-list p{border:0;grid-template-columns:1fr;gap:5px}
+body.tgd-letting-office.tgd-letting-office footer .footer-columns{grid-template-columns:minmax(0,1.5fr) repeat(2,minmax(0,.75fr))}
+@media(max-width:920px){body.tgd-letting-office.tgd-letting-office footer .footer-columns{grid-template-columns:1fr}}
 </style>

@@ -1,5 +1,96 @@
 ---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { TGD_APP_URL } from '../consts';
 export const prerender = false;
-
-return Astro.redirect("/tgd/#pricing", 301);
 ---
+<!doctype html><html lang="en-GB"><head><BaseHead title="Pricing | Trades Go Digital" description="Compare pricing for TGD Trades, LettingDesk, PDF Maker, Logo Maker and SafeWork AI." /></head><body class="tgd-pricing-office"><Header/><main>
+<header class="intro"><p class="eyebrow">TRADES GO DIGITAL</p><h1>All our pricing.<br/>One place.</h1><p>Choose the tools you need, with subscription and one-time options clearly set out.</p><nav aria-label="Pricing categories"><a href="#trades">TGD Trades</a><a href="#tools">Document & logo tools</a><a href="#safework">SafeWork AI</a><a href="#lettingdesk">LettingDesk</a><a href="#business">Business apps</a></nav></header>
+<section id="trades" class="section"><p class="eyebrow">MONTHLY SUBSCRIPTION</p><h2>TGD Trades</h2><article class="trade-card"><div><p class="price">£28 <span>/ month</span></p><p>For your first 3 months.</p><p><strong>Then £60 per month.</strong> Cancel anytime—no long contract.</p><a class="button primary" href={TGD_APP_URL}>Open TGD Trades</a></div><div><h3>Your business office, connected</h3><p>Quotes, jobs, customer portals, supplier prices, paperwork and accountant records.</p><p>Unlimited jobs, photos and PDFs. Use it on your phone, tablet or computer.</p></div></article></section>
+<section id="tools" class="section"><p class="eyebrow">ONE-TIME PRICES</p><h2>Documents and branding</h2><div class="price-grid tools">
+<article class="price-card"><h3>PDF Maker</h3><p class="price">£7.99 <span>one-off</span></p><p>Create quotes, invoices, receipts and job sign-off documents.</p><a class="button secondary" href="/pdf-maker">Open PDF Maker</a></article>
+<article class="price-card"><h3>Logo Maker</h3><p class="price">£1.99 <span>one-off</span></p><p>Create your trade logo and download SVG or PNG files.</p><a class="button secondary" href="/logo-maker">Open Logo Maker</a></article>
+<article class="price-card featured"><p class="eyebrow">BUNDLE</p><h3>Logo + PDF</h3><p class="price">£8.99 <span>one-off</span></p><p>Create your logo and use it on branded trade documents.</p><a class="button primary" href="/logo-maker">Start with your logo</a></article></div></section>
+<section id="safework" class="section"><p class="eyebrow">WORK PACKS</p><h2>SafeWork AI</h2><article class="trade-card"><div><h3>Price to be confirmed</h3><p>Online sales are not open yet.</p><a class="button secondary" href="/safework">Explore the work-pack builder</a></div><p>Job-specific draft work packs, including risk assessments, method statements and relevant supporting forms. Competent-person review is required before use.</p></article></section>
+<section id="lettingdesk" class="section pricing">
+				<div class="container">
+					<div class="section-head">
+						<p class="eyebrow">Straightforward ownership</p>
+						<h2>TGD LettingDesk</h2>
+						<p><strong>One-time prices.</strong> Trades Go Digital is not VAT registered, so no VAT is charged.</p>
+					</div>
+					<div class="price-grid">
+						<article class="price-card featured">
+							<p class="price-label">Source-code licence</p>
+							<p class="price">£4,990 <span>one-time</span></p>
+							<ul>
+								<li>Complete TGD LettingDesk application</li>
+								<li>Private customer copy</li>
+								<li>Commercial use for one business</li>
+								<li>Buyer and rebranding documentation</li>
+								<li>Current stable version</li>
+								<li>Secure download supplied automatically after payment</li>
+								<li>No compulsory monthly TGD licence</li>
+							</ul>
+							<a
+								class="button primary"
+								href="https://buy.stripe.com/7sY3cwbLQ1hJgsGcT88Zq04"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Buy software licence
+							</a>
+						</article>
+						<article class="price-card">
+							<p class="price-label">Licence + Remote Installation</p>
+							<p class="price">£6,490 <span>one-time</span></p>
+							<ul>
+								<li>Complete source-code licence for one business</li>
+								<li>Private GitHub repository setup</li>
+								<li>Database and environment configuration</li>
+								<li>Company branding</li>
+								<li>Initial administrator setup</li>
+								<li>Main workflow acceptance testing</li>
+								<li>Remote service only — no on-site attendance</li>
+								<li>Setup form after payment</li>
+								<li>Source package supplied after installation and handover</li>
+							</ul>
+							<a
+								class="button secondary"
+								href="https://buy.stripe.com/7sYbJ22bg9Of5O206m8Zq05"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Buy licence + remote installation
+							</a>
+						</article>
+					</div>
+					<p class="price-footnote">Licence-only customers receive the secure source download after cleared payment. Remote-installation customers complete a setup form and receive their source package after installation, acceptance testing and handover. The customer must provide a compatible Windows computer, internet connection and authorised remote access. No on-site attendance is provided. Hosting, domains, third-party services, API usage and future support are not included unless agreed separately. Additional work is charged at £300 per day. Trades Go Digital is not VAT registered, so no VAT is charged.</p>
+				</div>
+			</section>
+<section id="business" class="section"><p class="eyebrow">BUSINESS APPS</p><h2>TAD The Business & custom projects</h2><p>Contact us to discuss your requirements and get a price for your project.</p><a class="button secondary" href="/contact">Discuss your project</a></section>
+</main><Footer/></body></html>
+<style>
+body{background:#f5f7fa;color:#0b1930}main{max-width:1120px;margin:auto;padding:0 24px 60px}.intro{padding:65px 0 35px;border-bottom:1px solid #d4dce6}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.13em;color:#6b5430}h1{font-size:clamp(40px,6vw,66px);line-height:1.04;letter-spacing:-.05em;margin:15px 0 25px}.intro>p{max-width:650px}.intro nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}.intro nav a{padding:9px 14px;background:#fff;border:1px solid #d4dce6;border-radius:30px;text-decoration:none;font-size:14px}.section{padding:45px 0;scroll-margin-top:20px;border-bottom:1px solid #d4dce6}h2{font-size:32px;line-height:1.15;margin:8px 0 25px}h3{font-size:23px;margin-top:0}.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.tools{grid-template-columns:repeat(3,1fr)}.price-card,.trade-card{background:#fff;border:1px solid #d4dce6;border-radius:10px;padding:28px}.featured{border-top:4px solid #f47b20}.trade-card{display:grid;grid-template-columns:1fr 1fr;gap:40px}.price{font-size:38px;font-weight:850;margin:10px 0}.price span{font-size:16px;font-weight:500}.button{display:inline-block;padding:12px 18px;border-radius:6px;text-decoration:none;font-weight:750;margin-top:12px}.primary{background:#f47b20;color:#07111f}.secondary{background:#0b1930;color:white}li{margin:8px 0}.price-footnote{font-size:14px;color:#536174;margin-top:25px}a:focus-visible{outline:3px solid #1685bd;outline-offset:4px}@media(max-width:760px){.price-grid,.tools,.trade-card{grid-template-columns:1fr}.intro{padding-top:38px}.price-card,.trade-card{padding:22px}main{padding-inline:18px}}
+
+:global(html){background:#07111f;min-height:100%}
+body.tgd-pricing-office{position:relative;isolation:isolate;background:none;color:#fff}
+body.tgd-pricing-office::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(255,255,255,.10),rgba(255,255,255,.10)),url('/images/tgd-pricing-office-people.png') center / cover no-repeat}
+:global(body.tgd-pricing-office>header),:global(body.tgd-pricing-office>footer){background:transparent;border:0}
+.intro,.section{border:0;background:transparent}.intro .eyebrow,.section>.eyebrow,.section-head>.eyebrow{color:#ffa65e}
+h1{color:#fff}.intro>p{color:#e0e8f0}.intro nav a{background:rgba(7,17,31,.75);color:#fff;border-color:#ffffff45}.intro nav a:hover{background:#f47b20;color:#07111f}
+.price-card,.trade-card{background:#fff;color:#0b1930;border:0;box-shadow:0 14px 35px #0003}.featured{border-top:4px solid #ff7900}.price{font-size:42px;letter-spacing:-.04em}.price span{letter-spacing:0}.primary{background:#ff7900;color:#07111f}.primary:hover{background:#ff9b3e}.secondary{background:#0b1930;color:#fff}.price-footnote{color:#e0e8f0;background:rgba(7,17,31,.72);padding:22px;border-radius:8px}.section-head p{color:#e0e8f0}
+:global(body.tgd-pricing-office footer .footer-brand),:global(body.tgd-pricing-office footer .footer-contact-list),:global(body.tgd-pricing-office footer .footer-links),:global(body.tgd-pricing-office footer .footer-bottom),:global(body.tgd-pricing-office footer .footer-contact-list p){border:0}
+:global(body.tgd-pricing-office footer .footer-contact-list),:global(body.tgd-pricing-office footer .footer-links){background:rgba(7,17,31,.7)}
+
+body.tgd-pricing-office{color:#0b1930}
+.intro{background:rgba(255,255,255,.93);padding:32px;border-radius:12px;margin-top:35px}
+h1,.intro>p{color:#0b1930}
+.section>h2,.section>.eyebrow,.section-head,.section>p{background:rgba(255,255,255,.94);padding:12px 18px;border-radius:6px;width:fit-content;max-width:100%}
+.intro .eyebrow,.section>.eyebrow,.section-head>.eyebrow{color:#a84300}
+.section-head p{color:#33465b}
+.price-footnote{background:rgba(255,255,255,.95);color:#33465b}
+:global(body.tgd-pricing-office>header),:global(body.tgd-pricing-office>footer){background:#07111f}
+@media(max-width:760px){.intro{padding:22px}}
+</style>

@@ -9,7 +9,7 @@ export const prerender = false;
 const updates = [
 	{
 		title: "Demo Video Maker Update",
-		kicker: "August 2026",
+		kicker: "September 2026",
 		paragraphs: [
 			"Demo Video Maker is currently in active build and testing.",
 			"The main slideshow maker is now working with photo and video uploads, music selection, preview generation, and download. The gift intro feature has also been built, with several themed present-box openings including Luxury, Playful, Floral, Christmas, and Modern.",
@@ -29,7 +29,7 @@ const updates = [
 	},
 	{
 		title: "Business App Builder Update",
-		kicker: "August 2026",
+		kicker: "September 2026",
 		paragraphs: [
 			"Business App Builder, previously called Builder AI, is a local app-building workspace for creating practical business apps without starting from a blank project. It lets you plan an app, choose pages and features, design the layout, test the result, and generate a working local app from the same dashboard.",
 			"The app currently includes a visual builder, template tools, generated business pages, login protection, saved project state, admin/testing tools, and code generation for new apps. It is being developed as a workspace where trades, self-employed users, service businesses, and other small businesses can build apps for dashboards, customers, jobs, quotes, invoices, reports, documents, and business workflows.",
@@ -48,7 +48,7 @@ const updates = [
 			description="Monthly updates from Trades Go Digital on apps, software tools, TGD Trades progress and new features being built."
 		/>
 	</head>
-	<body>
+	<body class="tgd-news-office">
 		<Header />
 		<main>
 			<section class="updates-hero">
@@ -291,4 +291,29 @@ const updates = [
 			max-height: none;
 		}
 	}
+</style>
+
+<style is:global>
+body.tgd-news-office{position:relative;isolation:isolate;background:#edf0f2}
+body.tgd-news-office::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(#ffffff0d,#ffffff0d),url('/images/tgd-news-office.png') center / cover no-repeat}
+body.tgd-news-office .updates-hero{padding:30px;border-radius:12px;background:rgba(255,255,255,.95);box-shadow:0 8px 28px #07111f18}
+body.tgd-news-office .update-item{background:rgba(255,255,255,.97)}
+body.tgd-news-office .updates-hero .eyebrow,body.tgd-news-office .update-item summary small{color:#984000}
+body.tgd-news-office footer{background:transparent;border:0;color:#07111f}
+body.tgd-news-office footer .footer-brand,body.tgd-news-office footer .footer-contact-list,body.tgd-news-office footer .footer-links,body.tgd-news-office footer .footer-bottom{background:rgba(255,255,255,.95);border:0;border-radius:12px;padding:24px;color:#334155}
+body.tgd-news-office footer .footer-contact-list span,body.tgd-news-office footer .footer-contact-list a,body.tgd-news-office footer .footer-links a,body.tgd-news-office footer .footer-bottom a{color:#07111f}
+body.tgd-news-office footer h2{color:#984000}
+body.tgd-news-office footer .footer-contact-list p{border:0}
+body.tgd-news-office footer a:hover{color:#984000}
+@media(max-width:720px){body.tgd-news-office .updates-hero{padding:24px}}
+</style>
+
+<style is:global>
+body.tgd-news-office.tgd-news-office footer,body.tgd-news-office.tgd-news-office footer *{box-sizing:border-box}
+body.tgd-news-office.tgd-news-office footer .footer-contact-list span,body.tgd-news-office.tgd-news-office footer .footer-contact-list a,body.tgd-news-office.tgd-news-office footer .footer-bottom a{color:#07111f}
+body.tgd-news-office.tgd-news-office footer .footer-contact-list p{border:0}
+body.tgd-news-office.tgd-news-office footer .footer-columns{grid-template-columns:minmax(0,1.5fr) repeat(2,minmax(0,.75fr))}
+body.tgd-news-office.tgd-news-office footer .footer-contact-list p{grid-template-columns:1fr;gap:5px}
+body.tgd-news-office.tgd-news-office footer .footer-contact-list span,body.tgd-news-office.tgd-news-office footer .footer-contact-list a,body.tgd-news-office.tgd-news-office footer .footer-links a,body.tgd-news-office.tgd-news-office footer .footer-bottom a{white-space:normal;overflow-wrap:anywhere}
+@media(max-width:920px){body.tgd-news-office.tgd-news-office footer .footer-columns{grid-template-columns:1fr}}
 </style>

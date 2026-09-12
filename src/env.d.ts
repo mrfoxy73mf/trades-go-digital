@@ -1,4 +1,12 @@
 interface Env {
+ STRIPE_SECRET_KEY?: string;
+ STRIPE_TEST_SECRET_KEY?: string;
+ STRIPE_TEST_WEBHOOK_SECRET?: string;
+ OPENAI_API_KEY?: string;
+ SAFEWORK_MODEL?: string;
+ SAFEWORK_MODE?: string;
+ SAFEWORK_SALES_ENABLED?: string;
+ SAFEWORK_PRICE_PENCE?: string;
 	FULFILMENT_DB: D1Database;
 	FULFILMENT_FILES: KVNamespace;
 	STRIPE_WEBHOOK_SECRET: string;

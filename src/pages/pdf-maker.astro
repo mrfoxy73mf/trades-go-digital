@@ -1,6 +1,7 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -8,7 +9,7 @@ import Header from "../components/Header.astro";
 <head>
 	<BaseHead title="PDF Maker | Trades Go Digital" description="A structured Word-style PDF maker for trade quotes and invoices." />
 </head>
-<body>
+<body class="tgd-pdf-office">
 	<Header />
 	<main class="pdf-studio">
 		<header class="studio-top no-print">
@@ -22,7 +23,7 @@ import Header from "../components/Header.astro";
 					<p>Option 4</p>
 					<h1>Word-style PDF builder.</h1>
 					<span>Structured fields on the left. Finished A4 document on the right.</span>
-					<strong class="maker-price">£7.99 one-off</strong>
+					<a class="maker-price" href="/pricing#tools">View pricing</a>
 				</section>
 
 				<section class="panel open">
@@ -129,6 +130,7 @@ import Header from "../components/Header.astro";
 		document.addEventListener("input",e=>{const el=e.target;if(el.dataset?.i){state.items[Number(el.dataset.i)][el.dataset.f]=["qty","price"].includes(el.dataset.f)?Number(el.value):el.value}else if(el.id in state){state[el.id]=el.type==="checkbox"?el.checked:(["vatRate","deposit","previewZoom"].includes(el.id)?Number(el.value):el.value)}render(false)});
 		$("add-item").onclick=()=>{state.items.push({desc:"New item",qty:1,unit:"each",price:0});render()};$("save").onclick=()=>{$("status").textContent="Saved just now";localStorage.setItem("tgd-word-style-pdf",JSON.stringify(state))};$("download").onclick=()=>window.print();$("logo").onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.logo=String(r.result);render()};r.readAsDataURL(f)};$("import-logo").onclick=()=>{const logo=localStorage.getItem("tgd-logo-maker-export");if(logo){state.logo=logo;$("status").textContent="Logo imported from Logo Maker";render()}else{$("status").textContent="Create a logo first in Logo Maker"}};$("remove-logo").onclick=()=>{state.logo="";render()};try{const saved=JSON.parse(localStorage.getItem("tgd-word-style-pdf"));if(saved?.business)state={...fresh(),...saved}}catch{}render();
 	</script>
+<div class="maker-site-footer no-print"><Footer /></div>
 </body>
 </html>
 
@@ -140,4 +142,44 @@ import Header from "../components/Header.astro";
 </style>
 <style is:global>
 	.maker-price{display:inline-flex;width:max-content;margin-top:14px;padding:8px 11px;border-radius:999px;background:#f97316;color:#07111f;font-size:13px;font-weight:950}
+</style>
+
+<style is:global>
+@media screen {
+ body.tgd-pdf-office{position:relative;isolation:isolate;background:#edf0f2}
+ body.tgd-pdf-office::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)),url('/images/tgd-pdf-document-studio.png') center / cover no-repeat}
+ body.tgd-pdf-office .pdf-studio,body.tgd-pdf-office .studio-grid,body.tgd-pdf-office .preview{background:transparent}
+ body.tgd-pdf-office .pdf-studio{padding:24px;max-width:1500px;margin:auto}
+ body.tgd-pdf-office .studio-top,body.tgd-pdf-office .builder,body.tgd-pdf-office .preview-head{background:#fff;border-radius:10px;box-shadow:0 8px 28px #07111f1f}
+ body.tgd-pdf-office .studio-top{margin-bottom:22px}
+ body.tgd-pdf-office .sheet{background:#fff}
+ @media(max-width:720px){body.tgd-pdf-office .pdf-studio{padding:12px}}
+}
+@media print {body.tgd-pdf-office::before{display:none!important}}
+</style>
+
+<style is:global>
+.maker-site-footer{clear:both;width:100%;margin-top:32px}@media print{.maker-site-footer{display:none!important}}
+</style>
+
+<style is:global>
+@media screen {
+ .maker-site-footer footer{background:transparent;border:0;color:#07111f}
+ .maker-site-footer .footer-brand{padding:24px;border:0;border-radius:10px;background:rgba(255,255,255,.92)}
+ .maker-site-footer .footer-contact-list,.maker-site-footer .footer-links{background:rgba(255,255,255,.92);border:0;box-shadow:0 8px 28px #07111f1f}
+ .maker-site-footer .footer-contact-list span,.maker-site-footer .footer-contact-list a,.maker-site-footer .footer-links a,.maker-site-footer .footer-bottom a{color:#07111f}
+ .maker-site-footer h2{color:#9a4200}
+ .maker-site-footer .footer-contact-list p{border:0}
+ .maker-site-footer .footer-bottom{padding:20px;border:0;border-radius:10px;background:rgba(255,255,255,.92);color:#334155}
+ .maker-site-footer a:hover{color:#a84400}
+}
+</style>
+<style is:global>
+@media screen {
+ body .maker-site-footer.maker-site-footer footer .footer-contact-list span,
+ body .maker-site-footer.maker-site-footer footer .footer-contact-list a,
+ body .maker-site-footer.maker-site-footer footer .footer-bottom a{color:#07111f}
+ body .maker-site-footer.maker-site-footer footer .footer-contact-list p{border:0}
+ body .maker-site-footer.maker-site-footer footer a:hover{color:#a84400}
+}
 </style>

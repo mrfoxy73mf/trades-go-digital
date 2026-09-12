@@ -1,0 +1,5114 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Full runtime safety knowledge supplied to SafeWork AI so it can infer job phases, hazards, controls, permits, competence, emergency needs and stop-work conditions from a plain-language job description.",
+  "reasoning_policy": [
+    "Identify the intended job and expand it into a normal end-to-end work sequence without asking the user to list every step.",
+    "Treat inferred work methods as provisional and distinguish them from site facts confirmed by the user.",
+    "Use the full topic modules to identify hazards and controls across every inferred phase.",
+    "Ask only for material site-specific facts that cannot safely be inferred.",
+    "Never treat a generated assessment, method statement or permit as approved or issued."
+  ],
+  "topics": [
+    {
+      "id": "airborne-contaminants-lev",
+      "title": "Dust, fume, mist and local exhaust ventilation",
+      "purpose": "Control airborne contaminants at source and determine when competent LEV design, testing, monitoring or RPE is needed.",
+      "status": "draft",
+      "trigger_terms": [
+        "dust",
+        "fume",
+        "mist",
+        "aerosol",
+        "silica",
+        "wood dust",
+        "welding fume",
+        "spraying",
+        "LEV",
+        "extraction",
+        "air monitoring"
+      ],
+      "intake_questions": [
+        {
+          "id": "generation",
+          "question": "What contaminant is generated, by which process, at what rate and close to which breathing zones?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "source-control",
+          "question": "Can the process be changed, enclosed, wetted or extracted at source?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "evidence",
+          "question": "What commissioning, indicator, examination, exposure-monitoring or health-surveillance evidence confirms control?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "airborne-exposure",
+          "hazard": "Inhalation of harmful airborne contaminant",
+          "possible_harm": [
+            "asthma",
+            "lung disease",
+            "cancer",
+            "poisoning",
+            "sensitisation"
+          ],
+          "people_at_risk": [
+            "operators",
+            "nearby workers",
+            "cleaners",
+            "maintenance staff"
+          ],
+          "control_prompts": [
+            "eliminate or substitute process",
+            "use low-emission method",
+            "enclose",
+            "capture with effective LEV",
+            "verify airflow and containment",
+            "clean by suitable vacuum or wet method",
+            "limit exposure",
+            "add suitable RPE for residual risk"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "hot-work",
+        "confined-space-entry"
+      ],
+      "competence_requirements": [
+        "Competent LEV design, commissioning and examination",
+        "Competent exposure assessment where needed"
+      ],
+      "ppe_considerations": [
+        "RPE follows the PPE/RPE module"
+      ],
+      "emergency_requirements": [
+        "Stop process after extraction failure or uncontrolled release"
+      ],
+      "health_surveillance_considerations": [
+        "Respiratory or skin surveillance where risk criteria are met"
+      ],
+      "stop_work_conditions": [
+        "Contaminant identity or generation is unknown",
+        "Specified extraction is absent or ineffective",
+        "Unexpected visible dust, fume, odour, symptom or alarm occurs"
+      ],
+      "source_topic_ids": [
+        "hazardous-substances"
+      ],
+      "legal_currency_note": "Verify current WELs, measurement strategy and LEV examination requirements."
+    },
+    {
+      "id": "asbestos",
+      "title": "Asbestos-containing materials",
+      "purpose": "Prevent uncontrolled disturbance and route work to the correct survey, plan, competence and licensing decision.",
+      "status": "draft",
+      "trigger_terms": [
+        "asbestos",
+        "ACM",
+        "refurbishment",
+        "demolition",
+        "drilling existing building",
+        "AIB",
+        "lagging",
+        "textured coating",
+        "asbestos cement"
+      ],
+      "intake_questions": [
+        {
+          "id": "building-age-scope",
+          "question": "What building or plant fabric will be disturbed, where and to what depth?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "survey",
+          "question": "Is a suitable asbestos survey and register available for the exact work area and intrusive scope?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "material-status",
+          "question": "Has each suspect material been identified by competent survey or analysis?",
+          "answer_type": "boolean",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "fibre-release",
+          "hazard": "Disturbance releases respirable asbestos fibres",
+          "possible_harm": [
+            "asbestosis",
+            "mesothelioma",
+            "lung cancer"
+          ],
+          "people_at_risk": [
+            "workers",
+            "occupants",
+            "public",
+            "future maintenance workers"
+          ],
+          "control_prompts": [
+            "avoid disturbance",
+            "obtain task-suitable survey",
+            "classify work and licensing requirement",
+            "use trained competent contractor",
+            "prepare plan of work",
+            "control spread and decontamination",
+            "manage waste and clearance"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Asbestos awareness for those who may encounter ACMs",
+        "Task and licensing competence appropriate to classified work"
+      ],
+      "ppe_considerations": [
+        "RPE and protective clothing are selected only within a complete asbestos control plan"
+      ],
+      "emergency_requirements": [
+        "Stop, isolate area and follow accidental disturbance procedure"
+      ],
+      "health_surveillance_considerations": [
+        "Medical surveillance and records where legally applicable"
+      ],
+      "stop_work_conditions": [
+        "Survey does not cover the exact intrusive work",
+        "Suspect material is unidentified",
+        "Required licence, notification, plan, control or clearance is absent"
+      ],
+      "source_topic_ids": [
+        "hazardous-substances"
+      ],
+      "legal_currency_note": "Classification of licensed, notifiable non-licensed and non-licensed work must use current HSE requirements."
+    },
+    {
+      "id": "biological-agents",
+      "title": "Biological agents and infection exposure",
+      "purpose": "Assess deliberate or incidental exposure to biological agents, contaminated materials, sharps, waste and bodily fluids.",
+      "status": "draft",
+      "trigger_terms": [
+        "biological",
+        "bacteria",
+        "virus",
+        "fungus",
+        "mould",
+        "sewage",
+        "bodily fluid",
+        "sharps",
+        "animal waste",
+        "clinical waste",
+        "infection"
+      ],
+      "intake_questions": [
+        {
+          "id": "agent-source",
+          "question": "What agent or contaminated source may be present, and is exposure deliberate or incidental?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "route",
+          "question": "Which routes are credible?",
+          "answer_type": "multi_choice",
+          "required": true,
+          "options": [
+            "inhalation",
+            "ingestion",
+            "skin or mucous membrane",
+            "sharps or bite",
+            "unknown"
+          ]
+        },
+        {
+          "id": "vulnerable",
+          "question": "Could anyone be especially vulnerable because of health, pregnancy, immunity or age?",
+          "answer_type": "boolean",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "infection-exposure",
+          "hazard": "Exposure to infectious or sensitising biological material",
+          "possible_harm": [
+            "infection",
+            "allergy",
+            "toxic response",
+            "serious illness"
+          ],
+          "people_at_risk": [
+            "workers",
+            "cleaners",
+            "waste handlers",
+            "public"
+          ],
+          "control_prompts": [
+            "avoid or contain exposure",
+            "use safe collection and disposal",
+            "provide ventilation where aerosol can arise",
+            "prevent sharps injury",
+            "provide hygiene and washing",
+            "prohibit eating and drinking in contaminated area",
+            "use suitable PPE"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "confined-space-entry",
+        "line-breaking"
+      ],
+      "competence_requirements": [
+        "Workers trained in contamination control, hygiene, waste and exposure response"
+      ],
+      "ppe_considerations": [
+        "Select gloves, clothing, eye, face and respiratory protection for the agent, route and task"
+      ],
+      "emergency_requirements": [
+        "Needlestick, splash, bite, spill and exposure follow-up",
+        "Prompt medical advice where indicated"
+      ],
+      "health_surveillance_considerations": [
+        "Vaccination, health surveillance or occupational-health advice where the assessment identifies need"
+      ],
+      "stop_work_conditions": [
+        "Agent or contamination status is unknown and controls cannot cover the uncertainty",
+        "Containment, hygiene or waste arrangements fail",
+        "Unplanned exposure occurs"
+      ],
+      "source_topic_ids": [
+        "biological-agents"
+      ],
+      "legal_currency_note": "Obtain agent- and sector-specific current public-health and occupational guidance."
+    },
+    {
+      "id": "confined-spaces",
+      "title": "Confined spaces",
+      "purpose": "Identify confined spaces and specified risks, prioritise avoidance and require a complete safe system and rescue plan before entry.",
+      "status": "draft",
+      "trigger_terms": [
+        "confined space",
+        "tank",
+        "vessel",
+        "pit",
+        "chamber",
+        "sewer",
+        "silo",
+        "duct",
+        "restricted enclosure",
+        "oxygen deficient"
+      ],
+      "intake_questions": [
+        {
+          "id": "space-description",
+          "question": "Describe the enclosure, access, dimensions, contents, connected services and previous use.",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "avoid-entry",
+          "question": "Can the work be completed without entering the space?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "specified-risks",
+          "question": "Which specified risks or hazardous atmospheres could arise before or during work?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "rescue-plan",
+          "question": "What rescue method, trained team, communications and equipment will be immediately available?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "hazardous-atmosphere",
+          "hazard": "Oxygen deficiency or enrichment, toxic or flammable atmosphere",
+          "possible_harm": [
+            "asphyxiation",
+            "poisoning",
+            "fire",
+            "explosion"
+          ],
+          "people_at_risk": [
+            "entrant",
+            "standby person",
+            "rescuers"
+          ],
+          "control_prompts": [
+            "avoid entry",
+            "positively isolate",
+            "clean and purge",
+            "test atmosphere using suitable calibrated equipment",
+            "ventilate",
+            "continuously monitor where assessment requires",
+            "control ignition sources"
+          ]
+        },
+        {
+          "id": "engulfment-entrapment",
+          "hazard": "Inrush, engulfment, flooding, heat or restricted rescue",
+          "possible_harm": [
+            "drowning",
+            "crushing",
+            "heat illness",
+            "fatal rescue delay"
+          ],
+          "people_at_risk": [
+            "entrant",
+            "rescuers"
+          ],
+          "control_prompts": [
+            "secure mechanical and process isolations",
+            "control stored materials and liquids",
+            "manage temperature and duration",
+            "maintain communications",
+            "use an engineered rescue method"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "confined-space-entry",
+        "electrical-isolation",
+        "line-breaking",
+        "hot-work"
+      ],
+      "competence_requirements": [
+        "Competent confined-space classification and planning",
+        "Trained entrants, top person and rescuers",
+        "Competent atmospheric testing"
+      ],
+      "ppe_considerations": [
+        "PPE and respiratory protection selected from measured conditions and rescue compatibility"
+      ],
+      "emergency_requirements": [
+        "A site-specific rescue plan that does not rely solely on the public emergency services",
+        "Recovery equipment and first-aid arrangements immediately available"
+      ],
+      "health_surveillance_considerations": [
+        "Fitness for the environment, PPE and task where appropriate"
+      ],
+      "stop_work_conditions": [
+        "Entry can be avoided but has not been",
+        "Isolations, permit, testing or rescue arrangements are incomplete",
+        "Atmosphere leaves agreed limits or communications fail"
+      ],
+      "source_topic_ids": [
+        "confined-spaces"
+      ],
+      "legal_currency_note": "Use the current Confined Spaces Regulations, ACOP and site requirements when deciding whether the space and risks are in scope."
+    },
+    {
+      "id": "dangerous-substances-explosive-atmospheres",
+      "title": "Dangerous substances and explosive atmospheres",
+      "purpose": "Control fire, explosion and pressure effects from flammable, oxidising, explosive or pressurised substances and combustible dusts.",
+      "status": "draft",
+      "trigger_terms": [
+        "DSEAR",
+        "flammable",
+        "explosive atmosphere",
+        "combustible dust",
+        "solvent vapour",
+        "LPG",
+        "hydrogen",
+        "oxygen enrichment",
+        "aerosol",
+        "gas under pressure"
+      ],
+      "intake_questions": [
+        {
+          "id": "dangerous-substance",
+          "question": "Which dangerous substances, quantities, release scenarios and physical properties are present?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "area-classification",
+          "question": "Could an explosive atmosphere form, and has any hazardous area been classified?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "ignition",
+          "question": "Which electrical, mechanical, static, flame or hot-surface ignition sources could occur?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "fire-explosion",
+          "hazard": "Ignition or energetic release",
+          "possible_harm": [
+            "fire",
+            "explosion",
+            "burns",
+            "multiple fatalities"
+          ],
+          "people_at_risk": [
+            "workers",
+            "public",
+            "responders"
+          ],
+          "control_prompts": [
+            "eliminate or reduce inventory",
+            "prevent release",
+            "ventilate",
+            "classify hazardous areas",
+            "exclude ignition sources",
+            "use suitable equipment",
+            "mitigate explosion and control escalation",
+            "plan emergency response"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "hot-work",
+        "line-breaking",
+        "confined-space-entry"
+      ],
+      "competence_requirements": [
+        "Competent DSEAR assessment and hazardous-area expertise where relevant"
+      ],
+      "ppe_considerations": [
+        "Flame-resistant or anti-static PPE only where justified and compatible with the full control strategy"
+      ],
+      "emergency_requirements": [
+        "Alarm, evacuation, isolation and firefighting strategy",
+        "Information for responders"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Substance properties or inventory are unknown",
+        "Hazardous area or equipment suitability is unresolved",
+        "Leak, alarm or unplanned ignition source occurs"
+      ],
+      "source_topic_ids": [
+        "fire-hot-work",
+        "hazardous-substances"
+      ],
+      "legal_currency_note": "Use a current DSEAR assessment and specialist hazardous-area standards where applicable."
+    },
+    {
+      "id": "display-screen-home-working",
+      "title": "Display screen, office and home working",
+      "purpose": "Assess habitual display-screen work, workstation setup, work organisation, home conditions and remote communication.",
+      "status": "draft",
+      "trigger_terms": [
+        "DSE",
+        "computer",
+        "laptop",
+        "office",
+        "home working",
+        "hybrid working",
+        "workstation",
+        "screen user"
+      ],
+      "intake_questions": [
+        {
+          "id": "dse-user",
+          "question": "Does the person use display-screen equipment daily for continuous periods of about an hour or more?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "workstations",
+          "question": "Which office, home or mobile workstations are used and have they been assessed?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "symptoms-routine",
+          "question": "Are there discomfort, visual, workload, isolation or break-pattern concerns?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "poor-workstation",
+          "hazard": "Poor posture, prolonged static work, visual demand or unsuitable work organisation",
+          "possible_harm": [
+            "musculoskeletal discomfort",
+            "fatigue",
+            "eye discomfort",
+            "stress"
+          ],
+          "people_at_risk": [
+            "DSE users"
+          ],
+          "control_prompts": [
+            "assess each regular workstation",
+            "adjust chair, screen and input devices",
+            "support sustainable posture",
+            "plan breaks or activity changes",
+            "provide information and eye-test arrangements",
+            "review symptoms and changes"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Trained DSE assessor or competent support for complex needs"
+      ],
+      "ppe_considerations": [],
+      "emergency_requirements": [
+        "Home-worker contact and emergency arrangements proportionate to work"
+      ],
+      "health_surveillance_considerations": [
+        "Occupational-health or ergonomic referral for persistent symptoms"
+      ],
+      "stop_work_conditions": [
+        "Reported pain or disability needs are not addressed",
+        "Home or remote conditions create an immediate electrical, fire or personal-safety risk"
+      ],
+      "source_topic_ids": [
+        "manual-handling-ergonomics",
+        "stress-mental-health-violence"
+      ],
+      "legal_currency_note": "Confirm current DSE-user definitions and employer duties for each work location."
+    },
+    {
+      "id": "electricity",
+      "title": "Electrical safety and isolation",
+      "purpose": "Control electrical energy during use, installation, maintenance, testing and work near services.",
+      "status": "draft",
+      "trigger_terms": [
+        "electric",
+        "electrical",
+        "cable",
+        "switchgear",
+        "distribution board",
+        "isolation",
+        "live work",
+        "battery",
+        "overhead line",
+        "underground service"
+      ],
+      "intake_questions": [
+        {
+          "id": "system-details",
+          "question": "What system, voltage, energy source and equipment are involved?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "dead-working",
+          "question": "Can the work be completed with the system isolated and proved dead?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "isolation-owner",
+          "question": "Who controls the isolation, lock-off, testing and return to service?",
+          "answer_type": "text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "electric-shock",
+          "hazard": "Contact with live parts or induced/stored energy",
+          "possible_harm": [
+            "electric shock",
+            "burns",
+            "fatality",
+            "secondary fall"
+          ],
+          "people_at_risk": [
+            "electricians",
+            "users",
+            "maintenance workers",
+            "others nearby"
+          ],
+          "control_prompts": [
+            "design out live work",
+            "identify all supplies",
+            "isolate, secure and label",
+            "prove tester, prove dead, re-prove tester",
+            "discharge stored energy",
+            "protect against adjacent live parts"
+          ]
+        },
+        {
+          "id": "electrical-fire-arc",
+          "hazard": "Fault, overload, damaged equipment or arc event",
+          "possible_harm": [
+            "fire",
+            "explosion",
+            "thermal burns",
+            "pressure injury"
+          ],
+          "people_at_risk": [
+            "workers",
+            "building occupants"
+          ],
+          "control_prompts": [
+            "use suitable rated equipment",
+            "inspect and maintain",
+            "protect cables",
+            "use correct protective devices",
+            "control environment and ingress",
+            "establish emergency isolation"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "electrical-isolation",
+        "excavation"
+      ],
+      "competence_requirements": [
+        "Electrical work and testing performed only by persons competent for the system and task"
+      ],
+      "ppe_considerations": [
+        "Arc-rated or insulating PPE only where justified by a competent assessment; never as the primary reason to work live"
+      ],
+      "emergency_requirements": [
+        "Safe emergency isolation",
+        "Do not touch a casualty until the supply is isolated",
+        "Electrical fire response"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Circuit or isolation point cannot be positively identified",
+        "Work dead is possible but live work is proposed without specific justification",
+        "Equipment is damaged, wet, incorrectly rated or tests fail"
+      ],
+      "source_topic_ids": [
+        "electricity"
+      ],
+      "legal_currency_note": "Electrical technical standards, test requirements and authorisation rules must be confirmed for the installation and organisation."
+    },
+    {
+      "id": "environmental-protection",
+      "title": "Environmental protection within RAMS",
+      "purpose": "Add proportionate controls for pollution, waste, nuisance, resource use and environmental receptors affected by the job.",
+      "status": "draft",
+      "trigger_terms": [
+        "spill",
+        "waste",
+        "drain",
+        "watercourse",
+        "dust nuisance",
+        "noise nuisance",
+        "fuel storage",
+        "contaminated land",
+        "protected species",
+        "environmental"
+      ],
+      "intake_questions": [
+        {
+          "id": "receptors",
+          "question": "Which drains, watercourses, soil, neighbours, habitats or other environmental receptors could be affected?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "materials-waste",
+          "question": "Which fuels, chemicals, wastes, dusts, emissions or contaminated materials will be stored or generated?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "controls",
+          "question": "What containment, segregation, collection, disposal and emergency arrangements apply?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "pollution-release",
+          "hazard": "Release, poor waste control or nuisance affects environment or community",
+          "possible_harm": [
+            "water or soil pollution",
+            "harm to wildlife",
+            "community exposure",
+            "enforcement and cleanup"
+          ],
+          "people_at_risk": [
+            "workers",
+            "public",
+            "environmental receptors"
+          ],
+          "control_prompts": [
+            "avoid harmful material or method",
+            "minimise quantities and waste",
+            "use secondary containment",
+            "protect drains",
+            "segregate and label waste",
+            "use authorised disposal route",
+            "control dust, noise and runoff",
+            "maintain spill response"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "line-breaking",
+        "excavation"
+      ],
+      "competence_requirements": [
+        "Environmental competence proportionate to receptors and regulated waste"
+      ],
+      "ppe_considerations": [
+        "PPE selected for cleanup only after safe containment and response planning"
+      ],
+      "emergency_requirements": [
+        "Spill containment, notification and cleanup plan"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Environmental receptors or disposal route are unknown",
+        "Containment or spill response is unavailable",
+        "Unexpected contamination, protected feature or release is found"
+      ],
+      "source_topic_ids": [
+        "management-systems",
+        "risk-management"
+      ],
+      "legal_currency_note": "Environmental permits, waste classifications and regulator requirements must be confirmed for the location and material."
+    },
+    {
+      "id": "excavation-underground-services",
+      "title": "Excavation, ground disturbance and buried services",
+      "purpose": "Control service strikes, collapse, falls, water ingress, plant interaction and confined conditions during ground work.",
+      "status": "draft",
+      "trigger_terms": [
+        "excavation",
+        "dig",
+        "trench",
+        "breaking ground",
+        "core drilling ground",
+        "underground service",
+        "cable avoidance",
+        "trial hole",
+        "manhole"
+      ],
+      "intake_questions": [
+        {
+          "id": "ground-scope",
+          "question": "What depth, dimensions, ground conditions, support method and duration are planned?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "service-information",
+          "question": "Are current plans, site markings, locating results and safe-digging methods available?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "inspection",
+          "question": "Who will inspect the excavation and after which events?",
+          "answer_type": "text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "service-strike",
+          "hazard": "Contact with buried electrical, gas, water or communication service",
+          "possible_harm": [
+            "electric shock",
+            "fire",
+            "explosion",
+            "flooding",
+            "service loss"
+          ],
+          "people_at_risk": [
+            "workers",
+            "public",
+            "service users"
+          ],
+          "control_prompts": [
+            "obtain and review plans",
+            "survey and mark",
+            "use suitable locating equipment",
+            "prove services by safe trial holes",
+            "use controlled digging method",
+            "support exposed services",
+            "Complete service review, competent locating, marking and required authorisation before any ground disturbance, including extraction of existing posts/foundations and trial holes; establish segregation first."
+          ]
+        },
+        {
+          "id": "collapse-fall",
+          "hazard": "Ground collapse, falling material, falls or plant entering excavation",
+          "possible_harm": [
+            "burial",
+            "crushing",
+            "fatality"
+          ],
+          "people_at_risk": [
+            "workers",
+            "public"
+          ],
+          "control_prompts": [
+            "design battering or support",
+            "keep plant and spoil back",
+            "provide safe access",
+            "guard edges",
+            "control water",
+            "inspect and record as required"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "excavation",
+        "confined-space-entry"
+      ],
+      "competence_requirements": [
+        "Competent service locating, excavation planning and inspection"
+      ],
+      "ppe_considerations": [
+        "PPE supports, but does not replace, service and collapse controls"
+      ],
+      "emergency_requirements": [
+        "Service-strike response",
+        "Collapse and rescue plan without unplanned entry"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Plans or locating results are missing or conflict",
+        "Ground support or safe access is inadequate",
+        "Unknown service, water ingress, movement or atmosphere is encountered"
+      ],
+      "source_topic_ids": [
+        "risk-management",
+        "electricity"
+      ],
+      "legal_currency_note": "Confirm current service-owner requirements, excavation inspection duties and confined-space classification."
+    },
+    {
+      "id": "fire-hot-work",
+      "title": "Fire, explosion and hot work",
+      "purpose": "Identify ignition, fuel and oxygen interactions and control hot work, flammables, evacuation and fire watch arrangements.",
+      "status": "draft",
+      "trigger_terms": [
+        "hot work",
+        "welding",
+        "grinding",
+        "flame",
+        "torch",
+        "flammable",
+        "combustible",
+        "gas cylinder",
+        "fire",
+        "explosive atmosphere"
+      ],
+      "intake_questions": [
+        {
+          "id": "ignition-sources",
+          "question": "Which flames, sparks, hot surfaces, electrical or static ignition sources will be present?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "fuels",
+          "question": "Which flammable liquids, gases, dusts, wastes, structures or hidden combustibles could be affected?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "fire-system",
+          "question": "Will detection, alarms, suppression, compartmentation or escape routes be impaired?",
+          "answer_type": "boolean",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "ignition",
+          "hazard": "Ignition of flammable or combustible material",
+          "possible_harm": [
+            "burns",
+            "smoke inhalation",
+            "fatality",
+            "property damage"
+          ],
+          "people_at_risk": [
+            "workers",
+            "occupants",
+            "public",
+            "responders"
+          ],
+          "control_prompts": [
+            "eliminate hot work where possible",
+            "remove or shield fuels",
+            "clean hidden spaces and voids",
+            "control gas cylinders and hoses",
+            "provide suitable extinguishing equipment",
+            "maintain escape routes",
+            "fire watch during and after work"
+          ]
+        },
+        {
+          "id": "explosive-atmosphere",
+          "hazard": "Ignition in a flammable atmosphere or combustible dust cloud",
+          "possible_harm": [
+            "explosion",
+            "multiple serious injuries",
+            "structural damage"
+          ],
+          "people_at_risk": [
+            "everyone in the affected area"
+          ],
+          "control_prompts": [
+            "identify hazardous area",
+            "prevent release",
+            "ventilate and test where required",
+            "use suitable equipment",
+            "exclude ignition sources",
+            "coordinate emergency action"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "hot-work",
+        "confined-space-entry",
+        "line-breaking"
+      ],
+      "competence_requirements": [
+        "Hot-work operator competence",
+        "Permit issuer understands the location, fire systems and hidden spread routes"
+      ],
+      "ppe_considerations": [
+        "Heat, flame, eye and respiratory protection selected for the process and nearby persons"
+      ],
+      "emergency_requirements": [
+        "Alarm raising and evacuation",
+        "Fire watch duration and handback",
+        "Cylinder emergency arrangements"
+      ],
+      "health_surveillance_considerations": [
+        "Consider fume exposure under the hazardous-substances module"
+      ],
+      "stop_work_conditions": [
+        "Permit controls are incomplete",
+        "Combustibles cannot be removed or protected",
+        "Fire system impairment is unauthorised",
+        "Gas leak, alarm or uncontrolled fume occurs"
+      ],
+      "source_topic_ids": [
+        "fire-hot-work"
+      ],
+      "legal_currency_note": "Confirm site fire-risk assessment, insurer rules and permit requirements before work."
+    },
+    {
+      "id": "first-aid-emergency",
+      "title": "First aid, emergency response and rescue",
+      "purpose": "Match first-aid and emergency arrangements to the workforce, location, hazards, response time and rescue needs.",
+      "status": "draft",
+      "trigger_terms": [
+        "first aid",
+        "emergency",
+        "rescue",
+        "evacuation",
+        "AED",
+        "bleeding",
+        "burn",
+        "chemical exposure",
+        "remote work"
+      ],
+      "intake_questions": [
+        {
+          "id": "credible-events",
+          "question": "Which credible emergencies could occur and what immediate actions are required?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "first-aid-needs",
+          "question": "What first-aid personnel, equipment, facilities and response times are needed for the work and workforce?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "rescue",
+          "question": "Could anyone become suspended, trapped, contaminated, unconscious or otherwise unable to self-rescue?",
+          "answer_type": "boolean",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "delayed-response",
+          "hazard": "Emergency response or rescue is delayed, improvised or exposes rescuers",
+          "possible_harm": [
+            "injury worsens",
+            "multiple casualties",
+            "fatality"
+          ],
+          "people_at_risk": [
+            "casualty",
+            "first aider",
+            "rescuers",
+            "others"
+          ],
+          "control_prompts": [
+            "define alarms and contacts",
+            "provide suitable trained cover",
+            "locate equipment and access",
+            "coordinate emergency services",
+            "prepare task-specific rescue",
+            "drill critical arrangements",
+            "record and replenish after use"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "First-aid and rescue competence proportionate to hazards"
+      ],
+      "ppe_considerations": [
+        "Responder PPE and contamination control"
+      ],
+      "emergency_requirements": [
+        "This module defines emergency arrangements for all RAMS"
+      ],
+      "health_surveillance_considerations": [
+        "Post-exposure medical and occupational-health follow-up"
+      ],
+      "stop_work_conditions": [
+        "Required first-aid cover is absent",
+        "A credible rescue need has no workable plan",
+        "Emergency access, alarm or communications are unavailable"
+      ],
+      "source_topic_ids": [
+        "risk-management",
+        "incident-reporting-investigation"
+      ],
+      "legal_currency_note": "First-aid needs and specialist rescue arrangements must reflect current guidance and actual response capability."
+    },
+    {
+      "id": "gas-safety",
+      "title": "Fuel gas installation and appliances",
+      "purpose": "Control gas release, combustion products, fire, explosion and unsafe appliance work.",
+      "status": "draft",
+      "trigger_terms": [
+        "gas appliance",
+        "gas pipe",
+        "natural gas",
+        "LPG",
+        "boiler",
+        "flue",
+        "combustion",
+        "gas tightness",
+        "Gas Safe"
+      ],
+      "intake_questions": [
+        {
+          "id": "gas-system",
+          "question": "Which fuel, supply, appliance, pressure, ventilation and flue arrangements are involved?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "competence",
+          "question": "Is the person legally competent and registered for the exact gas work category?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "isolation-test",
+          "question": "How will the supply be isolated, tested, purged and safely recommissioned?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "gas-release-combustion",
+          "hazard": "Fuel gas release or incomplete combustion",
+          "possible_harm": [
+            "fire",
+            "explosion",
+            "carbon monoxide poisoning",
+            "asphyxiation"
+          ],
+          "people_at_risk": [
+            "workers",
+            "occupants",
+            "public"
+          ],
+          "control_prompts": [
+            "use category-competent engineer",
+            "isolate securely",
+            "ventilate and control ignition",
+            "tightness test and purge correctly",
+            "verify ventilation and flue",
+            "commission and record",
+            "provide alarm response"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "hot-work",
+        "line-breaking"
+      ],
+      "competence_requirements": [
+        "Current legal registration and competence for the appliance, fuel and work category"
+      ],
+      "ppe_considerations": [],
+      "emergency_requirements": [
+        "Gas-escape response, evacuation and emergency service contact",
+        "Carbon-monoxide response"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Competence category is not confirmed",
+        "Isolation, ventilation or flue condition is unsafe",
+        "Gas smell, alarm, failed test or suspected combustion-product release occurs"
+      ],
+      "source_topic_ids": [
+        "fire-hot-work",
+        "hazardous-substances"
+      ],
+      "legal_currency_note": "Gas work must comply with current Gas Safety law and registration requirements."
+    },
+    {
+      "id": "hazardous-substances",
+      "title": "Hazardous substances and occupational exposure",
+      "purpose": "Route COSHH-style questions for substances, dusts, fumes, vapours, gases and exposure controls.",
+      "status": "draft",
+      "trigger_terms": [
+        "chemical",
+        "dust",
+        "fume",
+        "vapour",
+        "gas",
+        "solvent",
+        "cement",
+        "silica",
+        "asbestos",
+        "COSHH",
+        "SDS",
+        "paint",
+        "adhesive"
+      ],
+      "intake_questions": [
+        {
+          "id": "substance-list",
+          "question": "Which products, process-generated substances, dusts, fumes or biological contaminants may be present?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "sds",
+          "question": "Are current safety data sheets and product labels available?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "exposure-route",
+          "question": "Which exposure routes are credible?",
+          "answer_type": "multi_choice",
+          "required": true,
+          "options": [
+            "inhalation",
+            "skin",
+            "eyes",
+            "ingestion",
+            "injection",
+            "oxygen displacement"
+          ]
+        },
+        {
+          "id": "quantity-duration",
+          "question": "What quantity is used, for how long, how often and in what ventilation conditions?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "harmful-exposure",
+          "hazard": "Exposure to hazardous substance",
+          "possible_harm": [
+            "acute poisoning",
+            "respiratory disease",
+            "dermatitis",
+            "eye injury",
+            "cancer or sensitisation where applicable"
+          ],
+          "people_at_risk": [
+            "users",
+            "nearby workers",
+            "cleaners",
+            "maintenance staff",
+            "public"
+          ],
+          "control_prompts": [
+            "eliminate or substitute",
+            "use enclosed or low-emission process",
+            "provide effective extraction or ventilation",
+            "limit number exposed and duration",
+            "use suitable handling and storage",
+            "select RPE/PPE only after higher controls"
+          ]
+        },
+        {
+          "id": "release",
+          "hazard": "Spill, leak, incompatible mixing or loss of containment",
+          "possible_harm": [
+            "fire",
+            "toxic exposure",
+            "environmental release",
+            "slip hazard"
+          ],
+          "people_at_risk": [
+            "workers",
+            "responders",
+            "public"
+          ],
+          "control_prompts": [
+            "segregate incompatibles",
+            "use labelled containers",
+            "provide spill plan and materials",
+            "protect drains",
+            "define evacuation and disposal arrangements"
+          ]
+        },
+        {
+          "id": "wood-dust",
+          "hazard": "Wood dust generated by cutting, drilling or sanding timber",
+          "possible_harm": [
+            "occupational asthma",
+            "nasal cancer from hardwood dust",
+            "eye and skin effects"
+          ],
+          "people_at_risk": [
+            "operatives",
+            "nearby workers",
+            "public"
+          ],
+          "control_prompts": [
+            "Confirm timber and treatment type; do not assume hardwood",
+            "Avoid or minimise on-site cutting; use suitable on-tool extraction for dusty cutting/sanding",
+            "Segregate others and use appropriate vacuum or wet cleaning, not dry sweeping",
+            "Select RPE for residual exposure; tight-fitting RPE requires wearer-specific face-fit testing and an effective seal",
+            "Assess exposure and health-surveillance needs; absence of visible dust or symptoms does not demonstrate safe exposure"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "line-breaking",
+        "confined-space-entry",
+        "hot-work"
+      ],
+      "competence_requirements": [
+        "Users understand product and process hazards, controls and emergency actions",
+        "Face-fit testing where tight-fitting RPE is selected"
+      ],
+      "ppe_considerations": [
+        "Select chemical compatibility, protection factor and wear time from the assessment",
+        "Check PPE does not introduce heat, visibility or dexterity risks"
+      ],
+      "emergency_requirements": [
+        "Spill and exposure response",
+        "Eyewash or emergency washing where justified",
+        "First-aid information accessible"
+      ],
+      "health_surveillance_considerations": [
+        "Consider where exposure can cause an identifiable disease or adverse effect and surveillance is appropriate"
+      ],
+      "stop_work_conditions": [
+        "Substance identity or SDS is unknown",
+        "Required extraction or RPE is unavailable",
+        "Unplanned odour, dust, symptoms, spill or alarm occurs"
+      ],
+      "source_topic_ids": [
+        "hazardous-substances"
+      ],
+      "legal_currency_note": "Verify current workplace exposure limits and substance-specific duties against the latest authoritative EH40/HSE information."
+    },
+    {
+      "id": "incident-reporting-investigation",
+      "title": "Incident, near-miss and statutory reporting",
+      "purpose": "Support immediate response, evidence preservation, proportionate investigation and escalation for potential statutory reporting.",
+      "status": "draft",
+      "trigger_terms": [
+        "accident",
+        "incident",
+        "near miss",
+        "dangerous occurrence",
+        "occupational disease",
+        "RIDDOR",
+        "investigation"
+      ],
+      "intake_questions": [
+        {
+          "id": "immediate-harm",
+          "question": "Is anyone injured, exposed or in need of urgent medical help?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "scene-safe",
+          "question": "Has the area been made safe without destroying necessary evidence?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "event-details",
+          "question": "What happened, when, where, to whom and during which work step?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "secondary-event",
+          "hazard": "Uncontrolled scene causes further harm",
+          "possible_harm": [
+            "additional injury",
+            "exposure",
+            "fire or release"
+          ],
+          "people_at_risk": [
+            "casualty",
+            "responders",
+            "others nearby"
+          ],
+          "control_prompts": [
+            "raise alarm",
+            "stop and isolate safely",
+            "provide first aid",
+            "control access",
+            "call emergency services when needed"
+          ]
+        },
+        {
+          "id": "poor-investigation",
+          "hazard": "Investigation focuses on blame or misses underlying causes",
+          "possible_harm": [
+            "repeat incident",
+            "weak corrective actions"
+          ],
+          "people_at_risk": [
+            "future workers and others"
+          ],
+          "control_prompts": [
+            "collect timely evidence",
+            "interview fairly",
+            "identify immediate and underlying causes",
+            "track corrective actions",
+            "share learning"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Investigation level and team competence proportionate to potential severity"
+      ],
+      "ppe_considerations": [
+        "Responders use PPE suitable for remaining hazards"
+      ],
+      "emergency_requirements": [
+        "Emergency response takes priority over evidence collection",
+        "Escalate possible statutory reports to the responsible person promptly"
+      ],
+      "health_surveillance_considerations": [
+        "Arrange occupational-health follow-up after relevant exposure"
+      ],
+      "stop_work_conditions": [
+        "The scene remains unsafe",
+        "A serious control failure is not understood",
+        "Required regulator or emergency-service instructions have not been followed"
+      ],
+      "source_topic_ids": [
+        "incident-reporting-investigation"
+      ],
+      "legal_currency_note": "RIDDOR categories, definitions and reporting timescales must always be verified against current HSE guidance."
+    },
+    {
+      "id": "lead-at-work",
+      "title": "Lead exposure",
+      "purpose": "Identify lead-containing materials and route exposure prevention, control, hygiene, monitoring and medical surveillance.",
+      "status": "draft",
+      "trigger_terms": [
+        "lead paint",
+        "lead sheet",
+        "lead pipe",
+        "solder",
+        "battery lead",
+        "lead dust",
+        "lead fume",
+        "old coating"
+      ],
+      "intake_questions": [
+        {
+          "id": "lead-source",
+          "question": "Which material may contain lead and how has its composition been confirmed?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "process",
+          "question": "Will work create dust, fume, ingestion risk or skin contamination?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "exposure-control",
+          "question": "What exposure assessment, hygiene, monitoring and medical-surveillance arrangements apply?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "lead-exposure",
+          "hazard": "Inhalation or ingestion of lead",
+          "possible_harm": [
+            "nervous-system damage",
+            "kidney effects",
+            "reproductive harm",
+            "chronic poisoning"
+          ],
+          "people_at_risk": [
+            "workers",
+            "others exposed to contaminated dust",
+            "family through take-home contamination"
+          ],
+          "control_prompts": [
+            "confirm material",
+            "avoid or use low-emission method",
+            "control dust or fume at source",
+            "strict hygiene and clean area",
+            "prevent take-home contamination",
+            "monitor exposure",
+            "provide medical surveillance where required"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "hot-work"
+      ],
+      "competence_requirements": [
+        "Competent lead exposure assessment and occupational-health support"
+      ],
+      "ppe_considerations": [
+        "Suitable RPE, clothing and gloves for residual exposure with controlled changing and cleaning"
+      ],
+      "emergency_requirements": [
+        "Response to uncontrolled contamination or significant exposure"
+      ],
+      "health_surveillance_considerations": [
+        "Medical surveillance and biological monitoring where legally required"
+      ],
+      "stop_work_conditions": [
+        "Lead status is unknown",
+        "Dust/fume and hygiene controls are inadequate",
+        "Required medical surveillance or exposure monitoring is absent"
+      ],
+      "source_topic_ids": [
+        "hazardous-substances"
+      ],
+      "legal_currency_note": "Lead has its own regulatory regime and must not be assessed only under generic COSHH logic."
+    },
+    {
+      "id": "legionella-water-hygiene",
+      "title": "Legionella and water-system hygiene",
+      "purpose": "Route water systems that can support and disseminate legionella to competent assessment, control schemes and monitoring.",
+      "status": "draft",
+      "trigger_terms": [
+        "legionella",
+        "cooling tower",
+        "hot water",
+        "cold water",
+        "shower",
+        "spa",
+        "water system",
+        "stagnant water",
+        "aerosol from water"
+      ],
+      "intake_questions": [
+        {
+          "id": "system",
+          "question": "What water system, temperatures, storage, outlets, aerosol sources and susceptible users are involved?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "assessment",
+          "question": "Is a current legionella risk assessment and written control scheme available?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "monitoring",
+          "question": "Who is responsible for monitoring, maintenance, flushing, cleaning and corrective action?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "legionella-exposure",
+          "hazard": "Inhalation of contaminated water aerosol",
+          "possible_harm": [
+            "Legionnaires' disease",
+            "serious respiratory illness",
+            "fatality"
+          ],
+          "people_at_risk": [
+            "workers",
+            "occupants",
+            "public",
+            "susceptible persons"
+          ],
+          "control_prompts": [
+            "competent risk assessment",
+            "design out stagnation and favourable temperatures",
+            "operate written control scheme",
+            "monitor critical controls",
+            "clean and disinfect when required",
+            "manage shutdown and recommissioning",
+            "keep records"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "line-breaking"
+      ],
+      "competence_requirements": [
+        "Named responsible person and competent water-hygiene support"
+      ],
+      "ppe_considerations": [
+        "Task-specific protection for cleaning chemicals and aerosols"
+      ],
+      "emergency_requirements": [
+        "Response to control failure, positive result or suspected case"
+      ],
+      "health_surveillance_considerations": [
+        "Medical advice following relevant symptoms or exposure"
+      ],
+      "stop_work_conditions": [
+        "Risk assessment or control scheme is absent",
+        "Critical monitoring is outside control",
+        "System opening or aerosol work is unplanned"
+      ],
+      "source_topic_ids": [
+        "biological-agents",
+        "hazardous-substances"
+      ],
+      "legal_currency_note": "Use the current L8/HSG274 framework and system-specific competence."
+    },
+    {
+      "id": "lifting-operations",
+      "title": "Lifting operations and lifting equipment",
+      "purpose": "Require competent planning, suitable equipment, stable setup, controlled load paths and examination evidence for lifting work.",
+      "status": "draft",
+      "trigger_terms": [
+        "crane",
+        "hoist",
+        "forklift lift",
+        "telehandler lift",
+        "chain block",
+        "lifting accessory",
+        "sling",
+        "suspended load",
+        "lift plan",
+        "lifting people"
+      ],
+      "intake_questions": [
+        {
+          "id": "load",
+          "question": "What is the verified load weight, shape, centre of gravity, lifting points and destination?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "equipment",
+          "question": "Which lifting appliance and accessories will be used, with what capacities and examination status?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "lift-conditions",
+          "question": "Describe ground, weather, obstructions, load path, exclusion zone and communication method.",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "dropped-moving-load",
+          "hazard": "Load falls, swings, overturns equipment or strikes a person",
+          "possible_harm": [
+            "crushing",
+            "fatality",
+            "structural damage"
+          ],
+          "people_at_risk": [
+            "lifting team",
+            "nearby workers",
+            "public"
+          ],
+          "control_prompts": [
+            "competent lift plan",
+            "verify load and equipment capacity",
+            "confirm ground and setup",
+            "inspect accessories",
+            "control load path and exclusion zone",
+            "use agreed signalling",
+            "supervise and stop in unsafe conditions"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "lifting-operation"
+      ],
+      "competence_requirements": [
+        "Competent lift planner, operator, slinger/signaller and supervisor appropriate to lift complexity"
+      ],
+      "ppe_considerations": [
+        "Head, hand, foot and visibility PPE for residual exposure"
+      ],
+      "emergency_requirements": [
+        "Plan for equipment failure, stranded load and contact with services"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Load weight or lifting points are unknown",
+        "Equipment certification or capacity is unverified",
+        "Ground, weather, communication or exclusion arrangements are unsafe"
+      ],
+      "source_topic_ids": [
+        "machinery-tools",
+        "manual-handling-ergonomics"
+      ],
+      "legal_currency_note": "Confirm current LOLER scope, thorough-examination requirements and any industry lifting standard."
+    },
+    {
+      "id": "lone-working",
+      "title": "Lone working",
+      "purpose": "Determine whether work can be done alone and provide proportionate communication, monitoring and emergency support.",
+      "status": "draft",
+      "trigger_terms": [
+        "lone worker",
+        "working alone",
+        "remote",
+        "out of hours",
+        "home visit",
+        "isolated",
+        "mobile worker"
+      ],
+      "intake_questions": [
+        {
+          "id": "suitable-alone",
+          "question": "Is the task legally and practically suitable for one person to perform alone?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "location-contact",
+          "question": "Where will the person be, who knows their itinerary and how will reliable contact be maintained?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "response",
+          "question": "What happens after a missed check-in, alarm, injury, violence or communication failure?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "delayed-assistance",
+          "hazard": "Injury or illness with delayed discovery and assistance",
+          "possible_harm": [
+            "worsened injury",
+            "fatality"
+          ],
+          "people_at_risk": [
+            "lone worker"
+          ],
+          "control_prompts": [
+            "avoid lone work for high-risk tasks",
+            "set itinerary and check-ins",
+            "use reliable communication or monitored alarm",
+            "define missed-contact escalation",
+            "ensure access for responders"
+          ]
+        },
+        {
+          "id": "personal-security",
+          "hazard": "Violence, intimidation or unsafe location",
+          "possible_harm": [
+            "assault",
+            "psychological harm",
+            "entrapment"
+          ],
+          "people_at_risk": [
+            "lone worker"
+          ],
+          "control_prompts": [
+            "share risk information",
+            "use visit controls",
+            "avoid carrying cash or valuables",
+            "provide exit strategy",
+            "use buddy or security support",
+            "allow withdrawal without penalty"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Lone worker and monitor understand check-in, alarm and escalation procedures"
+      ],
+      "ppe_considerations": [
+        "Personal alarms or tracking devices are communication controls, not PPE"
+      ],
+      "emergency_requirements": [
+        "Time-bound missed-contact escalation with named responders",
+        "Location and access information available to responders"
+      ],
+      "health_surveillance_considerations": [
+        "Consider medical conditions only through a proportionate, confidential fitness assessment"
+      ],
+      "stop_work_conditions": [
+        "The task requires immediate assistance or rescue that cannot be provided",
+        "Communication or monitoring fails",
+        "Location or person presents an unassessed violence risk"
+      ],
+      "source_topic_ids": [
+        "lone-working"
+      ],
+      "legal_currency_note": "Confirm sector-specific prohibitions, client rules and safeguarding requirements."
+    },
+    {
+      "id": "machinery-tools",
+      "title": "Machinery, work equipment and hand-held tools",
+      "purpose": "Control dangerous moving parts, ejected material, tool failure, energy and unsafe use or maintenance.",
+      "status": "draft",
+      "trigger_terms": [
+        "machine",
+        "machinery",
+        "tool",
+        "saw",
+        "grinder",
+        "drill",
+        "press",
+        "conveyor",
+        "guard",
+        "maintenance",
+        "PUWER"
+      ],
+      "intake_questions": [
+        {
+          "id": "equipment",
+          "question": "Identify each machine or tool, its task, power source, attachments and operating environment.",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "guarding",
+          "question": "How are dangerous parts prevented from being reached during operation, clearing and maintenance?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "inspection",
+          "question": "What pre-use, statutory and maintenance inspections apply, and are records current?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "dangerous-parts",
+          "hazard": "Contact with moving parts, trapping points or cutting surfaces",
+          "possible_harm": [
+            "entanglement",
+            "amputation",
+            "crushing",
+            "laceration"
+          ],
+          "people_at_risk": [
+            "operators",
+            "helpers",
+            "maintenance staff",
+            "bystanders"
+          ],
+          "control_prompts": [
+            "select suitable equipment",
+            "use fixed guards first",
+            "then interlocked or adjustable guards and protective devices",
+            "prevent bypass",
+            "provide safe feed and handling aids",
+            "establish exclusion zones"
+          ]
+        },
+        {
+          "id": "stored-energy-maintenance",
+          "hazard": "Unexpected start-up or release of stored energy",
+          "possible_harm": [
+            "crushing",
+            "injection",
+            "electric shock",
+            "fatal injury"
+          ],
+          "people_at_risk": [
+            "operators",
+            "maintenance staff"
+          ],
+          "control_prompts": [
+            "shut down",
+            "isolate all energy sources",
+            "lock and tag",
+            "release or restrain stored energy",
+            "verify zero energy",
+            "control test and recommissioning"
+          ]
+        },
+        {
+          "id": "tool-failure-ejection",
+          "hazard": "Tool, workpiece or abrasive failure and ejection",
+          "possible_harm": [
+            "eye injury",
+            "penetrating injury",
+            "impact injury"
+          ],
+          "people_at_risk": [
+            "operator",
+            "people nearby"
+          ],
+          "control_prompts": [
+            "match tool and accessory ratings",
+            "inspect before use",
+            "secure workpiece",
+            "use guards and screens",
+            "replace damaged components",
+            "control bystanders"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "electrical-isolation",
+        "hot-work"
+      ],
+      "competence_requirements": [
+        "Operators trained and authorised for the equipment",
+        "Maintenance performed by competent persons"
+      ],
+      "ppe_considerations": [
+        "Eye, face, hearing, respiratory, hand, foot and body protection selected for residual risks",
+        "Avoid loose clothing, jewellery or unsuitable gloves near entanglement hazards"
+      ],
+      "emergency_requirements": [
+        "Accessible emergency stop where appropriate",
+        "Isolation and first-aid response"
+      ],
+      "health_surveillance_considerations": [
+        "Route noise, vibration, dust, fume and skin exposures to their specialist modules"
+      ],
+      "stop_work_conditions": [
+        "Guard or safety device is missing, defeated or defective",
+        "Tool or accessory is incompatible or damaged",
+        "Isolation cannot be secured and verified"
+      ],
+      "source_topic_ids": [
+        "machinery-tools"
+      ],
+      "legal_currency_note": "Confirm equipment-specific legal, inspection and manufacturer requirements."
+    },
+    {
+      "id": "management-systems",
+      "title": "Health, safety, quality and environmental management systems",
+      "purpose": "Connect task controls to policy, responsibilities, competence, consultation, monitoring and continual improvement.",
+      "status": "draft",
+      "trigger_terms": [
+        "management system",
+        "ISO 45001",
+        "ISO 9001",
+        "environmental management",
+        "audit",
+        "policy",
+        "contractor management"
+      ],
+      "intake_questions": [
+        {
+          "id": "responsible-person",
+          "question": "Who has authority to approve, supervise and stop this work?",
+          "answer_type": "text",
+          "required": true
+        },
+        {
+          "id": "client-rules",
+          "question": "Which client, principal contractor or site procedures apply?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "consultation",
+          "question": "How have workers and relevant contractors been consulted about the task?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "unclear-accountability",
+          "hazard": "Unclear roles or conflicting instructions",
+          "possible_harm": [
+            "critical controls omitted",
+            "unsafe work continues",
+            "emergency delay"
+          ],
+          "people_at_risk": [
+            "workers",
+            "contractors",
+            "public"
+          ],
+          "control_prompts": [
+            "name duty holders and supervisors",
+            "define stop-work authority",
+            "record communication and escalation routes",
+            "coordinate simultaneous operations"
+          ]
+        },
+        {
+          "id": "uncontrolled-change",
+          "hazard": "Work changes without reassessment",
+          "possible_harm": [
+            "new hazards introduced",
+            "controls become unsuitable"
+          ],
+          "people_at_risk": [
+            "everyone affected by the work"
+          ],
+          "control_prompts": [
+            "set review triggers",
+            "brief revisions",
+            "withdraw superseded documents",
+            "record approval and version"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Named competent reviewer",
+        "Supervisor understands the RAMS and site rules"
+      ],
+      "ppe_considerations": [],
+      "emergency_requirements": [
+        "Define reporting and escalation responsibilities"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Accountability is unclear",
+        "Site rules conflict with the proposed method",
+        "Material conditions or scope change"
+      ],
+      "source_topic_ids": [
+        "management-systems"
+      ],
+      "legal_currency_note": "Verify current standards, certification claims and legal duties before relying on dated course material."
+    },
+    {
+      "id": "manual-handling-ergonomics",
+      "title": "Manual handling and musculoskeletal health",
+      "purpose": "Avoid hazardous handling and assess the task, load, individual capability and environment where handling remains.",
+      "status": "draft",
+      "trigger_terms": [
+        "lift",
+        "carry",
+        "push",
+        "pull",
+        "load",
+        "manual handling",
+        "repetitive",
+        "awkward posture",
+        "ergonomic",
+        "musculoskeletal"
+      ],
+      "intake_questions": [
+        {
+          "id": "avoid-handling",
+          "question": "Can the load or process be changed so manual handling is avoided?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "load-details",
+          "question": "What are the load's weight, dimensions, stability, grip points and centre of gravity?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "movement",
+          "question": "Describe the route, height, reach, twisting, frequency, duration and team involvement.",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "handling-strain",
+          "hazard": "High force, awkward posture, repetition or fatigue",
+          "possible_harm": [
+            "back injury",
+            "upper-limb disorder",
+            "sprain",
+            "chronic pain"
+          ],
+          "people_at_risk": [
+            "handlers"
+          ],
+          "control_prompts": [
+            "eliminate the lift",
+            "use mechanical aid",
+            "reduce or split the load",
+            "improve grip and working height",
+            "shorten carry distance",
+            "reduce repetition",
+            "plan suitable team handling"
+          ]
+        },
+        {
+          "id": "dropped-load",
+          "hazard": "Dropped, unstable or shifting load",
+          "possible_harm": [
+            "crush injury",
+            "foot injury",
+            "collision"
+          ],
+          "people_at_risk": [
+            "handlers",
+            "others on route"
+          ],
+          "control_prompts": [
+            "secure contents",
+            "clear and light route",
+            "use rated aids",
+            "coordinate team lift",
+            "keep hands and feet clear",
+            "separate others"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "lifting-operation"
+      ],
+      "competence_requirements": [
+        "Workers instructed in the specific handling plan and correct use of aids"
+      ],
+      "ppe_considerations": [
+        "Foot and hand protection may reduce consequence but do not make an unsafe lift acceptable"
+      ],
+      "emergency_requirements": [
+        "First-aid and reporting arrangements for pain or injury"
+      ],
+      "health_surveillance_considerations": [
+        "Early reporting and occupational-health referral for symptoms where appropriate"
+      ],
+      "stop_work_conditions": [
+        "Load details or route are unknown",
+        "Required handling aid is unavailable or defective",
+        "Worker reports pain or cannot complete the handling safely"
+      ],
+      "source_topic_ids": [
+        "manual-handling-ergonomics"
+      ],
+      "legal_currency_note": "Do not use a single weight limit as proof of safety; assess the full handling operation and individual factors."
+    },
+    {
+      "id": "monitoring-audit-review",
+      "title": "Monitoring, audit and management review",
+      "purpose": "Define how controls, incidents, inspections and actions are checked after paperwork is issued.",
+      "status": "draft",
+      "trigger_terms": [
+        "inspection",
+        "audit",
+        "review",
+        "monitoring",
+        "performance",
+        "close out",
+        "corrective action"
+      ],
+      "intake_questions": [
+        {
+          "id": "inspection-owner",
+          "question": "Who will inspect the work and at what frequency?",
+          "answer_type": "text",
+          "required": true
+        },
+        {
+          "id": "evidence",
+          "question": "What evidence will show that each critical control is working?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "review-events",
+          "question": "Which events or changes will trigger immediate review?",
+          "answer_type": "multi_choice",
+          "required": true,
+          "options": [
+            "incident",
+            "near miss",
+            "scope change",
+            "new equipment",
+            "new substance",
+            "weather change",
+            "control failure",
+            "worker concern"
+          ]
+        }
+      ],
+      "hazards": [
+        {
+          "id": "paper-controls-only",
+          "hazard": "Controls exist on paper but are not implemented",
+          "possible_harm": [
+            "uncontrolled exposure",
+            "repeat incidents"
+          ],
+          "people_at_risk": [
+            "workers",
+            "others affected"
+          ],
+          "control_prompts": [
+            "inspect critical controls",
+            "speak with workers",
+            "record evidence",
+            "assign and close actions",
+            "escalate overdue high-risk actions"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Auditors and inspectors understand the activity and remain sufficiently independent"
+      ],
+      "ppe_considerations": [],
+      "emergency_requirements": [
+        "Escalate serious control failure immediately"
+      ],
+      "health_surveillance_considerations": [
+        "Use anonymised trend information to review exposure controls"
+      ],
+      "stop_work_conditions": [
+        "A critical control fails",
+        "Inspection identifies imminent danger",
+        "Required corrective action is overdue and exposure continues"
+      ],
+      "source_topic_ids": [
+        "monitoring-audit-review"
+      ],
+      "legal_currency_note": "Retention periods and statutory inspection intervals must be checked for the specific equipment and activity."
+    },
+    {
+      "id": "noise-vibration",
+      "title": "Noise and vibration",
+      "purpose": "Assess noise, hand-arm vibration and whole-body vibration from tools, machinery, vehicles and work patterns.",
+      "status": "draft",
+      "trigger_terms": [
+        "noise",
+        "loud",
+        "hearing",
+        "vibration",
+        "HAVS",
+        "WBV",
+        "breaker",
+        "grinder",
+        "drill",
+        "compactor",
+        "ride-on plant"
+      ],
+      "intake_questions": [
+        {
+          "id": "equipment-data",
+          "question": "Which equipment is used and what reliable noise or vibration data is available for the real operating condition?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "exposure-time",
+          "question": "How long and how often will each person use or work near the equipment?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "symptoms",
+          "question": "Has anyone reported hearing difficulty, tingling, numbness, blanching, pain or back symptoms?",
+          "answer_type": "boolean",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "noise-exposure",
+          "hazard": "Harmful noise exposure or interference with communication",
+          "possible_harm": [
+            "hearing damage",
+            "tinnitus",
+            "missed warnings"
+          ],
+          "people_at_risk": [
+            "operators",
+            "nearby workers",
+            "public"
+          ],
+          "control_prompts": [
+            "select quieter process and equipment",
+            "isolate or enclose source",
+            "maintain equipment",
+            "increase distance",
+            "limit exposure",
+            "mark zones",
+            "provide suitable hearing protection and information"
+          ]
+        },
+        {
+          "id": "vibration-exposure",
+          "hazard": "Hand-arm or whole-body vibration",
+          "possible_harm": [
+            "HAVS",
+            "nerve and vascular damage",
+            "musculoskeletal injury",
+            "back pain"
+          ],
+          "people_at_risk": [
+            "tool operators",
+            "vehicle and plant operators"
+          ],
+          "control_prompts": [
+            "use lower-vibration method",
+            "select and maintain suitable equipment",
+            "reduce trigger time",
+            "plan breaks and warm conditions",
+            "improve seats, suspension and travel surfaces",
+            "monitor exposure"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Users trained in correct equipment selection, technique, defect reporting and exposure controls"
+      ],
+      "ppe_considerations": [
+        "Hearing protection selected for the exposure without excessive over-protection",
+        "Gloves are not treated as a substitute for vibration control"
+      ],
+      "emergency_requirements": [
+        "Stop and report sudden abnormal noise, vibration or equipment damage"
+      ],
+      "health_surveillance_considerations": [
+        "Audiometry where risk indicates",
+        "HAVS surveillance where workers are exposed at levels or conditions requiring it"
+      ],
+      "stop_work_conditions": [
+        "Exposure cannot be estimated from reliable data",
+        "Required controls or surveillance arrangements are absent",
+        "Symptoms are reported or equipment vibration/noise changes unexpectedly"
+      ],
+      "source_topic_ids": [
+        "noise-vibration"
+      ],
+      "legal_currency_note": "Verify current exposure action and limit values and calculation methods against current HSE guidance."
+    },
+    {
+      "id": "ppe-rpe",
+      "title": "Personal and respiratory protective equipment",
+      "purpose": "Select, issue, fit, use, maintain and replace PPE only for residual risks after higher-order controls.",
+      "status": "draft",
+      "trigger_terms": [
+        "PPE",
+        "RPE",
+        "respirator",
+        "mask",
+        "face fit",
+        "harness",
+        "gloves",
+        "eye protection",
+        "hearing protection",
+        "protective clothing"
+      ],
+      "intake_questions": [
+        {
+          "id": "residual-hazard",
+          "question": "Which residual hazard remains after elimination, substitution and engineering controls?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "wearer-task-environment",
+          "question": "Is the equipment adequate for the hazard and suitable for the wearer, task, duration and environment?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "management",
+          "question": "How will issue, fit, compatibility, training, inspection, cleaning, storage and replacement be controlled?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "ppe-failure",
+          "hazard": "Incorrect, incompatible, poorly fitted or badly maintained PPE",
+          "possible_harm": [
+            "unrecognised exposure",
+            "restricted vision or movement",
+            "heat stress",
+            "false confidence"
+          ],
+          "people_at_risk": [
+            "wearer"
+          ],
+          "control_prompts": [
+            "define performance requirement",
+            "select compatible equipment",
+            "involve wearer",
+            "face-fit tight-fitting RPE",
+            "train and supervise",
+            "inspect and replace",
+            "provide storage and cleaning",
+            "account for wear time and communication",
+            "For tight-fitting RPE: competent wearer-specific make/model/size face-fit test, fit check each use, clean-shaven seal area, compatible PPE, user training, maintenance and replacement. If no adequate seal is possible, assess suitable alternatives such as a loose-fitting powered hood."
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Competent PPE/RPE selection and face-fit testing where applicable"
+      ],
+      "ppe_considerations": [
+        "This module governs all PPE decisions"
+      ],
+      "emergency_requirements": [
+        "PPE must not be used to justify entry into an atmosphere requiring specialist breathing apparatus and rescue planning"
+      ],
+      "health_surveillance_considerations": [
+        "Consider wearer medical suitability where equipment imposes physiological load"
+      ],
+      "stop_work_conditions": [
+        "Higher-order controls have not been considered",
+        "Required protection level or compatibility is unknown",
+        "Fit, condition, training or replacement arrangements are inadequate"
+      ],
+      "source_topic_ids": [
+        "risk-management",
+        "hazardous-substances"
+      ],
+      "legal_currency_note": "Use current PPE duties and HSE RPE selection and face-fit guidance."
+    },
+    {
+      "id": "pressure-systems",
+      "title": "Pressure systems and stored fluid energy",
+      "purpose": "Prevent uncontrolled release from compressed air, steam, gas, hydraulic and other pressure systems.",
+      "status": "draft",
+      "trigger_terms": [
+        "pressure vessel",
+        "compressed air",
+        "steam",
+        "hydraulic",
+        "pneumatic",
+        "boiler",
+        "receiver",
+        "pressure test",
+        "hose under pressure"
+      ],
+      "intake_questions": [
+        {
+          "id": "system",
+          "question": "What fluid, pressure, temperature, volume and components form the system?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "written-scheme",
+          "question": "Does the system require a written scheme of examination, and is examination current?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "depressurise",
+          "question": "How will pressure and stored mechanical energy be isolated, discharged and verified?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "pressure-release",
+          "hazard": "Rupture, hose failure, ejection or uncontrolled pressure release",
+          "possible_harm": [
+            "impact injury",
+            "injection injury",
+            "burns",
+            "fatality"
+          ],
+          "people_at_risk": [
+            "operators",
+            "maintenance workers",
+            "others nearby"
+          ],
+          "control_prompts": [
+            "use correctly rated system",
+            "protect against overpressure",
+            "inspect and maintain",
+            "isolate and depressurise",
+            "restrain or shield components",
+            "control pressure testing",
+            "exclude persons from line of fire"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "line-breaking"
+      ],
+      "competence_requirements": [
+        "System-specific competent person for examination and maintenance"
+      ],
+      "ppe_considerations": [
+        "PPE selected for residual fluid, temperature and injection risks"
+      ],
+      "emergency_requirements": [
+        "Emergency isolation and release response",
+        "Urgent medical response for injection injury"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Pressure, contents or system boundary is unknown",
+        "Required written scheme or examination is absent",
+        "Isolation and zero-pressure verification cannot be achieved"
+      ],
+      "source_topic_ids": [
+        "machinery-tools"
+      ],
+      "legal_currency_note": "A competent person must determine PSSR scope and written-scheme requirements."
+    },
+    {
+      "id": "radiation",
+      "title": "Ionising and non-ionising radiation",
+      "purpose": "Identify radiation sources and require specialist classification, exposure control and authorisation where applicable.",
+      "status": "draft",
+      "trigger_terms": [
+        "radiation",
+        "x-ray",
+        "radioactive",
+        "laser",
+        "UV",
+        "infrared",
+        "microwave",
+        "RF",
+        "welding arc"
+      ],
+      "intake_questions": [
+        {
+          "id": "source",
+          "question": "What source, wavelength or radionuclide is present, and what output, activity or classification applies?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "specialist",
+          "question": "Has the relevant radiation protection or laser safety adviser defined the controls?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "exposure-path",
+          "question": "Could exposure occur externally, through the eyes or skin, or through contamination and intake?",
+          "answer_type": "multi_choice",
+          "required": true,
+          "options": [
+            "whole body",
+            "eyes",
+            "skin",
+            "inhalation",
+            "ingestion",
+            "contamination",
+            "unknown"
+          ]
+        }
+      ],
+      "hazards": [
+        {
+          "id": "radiation-exposure",
+          "hazard": "Exposure to ionising or harmful non-ionising radiation",
+          "possible_harm": [
+            "tissue damage",
+            "eye injury",
+            "burns",
+            "long-term health effects"
+          ],
+          "people_at_risk": [
+            "operators",
+            "nearby workers",
+            "public"
+          ],
+          "control_prompts": [
+            "eliminate or enclose source",
+            "minimise time",
+            "maximise distance",
+            "use suitable shielding and interlocks",
+            "control access",
+            "monitor exposure or contamination as specified",
+            "use warning and authorisation systems"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Specialist advice and trained authorised users appropriate to the source"
+      ],
+      "ppe_considerations": [
+        "PPE selected by specialist assessment; ordinary eyewear or clothing must not be assumed adequate"
+      ],
+      "emergency_requirements": [
+        "Source loss, exposure, contamination and equipment-failure procedures"
+      ],
+      "health_surveillance_considerations": [
+        "Medical surveillance and dose records where required by the specialist assessment and law"
+      ],
+      "stop_work_conditions": [
+        "Source or classification is unknown",
+        "Required specialist advice, shielding, monitoring or authorisation is absent",
+        "Interlock, enclosure or warning system fails"
+      ],
+      "source_topic_ids": [
+        "radiation"
+      ],
+      "legal_currency_note": "Radiation work requires source-specific current legal and specialist advice; generic RAMS content is insufficient."
+    },
+    {
+      "id": "risk-management",
+      "title": "Risk assessment and control selection",
+      "purpose": "Provide the common hazard-identification, risk-evaluation and control workflow used by every assessment.",
+      "status": "draft",
+      "trigger_terms": [
+        "risk assessment",
+        "RAMS",
+        "method statement",
+        "hazard",
+        "control",
+        "new task",
+        "change of work"
+      ],
+      "intake_questions": [
+        {
+          "id": "exact-task",
+          "question": "What exactly will be done, in what sequence and what is outside the scope?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "people-at-risk",
+          "question": "Who could be affected, including other trades, visitors and the public?",
+          "answer_type": "multi_choice",
+          "required": true,
+          "options": [
+            "workers",
+            "contractors",
+            "visitors",
+            "public",
+            "young people",
+            "new or expectant mothers",
+            "disabled persons"
+          ]
+        },
+        {
+          "id": "existing-controls",
+          "question": "What controls are already in place and how will their effectiveness be confirmed?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "generic-assessment",
+          "hazard": "Generic or incomplete assessment",
+          "possible_harm": [
+            "site-specific hazards missed",
+            "controls cannot be implemented"
+          ],
+          "people_at_risk": [
+            "all affected persons"
+          ],
+          "control_prompts": [
+            "survey the actual work area",
+            "break work into steps",
+            "consider routine and non-routine work",
+            "record information gaps and assumptions"
+          ]
+        },
+        {
+          "id": "weak-controls",
+          "hazard": "Over-reliance on instructions or PPE",
+          "possible_harm": [
+            "exposure remains uncontrolled",
+            "single-point human failure"
+          ],
+          "people_at_risk": [
+            "workers",
+            "others nearby"
+          ],
+          "control_prompts": [
+            "eliminate where possible",
+            "substitute lower-risk method or material",
+            "use engineering and collective controls",
+            "then add administrative controls and suitable PPE"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Assessment completed and approved by people competent for the task and hazards"
+      ],
+      "ppe_considerations": [
+        "PPE selection follows, and does not replace, higher-order controls"
+      ],
+      "emergency_requirements": [
+        "Consider foreseeable abnormal events as well as normal work"
+      ],
+      "health_surveillance_considerations": [
+        "Identify exposures for which health surveillance may be appropriate or required"
+      ],
+      "stop_work_conditions": [
+        "Mandatory task information is missing",
+        "Residual risk remains high or very high",
+        "Controls are unavailable or cannot be verified"
+      ],
+      "source_topic_ids": [
+        "risk-management"
+      ],
+      "legal_currency_note": "The assessment must be suitable and sufficient for the actual work and reviewed when circumstances change."
+    },
+    {
+      "id": "safe-isolation-permit-to-work",
+      "title": "Safe isolation and permit-to-work control",
+      "purpose": "Coordinate high-risk work through verified isolations, defined boundaries, authorisation, handover and controlled return to service.",
+      "status": "draft",
+      "trigger_terms": [
+        "permit to work",
+        "lockout",
+        "tagout",
+        "isolation",
+        "line breaking",
+        "shutdown",
+        "stored energy",
+        "sanction for test",
+        "handover"
+      ],
+      "intake_questions": [
+        {
+          "id": "energy-inventory",
+          "question": "Which electrical, mechanical, hydraulic, pneumatic, thermal, chemical, gravitational or process energies require control?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "isolation-standard",
+          "question": "What isolation standard, locks, tags, blanks, restraints and proving method apply?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "permit-control",
+          "question": "Who issues, accepts, suspends, extends and cancels the permit, and how are simultaneous jobs coordinated?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "isolation-failure",
+          "hazard": "Unexpected energisation, flow, movement or incompatible simultaneous work",
+          "possible_harm": [
+            "electric shock",
+            "crushing",
+            "burns",
+            "toxic release",
+            "fire",
+            "fatality"
+          ],
+          "people_at_risk": [
+            "work party",
+            "operators",
+            "others affected"
+          ],
+          "control_prompts": [
+            "define equipment and boundary",
+            "identify every energy source",
+            "shut down and isolate",
+            "lock and tag",
+            "release or restrain stored energy",
+            "prove isolation",
+            "control changes and handovers",
+            "inspect before reinstatement"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "hot-work",
+        "confined-space-entry",
+        "electrical-isolation",
+        "excavation",
+        "work-at-height",
+        "lifting-operation",
+        "line-breaking"
+      ],
+      "competence_requirements": [
+        "Authorised issuer and acceptor understand plant, hazards and permit system"
+      ],
+      "ppe_considerations": [],
+      "emergency_requirements": [
+        "Permit suspension and emergency override process"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Isolation boundary is ambiguous",
+        "Energy cannot be proved controlled",
+        "Permit conditions or work party change without re-authorisation"
+      ],
+      "source_topic_ids": [
+        "risk-management",
+        "machinery-tools",
+        "electricity"
+      ],
+      "legal_currency_note": "The organisation's permit system and plant-specific isolation standard control the detailed procedure."
+    },
+    {
+      "id": "slips-workplace-welfare",
+      "title": "Slips, access, workplace conditions and welfare",
+      "purpose": "Cover everyday workplace conditions that support safe access, hygiene, rest, comfort and emergency response.",
+      "status": "draft",
+      "trigger_terms": [
+        "slip",
+        "trip",
+        "floor",
+        "access",
+        "lighting",
+        "ventilation",
+        "temperature",
+        "welfare",
+        "toilet",
+        "washing",
+        "drinking water",
+        "rest area"
+      ],
+      "intake_questions": [
+        {
+          "id": "access-condition",
+          "question": "What are the floor, route, housekeeping, drainage, lighting and weather conditions?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "welfare",
+          "question": "Are suitable toilets, washing, drinking water, changing, rest and eating facilities available for the workforce and task?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "environment",
+          "question": "Are ventilation, temperature, workspace, seating and lighting suitable for the work?",
+          "answer_type": "boolean",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "slip-trip",
+          "hazard": "Contamination, obstruction, uneven surface or poor visibility",
+          "possible_harm": [
+            "fall",
+            "fracture",
+            "sprain",
+            "collision"
+          ],
+          "people_at_risk": [
+            "workers",
+            "visitors",
+            "public"
+          ],
+          "control_prompts": [
+            "prevent contamination",
+            "repair surfaces",
+            "route cables and materials",
+            "provide lighting and drainage",
+            "clean promptly with warning and access control",
+            "select suitable footwear"
+          ]
+        },
+        {
+          "id": "poor-welfare-environment",
+          "hazard": "Inadequate welfare or unsuitable work environment",
+          "possible_harm": [
+            "ill health",
+            "fatigue",
+            "reduced hygiene",
+            "heat or cold stress"
+          ],
+          "people_at_risk": [
+            "workers",
+            "contractors"
+          ],
+          "control_prompts": [
+            "provide accessible sanitary and washing facilities",
+            "provide wholesome drinking water",
+            "provide clean rest and eating arrangements",
+            "manage temperature and ventilation",
+            "provide suitable changing and drying facilities"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Clear responsibility for housekeeping, inspection and defect response"
+      ],
+      "ppe_considerations": [
+        "Footwear selected for the surface and contamination after source controls"
+      ],
+      "emergency_requirements": [
+        "Keep emergency routes and welfare access unobstructed"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Safe access or emergency egress is unavailable",
+        "Lighting, ventilation or temperature creates immediate danger",
+        "Basic welfare needed for the work is absent"
+      ],
+      "source_topic_ids": [
+        "slips-workplace-welfare"
+      ],
+      "legal_currency_note": "Check current workplace and construction welfare requirements for the setting and duration."
+    },
+    {
+      "id": "stress-mental-health-violence",
+      "title": "Work-related stress, mental health, substance misuse and violence",
+      "purpose": "Address psychosocial work design, individual concerns, impairment, aggression and post-incident support without diagnosing individuals.",
+      "status": "draft",
+      "trigger_terms": [
+        "stress",
+        "mental health",
+        "workload",
+        "bullying",
+        "harassment",
+        "violence",
+        "aggression",
+        "threat",
+        "substance abuse",
+        "fatigue",
+        "change"
+      ],
+      "intake_questions": [
+        {
+          "id": "management-standards",
+          "question": "Are there concerns about demands, control, support, relationships, role or organisational change?",
+          "answer_type": "multi_choice",
+          "required": true,
+          "options": [
+            "demands",
+            "control",
+            "support",
+            "relationships",
+            "role",
+            "change",
+            "none known"
+          ]
+        },
+        {
+          "id": "violence-risk",
+          "question": "Could workers face threats, abuse, harassment, assault, lone contact, cash handling or conflict?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "impairment",
+          "question": "Is there a credible fatigue, medication, alcohol or drug impairment risk for safety-critical work?",
+          "answer_type": "boolean",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "work-stress",
+          "hazard": "Poorly controlled psychosocial work factors",
+          "possible_harm": [
+            "stress-related ill health",
+            "absence",
+            "error",
+            "conflict"
+          ],
+          "people_at_risk": [
+            "workers",
+            "managers"
+          ],
+          "control_prompts": [
+            "assess the six HSE Management Standards areas",
+            "consult affected groups",
+            "agree organisational actions",
+            "assign owners and dates",
+            "monitor outcomes",
+            "provide confidential individual support"
+          ]
+        },
+        {
+          "id": "violence",
+          "hazard": "Threat, abuse, harassment or physical assault",
+          "possible_harm": [
+            "physical injury",
+            "anxiety",
+            "trauma",
+            "reduced wellbeing"
+          ],
+          "people_at_risk": [
+            "workers dealing with people",
+            "lone workers",
+            "others nearby"
+          ],
+          "control_prompts": [
+            "reduce predictable triggers",
+            "design safe layout and escape",
+            "provide staffing and communication",
+            "train in conflict management",
+            "use alarms or security where justified",
+            "report incidents and support affected people"
+          ]
+        },
+        {
+          "id": "impairment",
+          "hazard": "Work performed while impaired",
+          "possible_harm": [
+            "error",
+            "collision",
+            "unsafe judgement",
+            "injury"
+          ],
+          "people_at_risk": [
+            "worker",
+            "colleagues",
+            "public"
+          ],
+          "control_prompts": [
+            "set fair fitness-for-work rules",
+            "provide confidential reporting route",
+            "remove impaired person from safety-critical work safely",
+            "provide support and occupational-health route",
+            "investigate work-related fatigue factors"
+          ]
+        }
+      ],
+      "permit_triggers": [],
+      "competence_requirements": [
+        "Managers know how to respond without diagnosing, discriminating or escalating conflict",
+        "Relevant workers trained in de-escalation and incident reporting"
+      ],
+      "ppe_considerations": [],
+      "emergency_requirements": [
+        "Immediate help and police or emergency-service escalation for credible threats",
+        "Post-incident medical and psychological support"
+      ],
+      "health_surveillance_considerations": [
+        "Use occupational-health and employee-support routes while protecting confidentiality"
+      ],
+      "stop_work_conditions": [
+        "There is an immediate threat of violence",
+        "A safety-critical worker appears impaired",
+        "Work demands or fatigue create an immediate safety risk"
+      ],
+      "source_topic_ids": [
+        "stress-mental-health-violence"
+      ],
+      "legal_currency_note": "Handle personal information lawfully and use current equality, employment and safeguarding procedures."
+    },
+    {
+      "id": "temporary-works-structural-stability",
+      "title": "Temporary works and structural stability",
+      "purpose": "Prevent collapse during construction, alteration, support, demolition, formwork and temporary loading.",
+      "status": "draft",
+      "trigger_terms": [
+        "temporary works",
+        "propping",
+        "shoring",
+        "formwork",
+        "falsework",
+        "structural alteration",
+        "load-bearing wall",
+        "demolition sequence",
+        "temporary support"
+      ],
+      "intake_questions": [
+        {
+          "id": "structure-change",
+          "question": "What existing or temporary structure, load path or stability condition will change?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "design-control",
+          "question": "Who designs, checks, coordinates and authorises the temporary works?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "hold-points",
+          "question": "What inspections and hold points apply before loading, alteration, striking or removal?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "structural-collapse",
+          "hazard": "Loss of stability or overloading during temporary condition",
+          "possible_harm": [
+            "collapse",
+            "crushing",
+            "multiple fatalities",
+            "public harm"
+          ],
+          "people_at_risk": [
+            "workers",
+            "occupants",
+            "public"
+          ],
+          "control_prompts": [
+            "obtain structural information",
+            "use competent design and independent check proportionate to risk",
+            "define erection and loading sequence",
+            "inspect and issue permit to load",
+            "control changes",
+            "maintain exclusion and monitoring",
+            "authorise removal"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "excavation",
+        "lifting-operation",
+        "work-at-height"
+      ],
+      "competence_requirements": [
+        "Temporary works coordinator and designer/checker competence proportionate to category"
+      ],
+      "ppe_considerations": [],
+      "emergency_requirements": [
+        "Evacuation and exclusion after unexpected movement, damage or overload"
+      ],
+      "health_surveillance_considerations": [],
+      "stop_work_conditions": [
+        "Design or load assumptions are unknown",
+        "Required check or hold-point release is absent",
+        "Unexpected movement, cracking, settlement or change occurs"
+      ],
+      "source_topic_ids": [
+        "risk-management",
+        "management-systems"
+      ],
+      "legal_currency_note": "Use current engineering standards and project temporary-works procedures; generic RAMS cannot supply structural design."
+    },
+    {
+      "id": "work-at-height",
+      "title": "Work at height",
+      "purpose": "Apply the hierarchy of avoiding height work, preventing falls and minimising fall distance and consequences.",
+      "status": "draft",
+      "trigger_terms": [
+        "work at height",
+        "ladder",
+        "scaffold",
+        "roof",
+        "MEWP",
+        "open edge",
+        "fragile surface",
+        "fall arrest",
+        "tower",
+        "excavation edge"
+      ],
+      "intake_questions": [
+        {
+          "id": "avoid-height",
+          "question": "Can the work be completed from ground level or in a safer location?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "height-system",
+          "question": "What access and fall-prevention system is proposed, and why is it suitable for the duration and task?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "surface-weather",
+          "question": "Are surface strength, openings, fragile materials, weather and falling-object risks known?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "rescue",
+          "question": "If personal fall protection is used, what is the prompt rescue plan?",
+          "answer_type": "long_text",
+          "required": false
+        }
+      ],
+      "hazards": [
+        {
+          "id": "person-fall",
+          "hazard": "Person falls from an edge, access system, opening or fragile surface",
+          "possible_harm": [
+            "major injury",
+            "fatality",
+            "suspension trauma"
+          ],
+          "people_at_risk": [
+            "workers at height"
+          ],
+          "control_prompts": [
+            "avoid height work",
+            "use existing safe place",
+            "provide guardrails or other collective protection",
+            "use suitable inspected platform",
+            "control fragile surfaces and openings",
+            "use personal restraint or arrest only where higher controls are unsuitable"
+          ]
+        },
+        {
+          "id": "falling-object",
+          "hazard": "Tools or materials fall",
+          "possible_harm": [
+            "head injury",
+            "fatal injury",
+            "property damage"
+          ],
+          "people_at_risk": [
+            "workers below",
+            "public"
+          ],
+          "control_prompts": [
+            "prevent items falling",
+            "use toe boards and containment",
+            "secure tools and materials",
+            "establish exclusion zone",
+            "control lifting and storage"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "work-at-height",
+        "lifting-operation"
+      ],
+      "competence_requirements": [
+        "Planning, assembly, inspection and use by competent persons appropriate to the equipment"
+      ],
+      "ppe_considerations": [
+        "Harness, lanyard and connectors form a compatible system with suitable anchor and clearance"
+      ],
+      "emergency_requirements": [
+        "Rescue plan where a person could remain suspended or inaccessible",
+        "Do not rely only on the fire and rescue service"
+      ],
+      "health_surveillance_considerations": [
+        "Consider fitness where balance, medical condition or PPE use could affect safety"
+      ],
+      "stop_work_conditions": [
+        "Work at height can reasonably be avoided",
+        "Equipment, anchor or inspection is unverified",
+        "Weather, surface or edge conditions are unsafe",
+        "Required rescue arrangements are absent"
+      ],
+      "source_topic_ids": [
+        "work-at-height"
+      ],
+      "legal_currency_note": "Equipment selection and inspection intervals must be confirmed against current rules and manufacturer instructions."
+    },
+    {
+      "id": "workplace-transport-driving",
+      "title": "Workplace transport and work-related driving",
+      "purpose": "Separate people and vehicles and manage the driver, vehicle and journey for driving at work.",
+      "status": "draft",
+      "trigger_terms": [
+        "vehicle",
+        "driving",
+        "delivery",
+        "reversing",
+        "forklift",
+        "telehandler",
+        "loading",
+        "traffic route",
+        "road journey",
+        "fleet",
+        "electric vehicle"
+      ],
+      "intake_questions": [
+        {
+          "id": "movement-plan",
+          "question": "Describe vehicle and pedestrian routes, crossings, reversing areas, loading points and public interfaces.",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "driver",
+          "question": "Are licence, competence, fitness, fatigue, insurance and vehicle-specific training confirmed?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "vehicle",
+          "question": "Is the vehicle suitable, inspected, maintained, safely loaded and fitted for the task and environment?",
+          "answer_type": "boolean",
+          "required": true
+        },
+        {
+          "id": "journey",
+          "question": "Have route, schedule, breaks, weather, communications and foreseeable delays been planned?",
+          "answer_type": "boolean",
+          "required": true
+        }
+      ],
+      "hazards": [
+        {
+          "id": "vehicle-pedestrian",
+          "hazard": "Vehicle strikes or traps a person",
+          "possible_harm": [
+            "crushing",
+            "fatal injury"
+          ],
+          "people_at_risk": [
+            "drivers",
+            "workers",
+            "visitors",
+            "public"
+          ],
+          "control_prompts": [
+            "physically separate routes",
+            "minimise reversing",
+            "provide visibility and lighting",
+            "control speed",
+            "use trained banksman only where needed",
+            "manage loading areas and keys"
+          ]
+        },
+        {
+          "id": "road-driving",
+          "hazard": "Collision during work-related journey",
+          "possible_harm": [
+            "serious injury",
+            "fatality",
+            "public harm"
+          ],
+          "people_at_risk": [
+            "driver",
+            "passengers",
+            "other road users"
+          ],
+          "control_prompts": [
+            "use competent fit driver",
+            "select maintained suitable vehicle",
+            "secure load",
+            "plan realistic journey and breaks",
+            "prohibit unsafe mobile use",
+            "adjust for weather and route"
+          ]
+        },
+        {
+          "id": "ev-energy",
+          "hazard": "Electric or hybrid vehicle high voltage, battery fire or silent movement",
+          "possible_harm": [
+            "electric shock",
+            "fire",
+            "collision"
+          ],
+          "people_at_risk": [
+            "drivers",
+            "maintenance staff",
+            "pedestrians",
+            "responders"
+          ],
+          "control_prompts": [
+            "use trained personnel",
+            "identify high-voltage system",
+            "manage charging location",
+            "isolate damaged vehicle",
+            "plan battery-fire response",
+            "account for quiet operation"
+          ]
+        }
+      ],
+      "permit_triggers": [
+        "lifting-operation"
+      ],
+      "competence_requirements": [
+        "Correct driving entitlement and task-specific competence",
+        "Plant operators and signallers trained and authorised"
+      ],
+      "ppe_considerations": [
+        "High-visibility clothing supports, but does not replace, physical segregation"
+      ],
+      "emergency_requirements": [
+        "Collision, breakdown and lone-driver arrangements",
+        "Electric-vehicle incident information for responders"
+      ],
+      "health_surveillance_considerations": [
+        "Fitness-to-drive review proportionate to vehicle, mileage and risk"
+      ],
+      "stop_work_conditions": [
+        "Driver, vehicle or journey checks fail",
+        "Pedestrians cannot be safely separated",
+        "Load is insecure or exceeds limits",
+        "Weather or fatigue makes the journey unsafe"
+      ],
+      "source_topic_ids": [
+        "workplace-transport-driving"
+      ],
+      "legal_currency_note": "Confirm current road traffic, operator licensing, driving-hours and workplace transport requirements for the vehicle and journey."
+    }
+  ],
+  "trade_packs": {
+    "schema_version": "1.0.0",
+    "policy": "Trade packs route questions and sources. They do not replace task-specific assessment, site information, manufacturer instructions or competent-person approval.",
+    "universal_topic_ids": [
+      "management-systems",
+      "risk-management",
+      "incident-reporting-investigation",
+      "monitoring-audit-review",
+      "slips-workplace-welfare",
+      "first-aid-emergency",
+      "ppe-rpe",
+      "environmental-protection"
+    ],
+    "trade_packs": [
+      {
+        "id": "general-construction",
+        "title": "General building and construction",
+        "phase": 2,
+        "status": "active",
+        "additional_topic_ids": [
+          "work-at-height",
+          "hazardous-substances",
+          "machinery-tools",
+          "manual-handling-ergonomics",
+          "workplace-transport-driving",
+          "fire-hot-work",
+          "noise-vibration",
+          "asbestos",
+          "excavation-underground-services",
+          "temporary-works-structural-stability",
+          "airborne-contaminants-lev"
+        ],
+        "official_source_ids": [
+          "hse-cdm-2015",
+          "hse-hsg150",
+          "hse-public-protection",
+          "hse-asbestos-hsg264",
+          "hse-coshh-essentials"
+        ],
+        "required_input_groups": [
+          "project dutyholders",
+          "site boundaries and public",
+          "asbestos and services information",
+          "temporary works",
+          "work sequence and interfaces"
+        ]
+      },
+      {
+        "id": "electrical-installation",
+        "title": "Electrical installation and maintenance",
+        "phase": 2,
+        "status": "active",
+        "additional_topic_ids": [
+          "electricity",
+          "work-at-height",
+          "machinery-tools",
+          "hazardous-substances",
+          "fire-hot-work",
+          "confined-spaces",
+          "asbestos",
+          "safe-isolation-permit-to-work"
+        ],
+        "official_source_ids": [
+          "hse-electricity",
+          "hse-isolation-hsg253",
+          "hse-puwer",
+          "hse-cdm-2015",
+          "hse-asbestos-hsg264"
+        ],
+        "required_input_groups": [
+          "system and voltage",
+          "isolation and proving dead",
+          "live-work justification",
+          "arc and stored energy",
+          "services and penetrations"
+        ]
+      },
+      {
+        "id": "plumbing-heating-gas",
+        "title": "Plumbing, heating, ventilation and gas",
+        "phase": 2,
+        "status": "active",
+        "additional_topic_ids": [
+          "fire-hot-work",
+          "hazardous-substances",
+          "confined-spaces",
+          "manual-handling-ergonomics",
+          "work-at-height",
+          "biological-agents",
+          "gas-safety",
+          "pressure-systems",
+          "legionella-water-hygiene",
+          "asbestos",
+          "safe-isolation-permit-to-work"
+        ],
+        "official_source_ids": [
+          "hse-gas-safety",
+          "hse-pressure-l122",
+          "hse-legionella-hsg274",
+          "hse-asbestos-hsg264",
+          "hse-dsear"
+        ],
+        "required_input_groups": [
+          "gas competence and appliance",
+          "pressure and stored energy",
+          "water hygiene",
+          "hot work",
+          "asbestos and access"
+        ]
+      },
+      {
+        "id": "roofing-scaffolding",
+        "title": "Roofing, scaffolding and access systems",
+        "phase": 2,
+        "status": "active",
+        "additional_topic_ids": [
+          "work-at-height",
+          "manual-handling-ergonomics",
+          "workplace-transport-driving",
+          "hazardous-substances",
+          "fire-hot-work",
+          "asbestos",
+          "temporary-works-structural-stability"
+        ],
+        "official_source_ids": [
+          "hse-hsg33-roof-work",
+          "hse-public-protection",
+          "hse-cdm-2015",
+          "hse-asbestos-hsg264"
+        ],
+        "required_input_groups": [
+          "roof and surface condition",
+          "fragile materials",
+          "access system and inspections",
+          "falling objects",
+          "weather and rescue"
+        ]
+      },
+      {
+        "id": "groundworks-drainage",
+        "title": "Groundworks, excavation, civils and drainage",
+        "phase": 2,
+        "status": "active",
+        "additional_topic_ids": [
+          "confined-spaces",
+          "machinery-tools",
+          "workplace-transport-driving",
+          "hazardous-substances",
+          "biological-agents",
+          "noise-vibration",
+          "excavation-underground-services",
+          "temporary-works-structural-stability"
+        ],
+        "official_source_ids": [
+          "hse-hsg47-underground-services",
+          "hse-hsg150",
+          "hse-public-protection",
+          "hse-cdm-2015"
+        ],
+        "required_input_groups": [
+          "service plans and locating",
+          "ground and support",
+          "plant exclusion",
+          "access and inspection",
+          "water and contamination"
+        ]
+      },
+      {
+        "id": "demolition",
+        "title": "Demolition and structural alteration",
+        "phase": 2,
+        "status": "active",
+        "additional_topic_ids": [
+          "work-at-height",
+          "hazardous-substances",
+          "machinery-tools",
+          "noise-vibration",
+          "workplace-transport-driving",
+          "fire-hot-work",
+          "asbestos",
+          "temporary-works-structural-stability",
+          "airborne-contaminants-lev"
+        ],
+        "official_source_ids": [
+          "hse-demolition",
+          "hse-asbestos-hsg264",
+          "hse-public-protection",
+          "hse-cdm-2015"
+        ],
+        "required_input_groups": [
+          "engineering survey",
+          "sequence and stability",
+          "asbestos and services",
+          "exclusion and debris zones",
+          "dust and waste"
+        ]
+      },
+      {
+        "id": "painting-decorating",
+        "title": "Painting, decorating and surface preparation",
+        "phase": 2,
+        "status": "active",
+        "additional_topic_ids": [
+          "hazardous-substances",
+          "work-at-height",
+          "manual-handling-ergonomics",
+          "fire-hot-work",
+          "noise-vibration",
+          "lead-at-work",
+          "asbestos",
+          "airborne-contaminants-lev"
+        ],
+        "official_source_ids": [
+          "hse-coshh",
+          "hse-rpe-hsg53",
+          "hse-lead",
+          "hse-asbestos-hsg264",
+          "hse-hsg33-roof-work"
+        ],
+        "required_input_groups": [
+          "coating and SDS",
+          "existing paint and lead",
+          "surface preparation",
+          "ventilation and ignition",
+          "access equipment"
+        ]
+      },
+      {
+        "id": "carpentry-joinery",
+        "title": "Carpentry, joinery and installation",
+        "phase": 2,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "hazardous-substances",
+          "noise-vibration",
+          "manual-handling-ergonomics",
+          "work-at-height",
+          "airborne-contaminants-lev"
+        ],
+        "official_source_ids": [
+          "hse-woodworking",
+          "hse-puwer",
+          "hse-coshh-essentials",
+          "hse-rpe-hsg53"
+        ],
+        "required_input_groups": [
+          "machine and guard",
+          "wood and board dust",
+          "extraction",
+          "workpiece support",
+          "site installation"
+        ]
+      },
+      {
+        "id": "mechanical-maintenance",
+        "title": "Mechanical maintenance and plant shutdown",
+        "phase": 3,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "electricity",
+          "hazardous-substances",
+          "confined-spaces",
+          "fire-hot-work",
+          "manual-handling-ergonomics",
+          "safe-isolation-permit-to-work",
+          "pressure-systems",
+          "dangerous-substances-explosive-atmospheres"
+        ],
+        "official_source_ids": [
+          "hse-puwer",
+          "hse-isolation-hsg253",
+          "hse-pressure-l122",
+          "hse-permit-hsg250"
+        ],
+        "required_input_groups": [
+          "all energy sources",
+          "process contents",
+          "isolation standard",
+          "stored energy",
+          "test and recommission"
+        ]
+      },
+      {
+        "id": "lifting-rigging",
+        "title": "Lifting, rigging and crane operations",
+        "phase": 3,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "workplace-transport-driving",
+          "manual-handling-ergonomics",
+          "work-at-height",
+          "lifting-operations"
+        ],
+        "official_source_ids": [
+          "hse-loler",
+          "hse-loler-l113",
+          "hse-puwer"
+        ],
+        "required_input_groups": [
+          "load and centre of gravity",
+          "equipment and accessories",
+          "ground and environment",
+          "lift category and plan",
+          "exclusion and communication"
+        ]
+      },
+      {
+        "id": "welding-fabrication",
+        "title": "Welding, cutting and metal fabrication",
+        "phase": 3,
+        "status": "active",
+        "additional_topic_ids": [
+          "fire-hot-work",
+          "hazardous-substances",
+          "machinery-tools",
+          "noise-vibration",
+          "manual-handling-ergonomics",
+          "airborne-contaminants-lev",
+          "dangerous-substances-explosive-atmospheres"
+        ],
+        "official_source_ids": [
+          "hse-welding",
+          "hse-lev-hsg258",
+          "hse-rpe-hsg53",
+          "hse-dsear",
+          "hse-puwer"
+        ],
+        "required_input_groups": [
+          "process and parent metal",
+          "coatings and contaminants",
+          "fume control",
+          "hot-work area",
+          "gas cylinders and fire watch"
+        ]
+      },
+      {
+        "id": "manufacturing-engineering",
+        "title": "Manufacturing and engineering",
+        "phase": 3,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "hazardous-substances",
+          "noise-vibration",
+          "workplace-transport-driving",
+          "manual-handling-ergonomics",
+          "fire-hot-work",
+          "lifting-operations",
+          "safe-isolation-permit-to-work",
+          "pressure-systems",
+          "dangerous-substances-explosive-atmospheres",
+          "airborne-contaminants-lev"
+        ],
+        "official_source_ids": [
+          "hse-puwer",
+          "hse-loler",
+          "hse-dsear",
+          "hse-coshh-industry",
+          "hse-isolation-hsg253"
+        ],
+        "required_input_groups": [
+          "process flow and machinery",
+          "guarding and intervention",
+          "materials and emissions",
+          "maintenance and isolation",
+          "transport and storage"
+        ]
+      },
+      {
+        "id": "health-social-care",
+        "title": "Health and social care",
+        "phase": 6,
+        "status": "active",
+        "additional_topic_ids": [
+          "manual-handling-ergonomics",
+          "biological-agents",
+          "stress-mental-health-violence",
+          "lone-working",
+          "hazardous-substances",
+          "machinery-tools"
+        ],
+        "official_source_ids": [
+          "hse-health-services",
+          "hse-care-moving-handling",
+          "hse-loler",
+          "hse-violence"
+        ],
+        "required_input_groups": [
+          "service-user needs and dignity",
+          "person-specific handling",
+          "infection and sharps",
+          "challenging behaviour",
+          "medical and care equipment"
+        ]
+      },
+      {
+        "id": "cleaning-facilities",
+        "title": "Cleaning and facilities management",
+        "phase": 6,
+        "status": "active",
+        "additional_topic_ids": [
+          "hazardous-substances",
+          "slips-workplace-welfare",
+          "manual-handling-ergonomics",
+          "biological-agents",
+          "lone-working",
+          "work-at-height"
+        ],
+        "official_source_ids": [
+          "hse-coshh-industry",
+          "hse-coshh",
+          "hse-ppe-l25",
+          "hse-lone-working"
+        ],
+        "required_input_groups": [
+          "product and dilution",
+          "mixing incompatibility",
+          "public segregation",
+          "wet floors",
+          "waste and contamination"
+        ]
+      },
+      {
+        "id": "food-catering-hospitality",
+        "title": "Food, catering and hospitality",
+        "phase": 6,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "manual-handling-ergonomics",
+          "slips-workplace-welfare",
+          "hazardous-substances",
+          "fire-hot-work",
+          "biological-agents"
+        ],
+        "official_source_ids": [
+          "hse-food-hsg252",
+          "hse-coshh-industry",
+          "hse-puwer"
+        ],
+        "required_input_groups": [
+          "hot surfaces and liquids",
+          "knives and machinery",
+          "floors and cleaning",
+          "food and biological hazards",
+          "gas and ventilation"
+        ]
+      },
+      {
+        "id": "retail-office",
+        "title": "Retail, administration and office work",
+        "phase": 6,
+        "status": "active",
+        "additional_topic_ids": [
+          "manual-handling-ergonomics",
+          "stress-mental-health-violence",
+          "slips-workplace-welfare",
+          "lone-working",
+          "workplace-transport-driving",
+          "display-screen-home-working"
+        ],
+        "official_source_ids": [
+          "hse-dse",
+          "hse-home-working",
+          "hse-violence",
+          "hse-manual-handling"
+        ],
+        "required_input_groups": [
+          "DSE user and workstation",
+          "deliveries and storage",
+          "customer conflict and cash",
+          "lone opening or closing",
+          "home and hybrid work"
+        ]
+      },
+      {
+        "id": "hair-beauty",
+        "title": "Hairdressing, beauty and personal treatments",
+        "phase": 6,
+        "status": "active",
+        "additional_topic_ids": [
+          "hazardous-substances",
+          "biological-agents",
+          "manual-handling-ergonomics",
+          "slips-workplace-welfare",
+          "fire-hot-work"
+        ],
+        "official_source_ids": [
+          "hse-beauty-coshh",
+          "hse-coshh-industry",
+          "hse-skin-hsg262"
+        ],
+        "required_input_groups": [
+          "products and vapours",
+          "wet work and skin",
+          "sharps and blood",
+          "ventilation",
+          "client sensitivity and contraindications"
+        ]
+      },
+      {
+        "id": "education-childcare",
+        "title": "Education and childcare",
+        "phase": 6,
+        "status": "active",
+        "additional_topic_ids": [
+          "stress-mental-health-violence",
+          "biological-agents",
+          "manual-handling-ergonomics",
+          "slips-workplace-welfare",
+          "workplace-transport-driving"
+        ],
+        "official_source_ids": [
+          "hse-risk-assessment",
+          "hse-first-aid-l74",
+          "hse-violence"
+        ],
+        "required_input_groups": [
+          "age and supervision",
+          "safeguarding interface",
+          "educational activity",
+          "infection and medication",
+          "visits and transport"
+        ]
+      },
+      {
+        "id": "security-public-facing",
+        "title": "Security and public-facing services",
+        "phase": 6,
+        "status": "active",
+        "additional_topic_ids": [
+          "stress-mental-health-violence",
+          "lone-working",
+          "manual-handling-ergonomics",
+          "workplace-transport-driving"
+        ],
+        "official_source_ids": [
+          "hse-violence",
+          "hse-lone-working",
+          "hse-driving-work"
+        ],
+        "required_input_groups": [
+          "known persons and situations",
+          "staffing and communications",
+          "escape and assistance",
+          "restraint policy and competence",
+          "post-incident support"
+        ]
+      },
+      {
+        "id": "agriculture-landscaping-forestry",
+        "title": "Agriculture, horticulture, landscaping and forestry",
+        "phase": 7,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "workplace-transport-driving",
+          "hazardous-substances",
+          "biological-agents",
+          "noise-vibration",
+          "work-at-height",
+          "lone-working"
+        ],
+        "official_source_ids": [
+          "hse-farmwise-hsg270",
+          "hse-coshh-industry",
+          "hse-puwer",
+          "hse-loler"
+        ],
+        "required_input_groups": [
+          "land and weather",
+          "vehicle and machinery",
+          "animals and biological agents",
+          "pesticides and chemicals",
+          "trees, height and remote work"
+        ]
+      },
+      {
+        "id": "automotive-recovery",
+        "title": "Motor vehicle repair, bodywork and roadside recovery",
+        "phase": 7,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "workplace-transport-driving",
+          "hazardous-substances",
+          "fire-hot-work",
+          "manual-handling-ergonomics",
+          "electricity",
+          "lifting-operations",
+          "dangerous-substances-explosive-atmospheres",
+          "airborne-contaminants-lev",
+          "safe-isolation-permit-to-work"
+        ],
+        "official_source_ids": [
+          "hse-mvr-hsg261",
+          "hse-coshh-industry",
+          "hse-loler",
+          "hse-dsear"
+        ],
+        "required_input_groups": [
+          "vehicle support and movement",
+          "EV or hybrid energy",
+          "fuel and battery",
+          "tyre inflation",
+          "paint and isocyanate",
+          "roadside traffic"
+        ]
+      },
+      {
+        "id": "woodworking",
+        "title": "Woodworking and furniture production",
+        "phase": 7,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "hazardous-substances",
+          "noise-vibration",
+          "manual-handling-ergonomics",
+          "fire-hot-work",
+          "airborne-contaminants-lev"
+        ],
+        "official_source_ids": [
+          "hse-woodworking",
+          "hse-puwer",
+          "hse-lev-hsg258",
+          "hse-rpe-hsg53"
+        ],
+        "required_input_groups": [
+          "machine and cutter",
+          "guard and feed",
+          "wood dust and extraction",
+          "finishes and adhesives",
+          "fire and housekeeping"
+        ]
+      },
+      {
+        "id": "warehousing-logistics",
+        "title": "Warehousing, haulage and logistics",
+        "phase": 7,
+        "status": "active",
+        "additional_topic_ids": [
+          "workplace-transport-driving",
+          "manual-handling-ergonomics",
+          "machinery-tools",
+          "work-at-height",
+          "slips-workplace-welfare",
+          "lifting-operations"
+        ],
+        "official_source_ids": [
+          "hse-logistics",
+          "hse-workplace-transport",
+          "hse-loler",
+          "hse-driving-work"
+        ],
+        "required_input_groups": [
+          "yard and loading dock",
+          "racking and storage",
+          "lift trucks and pedestrians",
+          "load security",
+          "driving and delivery"
+        ]
+      },
+      {
+        "id": "waste-recycling",
+        "title": "Waste management and recycling",
+        "phase": 7,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "biological-agents",
+          "hazardous-substances",
+          "workplace-transport-driving",
+          "fire-hot-work",
+          "manual-handling-ergonomics",
+          "dangerous-substances-explosive-atmospheres",
+          "airborne-contaminants-lev"
+        ],
+        "official_source_ids": [
+          "hse-waste",
+          "hse-puwer",
+          "hse-workplace-transport",
+          "hse-dsear"
+        ],
+        "required_input_groups": [
+          "waste stream and unknowns",
+          "sharps and contamination",
+          "mobile plant",
+          "conveyors and compactors",
+          "battery and combustible fire"
+        ]
+      },
+      {
+        "id": "printing",
+        "title": "Printing and print finishing",
+        "phase": 7,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "hazardous-substances",
+          "fire-hot-work",
+          "noise-vibration",
+          "manual-handling-ergonomics",
+          "airborne-contaminants-lev",
+          "dangerous-substances-explosive-atmospheres"
+        ],
+        "official_source_ids": [
+          "hse-printing",
+          "hse-puwer",
+          "hse-coshh-industry",
+          "hse-dsear"
+        ],
+        "required_input_groups": [
+          "press and finishing machine",
+          "ink and solvent",
+          "cleaning and intervention",
+          "paper handling",
+          "fire and ventilation"
+        ]
+      },
+      {
+        "id": "quarrying-mineral-products",
+        "title": "Quarrying, stone and mineral products",
+        "phase": 7,
+        "status": "active",
+        "additional_topic_ids": [
+          "machinery-tools",
+          "workplace-transport-driving",
+          "hazardous-substances",
+          "noise-vibration",
+          "work-at-height",
+          "fire-hot-work",
+          "airborne-contaminants-lev",
+          "lifting-operations",
+          "excavation-underground-services",
+          "dangerous-substances-explosive-atmospheres"
+        ],
+        "official_source_ids": [
+          "hse-quarries",
+          "hse-coshh-essentials",
+          "hse-loler",
+          "hse-puwer"
+        ],
+        "required_input_groups": [
+          "face and ground stability",
+          "mobile plant",
+          "crushing and conveyors",
+          "respirable dust",
+          "explosives specialist boundary"
+        ]
+      }
+    ]
+  },
+  "permit_matrix": {
+    "schema_version": "1.0.0",
+    "warning": "A match means a permit may be required. The app must not state that a permit has been issued or that the listed permits are exhaustive.",
+    "permits": [
+      {
+        "id": "hot-work",
+        "title": "Hot-work permit",
+        "triggers": [
+          "welding",
+          "flame cutting",
+          "brazing",
+          "soldering",
+          "grinding producing sparks",
+          "bitumen heating",
+          "open flame"
+        ],
+        "minimum_checks": [
+          "combustibles removed or protected",
+          "fire detection implications checked",
+          "extinguishing equipment available",
+          "fire watch and post-work inspection agreed",
+          "gas cylinders controlled"
+        ]
+      },
+      {
+        "id": "confined-space-entry",
+        "title": "Confined-space entry permit",
+        "triggers": [
+          "confined space",
+          "tank",
+          "vessel",
+          "pit",
+          "chamber",
+          "sewer",
+          "restricted enclosure with specified risk"
+        ],
+        "minimum_checks": [
+          "avoidance considered",
+          "space classified by competent person",
+          "isolations secured",
+          "atmosphere testing plan",
+          "communications",
+          "standby arrangements",
+          "rescue plan and equipment"
+        ]
+      },
+      {
+        "id": "electrical-isolation",
+        "title": "Electrical isolation or sanction-for-test",
+        "triggers": [
+          "electrical maintenance",
+          "exposed conductors",
+          "switchgear",
+          "testing live circuits",
+          "high voltage"
+        ],
+        "minimum_checks": [
+          "correct source identified",
+          "isolation locked and tagged",
+          "stored energy controlled",
+          "dead proved with suitable tester",
+          "live work specifically justified and authorised"
+        ]
+      },
+      {
+        "id": "excavation",
+        "title": "Excavation permit",
+        "triggers": [
+          "excavation",
+          "trench",
+          "breaking ground",
+          "drilling into ground",
+          "underground services"
+        ],
+        "minimum_checks": [
+          "service plans reviewed",
+          "location devices used",
+          "safe digging method",
+          "ground support",
+          "access and egress",
+          "spoils and plant kept back",
+          "inspection arrangements"
+        ]
+      },
+      {
+        "id": "work-at-height",
+        "title": "Work-at-height permit or authorisation",
+        "triggers": [
+          "roof work",
+          "fragile surface",
+          "MEWP",
+          "scaffold",
+          "fall arrest",
+          "work near an open edge"
+        ],
+        "minimum_checks": [
+          "avoidance considered",
+          "collective protection prioritised",
+          "equipment inspected",
+          "weather acceptable",
+          "exclusion zone",
+          "rescue plan where fall arrest is used"
+        ]
+      },
+      {
+        "id": "lifting-operation",
+        "title": "Lifting-operation permit or lift plan",
+        "triggers": [
+          "crane lift",
+          "complex lift",
+          "lifting accessory",
+          "suspended load",
+          "lifting people"
+        ],
+        "minimum_checks": [
+          "lift planned by competent person",
+          "equipment and accessories verified",
+          "ground conditions",
+          "load weight and centre of gravity",
+          "exclusion zone",
+          "signalling and communications"
+        ]
+      },
+      {
+        "id": "line-breaking",
+        "title": "Line-breaking or process isolation permit",
+        "triggers": [
+          "opening pipework",
+          "breaking containment",
+          "pressurised system",
+          "chemical line",
+          "steam line"
+        ],
+        "minimum_checks": [
+          "contents identified",
+          "pressure and temperature reduced",
+          "positive isolation",
+          "drain and purge",
+          "spill controls",
+          "PPE and emergency arrangements"
+        ]
+      }
+    ]
+  },
+  "official_sources": {
+    "schema_version": "1.0.0",
+    "authority": "Health and Safety Executive",
+    "jurisdiction": "Great Britain",
+    "checked_on": "2026-08-31",
+    "usage_policy": "Use the live official page as the currency authority. Locally supplied notes remain supporting material and do not override current official guidance.",
+    "sources": [
+      {
+        "id": "hse-risk-assessment",
+        "title": "Managing risks and risk assessment at work",
+        "code": null,
+        "url": "https://www.hse.gov.uk/simple-health-safety/risk/",
+        "phase": 1,
+        "topic_ids": [
+          "risk-management"
+        ]
+      },
+      {
+        "id": "hse-riddor",
+        "title": "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations",
+        "code": "RIDDOR",
+        "url": "https://www.hse.gov.uk/riddor/",
+        "phase": 1,
+        "topic_ids": [
+          "incident-reporting-investigation"
+        ]
+      },
+      {
+        "id": "hse-first-aid-l74",
+        "title": "First aid at work: Guidance on Regulations",
+        "code": "L74",
+        "url": "https://www.hse.gov.uk/pubns/books/l74.htm",
+        "phase": 1,
+        "topic_ids": [
+          "risk-management",
+          "incident-reporting-investigation",
+          "first-aid-emergency"
+        ]
+      },
+      {
+        "id": "hse-ppe-l25",
+        "title": "Personal protective equipment at work",
+        "code": "L25",
+        "url": "https://www.hse.gov.uk/pubns/books/l25.htm",
+        "phase": 1,
+        "topic_ids": [
+          "risk-management",
+          "hazardous-substances",
+          "machinery-tools",
+          "ppe-rpe"
+        ]
+      },
+      {
+        "id": "hse-safety-signs-l64",
+        "title": "Safety signs and signals",
+        "code": "L64",
+        "url": "https://www.hse.gov.uk/pubns/books/l64.htm",
+        "phase": 1,
+        "topic_ids": [
+          "risk-management",
+          "slips-workplace-welfare"
+        ]
+      },
+      {
+        "id": "hse-worker-involvement-hsg263",
+        "title": "Involving your workforce in health and safety",
+        "code": "HSG263",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg263.htm",
+        "phase": 1,
+        "topic_ids": [
+          "management-systems",
+          "monitoring-audit-review"
+        ]
+      },
+      {
+        "id": "hse-cdm-2015",
+        "title": "Construction Design and Management Regulations 2015",
+        "code": "CDM 2015",
+        "url": "https://www.hse.gov.uk/construction/cdm/2015/",
+        "phase": 2,
+        "topic_ids": [
+          "management-systems",
+          "risk-management"
+        ]
+      },
+      {
+        "id": "hse-construction-guidance",
+        "title": "HSE construction guidance library",
+        "code": null,
+        "url": "https://www.hse.gov.uk/construction/resources/guidance.htm",
+        "phase": 2,
+        "topic_ids": [
+          "risk-management",
+          "work-at-height",
+          "machinery-tools"
+        ]
+      },
+      {
+        "id": "hse-hsg150",
+        "title": "Health and safety in construction",
+        "code": "HSG150",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg150.htm",
+        "phase": 2,
+        "topic_ids": [
+          "risk-management",
+          "slips-workplace-welfare",
+          "workplace-transport-driving",
+          "temporary-works-structural-stability",
+          "excavation-underground-services"
+        ]
+      },
+      {
+        "id": "hse-hsg33-roof-work",
+        "title": "Health and safety in roof work",
+        "code": "HSG33",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg33.htm",
+        "phase": 2,
+        "topic_ids": [
+          "work-at-height"
+        ]
+      },
+      {
+        "id": "hse-hsg47-underground-services",
+        "title": "Avoiding danger from underground services",
+        "code": "HSG47",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg47.htm",
+        "phase": 2,
+        "topic_ids": [
+          "risk-management",
+          "electricity",
+          "excavation-underground-services"
+        ]
+      },
+      {
+        "id": "hse-public-protection",
+        "title": "Protecting the public during construction",
+        "code": null,
+        "url": "https://www.hse.gov.uk/construction/safetytopics/publicprotection.htm",
+        "phase": 2,
+        "topic_ids": [
+          "risk-management",
+          "workplace-transport-driving",
+          "work-at-height"
+        ]
+      },
+      {
+        "id": "hse-demolition",
+        "title": "Demolition safety",
+        "code": null,
+        "url": "https://www.hse.gov.uk/construction/safetytopics/demolition.htm",
+        "phase": 2,
+        "topic_ids": [
+          "risk-management",
+          "work-at-height",
+          "hazardous-substances",
+          "asbestos",
+          "temporary-works-structural-stability"
+        ]
+      },
+      {
+        "id": "hse-asbestos-hsg264",
+        "title": "Asbestos: The survey guide",
+        "code": "HSG264",
+        "url": "https://www.hse.gov.uk/pubns/priced/hsg264.pdf",
+        "phase": 2,
+        "topic_ids": [
+          "hazardous-substances",
+          "asbestos"
+        ]
+      },
+      {
+        "id": "hse-asbestos-essentials",
+        "title": "Asbestos Essentials task sheets",
+        "code": "HSG210",
+        "url": "https://www.hse.gov.uk/asbestos/essentials/",
+        "phase": 2,
+        "topic_ids": [
+          "hazardous-substances",
+          "asbestos"
+        ]
+      },
+      {
+        "id": "hse-asbestos-l143",
+        "title": "Managing and working with asbestos",
+        "code": "L143",
+        "url": "https://www.hse.gov.uk/pubns/books/l143.htm",
+        "phase": 2,
+        "topic_ids": [
+          "hazardous-substances",
+          "asbestos"
+        ]
+      },
+      {
+        "id": "hse-fire-construction-hsg168",
+        "title": "Fire safety in construction",
+        "code": "HSG168",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg168.htm",
+        "phase": 2,
+        "topic_ids": [
+          "fire-hot-work"
+        ]
+      },
+      {
+        "id": "hse-puwer",
+        "title": "Provision and Use of Work Equipment Regulations",
+        "code": "PUWER",
+        "url": "https://www.hse.gov.uk/work-equipment-machinery/puwer.htm",
+        "phase": 3,
+        "topic_ids": [
+          "machinery-tools"
+        ]
+      },
+      {
+        "id": "hse-loler",
+        "title": "Lifting Operations and Lifting Equipment Regulations",
+        "code": "LOLER",
+        "url": "https://www.hse.gov.uk/work-equipment-machinery/loler-overview.htm",
+        "phase": 3,
+        "topic_ids": [
+          "machinery-tools",
+          "manual-handling-ergonomics",
+          "lifting-operations"
+        ]
+      },
+      {
+        "id": "hse-loler-l113",
+        "title": "Safe use of lifting equipment",
+        "code": "L113",
+        "url": "https://www.hse.gov.uk/pubns/books/l113.htm",
+        "phase": 3,
+        "topic_ids": [
+          "machinery-tools",
+          "lifting-operations"
+        ]
+      },
+      {
+        "id": "hse-pressure-l122",
+        "title": "Safety of pressure systems",
+        "code": "L122",
+        "url": "https://www.hse.gov.uk/pubns/priced/l122.pdf",
+        "phase": 3,
+        "topic_ids": [
+          "machinery-tools",
+          "risk-management",
+          "pressure-systems"
+        ]
+      },
+      {
+        "id": "hse-dsear",
+        "title": "Dangerous Substances and Explosive Atmospheres Regulations",
+        "code": "DSEAR",
+        "url": "https://www.hse.gov.uk/fireandexplosion/dsear.htm",
+        "phase": 3,
+        "topic_ids": [
+          "fire-hot-work",
+          "hazardous-substances",
+          "dangerous-substances-explosive-atmospheres"
+        ]
+      },
+      {
+        "id": "hse-permit-hsg250",
+        "title": "Guidance on permit-to-work systems",
+        "code": "HSG250",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg250.htm",
+        "phase": 3,
+        "topic_ids": [
+          "risk-management",
+          "management-systems",
+          "safe-isolation-permit-to-work"
+        ]
+      },
+      {
+        "id": "hse-isolation-hsg253",
+        "title": "The safe isolation of plant and equipment",
+        "code": "HSG253",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg253.htm",
+        "phase": 3,
+        "topic_ids": [
+          "machinery-tools",
+          "electricity",
+          "safe-isolation-permit-to-work"
+        ]
+      },
+      {
+        "id": "hse-electricity",
+        "title": "Electrical safety at work",
+        "code": null,
+        "url": "https://www.hse.gov.uk/electricity/",
+        "phase": 3,
+        "topic_ids": [
+          "electricity"
+        ]
+      },
+      {
+        "id": "hse-gas-safety",
+        "title": "Gas safety",
+        "code": null,
+        "url": "https://www.hse.gov.uk/gas/",
+        "phase": 3,
+        "topic_ids": [
+          "fire-hot-work",
+          "hazardous-substances",
+          "gas-safety"
+        ]
+      },
+      {
+        "id": "hse-coshh",
+        "title": "COSHH basics",
+        "code": "COSHH",
+        "url": "https://www.hse.gov.uk/coshh/basics/overview.htm",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances",
+          "biological-agents"
+        ]
+      },
+      {
+        "id": "hse-coshh-essentials",
+        "title": "COSHH Essentials and direct advice sheets",
+        "code": null,
+        "url": "https://www.hse.gov.uk/coshh/essentials/",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances"
+        ]
+      },
+      {
+        "id": "hse-eh40",
+        "title": "Workplace exposure limits",
+        "code": "EH40",
+        "url": "https://www.hse.gov.uk/pubns/books/eh40.htm",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances"
+        ]
+      },
+      {
+        "id": "hse-rpe-hsg53",
+        "title": "Respiratory protective equipment at work",
+        "code": "HSG53",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg53.htm",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances",
+          "ppe-rpe",
+          "airborne-contaminants-lev"
+        ]
+      },
+      {
+        "id": "hse-lev-hsg258",
+        "title": "Controlling airborne contaminants at work",
+        "code": "HSG258",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg258.htm",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances",
+          "airborne-contaminants-lev"
+        ]
+      },
+      {
+        "id": "hse-monitoring-hsg173",
+        "title": "Monitoring strategies for toxic substances",
+        "code": "HSG173",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg173.htm",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances",
+          "monitoring-audit-review",
+          "airborne-contaminants-lev"
+        ]
+      },
+      {
+        "id": "hse-welding",
+        "title": "Welding health and safety",
+        "code": null,
+        "url": "https://www.hse.gov.uk/welding/",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances",
+          "fire-hot-work",
+          "noise-vibration"
+        ]
+      },
+      {
+        "id": "hse-silica",
+        "title": "COSHH Essentials silica control sheets",
+        "code": null,
+        "url": "https://www.hse.gov.uk/coshh/essentials/",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances"
+        ]
+      },
+      {
+        "id": "hse-skin-hsg262",
+        "title": "Managing risks from skin exposure at work",
+        "code": "HSG262",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg262.htm",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances"
+        ]
+      },
+      {
+        "id": "hse-legionella-hsg274",
+        "title": "Legionnaires' disease technical guidance",
+        "code": "HSG274",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg274.htm",
+        "phase": 4,
+        "topic_ids": [
+          "biological-agents",
+          "hazardous-substances",
+          "legionella-water-hygiene"
+        ]
+      },
+      {
+        "id": "hse-lead",
+        "title": "Lead at work",
+        "code": null,
+        "url": "https://www.hse.gov.uk/lead/",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances",
+          "lead-at-work"
+        ]
+      },
+      {
+        "id": "hse-noise",
+        "title": "Noise at work",
+        "code": null,
+        "url": "https://www.hse.gov.uk/noise/",
+        "phase": 4,
+        "topic_ids": [
+          "noise-vibration"
+        ]
+      },
+      {
+        "id": "hse-vibration",
+        "title": "Vibration at work",
+        "code": null,
+        "url": "https://www.hse.gov.uk/vibration/",
+        "phase": 4,
+        "topic_ids": [
+          "noise-vibration"
+        ]
+      },
+      {
+        "id": "hse-workplace-transport",
+        "title": "Workplace transport",
+        "code": null,
+        "url": "https://www.hse.gov.uk/workplacetransport/",
+        "phase": 5,
+        "topic_ids": [
+          "workplace-transport-driving"
+        ]
+      },
+      {
+        "id": "hse-driving-work",
+        "title": "Driving and riding safely for work",
+        "code": null,
+        "url": "https://www.hse.gov.uk/roadsafety/",
+        "phase": 5,
+        "topic_ids": [
+          "workplace-transport-driving"
+        ]
+      },
+      {
+        "id": "hse-lone-working",
+        "title": "Protecting lone workers",
+        "code": null,
+        "url": "https://www.hse.gov.uk/lone-working/",
+        "phase": 5,
+        "topic_ids": [
+          "lone-working"
+        ]
+      },
+      {
+        "id": "hse-violence",
+        "title": "Violence and aggression at work",
+        "code": null,
+        "url": "https://www.hse.gov.uk/violence/",
+        "phase": 5,
+        "topic_ids": [
+          "stress-mental-health-violence"
+        ]
+      },
+      {
+        "id": "hse-stress",
+        "title": "Work-related stress and the Management Standards",
+        "code": null,
+        "url": "https://www.hse.gov.uk/stress/",
+        "phase": 5,
+        "topic_ids": [
+          "stress-mental-health-violence"
+        ]
+      },
+      {
+        "id": "hse-manual-handling",
+        "title": "Manual handling at work",
+        "code": null,
+        "url": "https://www.hse.gov.uk/msd/manual-handling/",
+        "phase": 5,
+        "topic_ids": [
+          "manual-handling-ergonomics"
+        ]
+      },
+      {
+        "id": "hse-dse",
+        "title": "Working with display screen equipment",
+        "code": "INDG36",
+        "url": "https://www.hse.gov.uk/pubns/indg36.pdf",
+        "phase": 5,
+        "topic_ids": [
+          "manual-handling-ergonomics",
+          "slips-workplace-welfare",
+          "display-screen-home-working"
+        ]
+      },
+      {
+        "id": "hse-home-working",
+        "title": "Home and hybrid working",
+        "code": null,
+        "url": "https://www.hse.gov.uk/home-working/",
+        "phase": 5,
+        "topic_ids": [
+          "manual-handling-ergonomics",
+          "stress-mental-health-violence",
+          "lone-working",
+          "display-screen-home-working"
+        ]
+      },
+      {
+        "id": "hse-health-services",
+        "title": "Health and social care safety topics",
+        "code": null,
+        "url": "https://www.hse.gov.uk/healthservices/safety-topics.htm",
+        "phase": 6,
+        "topic_ids": [
+          "biological-agents",
+          "manual-handling-ergonomics",
+          "stress-mental-health-violence"
+        ]
+      },
+      {
+        "id": "hse-care-moving-handling",
+        "title": "Moving and handling in health and social care",
+        "code": null,
+        "url": "https://www.hse.gov.uk/healthservices/moving-handling/manage-the-risk.htm",
+        "phase": 6,
+        "topic_ids": [
+          "manual-handling-ergonomics"
+        ]
+      },
+      {
+        "id": "hse-coshh-industry",
+        "title": "COSHH guidance by industry",
+        "code": null,
+        "url": "https://www.hse.gov.uk/coshh/industry/",
+        "phase": 6,
+        "topic_ids": [
+          "hazardous-substances",
+          "biological-agents"
+        ]
+      },
+      {
+        "id": "hse-food-hsg252",
+        "title": "A recipe for safety",
+        "code": "HSG252",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg252.htm",
+        "phase": 6,
+        "topic_ids": [
+          "machinery-tools",
+          "manual-handling-ergonomics",
+          "slips-workplace-welfare",
+          "hazardous-substances"
+        ]
+      },
+      {
+        "id": "hse-beauty-coshh",
+        "title": "COSHH and beauticians",
+        "code": null,
+        "url": "https://www.hse.gov.uk/coshh/industry/beauty.htm",
+        "phase": 6,
+        "topic_ids": [
+          "hazardous-substances",
+          "biological-agents"
+        ]
+      },
+      {
+        "id": "hse-farmwise-hsg270",
+        "title": "Farmwise",
+        "code": "HSG270",
+        "url": "https://www.hse.gov.uk/pubns/books/hsg270.htm",
+        "phase": 7,
+        "topic_ids": [
+          "machinery-tools",
+          "workplace-transport-driving",
+          "hazardous-substances",
+          "biological-agents"
+        ]
+      },
+      {
+        "id": "hse-mvr-hsg261",
+        "title": "Health and safety in motor vehicle repair",
+        "code": "HSG261",
+        "url": "https://www.hse.gov.uk/pubns/priced/hsg261.pdf",
+        "phase": 7,
+        "topic_ids": [
+          "machinery-tools",
+          "fire-hot-work",
+          "hazardous-substances",
+          "workplace-transport-driving"
+        ]
+      },
+      {
+        "id": "hse-woodworking",
+        "title": "Woodworking health and safety",
+        "code": null,
+        "url": "https://www.hse.gov.uk/woodworking/",
+        "phase": 7,
+        "topic_ids": [
+          "machinery-tools",
+          "hazardous-substances",
+          "noise-vibration"
+        ]
+      },
+      {
+        "id": "hse-logistics",
+        "title": "Logistics and warehousing",
+        "code": null,
+        "url": "https://www.hse.gov.uk/logistics/",
+        "phase": 7,
+        "topic_ids": [
+          "workplace-transport-driving",
+          "manual-handling-ergonomics"
+        ]
+      },
+      {
+        "id": "hse-waste",
+        "title": "Waste management and recycling",
+        "code": null,
+        "url": "https://www.hse.gov.uk/waste/",
+        "phase": 7,
+        "topic_ids": [
+          "machinery-tools",
+          "biological-agents",
+          "workplace-transport-driving"
+        ]
+      },
+      {
+        "id": "hse-printing",
+        "title": "Printing industry health and safety",
+        "code": null,
+        "url": "https://www.hse.gov.uk/printing/",
+        "phase": 7,
+        "topic_ids": [
+          "machinery-tools",
+          "hazardous-substances",
+          "fire-hot-work"
+        ]
+      },
+      {
+        "id": "hse-quarries",
+        "title": "Quarry health and safety",
+        "code": null,
+        "url": "https://www.hse.gov.uk/quarries/",
+        "phase": 7,
+        "topic_ids": [
+          "machinery-tools",
+          "workplace-transport-driving",
+          "hazardous-substances",
+          "noise-vibration"
+        ]
+      },
+      {
+        "id": "hse-construction-wood-dust",
+        "title": "Construction dust: cutting and sanding wood",
+        "code": null,
+        "url": "https://www.hse.gov.uk/construction/healthrisks/hazardous-substances/cutting-and-sanding-wood.htm",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances",
+          "ppe-rpe"
+        ]
+      },
+      {
+        "id": "hse-rpe-fit-basics",
+        "title": "RPE fit testing basics",
+        "code": null,
+        "url": "https://www.hse.gov.uk/respiratory-protective-equipment/fit-testing-basics.htm",
+        "phase": 4,
+        "topic_ids": [
+          "hazardous-substances",
+          "ppe-rpe"
+        ]
+      }
+    ]
+  },
+  "professional_language": {
+    "schema_version": "1.0.0",
+    "id": "nebosh-power-words",
+    "title": "NEBOSH power words and professional language",
+    "purpose": "Help SafeWork AI use precise professional health and safety language in answers, risk assessments and RAMS without forcing terminology or overstating legal conclusions.",
+    "source_id": "src-nebosh-power-words-list",
+    "source_class": "training_material",
+    "instruction_handling": "reference_only",
+    "usage_rules": [
+      "Use these terms naturally where they accurately describe the evidence, hazard, risk, control or outcome.",
+      "Prefer specific statements that identify the source of harm, people exposed, foreseeable consequences and effective control measures.",
+      "Distinguish a hazard from risk, initial risk from residual risk, and acute injury from chronic health effects.",
+      "Describe controls in hierarchy order and distinguish engineering controls, collective protection, administrative controls and PPE.",
+      "Use legal or enforcement terms only when the applicable law and facts support them; training language does not establish legal compliance.",
+      "Do not insert power words merely for style, repeat them unnecessarily or use them to imply that a draft RAMS is approved."
+    ],
+    "categories": [
+      {
+        "id": "risk-hazard",
+        "title": "Risk and hazard language",
+        "terms": [
+          "Hazard",
+          "Risk",
+          "Significant risk",
+          "Foreseeable harm",
+          "Likelihood",
+          "Severity",
+          "Consequence",
+          "Residual risk",
+          "Risk rating",
+          "Exposure",
+          "Source of harm",
+          "Potential for injury",
+          "Acute injury",
+          "Chronic health effect"
+        ]
+      },
+      {
+        "id": "control-prevention",
+        "title": "Control and prevention language",
+        "terms": [
+          "Eliminate",
+          "Reduce",
+          "Control measure",
+          "Preventative measure",
+          "Mitigate",
+          "Minimise",
+          "Engineering control",
+          "Administrative control",
+          "Personal protective equipment (PPE)",
+          "Collective protection",
+          "Safe system of work",
+          "Permit-to-work system",
+          "Supervision",
+          "Competent person",
+          "Monitoring",
+          "Inspection",
+          "Maintenance",
+          "Review"
+        ]
+      },
+      {
+        "id": "legal-professional",
+        "title": "Legal and professional language",
+        "terms": [
+          "Reasonably practicable",
+          "Suitable and sufficient",
+          "Legal requirement",
+          "Duty of care",
+          "Compliance",
+          "Enforcement action",
+          "Prosecution",
+          "Improvement notice",
+          "Prohibition notice",
+          "Breach of legislation",
+          "Health and Safety at Work etc. Act 1974",
+          "Management of Health and Safety at Work Regulations 1999"
+        ]
+      },
+      {
+        "id": "training-behaviour",
+        "title": "Training and behaviour language",
+        "terms": [
+          "Induction training",
+          "Refresher training",
+          "Toolbox talk",
+          "Safety briefing",
+          "Competence",
+          "Authorised personnel",
+          "Supervised activity",
+          "Unsafe act",
+          "Human error",
+          "Behavioural safety"
+        ]
+      },
+      {
+        "id": "fire-emergency",
+        "title": "Fire and emergency language",
+        "terms": [
+          "Fire load",
+          "Means of escape",
+          "Fire escape routes",
+          "Emergency procedures",
+          "Assembly point",
+          "Fire detection system",
+          "Fire suppression",
+          "Evacuation plan"
+        ]
+      },
+      {
+        "id": "occupational-health",
+        "title": "Health and workshop-environment language",
+        "terms": [
+          "Noise exposure",
+          "Respiratory hazard",
+          "Airborne contaminants",
+          "Hazardous substances",
+          "COSHH assessment",
+          "Occupational health",
+          "Musculoskeletal disorder (MSD)",
+          "Manual handling injury",
+          "Long-term exposure",
+          "Cumulative effect"
+        ]
+      },
+      {
+        "id": "business-organisational-impact",
+        "title": "Business and organisational impact",
+        "terms": [
+          "Financial loss",
+          "Reputational damage",
+          "Business interruption",
+          "Civil claim",
+          "Loss of productivity",
+          "Increased insurance premiums",
+          "Employee morale",
+          "Stakeholder confidence"
+        ]
+      }
+    ],
+    "legal_currency_note": "This terminology guide is training material. Current legislation and official guidance must be checked before making legal, enforcement or compliance claims."
+  }
+}

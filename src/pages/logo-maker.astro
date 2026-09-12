@@ -1,6 +1,7 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -8,7 +9,7 @@ import Header from "../components/Header.astro";
 <head>
 	<BaseHead title="Logo Maker | Trades Go Digital" description="Design a simple business logo and export it as SVG or PNG." />
 </head>
-<body>
+<body class="tgd-logo-office">
 	<Header />
 	<main class="logo-studio">
 		<header class="studio-top">
@@ -21,7 +22,7 @@ import Header from "../components/Header.astro";
 					<p>Brand Studio</p>
 					<h1>Build a sharp trade logo.</h1>
 					<span>Create a clean logo mark for vans, quotes, invoices, websites and social posts.</span>
-					<strong class="maker-price">£1.99 one-off</strong>
+					<a class="maker-price" href="/pricing#tools">View pricing</a>
 				</section>
 				<section class="panel open">
 					<h2><button class="drawer" type="button">Business <span>Words</span></button></h2>
@@ -147,6 +148,7 @@ import Header from "../components/Header.astro";
 		$("png").onclick=()=>{const img=new Image(),svg=logoSvg();img.onload=()=>{const c=document.createElement("canvas");c.width=1400;c.height=900;const x=c.getContext("2d");x.fillStyle=state.background;x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);download("logo.png","image/png",c.toDataURL("image/png"))};img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)};
 		$("reset").onclick=()=>{state=fresh();render()};try{const saved=JSON.parse(localStorage.getItem("tgd-logo-maker"));if(saved?.name)state={...fresh(),...saved}}catch{}render();
 	</script>
+<div class="maker-site-footer no-print"><Footer /></div>
 </body>
 </html>
 
@@ -155,4 +157,40 @@ import Header from "../components/Header.astro";
 </style>
 <style is:global>
 	.maker-price{display:inline-flex;width:max-content;margin-top:14px;padding:8px 11px;border-radius:999px;background:#ff6b00;color:#07111f;font-size:13px;font-weight:950}
+</style>
+
+<style is:global>
+body.tgd-logo-office{position:relative;isolation:isolate;background:#edf0f2}
+body.tgd-logo-office::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)),url('/images/tgd-logo-design-studio.png') center / cover no-repeat}
+body.tgd-logo-office .logo-studio,body.tgd-logo-office .studio-grid{background:transparent}
+body.tgd-logo-office .logo-studio{padding:24px;max-width:1500px;margin:auto}
+body.tgd-logo-office .studio-top,body.tgd-logo-office .tools,body.tgd-logo-office .preview{background:#fff;border-radius:10px;box-shadow:0 8px 28px #07111f1f}
+body.tgd-logo-office .studio-top{margin-bottom:22px}
+@media(max-width:720px){body.tgd-logo-office .logo-studio{padding:12px}}
+</style>
+
+<style is:global>
+.maker-site-footer{clear:both;width:100%;margin-top:32px}@media print{.maker-site-footer{display:none!important}}
+</style>
+
+<style is:global>
+@media screen {
+ .maker-site-footer footer{background:transparent;border:0;color:#07111f}
+ .maker-site-footer .footer-brand{padding:24px;border:0;border-radius:10px;background:rgba(255,255,255,.92)}
+ .maker-site-footer .footer-contact-list,.maker-site-footer .footer-links{background:rgba(255,255,255,.92);border:0;box-shadow:0 8px 28px #07111f1f}
+ .maker-site-footer .footer-contact-list span,.maker-site-footer .footer-contact-list a,.maker-site-footer .footer-links a,.maker-site-footer .footer-bottom a{color:#07111f}
+ .maker-site-footer h2{color:#9a4200}
+ .maker-site-footer .footer-contact-list p{border:0}
+ .maker-site-footer .footer-bottom{padding:20px;border:0;border-radius:10px;background:rgba(255,255,255,.92);color:#334155}
+ .maker-site-footer a:hover{color:#a84400}
+}
+</style>
+<style is:global>
+@media screen {
+ body .maker-site-footer.maker-site-footer footer .footer-contact-list span,
+ body .maker-site-footer.maker-site-footer footer .footer-contact-list a,
+ body .maker-site-footer.maker-site-footer footer .footer-bottom a{color:#07111f}
+ body .maker-site-footer.maker-site-footer footer .footer-contact-list p{border:0}
+ body .maker-site-footer.maker-site-footer footer a:hover{color:#a84400}
+}
 </style>

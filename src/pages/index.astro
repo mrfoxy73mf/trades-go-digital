@@ -1,7 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-import { TGD_APP_URL } from "../consts";
 
 export const prerender = false;
 ---
@@ -11,155 +10,41 @@ export const prerender = false;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Trades Go Digital | Digital Growth for UK Trades Businesses</title>
+    <title>Trades Go Digital | Business Software, Tools &amp; Services</title>
     <meta
       name="description"
-      content="Trades Go Digital helps UK trades businesses win more work, reduce admin and grow through practical digital solutions."
+      content="Explore TGD Trades, TAD The Business, Health and Safety, PDF Maker, Logo Maker and TGD LettingDesk. Find pricing, updates and support in one place."
     />
   </head>
-  <body>
+  <body class="tgd-home-office">
     <Header />
 
-    <main>
-      <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow">Helping UK Trades Businesses Grow</p>
-            <h1>Practical digital tools that help your business run cleaner, faster and smarter.</h1>
-            <p class="hero-text">
-              Trades Go Digital builds straightforward business software for UK trades and
-              letting agencies—bringing jobs, customers, paperwork and day-to-day admin together.
-            </p>
-            <p class="hero-text">
-              We can also build custom business apps for any trade when an off-the-shelf system does not fit the way you work.
-            </p>
-            <p class="hero-text">
-              Less time chasing information. More time doing the work that moves your business forward.
-            </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="/tgd/">See TGD Trades in action</a>
-              <a class="button button-secondary" href={TGD_APP_URL}>Start with TGD Trades</a>
-            </div>
-            <ul class="hero-proof" aria-label="TGD Trades benefits">
-              <li>Built around real working businesses</li>
-              <li>Clear pricing</li>
-              <li>Friendly UK support</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="section products-section">
-        <div class="container">
-          <div class="products-heading">
-            <p class="eyebrow">Our Software</p>
-            <h2>Practical business systems built around real work.</h2>
-            <p>Choose the platform designed for your type of business.</p>
-          </div>
-          <div class="product-grid">
-            <article class="product-card">
-              <span class="product-tag">For UK trades</span>
-              <h3>TGD Trades</h3>
-              <p>Quotes, jobs, customers, paperwork, accounts and supplier orders connected in one business office.</p>
-              <a class="button button-primary" href="/tgd/">Explore TGD Trades</a>
-            </article>
-            <article class="product-card pdf-maker-card">
-              <span class="product-tag">Document Studio</span>
-              <h3>PDF Maker</h3>
-              <p class="tool-price">£7.99 <span>one-off</span></p>
-              <p>Build trade quotes, invoices, receipts and job sign-off PDFs from a live A4 document preview.</p>
-              <a class="button button-primary" href="/pdf-maker/">Open PDF Maker</a>
-            </article>
-            <article class="product-card logo-maker-card">
-              <span class="product-tag">Brand Studio</span>
-              <h3>Logo Maker</h3>
-              <p class="tool-price">£1.99 <span>one-off</span></p>
-              <p>Create a trade logo, test it on simple mockups and download SVG or PNG files.</p>
-              <a class="button button-primary" href="/logo-maker/">Open Logo Maker</a>
-            </article>
-            <article class="product-card maker-bundle-card">
-              <span class="product-tag">Best value</span>
-              <h3>Logo + PDF Bundle</h3>
-              <p class="tool-price">£8.99 <span>one-off</span></p>
-              <p>Create the business logo, send it into the PDF Maker, then download branded trade documents.</p>
-              <a class="button button-primary" href="/logo-maker/">Start Bundle</a>
-            </article>
-            <article class="product-card lettingdesk-card">
-              <span class="product-tag">For letting agencies</span>
-              <h3>TGD LettingDesk</h3>
-              <p>Properties, maintenance, contractors, rent, finances and customer portals connected in one agency platform.</p>
-              <a class="button button-lettingdesk" href="/tgd-lettingdesk/">Explore TGD LettingDesk</a>
-            </article>
-            <article class="product-card custom-app-card">
-              <span class="product-tag">Custom Builds</span>
-              <h3>Business Apps for Any Trade</h3>
-              <p>Need something built around your own work? We can design custom apps for builders, plumbers, electricians, landscapers, roofers, cleaners and other trade businesses.</p>
-              <a class="button button-primary" href="/contact/#tgd-enquiry">Talk About an App</a>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section story-section">
-        <div class="container story-copy">
-          <p class="eyebrow">The Story</p>
-          <h2>Why Trades Go Digital Exists</h2>
-          <p class="story-lead">
-            Trades Go Digital began with a simple request from a tradesperson who needed help
-            organising jobs, customers, paperwork and enquiries.
-          </p>
-          <p>
-            A few practical spreadsheets made an immediate difference. That showed me the real
-            problem wasn't a lack of effort—it was having too many disconnected tools and too
-            much information scattered across messages, notebooks and memory.
-          </p>
-          <p>
-            That first solution grew into TGD Trades: practical business software shaped around how
-            people actually work, designed to reduce admin and give owners more control of their day.
-          </p>
-        </div>
-      </section>
-
-      <section class="section problem-section">
-        <div class="container story-copy">
-          <p class="eyebrow">The Problem</p>
-          <h2>The Problem I Kept Seeing</h2>
-          <p class="standout-line">
-            Small gaps in organisation were costing real money.
-          </p>
-          <p>
-            Forgotten materials create extra journeys. Job details disappear into messages.
-            Quotes, receipts and customer records get pushed to the end of an already long day.
-            Each small gap costs time, fuel and profit.
-          </p>
-          <p>
-            The answer is not another complicated app. It is one practical system that keeps
-            the work connected and makes the next step easier.
-          </p>
-        </div>
-      </section>
-
-      <section class="section solution-section">
-        <div class="container story-copy">
-          <p class="eyebrow">The Solution</p>
-          <h2>The Solution: TGD Trades</h2>
-          <p>
-            Instead of expecting tradespeople to juggle multiple apps, paperwork and
-            disconnected systems, TGD Trades brings the business office together in one
-            place. Jobs, customers, quotes, invoices, receipts, certificates and day-to-day
-            admin can all stay organised around the way trade businesses actually work.
-          </p>
-          <p>Quote once, then keep the job, calendar, paperwork and business records connected.</p>
-
-          <div class="magic-room">
-            <h2>Welcome to TGD Trades</h2>
-            <p>Explore the real screens and see how quotes, jobs, paperwork and your Business Office work together.</p>
-            <a class="button button-primary" href="/tgd/">Explore TGD Trades</a>
-          </div>
-        </div>
-      </section>
-    </main>
+<main>
+<section class="hero"><div class="hero-bg" aria-hidden="true"></div><div class="container hero-grid"><div class="hero-copy">
+<p class="eyebrow">Trades Go Digital / Your business, brought together</p>
+<h1>From your first logo to your next job.<br />Find the tools for your business.</h1>
+<p class="hero-text">Business software, branded documents, health and safety work packs and property management. Explore everything Trades Go Digital offers from one place.</p>
+<p class="hero-text">Choose a tool for today, explore a business platform, or talk to us about something built around the way you work.</p>
+<div class="hero-actions"><a class="button button-primary" href="#explore">Explore all tools &amp; services</a><a class="button button-secondary" href="/pricing/">View pricing</a></div>
+<ul class="hero-proof" aria-label="Our approach"><li>Practical tools for working businesses</li><li>All pricing in one place</li><li>UK support</li></ul>
+</div></div></section>
+<section id="explore" class="section products-section"><div class="container"><div class="products-heading"><p class="eyebrow">Explore Trades Go Digital</p><h2>Every part of the website.<br />One place to start.</h2><p>Find out what each tool does, see the options and choose your next step.</p></div><div class="product-grid"><article class="product-card"><span class="product-tag">Business management</span><h3>TGD Trades</h3><p>Keep quotes, jobs, customers, accounts and supplier orders organised in your business office.</p><a class="button button-primary" href="/tgd/">Explore TGD Trades</a></article>
+<article class="product-card"><span class="product-tag">Team and office</span><h3>TAD The Business</h3><p>Explore the multi-user trades platform for jobs, customer communication, expenses, wages and supplier paperwork.</p><a class="button button-primary" href="/tad-the-business/">Explore TAD The Business</a></article>
+<article class="product-card"><span class="product-tag">Work packs and guidance</span><h3>Health &amp; Safety</h3><p>Meet SafeWork AI: draft work packs, risk assessments and method statements for review. Public app access is being prepared.</p><a class="button button-primary" href="/health-and-safety/">Explore Health &amp; Safety</a></article>
+<article class="product-card"><span class="product-tag">Document studio</span><h3>PDF Maker</h3><p>Create quotes, invoices, receipts and job sign-off documents with a live A4 preview.</p><a class="button button-primary" href="/pdf-maker/">Open PDF Maker</a></article>
+<article class="product-card"><span class="product-tag">Brand studio</span><h3>Logo Maker</h3><p>Create a business logo, try it on mockups and export your design. Use it to brand your documents.</p><a class="button button-primary" href="/logo-maker/">Open Logo Maker</a></article>
+<article class="product-card"><span class="product-tag">Property management</span><h3>TGD LettingDesk</h3><p>Explore one agency platform for properties, maintenance, contractors, rent, finances and customer portals.</p><a class="button button-primary" href="/tgd-lettingdesk/">Explore TGD LettingDesk</a></article>
+<article class="product-card"><span class="product-tag">Coming soon</span><h3>Demo Video Maker</h3><p>Turn your photos and video clips into a demo video with music, captions and previews. Currently in development.</p><a class="button button-primary" href="/monthly-updates/">Follow development updates</a></article>
+<article class="product-card"><span class="product-tag">All costs in one place</span><h3>Pricing</h3><p>Compare software plans, individual tools, the Logo + PDF bundle and LettingDesk options. Find availability and pricing details together.</p><a class="button button-primary" href="/pricing/">View all pricing</a></article>
+<article class="product-card"><span class="product-tag">News and progress</span><h3>Monthly Updates</h3><p>Follow software developments, AI projects and the latest news from Trades Go Digital.</p><a class="button button-primary" href="/monthly-updates/">Read the updates</a></article>
+<article class="product-card"><span class="product-tag">Support and custom builds</span><h3>Contact</h3><p>Get help choosing a tool, ask about a website or automation, or discuss a custom business app built around your work.</p><a class="button button-primary" href="/contact/">Talk to Trades Go Digital</a></article></div></div></section>
+<section class="section story-section"><div class="container"><p class="eyebrow">Make it work for your business</p><h2 class="journey-title">Start where you need help.</h2><div class="journey-grid">
+<article><span class="product-tag">01 / Build your identity</span><h3>Look the part.</h3><p>Create your branding with <a href="/logo-maker/">Logo Maker</a>, then prepare branded paperwork in <a href="/pdf-maker/">PDF Maker</a>. The <a href="/pricing/#tools">bundle pricing</a> brings both tools together.</p></article>
+<article><span class="product-tag">02 / Organise the work</span><h3>Keep the day moving.</h3><p>Explore <a href="/tgd/">TGD Trades</a> and <a href="/tad-the-business/">TAD The Business</a> for your business admin, or <a href="/tgd-lettingdesk/">TGD LettingDesk</a> for your agency.</p></article>
+<article><span class="product-tag">03 / Prepare and grow</span><h3>Plan your next step.</h3><p>See what is being prepared for <a href="/health-and-safety/">Health &amp; Safety</a> and the <a href="/safework/">SafeWork work-pack builder</a>. Follow <a href="/monthly-updates/">updates</a> or <a href="/contact/">discuss a custom app</a>.</p></article>
+</div></div></section>
+<section class="section solution-section"><div class="container story-copy"><p class="eyebrow">About Trades Go Digital</p><h2>Built from a real business need.</h2><p>Trades Go Digital began with a tradesperson who needed help organising jobs, customers, paperwork and enquiries. A few practical spreadsheets grew into software shaped around everyday work.</p><p>Today, that same approach runs through our business platforms, document tools and custom builds: help people spend less time on admin and more time on their business.</p><div class="magic-room"><h2>Let’s find your next step.</h2><p>Compare the options on the pricing page, or tell us what your business needs and we’ll help you choose.</p><div class="hero-actions"><a class="button button-primary" href="/pricing/">Compare pricing</a><a class="button button-secondary" href="/contact/#tgd-enquiry">Talk to us</a></div><p class="terms-note">Read our <a href="/terms-and-conditions/">Terms &amp; Conditions</a> for the details of using our services.</p></div></div></section>
+</main>
     <Footer />
   </body>
 </html>
@@ -568,4 +453,32 @@ export const prerender = false;
       font-size: clamp(1.65rem, 7.5vw, 2rem);
     }
   }
+</style>
+
+<style>
+.hero{min-height:auto;padding:88px 0}.hero-grid{grid-template-columns:minmax(0,900px)}
+#explore{scroll-margin-top:24px}.products-section{border:0}.product-card h3{font-size:1.8rem}.product-card p{flex:1}.product-card .button{font-size:.94rem}
+.journey-title,.journey-grid h3{color:#0b1930}.journey-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;margin-top:40px}.journey-grid h3{font-size:1.6rem;margin-top:14px}.journey-grid p{color:#334155}.journey-grid .product-tag{color:#9a4200}.journey-grid a,.terms-note a{text-decoration:underline;text-underline-offset:3px;font-weight:700}.magic-room .terms-note{margin:26px 0 0;font-size:.9rem}.magic-room .button{margin-top:0}a:focus-visible{outline:3px solid #f97316;outline-offset:5px}
+@media(max-width:760px){.hero{padding:58px 0}.journey-grid{grid-template-columns:1fr;gap:24px}.magic-room{padding:24px}}
+</style>
+
+<style is:global>
+body.tgd-home-office{position:relative;isolation:isolate;background:#edf0f2;color:#07111f}
+body.tgd-home-office::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(#ffffff0d,#ffffff0d),url('/images/tgd-home-office.png') center / cover no-repeat}
+body.tgd-home-office main .hero,body.tgd-home-office main .section{background:transparent;border:0}
+body.tgd-home-office .hero-bg{display:none}
+body.tgd-home-office .hero-copy,body.tgd-home-office .products-heading,body.tgd-home-office .product-card,body.tgd-home-office .story-section>.container,body.tgd-home-office .solution-section>.container{background:rgba(255,255,255,.94);border:0;border-radius:16px;padding:32px;box-shadow:0 8px 28px #07111f18}
+body.tgd-home-office .hero-copy{max-width:790px}
+body.tgd-home-office main h1,body.tgd-home-office main h2,body.tgd-home-office main h3{color:#07111f}
+body.tgd-home-office .hero-text,body.tgd-home-office .hero-proof,body.tgd-home-office .product-card p,body.tgd-home-office .products-heading>p:last-child{color:#334155}
+body.tgd-home-office .eyebrow,body.tgd-home-office .product-tag{color:#984000}
+body.tgd-home-office .hero-proof li::before{color:#984000}
+body.tgd-home-office main .section{padding:44px 0}
+body.tgd-home-office footer{background:transparent;border:0;color:#07111f}
+body.tgd-home-office footer .footer-brand,body.tgd-home-office footer .footer-contact-list,body.tgd-home-office footer .footer-links,body.tgd-home-office footer .footer-bottom{background:rgba(255,255,255,.94);border:0;border-radius:12px;padding:24px;color:#334155}
+body.tgd-home-office footer .footer-contact-list span,body.tgd-home-office footer .footer-contact-list a,body.tgd-home-office footer .footer-links a,body.tgd-home-office footer .footer-bottom a{color:#07111f}
+body.tgd-home-office footer h2{color:#984000}
+body.tgd-home-office footer .footer-contact-list p{border:0}
+body.tgd-home-office footer a:hover{color:#984000}
+@media(max-width:760px){body.tgd-home-office .hero-copy,body.tgd-home-office .products-heading,body.tgd-home-office .product-card,body.tgd-home-office .story-section>.container,body.tgd-home-office .solution-section>.container{padding:24px}body.tgd-home-office main .section{padding:28px 0}}
 </style>

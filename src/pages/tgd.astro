@@ -155,7 +155,7 @@ const operationsFeatures = [
 		<meta property="og:site_name" content={SITE_TITLE} />
 		<meta property="og:locale" content="en_GB" />
 	</head>
-	<body>
+	<body class="tgd-shared-background">
 		<Header />
 		<main class="pt-landing">
 			<section class="pt-intro" aria-labelledby="tgd-title">
@@ -169,7 +169,7 @@ const operationsFeatures = [
 						</p>
 						<div class="pt-intro-actions">
 							<a class="pt-action pt-action-primary" href="#explore">Explore the app</a>
-							<a class="pt-action pt-action-secondary" href="#pricing">See pricing</a>
+							<a class="pt-action pt-action-secondary" href="/pricing#trades">See pricing</a>
 						</div>
 						<ul class="pt-intro-points" aria-label="TGD Trades highlights">
 							<li>Win work and book it faster</li>
@@ -211,7 +211,6 @@ const operationsFeatures = [
 						<p id="demo-description">Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.</p>
 						<div class="pt-demo-selector" role="group" aria-label="Choose a TGD Trades demonstration">
 							<button class="is-active" type="button" data-demo="tour" aria-pressed="true">Full TGD Tour</button>
-							<button type="button" data-demo="quote" aria-pressed="false">Quote to Job Demo</button>
 						</div>
 					</div>
 					<div class="pt-demo-video">
@@ -220,10 +219,6 @@ const operationsFeatures = [
 							Your browser does not support embedded video.
 						</video>
 					</div>
-					<figure id="pt-demo-proof" class="pt-demo-proof" hidden>
-						<img src="/images/tgd-quote-page.png" alt="TGD Trades quote builder with staff, vehicle, plant, material and PDF preview controls" />
-						<figcaption>Quote builder view: customer details, proposed work dates, staff, vehicles, plant, materials and the live customer quote preview.</figcaption>
-					</figure>
 				</div>
 			</section>
 
@@ -317,24 +312,7 @@ const operationsFeatures = [
 				</div>
 			</section>
 
-			<section id="pricing" class="pt-pricing pt-section" aria-labelledby="pricing-title">
-				<div class="pt-container pt-pricing-grid">
-					<div class="pt-price-card-new">
-						<p class="pt-eyebrow">Subscription pricing</p>
-						<h2 id="pricing-title">Simple pricing. The whole business office included.</h2>
-						<div class="pt-price-new"><strong>&pound;28</strong><span>/month</span></div>
-						<p class="pt-price-highlight">Less than &pound;1 a day for your first 3 months.</p>
-						<p class="pt-price-after-new">Then &pound;60 per month. Cancel anytime—no long contract.</p>
-						<a class="pt-action pt-action-primary" href={TGD_APP_URL}>Start TGD Trades subscription</a>
-					</div>
-					<div class="pt-included">
-						<h3>Everything you need to run the job</h3>
-						<ul>
-							{pricingFeatures.map((item) => <li><span aria-hidden="true">✓</span>{item}</li>)}
-						</ul>
-					</div>
-				</div>
-			</section>
+			<section id="pricing" class="pt-section"><div class="pt-container"><h2>Choose your TGD Trades subscription.</h2><p>See the introductory offer and ongoing subscription on our pricing page.</p><a class="pt-action pt-action-primary" href="/pricing#trades">View TGD Trades pricing</a></div></section>
 
 			<section class="pt-section pt-faq" aria-labelledby="faq-title">
 				<div class="pt-container">
@@ -363,7 +341,6 @@ const operationsFeatures = [
 			const demoPlayer = document.querySelector<HTMLVideoElement>("#pt-demo-player");
 			const demoTitle = document.querySelector<HTMLElement>("#demo-title");
 			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
-			const demoProof = document.querySelector<HTMLElement>("#pt-demo-proof");
 			const demoButtons = document.querySelectorAll<HTMLButtonElement>("[data-demo]");
 			const demos = {
 				tour: {
@@ -371,14 +348,6 @@ const operationsFeatures = [
 					description: "Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.",
 					src: "/videos/tgd-trades-demo-music.mp4?v=20260830-clear",
 					poster: "/images/tgd-trades-demo-poster.jpg",
-					showProof: false,
-				},
-				quote: {
-					title: "See the quote system become a job.",
-					description: "Start inside the quote builder, add the work details, then send it for approval and let TGD create the job, Client Portal and paperwork.",
-					src: "/videos/tgd-quote-demo.mp4",
-					poster: "/images/tgd-quote-page.png",
-					showProof: true,
 				},
 			};
 
@@ -393,9 +362,6 @@ const operationsFeatures = [
 					demoPlayer.load();
 					demoTitle.textContent = demo.title;
 					demoDescription.textContent = demo.description;
-					if (demoProof) {
-						demoProof.hidden = !demo.showProof;
-					}
 					demoButtons.forEach((item) => {
 						const active = item === button;
 						item.classList.toggle("is-active", active);
@@ -3022,4 +2988,12 @@ const operationsFeatures = [
 		height: 100%;
 		object-fit: contain;
 	}
+</style>
+
+<style is:global>
+body.tgd-shared-background{position:relative;isolation:isolate;background:#05080d}
+body.tgd-shared-background::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(2,5,10,.12),rgba(2,5,10,.48) 52%,rgba(2,5,10,.7)),url('/images/tgd-tools-background.png') center top / cover no-repeat}
+body.tgd-shared-background .pt-landing,body.tgd-shared-background>footer.footer-tgd-trades{background:transparent}
+body.tgd-shared-background>footer.footer-tgd-trades{border-top:0}
+body.tgd-shared-background footer .footer-brand,body.tgd-shared-background footer .footer-bottom{background:rgba(8,13,20,.84);border:0;border-radius:10px;padding:24px;color:#cbd5e1}
 </style>

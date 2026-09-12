@@ -1,3 +1,4 @@
+import { PRODUCT, markPaid } from '../../../lib/safework/orders.mjs';
 import type { APIRoute } from "astro";
 import {
 	FULFILMENT_TYPES,
@@ -42,6 +43,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		return Response.json({ received: true });
 	}
 
+	if (session.metadata?.product === PRODUCT) {
+		if (session.livemode ? !validLiveSignature : !validTestSignature) return new Response('Wrong signing mode', {status:400});
+		return await markPaid(env.FULFILMENT_DB, session) ? Response.json({received:true}) : new Response('Order not ready or payment mismatch', {status:409});
+	}
 	const fulfilmentType = resolveFulfilmentType(session);
 	const email = session.customer_details?.email || session.customer_email;
 	if (!fulfilmentType || !email) {
