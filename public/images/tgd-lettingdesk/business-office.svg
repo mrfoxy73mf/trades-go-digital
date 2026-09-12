@@ -13,12 +13,12 @@
   <rect x="270" y="132" width="42" height="42" rx="10" fill="#DBEAFE"/>
   <text x="284" y="158" fill="#2563EB" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">D</text>
   <text x="270" y="202" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Documents</text>
-  <text x="270" y="228" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Job packs · Certificates</text>
+  <text x="270" y="228" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Job packs Â· Certificates</text>
   <rect x="498" y="110" width="230" height="150" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
   <rect x="520" y="132" width="42" height="42" rx="10" fill="#FFEDD5"/>
-  <text x="534" y="158" fill="#EA580C" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">£</text>
+  <text x="534" y="158" fill="#EA580C" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Â£</text>
   <text x="520" y="202" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Expenses</text>
-  <text x="520" y="228" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Receipts · Categories</text>
+  <text x="520" y="228" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Receipts Â· Categories</text>
   <rect x="748" y="110" width="230" height="150" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
   <rect x="770" y="132" width="42" height="42" rx="10" fill="#DCFCE7"/>
   <text x="782" y="158" fill="#15976C" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">W</text>
@@ -28,17 +28,17 @@
   <rect x="1020" y="132" width="42" height="42" rx="10" fill="#E2E8F0"/>
   <text x="1034" y="158" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">V</text>
   <text x="1020" y="202" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Vehicle</text>
-  <text x="1020" y="228" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Mileage · Insurance</text>
+  <text x="1020" y="228" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="12">Mileage Â· Insurance</text>
   <rect x="248" y="286" width="988" height="470" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
   <text x="272" y="328" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Recent filing</text>
   <rect x="272" y="350" width="940" height="1" fill="#E2E8F0"/>
-  <text x="272" y="390" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">Job pack · 14 Sample Street · Boiler service</text>
+  <text x="272" y="390" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">Job pack Â· 14 Sample Street Â· Boiler service</text>
   <text x="980" y="390" fill="#15976C" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Filed</text>
-  <text x="272" y="438" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">Invoice · INV-2026-0142 · Contractor remittance</text>
+  <text x="272" y="438" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">Invoice Â· INV-2026-0142 Â· Contractor remittance</text>
   <text x="980" y="438" fill="#2563EB" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Ready</text>
-  <text x="272" y="486" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">Certificate · Gas safety · 9 Oak Avenue</text>
+  <text x="272" y="486" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">Certificate Â· Gas safety Â· 9 Oak Avenue</text>
   <text x="980" y="486" fill="#15976C" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Filed</text>
-  <text x="272" y="534" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">Expense receipt · Van fuel · March</text>
+  <text x="272" y="534" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="14">Expense receipt Â· Van fuel Â· March</text>
   <text x="980" y="534" fill="#64748B" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600">Logged</text>
   <rect x="272" y="580" width="940" height="140" rx="12" fill="#FAF7F2" stroke="#E7E0D5"/>
   <text x="294" y="624" fill="#101A2E" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Share links and archives</text>
