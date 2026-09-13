@@ -15,6 +15,27 @@ import {
 	escapeHtml,
 	formatGbp,
 } from "../src/lib/fulfilment-email.mjs";
+import { validateInput as validateSafeWorkInput } from "../src/lib/safework/orders.mjs";
+
+const safeWorkInput = (workerCount) => ({
+	description: "Install a timber fence with controlled access.",
+	address: "1 Test Street, London",
+	company: "Test Trades Ltd",
+	companyAddress: "",
+	contact: "",
+	emergency: "",
+	workerCount,
+	reviewAccepted: true,
+	processingAccepted: true,
+});
+
+test("keeps the confirmed SafeWork worker count", () => {
+	assert.equal(validateSafeWorkInput(safeWorkInput("4")).workerCount, 4);
+});
+
+test("rejects unsafe SafeWork worker counts", () => {
+	for (const count of [0, 51, 1.5, "four", ""]) assert.throws(() => validateSafeWorkInput(safeWorkInput(count)), /number of workers/);
+});
 
 test("resolves explicit Stripe fulfilment metadata", () => {
 	assert.equal(

@@ -16,11 +16,12 @@ export const POST: APIRoute = async ({request,locals}) => {
  if(!claim.meta.changes) return json({error:'A generation is already running or this order needs support. Do not pay again.'},409);
  try {
   const input=JSON.parse(order.input_json);
-  const payload={description:input.description+(input.emergency ? `\nConfirmed emergency information: ${input.emergency}` : ''),address:input.address};
+  const workerCount=Number.isSafeInteger(input.workerCount)&&input.workerCount>=1&&input.workerCount<=50?input.workerCount:1;
+  const payload={description:`${input.description}\nConfirmed workforce: ${workerCount} ${workerCount === 1 ? 'worker' : 'workers'}.${input.emergency ? `\nConfirmed emergency information: ${input.emergency}` : ''}`,address:input.address};
   const response=await generatePack(new Request('https://internal.invalid/generate',{method:'POST',body:JSON.stringify(payload)}),env.OPENAI_API_KEY,env.SAFEWORK_MODEL || 'gpt-5.4');
   if(!response.ok) throw new Error('Generation failed');
   const data=await response.json() as {workPack: WorkPack};
-  const document=packAsA4Html(data.workPack,{...EMPTY_COMPANY_PROFILE,name:input.company,address:input.companyAddress,phone:input.contact},{siteContact:input.emergency,sitePhone:'',firstAider:'',firstAiderPhone:'',hospitals:[]});
+  const document=packAsA4Html(data.workPack,{...EMPTY_COMPANY_PROFILE,name:input.company,address:input.companyAddress,phone:input.contact},{siteContact:input.emergency,sitePhone:'',firstAider:'',firstAiderPhone:'',hospitals:[]},workerCount);
   await db.prepare("UPDATE safework_orders SET document_html=?,status='ready',lease_until=0 WHERE id=? AND lease_id=?").bind(document,order.id,lease).run();
   return json({ready:true});
  } catch {
