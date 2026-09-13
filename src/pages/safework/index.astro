@@ -45,3 +45,23 @@ input:not([type=checkbox]),textarea{background:#fafbfd;color:#10243b;border-colo
 :global(body.safework-office)::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(7,17,31,.65),rgba(7,17,31,.65)),url('/images/safework-office-background.png') center center / cover no-repeat}
 :global(body.safework-office>header),:global(body.safework-office>footer),:global(body.safework-office main),.hero,.advice,.workspace{background:transparent}
 </style>
+<style is:global>
+  body.safework-office .emergency-fields{min-width:0;box-sizing:border-box;margin:24px 0;padding:22px;border:1px solid #c9d7cc;border-radius:10px}
+  body.safework-office .emergency-fields *{box-sizing:border-box}
+  body.safework-office .emergency-fields legend{padding:0 9px;color:#176b50;font-size:24px;line-height:1.2;font-weight:850}
+  body.safework-office .emergency-fields>p{margin:4px 0 20px;color:#53675e;font-size:14px;line-height:1.5}
+  body.safework-office .emergency-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 18px}
+  body.safework-office .emergency-fields label{display:block;margin-bottom:18px;color:#17392d;font-weight:700}
+  body.safework-office .emergency-fields input{display:block;width:100%;min-height:48px;margin-top:6px;padding:12px;border:1px solid #a9b7c5;border-radius:6px;background:#fafbfd;color:#10243b;font:inherit}
+  body.safework-office .hospital-title{margin:2px 0 12px;font-weight:800}
+  body.safework-office .hospitals{display:grid;gap:10px}
+  body.safework-office .hospital-row{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,1.6fr) minmax(0,1fr);align-items:center;gap:10px}
+  body.safework-office .hospital-row strong{display:grid;place-items:center;width:26px;height:26px;border-radius:6px;background:#e9f4ee;color:#176b50}
+  body.safework-office .hospital-row input{margin:0}
+  @media(max-width:760px){
+    body.safework-office .emergency-grid{grid-template-columns:1fr}
+    body.safework-office .emergency-fields{padding:18px}
+    body.safework-office .hospital-row{grid-template-columns:28px minmax(0,1fr)}
+    body.safework-office .hospital-row input{grid-column:2}
+  }
+</style>
