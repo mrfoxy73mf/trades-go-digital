@@ -8,7 +8,7 @@ const worker = String.raw`import astroWorker from "./_worker.js/index.js";
 const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
-const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook", "/pdf-maker", "/images/tgd-pricing-office-people.png", "/images/safework-office-background.png", "/images/tgd-pdf-document-studio.png", "/images/tgd-logo-design-studio.png", "/images/tgd-home-office.png", "/images/tgd-news-office.png", "/images/tgd-letting-office.png", "/images/trades-go-digital-logo-stripe.png", "/favicon.svg", "/images/trades-go-digital-icon-stripe.png", "/pricing", "/pricing/", "/health-and-safety", "/health-and-safety/", "/safework", "/safework/"]);
+const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook", "/pdf-maker", "/images/tgd-pricing-office-people.png", "/images/safework-office-background.png", "/images/tgd-pdf-document-studio.png", "/images/tgd-logo-design-studio.png", "/images/tgd-home-office.png", "/images/tgd-home-office-clean.png", "/images/tgd-news-office.png", "/images/tgd-news-office-clean.png", "/images/tgd-letting-office.png", "/images/trades-go-digital-logo-stripe.png", "/favicon.svg", "/images/trades-go-digital-icon-stripe.png", "/pricing", "/pricing/", "/health-and-safety", "/health-and-safety/", "/safework", "/safework/"]);
 const PUBLIC_PATH_PREFIXES = ["/fonts/", "/api/safework/", "/safework/", "/api/fulfilment/", "/fulfilment/", "/api/pdf-payment/", "/pdf-maker/", "/_astro/"];
 
 const unauthorized = () =>

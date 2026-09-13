@@ -2,319 +2,42 @@
 const today = new Date();
 const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
 const isTgdTrades = Astro.url.pathname === "/tgd" || Astro.url.pathname.startsWith("/tgd/");
-
-const footerContacts = [
-	{ label: "General Enquiries", email: "hello@trades-go-digital.co.uk" },
-	{ label: "Customer Support", email: "support@trades-go-digital.co.uk" },
-	{ label: "Report a Bug", email: "feedback@trades-go-digital.co.uk" },
-	{ label: "Accounts & Invoices", email: "invoices@trades-go-digital.co.uk" },
-];
-
-const companyLinks = [
-	{ label: "About Us", href: "/" },
-	{ label: "Pricing", href: "/pricing" },
-	{ label: "TAD The Business", href: "/tad-the-business" },
-	{ label: "TGD Trades", href: "/tgd" },
-	{ label: "Health & Safety", href: "/health-and-safety" },
-	{ label: "PDF Maker", href: "/pdf-maker" },
-	{ label: "Logo Maker", href: "/logo-maker" },
-	{ label: "TGD LettingDesk", href: "/tgd-lettingdesk" },
-	{ label: "Contact", href: "/contact" },
-];
-
-const resourceLinks = [
-	{ label: "Business Apps", href: "/" },
-	{ label: "Software Updates", href: "/monthly-updates" },
-	{ label: "AI Updates", href: "/monthly-updates" },
-	{ label: "Blog", href: "/monthly-updates" },
-	{ label: "Monthly News", href: "/monthly-updates" },
-];
 ---
 
 <footer class:list={{ "footer-tgd-trades": isTgdTrades }}>
-	<div class="footer-inner">
-		<div class="footer-brand">
-			<a class="brand" href="/">
-				<img src="/images/trades-go-digital-logo-stripe.png" alt="Trades Go Digital" />
-			</a>
-			<p>Helping UK trade businesses grow through websites, local SEO, automation and bespoke software.</p>
-			<a class="footer-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : "/contact/#tgd-enquiry"}>
-				{isLettingDesk ? "Enquire about TGD LettingDesk" : "Get a Free Consultation"}
-			</a>
+	<div class="footer-main">
+		<a class="footer-brand" href="/" aria-label="Trades Go Digital home">
+			<img src="/images/trades-go-digital-logo-stripe.png" alt="Trades Go Digital" />
+		</a>
+		<div class="footer-message">
+			<strong>Practical software for working businesses.</strong>
+			<span>Websites, business apps and straightforward UK support.</span>
 		</div>
-
-		<div class="footer-columns">
-			<section class="footer-contact-list" aria-label="Footer contact emails">
-				<h2>Contact</h2>
-				{
-					footerContacts.map((item) => (
-						<p>
-							<span>{item.label}</span>
-							<a href={`mailto:${item.email}`}>{item.email}</a>
-						</p>
-					))
-				}
-			</section>
-
-			<section class="footer-links" aria-label="Company links">
-				<h2>Company</h2>
-				{companyLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-			</section>
-
-			<section class="footer-links" aria-label="Resource links">
-				<h2>Resources</h2>
-				{resourceLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-			</section>
-		</div>
+		<nav aria-label="Footer navigation">
+			<a href="/#explore">Products</a><a href="/pricing">Pricing</a>
+			<a href="/monthly-updates">Updates</a><a href="/contact">Contact</a>
+		</nav>
+		<a class="footer-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : "/contact/#tgd-enquiry"}>
+			{isLettingDesk ? "Enquire about LettingDesk" : "Talk to us"}
+		</a>
 	</div>
-
 	<div class="footer-bottom">
-		<p>&copy; {today.getFullYear()} Trades Go Digital Ltd.</p>
-		<p>Built in the UK 🇬🇧</p>
+		<span>&copy; {today.getFullYear()} Trades Go Digital Ltd.</span>
+		<a href="mailto:hello@trades-go-digital.co.uk">hello@trades-go-digital.co.uk</a>
 		<a href="/terms-and-conditions">Terms &amp; Conditions</a>
 	</div>
 </footer>
 
 <style>
-	footer {
-		background: #07111f;
-		color: #c7d8e8;
-		border-top: 1px solid rgba(109, 199, 255, 0.16);
-	}
-
-	footer.footer-tgd-trades {
-		background:
-			linear-gradient(180deg, rgba(2, 4, 7, 0.58), rgba(2, 4, 7, 0.76)),
-			url("/images/tgd-footer-workshop-tools.png") center bottom / cover no-repeat,
-			#05070a;
-		border-top-color: rgba(255, 107, 0, 0.5);
-	}
-
-	footer.footer-tgd-trades .footer-brand {
-		border-bottom-color: rgba(255, 107, 0, 0.3);
-	}
-
-	footer.footer-tgd-trades .brand {
-		display: none;
-	}
-
-	footer.footer-tgd-trades .footer-cta {
-		background: linear-gradient(135deg, #ff7a00, #ff5a00);
-		color: #080a0d;
-		box-shadow: 0 14px 34px rgba(255, 107, 0, 0.28);
-	}
-
-	footer.footer-tgd-trades .footer-contact-list,
-	footer.footer-tgd-trades .footer-links {
-		border-color: rgba(255, 107, 0, 0.38);
-		background: linear-gradient(180deg, rgba(12, 14, 18, 0.94), rgba(4, 6, 9, 0.94));
-		box-shadow: 0 18px 44px rgba(0, 0, 0, 0.48);
-		backdrop-filter: blur(3px);
-	}
-
-	footer.footer-tgd-trades h2 {
-		color: #ff7a00;
-	}
-
-	footer.footer-tgd-trades .footer-contact-list p,
-	footer.footer-tgd-trades .footer-bottom {
-		border-color: rgba(255, 107, 0, 0.22);
-	}
-
-	.footer-inner {
-		display: grid;
-		gap: 34px;
-		width: min(1120px, calc(100% - 32px));
-		margin: 0 auto;
-		padding: 54px 0 34px;
-		align-items: start;
-	}
-
-	.footer-brand {
-		display: grid;
-		justify-items: center;
-		gap: 14px;
-		max-width: 720px;
-		margin: 0 auto;
-		padding-bottom: 34px;
-		text-align: center;
-		border-bottom: 1px solid rgba(109, 199, 255, 0.14);
-	}
-
-	.brand {
-		display: inline-flex;
-		padding: 8px 12px;
-		border-radius: 12px;
-		background: #ffffff;
-		text-decoration: none;
-	}
-
-	.brand img {
-		display: block;
-		width: min(330px, 72vw);
-		height: auto;
-	}
-
-	p {
-		max-width: 620px;
-		margin: 0;
-		overflow-wrap: anywhere;
-	}
-
-	.footer-cta {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 46px;
-		padding: 12px 18px;
-		border-radius: 8px;
-		background: linear-gradient(135deg, #f0c85a, #d6a935);
-		color: #07111f;
-		font-weight: 900;
-		text-decoration: none;
-		box-shadow: 0 14px 30px rgba(214, 169, 53, 0.18);
-	}
-
-	.footer-columns {
-		display: grid;
-		grid-template-columns: minmax(280px, 1.35fr) repeat(2, minmax(160px, 0.65fr));
-		gap: 24px;
-		align-items: stretch;
-	}
-
-	.footer-contact-list,
-	.footer-links {
-		display: grid;
-		gap: 10px;
-		min-width: 0;
-		height: 100%;
-		padding: 22px;
-		border: 1px solid rgba(109, 199, 255, 0.24);
-		border-radius: 10px;
-		background: linear-gradient(180deg, rgba(11, 25, 48, 0.92), rgba(5, 14, 27, 0.92));
-		box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
-	}
-
-	.footer-contact-list p {
-		display: grid;
-		gap: 5px;
-		padding: 8px 0 0;
-		border-top: 1px solid rgba(109, 199, 255, 0.12);
-	}
-
-	.footer-contact-list p:first-of-type {
-		border-top: 0;
-		padding-top: 0;
-	}
-
-	.footer-contact-list span {
-		color: #ffffff;
-		font-weight: 900;
-	}
-
-	.footer-contact-list a {
-		color: #d8ecff;
-		font-weight: 900;
-	}
-
-	a {
-		color: #c7d8e8;
-		font-weight: 800;
-		overflow-wrap: anywhere;
-		text-decoration: none;
-	}
-
-	h2 {
-		margin: 0 0 12px;
-		color: #69d5ff;
-		font-size: 0.82rem;
-		font-weight: 900;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-	}
-
-	.footer-links a {
-		display: inline-flex;
-	}
-
-	a:hover {
-		color: #ffffff;
-	}
-
-	.footer-bottom {
-		display: grid;
-		grid-template-columns: 1fr auto auto;
-		width: min(1120px, calc(100% - 32px));
-		align-items: center;
-		gap: 24px;
-		margin: 0 auto;
-		padding: 22px 0 30px;
-		border-top: 1px solid rgba(109, 199, 255, 0.12);
-		color: #7d91a8;
-		font-size: 0.9rem;
-		line-height: 1.5;
-	}
-
-	.footer-bottom p {
-		margin: 0;
-	}
-
-	.footer-bottom a {
-		color: #c7d8e8;
-		font-weight: 900;
-		white-space: nowrap;
-	}
-
-	.footer-bottom a:hover {
-		color: #ffffff;
-	}
-
-	@media (min-width: 921px) {
-		.footer-columns {
-			grid-template-columns: minmax(520px, 1.4fr) repeat(2, minmax(170px, 0.55fr));
-		}
-
-		.footer-contact-list p {
-			grid-template-columns: minmax(148px, 0.42fr) minmax(0, 1fr);
-			gap: 16px;
-			align-items: center;
-		}
-
-		.footer-contact-list span,
-		.footer-contact-list a,
-		.footer-links a {
-			white-space: nowrap;
-		}
-	}
-
-	@media (max-width: 920px) {
-		.footer-columns {
-			grid-template-columns: 1fr;
-		}
-
-		.footer-bottom {
-			grid-template-columns: 1fr;
-			gap: 8px;
-			justify-items: start;
-		}
-	}
-
-	@media (max-width: 720px) {
-		.footer-inner {
-			gap: 26px;
-			padding: 38px 0 28px;
-		}
-
-		.footer-brand {
-			justify-items: start;
-			text-align: left;
-		}
-	}
-
-	@media (max-width: 420px) {
-		.footer-links,
-		.footer-contact-list {
-			padding: 18px;
-		}
-	}
+	footer{box-sizing:border-box;background:#07111f;color:#c7d8e8;border-top:1px solid rgba(109,199,255,.16);font-family:Inter,ui-sans-serif,system-ui,sans-serif}footer *{box-sizing:border-box}
+	.footer-main{display:grid;grid-template-columns:auto minmax(210px,1fr) auto auto;align-items:center;gap:28px;width:min(1180px,calc(100% - 32px));margin:0 auto;padding:30px 0 22px}
+	.footer-brand{display:inline-flex;padding:7px 10px;border-radius:9px;background:#fff}.footer-brand img{display:block;width:176px;height:auto}
+	.footer-message{display:grid;gap:3px;min-width:0}.footer-message strong{color:#fff;font-size:.95rem}.footer-message span{color:#9fb0c3;font-size:.78rem}
+	nav{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center}a{color:#d8e6f3;font-size:.84rem;font-weight:800;text-decoration:none}a:hover{color:#fff}
+	.footer-cta{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 16px;border-radius:8px;background:#ff8a36;color:#07111f;white-space:nowrap}.footer-cta:hover{background:#ffa25e;color:#07111f}
+	.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;width:min(1180px,calc(100% - 32px));margin:0 auto;padding:16px 0 22px;border-top:1px solid rgba(109,199,255,.12);color:#8194a9;font-size:.78rem}.footer-bottom a{color:inherit;font-size:inherit;overflow-wrap:anywhere}
+	footer.footer-tgd-trades{background:rgba(3,5,8,.88);border-top-color:rgba(255,107,0,.34)}footer.footer-tgd-trades .footer-brand{display:inline-flex}
+	@media(max-width:980px){.footer-main{grid-template-columns:auto 1fr auto}.footer-main nav{grid-column:1/-1;grid-row:2;justify-content:flex-start}}
+	@media(max-width:680px){.footer-main{grid-template-columns:1fr;gap:17px;padding-top:24px}.footer-main nav{grid-column:auto;grid-row:auto;justify-content:flex-start}.footer-cta{width:100%}.footer-bottom{flex-direction:column;align-items:flex-start;gap:7px}}
+	@media print{footer{display:none!important}}
 </style>

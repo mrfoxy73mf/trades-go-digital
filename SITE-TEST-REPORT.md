@@ -1,4 +1,4 @@
-# Website test report — 12 September 2026
+# Website test report — 13 September 2026
 
 Tested the production build locally with Chromium at 1440 × 1000 and 390 × 844; checked the open navigation dropdown at 1100px.
 
@@ -19,6 +19,9 @@ Tested the production build locally with Chromium at 1440 × 1000 and 390 × 844
 - Corrected pale home-page footer contact and Terms text.
 - Re-encoded three invalid LettingDesk SVG images as UTF-8.
 - Allowed the shared public logo asset through the existing password wrapper so public pages can display it.
+- Reworked the home page around three clearly separated business platforms, three focused tools and one coming-soon product.
+- Replaced the oversized site footer with a compact product, support and company footer.
+- Replaced the home and Monthly Updates backgrounds with clean office artwork that contains no generated slogans or poster text.
 
 ## Coverage and limits
 
