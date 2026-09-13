@@ -4,7 +4,8 @@ export const workPackPrintCss = `
   @page { size: A4; margin: 12mm; }
   html,body { background:white!important; }
   .wp-document { overflow:visible; }
-  .wp-sheet,.sheet { display:block!important; width:100%!important; max-width:none; min-height:0!important; height:auto; padding:0; margin:0 0 5mm!important; overflow:visible!important; box-shadow:none; break-after:auto!important; page-break-after:auto!important; }
+  .wp-sheet,.sheet { display:block!important; width:100%!important; max-width:none; min-height:0!important; height:auto; padding:0; margin:0!important; overflow:visible!important; box-shadow:none; break-before:page!important; page-break-before:always!important; break-after:auto!important; page-break-after:auto!important; }
+  .wp-sheet:first-child,.sheet:first-child { break-before:auto!important; page-break-before:auto!important; }
   .wp-sheet-head,.sheet>header { margin:0 0 3mm; padding:3mm 0 2mm; font-size:9pt; break-after:avoid; }
   .wp-sheet-body,.sheet>main { display:block!important; padding:0; }
   .wp-sheet>footer,.sheet>footer { display:none; }
