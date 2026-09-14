@@ -7,7 +7,7 @@ test('sales fail closed and live price cannot silently use the test price',()=>{
  assert.equal(config({SAFEWORK_SALES_ENABLED:'true',STRIPE_TEST_SECRET_KEY:'sk_live_x',OPENAI_API_KEY:'x'}).enabled,false);
 });
 test('input requires consent and preserves only accepted fields',()=>{
- const b={description:'Replace timber fencing',address:'Example site address',company:'Example Ltd',reviewAccepted:true,processingAccepted:true,amount:1};
+ const b={description:'Replace timber fencing',address:'Example site address',company:'Example Ltd',workerCount:2,reviewAccepted:true,processingAccepted:true,amount:1};
  assert.equal(validateInput(b).amount,undefined);
  assert.throws(()=>validateInput({...b,reviewAccepted:false}));
  assert.throws(()=>validateInput({...b,description:'x'.repeat(12001)}));

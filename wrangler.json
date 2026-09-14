@@ -3,6 +3,10 @@
 	"compatibility_date": "2026-07-29",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./dist/locked-worker.js",
+	"vars": {
+		"SAFEWORK_MODE": "test",
+		"SAFEWORK_SALES_ENABLED": "true"
+	},
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS",
