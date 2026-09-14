@@ -103,7 +103,7 @@ import Footer from "../components/Footer.astro";
 			</section>
 		</div>
 	</main>
-	<script>
+	<script is:inline>
 		const fresh=()=>({name:"TGD Trades",mark:"TGD",tagline:"TRADES GO DIGITAL",trade:"Construction",layout:"stacked",shape:"badge",shapeStyle:"solid",finish:"metal",symbol:"auto",font:"industrial",nameWeight:"900",textStyle:"normal",uppercaseName:false,showTagline:true,accent:"#ff6b00",secondary:"#f8fafc",background:"#05070a",background2:"#172033",text:"#ffffff",iconColor:"#05070a",backgroundStyle:"solid",pattern:"none",patternOpacity:12,borderWidth:0,cornerRadius:34,shadowStrength:35,transparentExport:false,pngWidth:"2000",iconSize:100,badgeScale:100,iconRotation:0,iconStroke:2.4,badgeRotation:0,markSize:30,nameSize:78,taglineSize:24,letterSpace:7,textX:0,textY:0,markX:0,markY:0,mockup:"van"});
 		const templates={
 			trade:{label:"Trade Strong",layout:"stacked",shape:"badge",finish:"metal",accent:"#ff6b00",secondary:"#f8fafc",background:"#05070a",text:"#ffffff",markSize:30,nameSize:78,taglineSize:24,letterSpace:7,textX:0,textY:0,markX:0,markY:0},
@@ -131,6 +131,12 @@ import Footer from "../components/Footer.astro";
 		let state=fresh();
 		const $=id=>document.getElementById(id);
 		const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+		function fittedFontSize(text,fontFamily,fontWeight,fontStyle,requested,maxWidth){
+			const canvas=document.createElement("canvas"),context=canvas.getContext("2d"),size=Math.max(10,Number(requested)||10);
+			context.font=`${fontStyle||"normal"} ${fontWeight||"700"} ${size}px ${fontFamily}`;
+			const measured=context.measureText(String(text||"")).width;
+			return measured>maxWidth?Math.max(10,Math.floor(size*maxWidth/measured)):size;
+		}
 		const symbolPaths={wrench:"M5 19 11 13M14 10l5-5M13 4a5 5 0 0 0 7 7l-9 9a2 2 0 0 1-3-3l9-9a5 5 0 0 0-4-4Z",hammer:"M4 20 13 11M10 6l3-3 8 8-3 3z",bolt:"M13 2 4 14h7l-2 8 9-12h-7l2-8z",plug:"M8 3v6m8-6v6M6 9h12v3a6 6 0 0 1-12 0zM12 18v4",pipe:"M4 7h7v4h6v9M8 4v6M4 4h8",tap:"M4 12h16M8 12V8h8v4M10 8V5h4v3M18 12v4a3 3 0 0 1-3 3",roof:"M3 12 12 4l9 8M6 10v9h12v-9",house:"M4 11 12 4l8 7v9H4zM9 20v-6h6v6",spade:"M12 3v11M8 20h8M7 14h10l-2 6H9z",leaf:"M4 18c6-1 10-6 16-14 0 10-4 17-14 14zM6 18c4-4 7-7 12-11",brush:"M7 4h10v8H7zM9 12v5c0 3-4 3-4 0M13 12v6M17 12v5c0 3 4 3 4 0",flame:"M12 22c-5 0-8-3-7-8 1-4 5-6 5-11 5 4 9 7 9 12 0 4-3 7-7 7zM12 19c-2 0-3-1-3-3 0-2 2-3 3-5 2 2 3 3 3 5 0 2-1 3-3 3z",shield:"M12 3 20 6v6c0 5-3 8-8 10-5-2-8-5-8-10V6zM8 12l3 3 5-6"};
 		function icon(){if(state.symbol==="none")return"";if(state.symbol!=="auto")return symbolPaths[state.symbol]||symbolPaths.wrench;return {Plumbing:symbolPaths.pipe,Electrical:symbolPaths.bolt,Landscaping:symbolPaths.leaf,Roofing:symbolPaths.roof,Groundworks:symbolPaths.spade,Cleaning:symbolPaths.brush,"General Trades":symbolPaths.wrench}[state.trade]||symbolPaths.hammer}
 		function logoSvg(transparent=false){
@@ -141,6 +147,7 @@ import Footer from "../components/Footer.astro";
 			const textBaseX=(wide?250:corner?70:w/2)+Number(state.textX||0),textBaseY=(wide?86:corner?88:minimal?246:260)+Number(state.textY||0);
 			const fonts={industrial:'Arial Black, Arial, sans-serif',condensed:'Impact, Arial Narrow, sans-serif',geometric:'Avenir Next, Montserrat, Arial, sans-serif',classic:'Georgia, Times New Roman, serif',technical:'Courier New, monospace',rounded:'Trebuchet MS, Arial, sans-serif'};
 			const fontFamily=fonts[state.font]||fonts.industrial,nameText=state.uppercaseName?String(state.name).toUpperCase():state.name,cornerRadius=Number(state.cornerRadius??34),shadow=Number(state.shadowStrength??35)/100,iconScale=(Number(state.iconSize)||100)/100;
+			const textPadding=wide?40:56,maxTextWidth=textAnchor==="start"?Math.max(80,w-textBaseX-textPadding):Math.max(80,2*Math.min(textBaseX-textPadding,w-textBaseX-textPadding)),nameSize=fittedFontSize(nameText,fontFamily,state.nameWeight,state.textStyle,Number(state.nameSize)||78,maxTextWidth),taglineSize=fittedFontSize(state.tagline,fontFamily,"700","normal",Number(state.taglineSize)||24,maxTextWidth);
 			const shapeD=(shapes[state.shape]||shapes.badge).d,shapeScale=markSize/100,shapeStroke=Math.max(3,markSize*.055);
 			const backgroundStyle=transparent?"transparent":state.backgroundStyle;
 			const backgroundFill=backgroundStyle==="gradient"?"url(#bg)":state.background;
@@ -169,8 +176,8 @@ import Footer from "../components/Footer.astro";
 				${seal?`<circle cx="${w/2}" cy="${h/2}" r="225" fill="none" stroke="${state.accent}" stroke-width="8"/><circle cx="${w/2}" cy="${h/2}" r="195" fill="none" stroke="${state.secondary}" stroke-width="2" stroke-dasharray="10 10"/>`:""}
 				<g transform="translate(${textBaseX} ${textBaseY})" text-anchor="${textAnchor}">
 					<text x="0" y="0" fill="${state.accent}" font-family="${fontFamily}" font-size="${Number(state.markSize)||30}" font-weight="${state.nameWeight}" font-style="${state.textStyle}" letter-spacing="${Math.max(0,Number(state.letterSpace)||0)}">${esc(state.mark)}</text>
-					<text x="0" y="${minimal?76:92}" fill="${state.text}" font-family="${fontFamily}" font-size="${Number(state.nameSize)||78}" font-weight="${state.nameWeight}" font-style="${state.textStyle}">${esc(nameText)}</text>
-					${state.showTagline?`<text x="0" y="${minimal?124:150}" fill="${state.secondary}" font-family="${fontFamily}" font-size="${Number(state.taglineSize)||24}" font-weight="700" letter-spacing="${Math.max(0,Number(state.letterSpace)||0)}">${esc(state.tagline)}</text>`:""}
+					<text x="0" y="${minimal?76:92}" fill="${state.text}" font-family="${fontFamily}" font-size="${nameSize}" font-weight="${state.nameWeight}" font-style="${state.textStyle}">${esc(nameText)}</text>
+					${state.showTagline?`<text x="0" y="${minimal?124:150}" fill="${state.secondary}" font-family="${fontFamily}" font-size="${taglineSize}" font-weight="700" letter-spacing="${Math.max(0,Number(state.letterSpace)||0)}">${esc(state.tagline)}</text>`:""}
 				</g>
 			</svg>`;
 		}
