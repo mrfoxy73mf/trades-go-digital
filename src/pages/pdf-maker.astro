@@ -14,7 +14,7 @@ import Footer from "../components/Footer.astro";
 	<main class="pdf-studio">
 		<header class="studio-top no-print">
 			<a class="studio-brand" href="/"><img src="/images/trades-go-digital-icon-stripe.png" alt="" /><span><strong>Trades Go Digital</strong><small>PDF Maker</small></span></a>
-			<div class="studio-actions"><span id="status">Draft saved on this device</span><button id="save" type="button">Save</button><button id="download" type="button">Download PDF</button></div>
+		<div class="studio-actions"><span id="status">Checking payment availability…</span><button id="save" type="button">Save</button><button id="download" type="button" disabled>Download PDF</button></div>
 		</header>
 
 		<div class="studio-grid">
@@ -255,6 +255,7 @@ import Footer from "../components/Footer.astro";
 		}
 		async function downloadPdf(){
 			const button=$("download"),sheet=$("sheet"),previousStatus=$("status").textContent;
+			if(!pdfPaid){await openPdfCheckout();return}
 			button.disabled=true;button.textContent="Creating PDF…";$("status").textContent="Preparing your PDF download";
 			try{
 				const [{default:html2canvas},{jsPDF}]=await Promise.all([import("html2canvas"),import("jspdf")]);
@@ -271,7 +272,10 @@ import Footer from "../components/Footer.astro";
 			}catch(error){console.error(error);$("status").textContent="PDF download failed — please try again"}
 			finally{sheet.classList.remove("exporting");button.disabled=false;button.textContent="Download PDF";if($("status").textContent===previousStatus)$("status").textContent=previousStatus}
 		}
-		$("add-item").onclick=()=>{state.items.push(state.doc==="signoff"?{desc:"New completion check",status:"Complete"}:{desc:"New item",qty:1,unit:"each",price:0});render()};$("save").onclick=()=>{$("status").textContent="Saved just now";localStorage.setItem("tgd-word-style-pdf",JSON.stringify(state))};$("download").onclick=downloadPdf;$("logo").onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.logo=String(r.result);render()};r.readAsDataURL(f)};$("import-logo").onclick=()=>{const logo=localStorage.getItem("tgd-logo-maker-export");if(logo){state.logo=logo;$("status").textContent="Logo imported from Logo Maker";render()}else{$("status").textContent="Create a logo first in Logo Maker"}};$("remove-logo").onclick=()=>{state.logo="";render()};try{const saved=JSON.parse(localStorage.getItem("tgd-word-style-pdf"));if(saved?.business)state={...fresh(),...saved}}catch{}render();
+		let pdfPaid=false;
+		async function openPdfCheckout(){const button=$("download");button.disabled=true;$("status").textContent="Opening secure Stripe checkout…";localStorage.setItem("tgd-word-style-pdf",JSON.stringify(state));try{const response=await fetch("/api/pdf-payment/checkout",{method:"POST",headers:{"Content-Type":"application/json"}}),data=await response.json();if(!response.ok)throw new Error(data.error);location.href=data.url}catch(error){$("status").textContent=error instanceof Error?error.message:"Checkout could not be opened";button.disabled=false}}
+		async function initialisePdfPayment(){const button=$("download"),params=new URLSearchParams(location.search),session=params.get("session_id")||sessionStorage.getItem("tgd-pdf-payment")||"";if(params.get("checkout")==="cancelled")$("status").textContent="Payment cancelled — your draft is still saved";try{const availability=await (await fetch("/api/pdf-payment/checkout")).json();if(!availability.enabled){$("status").textContent="PDF downloads are temporarily unavailable";return}const price=new Intl.NumberFormat("en-GB",{style:"currency",currency:"GBP"}).format(availability.amount/100);if(session){const check=await (await fetch(`/api/pdf-payment/verify?session_id=${encodeURIComponent(session)}`)).json();if(check.paid){pdfPaid=true;sessionStorage.setItem("tgd-pdf-payment",session);button.textContent="Download PDF";$("status").textContent=`Payment confirmed${availability.mode==="test"?" — TEST MODE":""}`;button.disabled=false;return}}button.textContent=`Pay ${price} & download PDF`;if(!params.get("checkout"))$("status").textContent=`Secure ${availability.mode==="test"?"test ":""}payment required once per checkout`;button.disabled=false}catch{$("status").textContent="Payment availability could not be checked"}}
+		$("add-item").onclick=()=>{state.items.push(state.doc==="signoff"?{desc:"New completion check",status:"Complete"}:{desc:"New item",qty:1,unit:"each",price:0});render()};$("save").onclick=()=>{$("status").textContent="Saved just now";localStorage.setItem("tgd-word-style-pdf",JSON.stringify(state))};$("download").onclick=downloadPdf;$("logo").onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{state.logo=String(r.result);render()};r.readAsDataURL(f)};$("import-logo").onclick=()=>{const logo=localStorage.getItem("tgd-logo-maker-export");if(logo){state.logo=logo;$("status").textContent="Logo imported from Logo Maker";render()}else{$("status").textContent="Create a logo first in Logo Maker"}};$("remove-logo").onclick=()=>{state.logo="";render()};try{const saved=JSON.parse(localStorage.getItem("tgd-word-style-pdf"));if(saved?.business)state={...fresh(),...saved}}catch{}render();initialisePdfPayment();
 	</script>
 <div class="maker-site-footer no-print"><Footer /></div>
 </body>

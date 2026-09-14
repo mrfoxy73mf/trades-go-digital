@@ -5,7 +5,12 @@
 	"main": "./dist/locked-worker.js",
 	"vars": {
 		"SAFEWORK_MODE": "test",
-		"SAFEWORK_SALES_ENABLED": "true"
+		"SAFEWORK_SALES_ENABLED": "true",
+		"TOOL_PAYMENT_MODE": "test",
+		"TOOL_PAYMENTS_ENABLED": "true",
+		"PDF_DOWNLOAD_PRICE_PENCE": "799",
+		"LOGO_DOWNLOAD_PRICE_PENCE": "199",
+		"PUBLIC_SITE_URL": "https://trades-go-digital.co.uk"
 	},
 	"assets": {
 		"directory": "./dist",
