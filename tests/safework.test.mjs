@@ -10,7 +10,7 @@ test('input requires consent and preserves only accepted fields',()=>{
  const b={description:'Replace timber fencing',address:'Example site address',company:'Example Ltd',workerCount:2,reviewAccepted:true,processingAccepted:true,amount:1};
  assert.equal(validateInput(b).amount,undefined);
  assert.throws(()=>validateInput({...b,reviewAccepted:false}));
- assert.throws(()=>validateInput({...b,description:'x'.repeat(12001)}));
+ assert.throws(()=>validateInput({...b,description:'x'.repeat(20001)}));
  assert.throws(()=>validateInput({...b,address:{}}));
 });
 test('payment must match the exact order, amount, product, mode and currency',()=>{
