@@ -77,7 +77,15 @@ Full SafeWork knowledge: ${JSON.stringify(runtimeKnowledge)}`,
   if (!apiResponse.ok) return Response.json({ message: data.error?.message || 'The work pack could not be generated.' }, { status: apiResponse.status });
   if (data.status === 'incomplete') return Response.json({ message: data.incomplete_details?.reason === 'max_output_tokens' ? 'This job needs an unusually large pack. Shorten the description slightly and try again.' : 'The AI could not finish the work pack. Please try again.' }, { status: 502 });
   const outputText = data.output_text || data.output?.flatMap((item) => item.content || []).filter((item) => item.type === 'output_text').map((item) => item.text || '').join('') || '';
-  try { const workPack = JSON.parse(outputText); if (!validPack(workPackSchema, workPack)) throw new Error("Invalid pack"); return Response.json({ workPack }); }
+  try {
+    const workPack = JSON.parse(outputText);
+    if (!validPack(workPackSchema, workPack)) throw new Error("Invalid pack");
+    const jobText = `${description} ${address}`.toLowerCase();
+    if (!/wood|timber|carpentr|joiner/.test(jobText)) {
+      workPack.sources = workPack.sources.filter((source: { title: string; url: string }) => !/wood|timber/.test(`${source.title} ${source.url}`.toLowerCase()));
+    }
+    return Response.json({ workPack });
+  }
   catch { return Response.json({ message: 'The AI returned an incomplete work pack. Please try again.' }, { status: 502 }); }
 }
 
