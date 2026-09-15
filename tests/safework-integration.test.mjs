@@ -70,12 +70,26 @@ test('conditional forms match normal, excavation/hot-work, static TM and mobile 
  assert.ok(!trafficLights.includes('Foreman / IPV driver control'));
  assert.ok(!trafficLights.includes('Approved maximum flow / go-no-go limit'));
 
- const mobileTm=packAsA4Html(makePack('Chapter 8 mobile lane closure (MLC)',{traffic_management:true}),profile,emergency,6,1,'');
- assert.ok(mobileTm.includes('MLC vehicle allocation, radio checks and traffic-flow decision recorded'));
- assert.ok(mobileTm.includes('Mobile lane closure vehicle, radio and supervisor record'));
- assert.ok(!mobileTm.includes('Portable signals commissioned to the approved design'));
- assert.ok(!mobileTm.includes('Closure and signed diversion inspected before opening'));
- assert.ok(!mobileTm.includes('Each phase change recorded and accepted before release'));
+const mobileTm=packAsA4Html(makePack('Chapter 8 mobile lane closure (MLC)',{traffic_management:true}),profile,emergency,6,1,'');
+assert.ok(mobileTm.includes('MLC vehicle allocation, radio checks and traffic-flow decision recorded'));
+assert.ok(mobileTm.includes('Mobile lane closure vehicle, radio and supervisor record'));
+assert.ok(!mobileTm.includes('Portable signals commissioned to the approved design'));
+assert.ok(!mobileTm.includes('Closure and signed diversion inspected before opening'));
+assert.ok(!mobileTm.includes('Each phase change recorded and accepted before release'));
+
+const staticTmWithMlcDrawingRef=packAsA4Html(makePack('Static lane 2 closure using drawing TEST-TM-MLC-020 Rev B',{traffic_management:true}),profile,emergency,6,1,'Selected arrangement: Static lane closure');
+assert.ok(!staticTmWithMlcDrawingRef.includes('Mobile lane closure vehicle, radio and supervisor record'));
+
+const singlePhaseStaticTm=packAsA4Html(makePack('Static lane closure; single phase with no phase changeover',{traffic_management:true}),profile,emergency,4,1,'Selected arrangement: Static lane closure\nPhase sequence/changeover: Single static lane closure; no phase changeover.');
+assert.ok(!singlePhaseStaticTm.includes('Multi-phase layout and changeover register'));
+
+const selectedMultiPhaseTm=packAsA4Html(makePack('Portable traffic-light job',{traffic_management:true}),profile,emergency,4,1,'Selected arrangement: Portable two-way traffic signals; Multi-phase staged traffic-management layout');
+assert.ok(selectedMultiPhaseTm.includes('Multi-phase layout and changeover register'));
+
+const selectedMobileTm=packAsA4Html(makePack('Traffic-management operation',{traffic_management:true}),profile,emergency,6,1,'Selected arrangement: Mobile lane closure (MLC)');
+assert.ok(selectedMobileTm.includes('Mobile lane closure vehicle, radio and supervisor record'));
+assert.ok(selectedMobileTm.includes('Operative call sign'));
+assert.ok(!selectedMobileTm.includes('Deputy supervisor'));
 });
 
 import { markPaid } from '../src/lib/safework/orders.mjs';
