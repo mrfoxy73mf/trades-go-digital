@@ -1,5 +1,6 @@
 const MAX_SOURCE_BYTES = 250_000;
 const MAX_DATA_URL_LENGTH = 40_000;
+export const SAFEWORK_LOGO_KEY = 'tgd-safework-logo-v1';
 
 export function bindCompanyLogoUpload(form: HTMLFormElement) {
   const fileInput = form.querySelector<HTMLInputElement>('input[name="companyLogoFile"]');
@@ -7,6 +8,16 @@ export function bindCompanyLogoUpload(form: HTMLFormElement) {
   const preview = form.querySelector<HTMLImageElement>('[data-company-logo-preview]');
   const status = form.querySelector<HTMLElement>('[data-company-logo-status]');
   if (!fileInput || !valueInput || !preview || !status) return;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(SAFEWORK_LOGO_KEY) || '{}');
+    if (typeof saved.dataUrl === 'string' && /^data:image\/(?:png|jpeg|webp);base64,/.test(saved.dataUrl) && saved.dataUrl.length <= MAX_DATA_URL_LENGTH) {
+      valueInput.value = saved.dataUrl;
+      preview.src = saved.dataUrl;
+      preview.hidden = false;
+      status.textContent = `Logo from Logo Maker ready${saved.name ? ` for ${saved.name}` : ''}. Choose another file to replace it.`;
+    }
+  } catch { localStorage.removeItem(SAFEWORK_LOGO_KEY); }
 
   fileInput.addEventListener('change', async () => {
     valueInput.value = '';
@@ -29,6 +40,7 @@ export function bindCompanyLogoUpload(form: HTMLFormElement) {
       const dataUrl = canvas.toDataURL('image/webp', .86);
       if (dataUrl.length > MAX_DATA_URL_LENGTH) throw new Error('compressed image is too large');
       valueInput.value = dataUrl;
+      localStorage.setItem(SAFEWORK_LOGO_KEY, JSON.stringify({ dataUrl, name: '', savedAt: Date.now() }));
       preview.src = dataUrl;
       preview.hidden = false;
       status.textContent = 'Logo ready. It will appear at the top of every pack page.';
