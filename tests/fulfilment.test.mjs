@@ -16,6 +16,7 @@ import {
 	formatGbp,
 } from "../src/lib/fulfilment-email.mjs";
 import { validateInput as validateSafeWorkInput } from "../src/lib/safework/orders.mjs";
+import { parseEmergencyDetails } from "../src/lib/safework/emergency.mjs";
 
 const safeWorkInput = (workerCount) => ({
 	description: "Install a timber fence with controlled access.",
@@ -35,6 +36,23 @@ test("keeps the confirmed SafeWork worker count", () => {
 
 test("rejects unsafe SafeWork worker counts", () => {
 	for (const count of [0, 51, 1.5, "four", ""]) assert.throws(() => validateSafeWorkInput(safeWorkInput(count)), /number of workers/);
+});
+
+test("maps SafeWork emergency form fields into the generated document", () => {
+	assert.deepEqual(
+		parseEmergencyDetails("Site emergency contact: Site Supervisor: 01206 000000\nFirst aider: First Aider: 01206 000001\nHospital 1: Colchester Hospital: Turner Road, Colchester, Essex, CO4 5JL: 01206 747474"),
+		{
+			siteContact: "Site Supervisor",
+			sitePhone: "01206 000000",
+			firstAider: "First Aider",
+			firstAiderPhone: "01206 000001",
+			hospitals: [
+				{ name: "Colchester Hospital", address: "Turner Road, Colchester, Essex, CO4 5JL", phone: "01206 747474" },
+				{ name: "", address: "", phone: "" },
+				{ name: "", address: "", phone: "" },
+			],
+		},
+	);
 });
 
 test("resolves explicit Stripe fulfilment metadata", () => {

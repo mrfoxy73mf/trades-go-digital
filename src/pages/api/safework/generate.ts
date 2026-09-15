@@ -3,6 +3,7 @@ import { authorisedOrder, json } from '../../../lib/safework/orders.mjs';
 import { generatePack } from '../../../lib/safework/generate';
 import { packAsA4Html, type WorkPack } from '../../../lib/safework/render';
 import { EMPTY_COMPANY_PROFILE } from '../../../lib/safework/company-profile';
+import { parseEmergencyDetails } from '../../../lib/safework/emergency.mjs';
 export const prerender = false;
 export const POST: APIRoute = async ({request,locals}) => {
  const env=locals.runtime.env; const db=env.FULFILMENT_DB;
@@ -22,7 +23,7 @@ export const POST: APIRoute = async ({request,locals}) => {
   if(!response.ok) throw new Error('Generation failed');
   const data=await response.json() as {workPack: WorkPack};
   const trialHoleSheets=Number.isSafeInteger(input.trialHoleSheets)&&input.trialHoleSheets>=1&&input.trialHoleSheets<=20?input.trialHoleSheets:1;
-  const document=packAsA4Html(data.workPack,{...EMPTY_COMPANY_PROFILE,name:input.company,address:input.companyAddress,phone:input.contact},{siteContact:input.emergency,sitePhone:'',firstAider:'',firstAiderPhone:'',hospitals:[]},workerCount,trialHoleSheets);
+  const document=packAsA4Html(data.workPack,{...EMPTY_COMPANY_PROFILE,name:input.company,address:input.companyAddress,phone:input.contact},parseEmergencyDetails(input.emergency),workerCount,trialHoleSheets);
   await db.prepare("UPDATE safework_orders SET document_html=?,status='ready',lease_until=0 WHERE id=? AND lease_id=?").bind(document,order.id,lease).run();
   return json({ready:true});
  } catch {
