@@ -19,7 +19,7 @@ test('purchase → unpaid rejection → paid → failed generation → retry →
  globalThis.fetch=async(url,opts)=>{
   if(String(url).includes('api.stripe.com') && opts.method==='POST'){const p=opts.body;session={id:'cs_test_fixture',url:'https://checkout.stripe.com/test',payment_status:'unpaid',currency:'gbp',amount_total:1499,livemode:false,metadata:{product:p.get('metadata[product]'),order_id:p.get('metadata[order_id]')}};return Response.json(session);}
   if(String(url).includes('api.stripe.com'))return Response.json({...session,payment_status:paid?'paid':'unpaid'});
-  calls++;if(fail)return Response.json({error:{message:'Simulated outage'}},{status:503});return Response.json({output_text:JSON.stringify(sample(workPackSchema))});
+  calls++;if(fail)return Response.json({error:{message:'Simulated outage'}},{status:503});const pack=sample(workPackSchema);pack.pack_requirements.excavation=true;pack.pack_requirements.hot_work=true;return Response.json({output_text:JSON.stringify(pack)});
  };
  const context=(request)=>({request,locals:{runtime:{env}}});
  try {
@@ -34,7 +34,7 @@ test('purchase → unpaid rejection → paid → failed generation → retry →
  assert.equal((await generate.POST(context(req('generate','POST')))).status,502);
  fail=false;assert.equal((await generate.POST(context(req('generate','POST')))).status,200);
  assert.equal((await generate.POST(context(req('generate','POST')))).status,200);assert.equal(calls,2);
- const doc=await download.GET(context(req('download')));assert.equal(doc.status,200);const html=await doc.text();assert.ok(html.includes('Test Company'));assert.ok(!html.includes('<script>alert(1)</script>'));assert.ok(html.includes('RAMS briefing'));
+ const doc=await download.GET(context(req('download')));assert.equal(doc.status,200);const html=await doc.text();assert.ok(html.includes('Test Company'));assert.ok(!html.includes('<script>alert(1)</script>'));assert.ok(html.includes('RAMS briefing'));assert.ok(html.includes('EXCAVATION MUST NOT START UNTIL THIS PERMIT IS COMPLETED AND SIGNED'));assert.ok(html.includes('HOT WORK MUST NOT START UNTIL THIS PERMIT IS COMPLETED AND SIGNED'));assert.ok(html.includes('Person in charge accepting the permit'));assert.match(doc.headers.get('X-SafeWork-Filename'),/^SafeWork-Test-Company-/);
  assert.equal((await download.GET(context(req('download','GET',{Authorization:'Bearer '+ 'a'.repeat(64)})))).status,404);
  assert.equal((await download.GET(context(req('download')))).status,200);
  assert.equal(db.sql.prepare('SELECT attempts FROM safework_orders').get().attempts,2);
