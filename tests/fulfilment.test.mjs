@@ -17,6 +17,7 @@ import {
 } from "../src/lib/fulfilment-email.mjs";
 import { validateInput as validateSafeWorkInput } from "../src/lib/safework/orders.mjs";
 import { parseEmergencyDetails } from "../src/lib/safework/emergency.mjs";
+import { readFile } from "node:fs/promises";
 
 const safeWorkInput = (workerCount) => ({
 	description: "Install a timber fence with controlled access.",
@@ -32,6 +33,16 @@ const safeWorkInput = (workerCount) => ({
 
 test("keeps the confirmed SafeWork worker count", () => {
 	assert.equal(validateSafeWorkInput(safeWorkInput("4")).workerCount, 4);
+});
+
+test("SafeWork knowledge includes the official Chapter 8 and Red Book traffic sources", async () => {
+	const knowledge = JSON.parse(await readFile(new URL("../src/lib/safework/runtime-knowledge.json", import.meta.url), "utf8"));
+	const trafficTopic = knowledge.topics.find((topic) => topic.id === "temporary-traffic-management-street-works");
+	assert.ok(trafficTopic);
+	assert.match(trafficTopic.application_rules.join(" "), /Do not invent sign distances/i);
+	const sourceIds = new Set(knowledge.official_sources.sources.map((source) => source.id));
+	assert.ok(sourceIds.has("dft-traffic-signs-manual-chapter-8"));
+	assert.ok(sourceIds.has("dft-safety-street-road-works-red-book"));
 });
 
 test("rejects unsafe SafeWork worker counts", () => {

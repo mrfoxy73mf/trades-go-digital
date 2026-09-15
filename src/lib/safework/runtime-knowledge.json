@@ -3230,6 +3230,110 @@
       "legal_currency_note": "Equipment selection and inspection intervals must be confirmed against current rules and manufacturer instructions."
     },
     {
+      "id": "temporary-traffic-management-street-works",
+      "title": "Temporary traffic management for street works and road works",
+      "purpose": "Plan, install, inspect, maintain and remove temporary traffic management that protects workers and every road user, including pedestrians, cyclists, equestrians and disabled people.",
+      "status": "reviewed",
+      "trigger_terms": [
+        "street works",
+        "road works",
+        "carriageway",
+        "lane closure",
+        "road closure",
+        "traffic management",
+        "traffic signals",
+        "stop go boards",
+        "pedestrian diversion",
+        "cycle diversion",
+        "signing lighting guarding",
+        "Chapter 8",
+        "Red Book"
+      ],
+      "intake_questions": [
+        {
+          "id": "road-and-site-data",
+          "question": "What are the road type, speed limit, carriageway and footway widths, visibility, traffic flows, vulnerable-user routes, work dimensions and planned duration?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "layout-and-authority",
+          "question": "Who prepared and approved the temporary traffic-management layout, and what are its drawing number, revision, highway-authority permit or notice, road-space booking and any traffic-order or signal approval references?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "installation-maintenance-removal",
+          "question": "Who will competently install, inspect, maintain, alter and remove the layout, and how will inspections, defects, changes and handback be recorded?",
+          "answer_type": "long_text",
+          "required": true
+        },
+        {
+          "id": "pedestrians-cyclists-accessibility",
+          "question": "How will a continuous, accessible and clearly signed route be maintained for pedestrians, wheelchair and mobility-scooter users, people with pushchairs, cyclists and other vulnerable road users?",
+          "answer_type": "long_text",
+          "required": true
+        }
+      ],
+      "application_rules": [
+        "Use the Safety at Street Works and Road Works Code of Practice, commonly called the Red Book, for standard signing, lighting and guarding arrangements only where the road and site conditions fall within its scope and match the selected standard layout.",
+        "The Red Book applies to highways and roads other than motorways and dual carriageways with a speed limit of 50 mph or more. Use a competent site-specific Chapter 8 design where the Red Book does not apply or its standard layouts do not fit the actual conditions.",
+        "Use Traffic Signs Manual Chapter 8 Part 1 for temporary traffic-management design, Part 2 for planning and operational implementation, maintenance and removal, and Part 3 for current update guidance including TSRGD 2016 integration, diversions, speed limits, works length and spacing, sign clutter and designer competence.",
+        "Do not invent sign distances, cone spacing, taper lengths, safety-zone dimensions, signal timings or carriageway widths. Record the values from the approved layout and current guidance after a competent person has assessed the actual road.",
+        "Confirm the current highway-authority permit or notice, road-space booking and any required temporary traffic regulation order, temporary restriction, parking suspension or portable-signal approval before issue.",
+        "A traffic marshal or banksman supports controlled movements but does not replace signing, guarding, physical segregation or an approved traffic-management layout and must not direct public traffic unless competent and authorised to do so.",
+        "High-visibility clothing supports visibility but does not replace safe clearances, barriers, safety zones or separation from traffic.",
+        "Install and remove traffic-management equipment using a planned safe sequence from protected positions; maintain emergency access and do not expose workers while placing or retrieving signs and devices.",
+        "Inspect the layout after installation, at suitable recorded intervals, after alteration, impact, severe weather or reported defect, and before handback. Correct defects promptly and record the action."
+      ],
+      "required_records": [
+        "approved traffic-management drawing number and revision",
+        "road and site data including speed limit, widths, visibility and work limits",
+        "highway-authority permit, notice, booking, order and signal references as applicable",
+        "sign, cone, barrier, lamp and signal schedule",
+        "taper, safety-zone, working-space and pedestrian-route dimensions taken from the approved layout",
+        "installation and removal sequence",
+        "accessible pedestrian and cycle-route checks",
+        "installation, alteration, shift and post-event inspection log",
+        "defect and corrective-action log",
+        "designer, installer, supervisor and highway or client contact details",
+        "installation handover and final removal or road handback signatures"
+      ],
+      "hazards": [
+        {
+          "id": "live-traffic-interface",
+          "hazard": "Workers or road users enter an inadequately protected work area",
+          "possible_harm": ["collision", "crushing", "serious injury", "fatal injury"],
+          "people_at_risk": ["workers", "drivers", "passengers", "pedestrians", "cyclists", "equestrians", "public"],
+          "control_prompts": ["competent approved layout", "advance warning and conspicuous boundaries", "correct tapers and safety zones", "safe installation sequence", "regular recorded inspections"]
+        },
+        {
+          "id": "vulnerable-road-user-route",
+          "hazard": "A diversion or obstruction exposes a vulnerable road user to traffic, a fall, an inaccessible route or confusing information",
+          "possible_harm": ["collision", "fall", "entrapment", "loss of safe access"],
+          "people_at_risk": ["disabled people", "pedestrians", "children", "older people", "people with pushchairs", "cyclists", "equestrians"],
+          "control_prompts": ["continuous accessible route", "suitable barriers and ramps", "adequate width and visibility", "clear signed crossings and diversions", "inspect after every change"]
+        }
+      ],
+      "permit_triggers": ["road-lane-closure-traffic-management"],
+      "competence_requirements": [
+        "Temporary traffic-management design, installation, maintenance, inspection and removal by people competent for the road category and system used",
+        "Named supervisor with authority to stop work and correct defects"
+      ],
+      "ppe_considerations": ["Suitable high-visibility clothing for the road environment, selected after higher-order traffic controls"],
+      "emergency_requirements": ["Maintain emergency-service access and provide a method to make the site safe after collision, failed signals, displaced equipment or sudden deterioration"],
+      "health_surveillance_considerations": ["Consider fatigue, night work, noise and exhaust exposure for traffic-management operatives"],
+      "stop_work_conditions": [
+        "No approved layout or the actual road conditions do not match it",
+        "Required authority, road-space, restriction or signal approval is absent",
+        "Signs, barriers, lamps, signals, tapers or safety zones are missing, displaced or defective",
+        "A safe accessible route for vulnerable road users cannot be maintained",
+        "Visibility, traffic, weather or site changes make the arrangement unsafe"
+      ],
+      "source_topic_ids": ["temporary-traffic-management-street-works"],
+      "legal_currency_note": "Check the live Department for Transport publications, current legislation and the relevant highway authority's requirements before issuing the pack. The generated record does not approve a traffic-management design or grant road-space permission."
+    },
+    {
       "id": "workplace-transport-driving",
       "title": "Workplace transport and work-related driving",
       "purpose": "Separate people and vehicles and manage the driver, vehicle and journey for driving at work.",
@@ -4273,11 +4377,37 @@
   },
   "official_sources": {
     "schema_version": "1.0.0",
-    "authority": "Health and Safety Executive",
+    "authority": "Health and Safety Executive and other named UK public authorities",
     "jurisdiction": "Great Britain",
-    "checked_on": "2026-08-31",
+    "checked_on": "2026-09-15",
     "usage_policy": "Use the live official page as the currency authority. Locally supplied notes remain supporting material and do not override current official guidance.",
     "sources": [
+      {
+        "id": "dft-traffic-signs-manual-chapter-8",
+        "title": "Traffic Signs Manual Chapter 8: road works and temporary situations, Parts 1, 2 and 3",
+        "code": "TSM Chapter 8",
+        "url": "https://www.gov.uk/government/publications/traffic-signs-manual",
+        "publisher": "Department for Transport",
+        "phase": 2,
+        "topic_ids": [
+          "temporary-traffic-management-street-works",
+          "workplace-transport-driving",
+          "risk-management"
+        ]
+      },
+      {
+        "id": "dft-safety-street-road-works-red-book",
+        "title": "Safety at Street Works and Road Works: A Code of Practice (the Red Book)",
+        "code": "Red Book, October 2013",
+        "url": "https://www.gov.uk/government/publications/safety-at-street-works-and-road-works",
+        "publisher": "Department for Transport",
+        "phase": 2,
+        "topic_ids": [
+          "temporary-traffic-management-street-works",
+          "workplace-transport-driving",
+          "risk-management"
+        ]
+      },
       {
         "id": "hse-risk-assessment",
         "title": "Managing risks and risk assessment at work",
