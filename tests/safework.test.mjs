@@ -28,6 +28,9 @@ test('input requires consent and preserves only accepted fields',()=>{
  assert.throws(()=>validateInput({...b,address:{}}));
  assert.equal(validateInput({...b,trialHoleSheets:10}).trialHoleSheets,10);
  assert.throws(()=>validateInput({...b,trialHoleSheets:21}));
+ assert.equal(validateInput({...b,logoDataUrl:'data:image/png;base64,AAAA'}).logoDataUrl,'data:image/png;base64,AAAA');
+ assert.throws(()=>validateInput({...b,logoDataUrl:'data:image/svg+xml;base64,AAAA'}));
+ assert.throws(()=>validateInput({...b,logoDataUrl:'data:image/png;base64,'+'A'.repeat(40000)}));
 });
 test('payment must match the exact order, amount, product, mode and currency',()=>{
  const order={id:'one',session_id:'cs_test_one',amount:1499,mode:'test'};

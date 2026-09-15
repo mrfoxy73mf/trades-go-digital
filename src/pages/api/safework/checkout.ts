@@ -7,7 +7,7 @@ export const POST: APIRoute = async ({request,locals}) => {
  if (!c.enabled) return json({error:'Online sales are not open yet. No payment has been taken.'},503);
  if(request.headers.get('origin') !== new URL(request.url).origin) return json({error:'Please start checkout from this website.'},403);
  if(Number(request.headers.get('content-length') || 0) > 24000) return json({error:'Job details are too long.'},413);
- let input; try { const raw = await request.text(); if(raw.length>24000) return json({error:'Job details are too long.'},413); input=validateInput(JSON.parse(raw)); } catch(e) { return json({error:e instanceof Error ? e.message : 'Invalid details'},400); }
+ let input; try { const raw = await request.text(); if(raw.length>70000) return json({error:'Job details are too long.'},413); input=validateInput(JSON.parse(raw)); } catch(e) { return json({error:e instanceof Error ? e.message : 'Invalid details'},400); }
  try {
   const extraTrialHoleSheets=Math.max(0,input.trialHoleSheets-INCLUDED_TRIAL_HOLE_SHEETS);
   const selectedPrice=priceForDescription(c,input.description);

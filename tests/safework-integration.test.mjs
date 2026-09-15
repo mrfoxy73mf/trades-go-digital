@@ -44,11 +44,12 @@ test('purchase → unpaid rejection → paid → failed generation → retry →
 });
 
 test('conditional forms match normal, excavation/hot-work, static TM and mobile TM jobs',()=>{
- const profile={name:'Acceptance Test Ltd',address:'1 Test Road',telephone:'01234 000000'};
+ const profile={name:'Acceptance Test Ltd',address:'1 Test Road',telephone:'01234 000000',logoDataUrl:'data:image/png;base64,AAAA'};
  const emergency={siteContact:'Test Supervisor',sitePhone:'01234 000001',firstAider:'Test First Aider',firstAiderPhone:'01234 000002',hospitals:[]};
  const makePack=(description,requirements)=>{const pack=sample(workPackSchema);pack.job_description=description;pack.scope=description;pack.permits_and_authorisations=[];pack.coshh_assessments=[];pack.pack_requirements={...Object.fromEntries(Object.keys(pack.pack_requirements).map((key)=>[key,false])),...requirements};return pack;};
 
  const normal=packAsA4Html(makePack('Internal timber door replacement',{ }),profile,emergency,2,1,'');
+ assert.equal((normal.match(/class="page-logo"/g)||[]).length,(normal.match(/class="sheet /g)||[]).length);
  assert.ok(!normal.includes('Hot-work permit'));
  assert.ok(!normal.includes('Excavation permit and team acknowledgement'));
  assert.ok(!normal.includes('TM-MLC'));

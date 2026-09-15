@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({request,locals}) => {
   if(!response.ok) throw new Error(`Generation failed: ${response.status} ${await response.text()}`);
   const data=await response.json() as {workPack: WorkPack};
   const trialHoleSheets=Number.isSafeInteger(input.trialHoleSheets)&&input.trialHoleSheets>=1&&input.trialHoleSheets<=20?input.trialHoleSheets:1;
-  const document=packAsA4Html(data.workPack,{...EMPTY_COMPANY_PROFILE,name:input.company,address:input.companyAddress,phone:input.contact},parseEmergencyDetails(input.emergency),workerCount,trialHoleSheets,input.description);
+  const document=packAsA4Html(data.workPack,{...EMPTY_COMPANY_PROFILE,name:input.company,address:input.companyAddress,phone:input.contact,logoDataUrl:input.logoDataUrl || ''},parseEmergencyDetails(input.emergency),workerCount,trialHoleSheets,input.description);
   await db.prepare("UPDATE safework_orders SET document_html=?,status='ready',lease_until=0 WHERE id=? AND lease_id=?").bind(document,order.id,lease).run();
   return json({ready:true});
  } catch (error) {
