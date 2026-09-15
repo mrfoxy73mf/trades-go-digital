@@ -12,6 +12,8 @@ test('input requires consent and preserves only accepted fields',()=>{
  assert.throws(()=>validateInput({...b,reviewAccepted:false}));
  assert.throws(()=>validateInput({...b,description:'x'.repeat(20001)}));
  assert.throws(()=>validateInput({...b,address:{}}));
+ assert.equal(validateInput({...b,trialHoleSheets:10}).trialHoleSheets,10);
+ assert.throws(()=>validateInput({...b,trialHoleSheets:21}));
 });
 test('payment must match the exact order, amount, product, mode and currency',()=>{
  const order={id:'one',session_id:'cs_test_one',amount:1499,mode:'test'};

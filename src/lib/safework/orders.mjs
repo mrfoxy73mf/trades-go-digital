@@ -1,4 +1,6 @@
 export const PRODUCT = 'tgd_safework_pack';
+export const INCLUDED_TRIAL_HOLE_SHEETS = 5;
+export const EXTRA_TRIAL_HOLE_SHEET_PENCE = 100;
 export function config(env) {
  const mode = env.SAFEWORK_MODE === 'live' ? 'live' : 'test';
  const key = mode === 'live' ? env.STRIPE_SECRET_KEY : env.STRIPE_TEST_SECRET_KEY;
@@ -14,7 +16,8 @@ export function validateInput(body) {
  const text = (name, min, max) => { const value = typeof body[name] === 'string' ? body[name].trim() : ''; if(value.length < min || value.length > max) throw new Error(`Check ${name}: enter ${min}–${max} characters.`); return value; };
  if (body.reviewAccepted !== true || body.processingAccepted !== true) throw new Error('Confirm document review and data processing before continuing.');
  const workerCount=Number(body.workerCount); if(!Number.isSafeInteger(workerCount) || workerCount < 1 || workerCount > 50) throw new Error('Enter the number of workers, from 1 to 50.');
- return { description: text('description', 8, 20000), address: text('address', 5, 500), company: text('company', 1, 200), companyAddress: text('companyAddress', 0, 500), contact: text('contact', 0, 200), emergency: text('emergency', 0, 1500), workerCount };
+ const trialHoleSheets=body.trialHoleSheets===undefined?1:Number(body.trialHoleSheets); if(!Number.isSafeInteger(trialHoleSheets) || trialHoleSheets < 1 || trialHoleSheets > 20) throw new Error('Choose between 1 and 20 trial-hole sheets.');
+ return { description: text('description', 8, 20000), address: text('address', 5, 500), company: text('company', 1, 200), companyAddress: text('companyAddress', 0, 500), contact: text('contact', 0, 200), emergency: text('emergency', 0, 1500), workerCount, trialHoleSheets };
 }
 export function matchesPayment(order, session) {
  return session.id === order.session_id && session.payment_status === 'paid' && session.metadata?.product === PRODUCT && session.metadata?.order_id === order.id && session.amount_total === order.amount && session.currency === 'gbp' && session.livemode === (order.mode === 'live');
