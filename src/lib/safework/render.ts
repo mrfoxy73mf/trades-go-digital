@@ -152,7 +152,16 @@ export function packAsA4Html(pack: WorkPack, profile: CompanyProfile, emergency:
   const coshhAssessments = pack.coshh_assessments || [];
   const coshh = pack.pack_requirements?.coshh ?? coshhAssessments.length > 0;
   const inspectionStages = traffic
-    ? ['Authority, exact limits and approved drawing confirmed', 'Traffic-management vehicles and equipment checked', 'Initial layout installed and inspected before release', 'Portable signals commissioned to the approved design', 'Closure and signed diversion inspected before opening', 'Each phase change recorded and accepted before release', 'Hourly, event-led and defect inspections completed', 'Final removal inspection and signed road handback']
+    ? [
+        'Authority, exact limits and approved drawing confirmed',
+        'Traffic-management vehicles and equipment checked',
+        mobileLaneClosure ? 'MLC vehicle allocation, radio checks and traffic-flow decision recorded' : 'Initial layout installed and inspected before release',
+        ...(portableSignals ? ['Portable signals commissioned to the approved design'] : []),
+        ...(roadClosure ? ['Closure and signed diversion inspected before opening'] : []),
+        ...(multiPhaseTraffic ? ['Each phase change recorded and accepted before release'] : []),
+        'Scheduled, event-led and defect inspections completed',
+        'Final removal inspection and signed road handback',
+      ]
     : heatingBoiler
       ? ['Appliance, fuel and site survey confirmed', 'Asbestos and intrusive-work check', 'Gas / electrical / water safe isolation', 'Mounting, flue, ventilation and discharge routes', 'Pipework, controls and electrical connections', 'Tightness, leak and system-pressure tests', 'Combustion, flue and safety-device checks', 'Commissioning, notification and customer handover']
     : domesticRewire
