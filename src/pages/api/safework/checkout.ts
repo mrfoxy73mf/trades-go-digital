@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
-import { config, json, validateInput, token, digest, stripe, PRODUCT, rateLimit, INCLUDED_TRIAL_HOLE_SHEETS, EXTRA_TRIAL_HOLE_SHEET_PENCE } from '../../../lib/safework/orders.mjs';
+import { config, json, validateInput, token, digest, stripe, PRODUCT, rateLimit, priceForDescription, INCLUDED_TRIAL_HOLE_SHEETS, EXTRA_TRIAL_HOLE_SHEET_PENCE } from '../../../lib/safework/orders.mjs';
 export const prerender = false;
-export const GET: APIRoute = ({locals}) => { const c = config(locals.runtime.env); return json({enabled:c.enabled, mode:c.mode, amount:Number.isSafeInteger(c.amount) ? c.amount : null,includedTrialHoleSheets:INCLUDED_TRIAL_HOLE_SHEETS,extraTrialHoleSheetPence:EXTRA_TRIAL_HOLE_SHEET_PENCE}); };
+export const GET: APIRoute = ({locals}) => { const c = config(locals.runtime.env); return json({enabled:c.enabled, mode:c.mode, amount:Number.isSafeInteger(c.amount) ? c.amount : null,prices:c.prices,includedTrialHoleSheets:INCLUDED_TRIAL_HOLE_SHEETS,extraTrialHoleSheetPence:EXTRA_TRIAL_HOLE_SHEET_PENCE}); };
 export const POST: APIRoute = async ({request,locals}) => {
  const env = locals.runtime.env; const c = config(env);
  if (!c.enabled) return json({error:'Online sales are not open yet. No payment has been taken.'},503);
@@ -10,9 +10,10 @@ export const POST: APIRoute = async ({request,locals}) => {
  let input; try { const raw = await request.text(); if(raw.length>24000) return json({error:'Job details are too long.'},413); input=validateInput(JSON.parse(raw)); } catch(e) { return json({error:e instanceof Error ? e.message : 'Invalid details'},400); }
  try {
   const extraTrialHoleSheets=Math.max(0,input.trialHoleSheets-INCLUDED_TRIAL_HOLE_SHEETS);
-  const orderAmount=c.amount+(extraTrialHoleSheets*EXTRA_TRIAL_HOLE_SHEET_PENCE);
-  const trafficManagement=/^TRAFFIC-MANAGEMENT JOB:/i.test(input.description);
-  const productName=trafficManagement?'SafeWork AI traffic-management work pack':'SafeWork AI draft work pack';
+  const selectedPrice=priceForDescription(c,input.description);
+  const orderAmount=selectedPrice.amount+(extraTrialHoleSheets*EXTRA_TRIAL_HOLE_SHEET_PENCE);
+  const trafficManagement=selectedPrice.kind!=='standard';
+  const productName=selectedPrice.kind==='traffic-lights'?'SafeWork AI portable traffic-light work pack':trafficManagement?'SafeWork AI motorway or dual-carriageway traffic-management work pack':'SafeWork AI draft work pack';
   const productDescription=trafficManagement
    ? 'One job-specific draft traffic-management work pack with repeat downloads.'
    : `One job-specific draft work pack with ${input.trialHoleSheets} trial-hole sheet${input.trialHoleSheets===1?'':'s'} and repeat downloads.`;

@@ -27,7 +27,7 @@ test('purchase → unpaid rejection → paid → failed generation → retry →
  try {
  const input={description:'Replace timber fencing with two workers',address:'Example site address',company:'Test Company',companyAddress:'',contact:'',emergency:'',workerCount:2,trialHoleSheets:10,reviewAccepted:true,processingAccepted:true};
  const r=await checkout.POST(context(new Request('https://example.test/api/safework/checkout',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:JSON.stringify(input)})));
- assert.equal(r.status,200);assert.equal(session.amount_total,1999);const created=await r.json();const u=new URL(created.returnUrl);const id=u.searchParams.get('id');const headers={Authorization:`Bearer ${u.hash.slice(1)}`};
+ assert.equal(r.status,200);assert.equal(session.amount_total,3499);const created=await r.json();const u=new URL(created.returnUrl);const id=u.searchParams.get('id');const headers={Authorization:`Bearer ${u.hash.slice(1)}`};
  const req=(route,method='GET',auth=headers)=>new Request(`https://example.test/api/safework/${route}?id=${id}`,{method,headers:auth});
  assert.equal((await generate.POST(context(req('generate','POST')))).status,402);
  assert.equal((await download.GET(context(req('download')))).status,404);

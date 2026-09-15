@@ -1,12 +1,24 @@
 export const PRODUCT = 'tgd_safework_pack';
 export const INCLUDED_TRIAL_HOLE_SHEETS = 5;
 export const EXTRA_TRIAL_HOLE_SHEET_PENCE = 100;
+export const TEST_PRICES = { standard: 2999, bundle: 5999, motorwayTraffic: 3499, trafficLights: 2599 };
 export function config(env) {
  const mode = env.SAFEWORK_MODE === 'live' ? 'live' : 'test';
  const key = mode === 'live' ? env.STRIPE_SECRET_KEY : env.STRIPE_TEST_SECRET_KEY;
- const amount = mode === 'live' ? Number(env.SAFEWORK_PRICE_PENCE) : 1499;
- const enabled = env.SAFEWORK_SALES_ENABLED === 'true' && Boolean(key && env.OPENAI_API_KEY) && Number.isSafeInteger(amount) && amount >= 50 && amount <= 100000 && key.startsWith(mode === 'live' ? 'sk_live_' : 'sk_test_');
- return { mode, key, amount, enabled };
+ const prices = mode === 'live' ? {
+  standard: Number(env.SAFEWORK_STANDARD_PRICE_PENCE ?? env.SAFEWORK_PRICE_PENCE),
+  bundle: Number(env.SAFEWORK_BUNDLE_PRICE_PENCE),
+  motorwayTraffic: Number(env.SAFEWORK_MOTORWAY_TM_PRICE_PENCE),
+  trafficLights: Number(env.SAFEWORK_TRAFFIC_LIGHT_PRICE_PENCE),
+ } : TEST_PRICES;
+ const validPrices = Object.values(prices).every(amount => Number.isSafeInteger(amount) && amount >= 50 && amount <= 100000);
+ const enabled = env.SAFEWORK_SALES_ENABLED === 'true' && Boolean(key && env.OPENAI_API_KEY) && validPrices && key.startsWith(mode === 'live' ? 'sk_live_' : 'sk_test_');
+ return { mode, key, amount: prices.standard, prices, enabled };
+}
+export function priceForDescription(config, description) {
+ if (/^TRAFFIC-MANAGEMENT JOB TYPE:\s*PORTABLE TRAFFIC-LIGHT JOB/m.test(description)) return { amount: config.prices.trafficLights, kind: 'traffic-lights' };
+ if (/^TRAFFIC-MANAGEMENT JOB TYPE:\s*MOTORWAY OR DUAL-CARRIAGEWAY LANE CLOSURE/m.test(description)) return { amount: config.prices.motorwayTraffic, kind: 'motorway-traffic' };
+ return { amount: config.prices.standard, kind: 'standard' };
 }
 export const json = (data, status = 200) => Response.json(data, { status, headers: { 'Cache-Control': 'no-store', 'Referrer-Policy': 'no-referrer' } });
 export async function digest(value) { return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value))), x => x.toString(16).padStart(2,'0')).join(''); }

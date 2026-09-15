@@ -1,10 +1,24 @@
-import { config, validateInput, matchesPayment, token, digest } from '../src/lib/safework/orders.mjs';
+import { config, priceForDescription, validateInput, matchesPayment, token, digest } from '../src/lib/safework/orders.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 test('sales fail closed and live price cannot silently use the test price',()=>{
  assert.equal(config({}).enabled,false);
  assert.equal(config({SAFEWORK_MODE:'live',SAFEWORK_SALES_ENABLED:'true',STRIPE_SECRET_KEY:'sk_live_x',OPENAI_API_KEY:'x'}).enabled,false);
  assert.equal(config({SAFEWORK_SALES_ENABLED:'true',STRIPE_TEST_SECRET_KEY:'sk_live_x',OPENAI_API_KEY:'x'}).enabled,false);
+});
+test('each work-pack type uses its configured price',()=>{
+ const c=config({SAFEWORK_SALES_ENABLED:'true',STRIPE_TEST_SECRET_KEY:'sk_test_x',OPENAI_API_KEY:'x'});
+ assert.deepEqual(c.prices,{standard:2999,bundle:5999,motorwayTraffic:3499,trafficLights:2599});
+ assert.deepEqual(priceForDescription(c,'Replace a timber gate'),{amount:2999,kind:'standard'});
+ assert.deepEqual(priceForDescription(c,'TRAFFIC-MANAGEMENT JOB TYPE: MOTORWAY OR DUAL-CARRIAGEWAY LANE CLOSURE\nInstall a lane closure'),{amount:3499,kind:'motorway-traffic'});
+ assert.deepEqual(priceForDescription(c,'TRAFFIC-MANAGEMENT JOB TYPE: PORTABLE TRAFFIC-LIGHT JOB WITHIN RED BOOK ROAD SCOPE\nInstall signals'),{amount:2599,kind:'traffic-lights'});
+});
+test('live sales require and use every configured work-pack price',()=>{
+ const env={SAFEWORK_MODE:'live',SAFEWORK_SALES_ENABLED:'true',STRIPE_SECRET_KEY:'sk_live_x',OPENAI_API_KEY:'x',SAFEWORK_STANDARD_PRICE_PENCE:'2999',SAFEWORK_BUNDLE_PRICE_PENCE:'5999',SAFEWORK_MOTORWAY_TM_PRICE_PENCE:'3499',SAFEWORK_TRAFFIC_LIGHT_PRICE_PENCE:'2599'};
+ const c=config(env);
+ assert.equal(c.enabled,true);
+ assert.equal(c.amount,2999);
+ assert.equal(config({...env,SAFEWORK_TRAFFIC_LIGHT_PRICE_PENCE:undefined}).enabled,false);
 });
 test('input requires consent and preserves only accepted fields',()=>{
  const b={description:'Replace timber fencing',address:'Example site address',company:'Example Ltd',workerCount:2,reviewAccepted:true,processingAccepted:true,amount:1};
