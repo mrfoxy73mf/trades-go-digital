@@ -3242,6 +3242,12 @@
         "road closure",
         "traffic management",
         "traffic signals",
+        "portable traffic lights",
+        "two way traffic lights",
+        "multi way traffic lights",
+        "multi-phase traffic management",
+        "staged traffic management",
+        "traffic management changeover",
         "stop go boards",
         "pedestrian diversion",
         "cycle diversion",
@@ -3273,6 +3279,12 @@
           "question": "How will a continuous, accessible and clearly signed route be maintained for pedestrians, wheelchair and mobility-scooter users, people with pushchairs, cyclists and other vulnerable road users?",
           "answer_type": "long_text",
           "required": true
+        },
+        {
+          "id": "signals-closures-and-phases",
+          "question": "Will the job use portable two-way or multi-way signals, Stop/Go control, a lane or full road closure, a signed diversion, or more than one traffic-management phase? Give the approved settings, closure limits, phase sequence, changeover method and authority references.",
+          "answer_type": "long_text",
+          "required": true
         }
       ],
       "application_rules": [
@@ -3284,7 +3296,10 @@
         "A traffic marshal or banksman supports controlled movements but does not replace signing, guarding, physical segregation or an approved traffic-management layout and must not direct public traffic unless competent and authorised to do so.",
         "High-visibility clothing supports visibility but does not replace safe clearances, barriers, safety zones or separation from traffic.",
         "Install and remove traffic-management equipment using a planned safe sequence from protected positions; maintain emergency access and do not expose workers while placing or retrieving signs and devices.",
-        "Inspect the layout after installation, at suitable recorded intervals, after alteration, impact, severe weather or reported defect, and before handback. Correct defects promptly and record the action."
+        "Inspect the layout after installation, at suitable recorded intervals, after alteration, impact, severe weather or reported defect, and before handback. Correct defects promptly and record the action.",
+        "For portable signals, record the number of approaches, controller and signal IDs, approved timing or design reference, detection or manual-control mode, commissioning checks, queue monitoring, fault response and competent-person acceptance. Do not invent signal timings.",
+        "For a full or partial road closure, record the exact limits, current order or notice and permit references, closure points, authorised and emergency access, the approved diversion route and signs, stakeholder communications, inspections and final handback.",
+        "For multi-phase or staged traffic management, identify every phase by drawing and revision, record its work limits and road-user routes, and use a briefed changeover sequence that establishes a safe temporary state, removes or covers conflicting signs and inspects the complete new layout before traffic is released."
       ],
       "required_records": [
         "approved traffic-management drawing number and revision",
@@ -3297,7 +3312,10 @@
         "installation, alteration, shift and post-event inspection log",
         "defect and corrective-action log",
         "designer, installer, supervisor and highway or client contact details",
-        "installation handover and final removal or road handback signatures"
+        "installation handover and final removal or road handback signatures",
+        "portable-signal commissioning, settings, inspection, fault and removal record where used",
+        "road-closure authority, access, diversion inspection and handback record where used",
+        "multi-phase layout register and signed changeover log where used"
       ],
       "hazards": [
         {
