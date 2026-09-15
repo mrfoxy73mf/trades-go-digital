@@ -40,9 +40,20 @@ test("SafeWork knowledge includes the official Chapter 8 and Red Book traffic so
 	const trafficTopic = knowledge.topics.find((topic) => topic.id === "temporary-traffic-management-street-works");
 	assert.ok(trafficTopic);
 	assert.match(trafficTopic.application_rules.join(" "), /Do not invent sign distances/i);
+	assert.match(trafficTopic.application_rules.join(" "), /Distinguish static traffic management from.*mobile lane closure/i);
+	assert.match(trafficTopic.application_rules.join(" "), /deputy supervisor required for that technique/i);
 	const sourceIds = new Set(knowledge.official_sources.sources.map((source) => source.id));
 	assert.ok(sourceIds.has("dft-traffic-signs-manual-chapter-8"));
 	assert.ok(sourceIds.has("dft-safety-street-road-works-red-book"));
+});
+
+test("traffic-management packs distinguish static work from the Chapter 8 mobile lane closure technique", async () => {
+	const page = await readFile(new URL("../src/pages/traffic-management.astro", import.meta.url), "utf8");
+	const renderer = await readFile(new URL("../src/lib/safework/render.ts", import.meta.url), "utf8");
+	assert.match(page, /value="Static lane closure"/);
+	assert.match(page, /value="Mobile lane closure \(MLC\)"/);
+	assert.match(renderer, /TM-MLC/);
+	assert.match(renderer, /IPV \/ leading block-vehicle driver/);
 });
 
 test("rejects unsafe SafeWork worker counts", () => {
