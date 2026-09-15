@@ -40,7 +40,7 @@ function buildPackIndex(pack: WorkPack, workerCount = workforceRows(pack), trial
     domesticRewire: pack.pack_requirements?.domestic_rewire ?? /house rewire|domestic rewire|rewire of (?:a |the )?(?:house|home|dwelling)|consumer unit replacement|replace (?:the )?consumer unit/i.test(packText),
   };
   const mobileLaneClosure = requirements.traffic && /mobile lane closure|\bMLC\b/i.test(packText);
-  const portableSignals = requirements.traffic && /portable (?:two-way|multi-way )?traffic (?:signals|lights)|stop \/ go/i.test(packText);
+  const portableSignals = requirements.traffic && /portable (?:(?:two-way|multi-way)\s+)?traffic (?:signals|lights)|stop\s*\/\s*go/i.test(packText);
   const roadClosure = requirements.traffic && /full road closure|signed diversion route/i.test(packText);
   const multiPhaseTraffic = requirements.traffic && /multi-phase|multiphase|staged traffic-management|phase changeover/i.test(packText);
   const methodPages = 1; // One flowing document; physical pages depend on content.
@@ -138,7 +138,7 @@ export function packAsA4Html(pack: WorkPack, profile: CompanyProfile, emergency:
   const electrical = pack.pack_requirements?.electrical ?? /electrical|isolation|energisation|cable|lamp column|street light/i.test(packText);
   const traffic = pack.pack_requirements?.traffic_management ?? /traffic|highway|roadside|road works|street works|pedestrian diversion/i.test(packText);
   const mobileLaneClosure = traffic && /mobile lane closure|\bMLC\b/i.test(packText);
-  const portableSignals = traffic && /portable (?:two-way|multi-way )?traffic (?:signals|lights)|stop \/ go/i.test(packText);
+  const portableSignals = traffic && /portable (?:(?:two-way|multi-way)\s+)?traffic (?:signals|lights)|stop\s*\/\s*go/i.test(packText);
   const roadClosure = traffic && /full road closure|signed diversion route/i.test(packText);
   const multiPhaseTraffic = traffic && /multi-phase|multiphase|staged traffic-management|phase changeover/i.test(packText);
   const lifting = pack.pack_requirements?.lifting_operation ?? /crane|hiab|lift plan|lifting operation|lamp column|street light/i.test(packText);
