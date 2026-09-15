@@ -69,7 +69,7 @@ Use the supplied professional-language module naturally and accurately throughou
 
 Full SafeWork knowledge: ${JSON.stringify(runtimeKnowledge)}`,
       input: `JOB DESCRIPTION:\n${description}\n\nJOB ADDRESS:\n${address}`,
-      max_output_tokens: 9000,
+      max_output_tokens: 12000,
       reasoning: { effort: 'low' },
       text: { verbosity: 'low', format: { type: 'json_schema', name: 'safework_work_pack', strict: true, schema: workPackSchema } },
     }),

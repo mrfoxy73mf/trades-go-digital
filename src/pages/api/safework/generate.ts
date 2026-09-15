@@ -20,13 +20,14 @@ export const POST: APIRoute = async ({request,locals}) => {
   const workerCount=Number.isSafeInteger(input.workerCount)&&input.workerCount>=1&&input.workerCount<=50?input.workerCount:1;
   const payload={description:`${input.description}\nConfirmed workforce: ${workerCount} ${workerCount === 1 ? 'worker' : 'workers'}.${input.emergency ? `\nConfirmed emergency information: ${input.emergency}` : ''}`,address:input.address};
   const response=await generatePack(new Request('https://internal.invalid/generate',{method:'POST',body:JSON.stringify(payload)}),env.OPENAI_API_KEY,env.SAFEWORK_MODEL || 'gpt-5.4');
-  if(!response.ok) throw new Error('Generation failed');
+  if(!response.ok) throw new Error(`Generation failed: ${response.status} ${await response.text()}`);
   const data=await response.json() as {workPack: WorkPack};
   const trialHoleSheets=Number.isSafeInteger(input.trialHoleSheets)&&input.trialHoleSheets>=1&&input.trialHoleSheets<=20?input.trialHoleSheets:1;
   const document=packAsA4Html(data.workPack,{...EMPTY_COMPANY_PROFILE,name:input.company,address:input.companyAddress,phone:input.contact},parseEmergencyDetails(input.emergency),workerCount,trialHoleSheets,input.description);
   await db.prepare("UPDATE safework_orders SET document_html=?,status='ready',lease_until=0 WHERE id=? AND lease_id=?").bind(document,order.id,lease).run();
   return json({ready:true});
- } catch {
+ } catch (error) {
+  console.error('SafeWork generation failed', { orderId: order.id, attempt: Number(order.attempts || 0) + 1, error: error instanceof Error ? error.message : String(error) });
   await db.prepare('UPDATE safework_orders SET lease_until=0 WHERE id=? AND lease_id=?').bind(order.id,lease).run();
   return json({error:'The pack could not be completed. Your payment is saved. Retry this order without paying again, or contact support.'},502);
  }
