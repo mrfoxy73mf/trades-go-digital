@@ -11,13 +11,18 @@ export const POST: APIRoute = async ({request,locals}) => {
  try {
   const extraTrialHoleSheets=Math.max(0,input.trialHoleSheets-INCLUDED_TRIAL_HOLE_SHEETS);
   const orderAmount=c.amount+(extraTrialHoleSheets*EXTRA_TRIAL_HOLE_SHEET_PENCE);
+  const trafficManagement=/^TRAFFIC-MANAGEMENT JOB:/i.test(input.description);
+  const productName=trafficManagement?'SafeWork AI traffic-management work pack':'SafeWork AI draft work pack';
+  const productDescription=trafficManagement
+   ? 'One job-specific draft traffic-management work pack with repeat downloads.'
+   : `One job-specific draft work pack with ${input.trialHoleSheets} trial-hole sheet${input.trialHoleSheets===1?'':'s'} and repeat downloads.`;
   const db=env.FULFILMENT_DB;
   if(!await rateLimit(db,request.headers.get('cf-connecting-ip') || 'local')) return json({error:'Too many checkout requests. Please try again later.'},429);
   const id=crypto.randomUUID(); const access=token();
   await db.prepare('INSERT INTO safework_orders(id,token_hash,input_json,amount,mode,created_at) VALUES(?,?,?,?,?,?)').bind(id,await digest(access),JSON.stringify(input),orderAmount,c.mode,Date.now()).run();
   const origin=new URL(request.url).origin;
   const returnUrl=`${origin}/safework/order?id=${id}#${access}`;
-  const session=await stripe(c.key,'checkout/sessions',new URLSearchParams({mode:'payment',success_url:returnUrl,cancel_url:returnUrl, 'payment_method_types[0]':'card','line_items[0][quantity]':'1','line_items[0][price_data][currency]':'gbp','line_items[0][price_data][unit_amount]':String(orderAmount),'line_items[0][price_data][product_data][name]':'SafeWork AI draft work pack','line_items[0][price_data][product_data][description]':`One job-specific draft work pack with ${input.trialHoleSheets} trial-hole sheet${input.trialHoleSheets===1?'':'s'} and repeat downloads.`, 'metadata[product]':PRODUCT,'metadata[order_id]':id,'metadata[trial_hole_sheets]':String(input.trialHoleSheets)}),`safework-${id}`);
+  const session=await stripe(c.key,'checkout/sessions',new URLSearchParams({mode:'payment',success_url:returnUrl,cancel_url:returnUrl, 'payment_method_types[0]':'card','line_items[0][quantity]':'1','line_items[0][price_data][currency]':'gbp','line_items[0][price_data][unit_amount]':String(orderAmount),'line_items[0][price_data][product_data][name]':productName,'line_items[0][price_data][product_data][description]':productDescription, 'metadata[product]':PRODUCT,'metadata[order_id]':id,'metadata[trial_hole_sheets]':String(input.trialHoleSheets)}),`safework-${id}`);
   await db.prepare('UPDATE safework_orders SET session_id=?,checkout_url=? WHERE id=?').bind(session.id,session.url,id).run();
   return json({url:session.url, returnUrl});
  } catch {return json({error:'Checkout could not be opened. Please try again.'},502);}

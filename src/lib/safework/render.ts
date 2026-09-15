@@ -147,8 +147,10 @@ export function packAsA4Html(pack: WorkPack, profile: CompanyProfile, emergency:
   const siteSpecificPermit = /client or site-specific permit|site-specific permit|client\/site permit/i.test(packText);
   const coshhAssessments = pack.coshh_assessments || [];
   const coshh = pack.pack_requirements?.coshh ?? coshhAssessments.length > 0;
-  const inspectionStages = heatingBoiler
-    ? ['Appliance, fuel and site survey confirmed', 'Asbestos and intrusive-work check', 'Gas / electrical / water safe isolation', 'Mounting, flue, ventilation and discharge routes', 'Pipework, controls and electrical connections', 'Tightness, leak and system-pressure tests', 'Combustion, flue and safety-device checks', 'Commissioning, notification and customer handover']
+  const inspectionStages = traffic
+    ? ['Authority, exact limits and approved drawing confirmed', 'Traffic-management vehicles and equipment checked', 'Initial layout installed and inspected before release', 'Portable signals commissioned to the approved design', 'Closure and signed diversion inspected before opening', 'Each phase change recorded and accepted before release', 'Hourly, event-led and defect inspections completed', 'Final removal inspection and signed road handback']
+    : heatingBoiler
+      ? ['Appliance, fuel and site survey confirmed', 'Asbestos and intrusive-work check', 'Gas / electrical / water safe isolation', 'Mounting, flue, ventilation and discharge routes', 'Pipework, controls and electrical connections', 'Tightness, leak and system-pressure tests', 'Combustion, flue and safety-device checks', 'Commissioning, notification and customer handover']
     : domesticRewire
       ? ['Design, supply characteristics and notification route', 'Asbestos and hidden-service checks', 'Safe isolation and occupied-property handback', 'First fix, chases, joists and penetrations', 'Fire, smoke, acoustic and weather reinstatement', 'Second fix, bonding, labels and accessories', 'Inspection, dead tests, live tests and energisation', 'Certification, notification, waste and customer handover']
       : roofing
