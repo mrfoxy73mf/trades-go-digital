@@ -27,7 +27,13 @@ export const POST: APIRoute = async ({request,locals}) => {
   await db.prepare("UPDATE safework_orders SET document_html=?,status='ready',lease_until=0 WHERE id=? AND lease_id=?").bind(document,order.id,lease).run();
   return json({ready:true});
  } catch (error) {
-  console.error('SafeWork generation failed', { orderId: order.id, attempt: Number(order.attempts || 0) + 1, error: error instanceof Error ? error.message : String(error) });
+  const message=error instanceof Error ? error.message : String(error);
+  const upstreamUnavailable=/Generation failed: (?:429|5\d\d)\b/.test(message);
+  console.error('SafeWork generation failed', { orderId: order.id, attempt: Number(order.attempts || 0) + 1, error: message });
+  if(upstreamUnavailable) {
+   await db.prepare('UPDATE safework_orders SET lease_until=0,attempts=CASE WHEN attempts>0 THEN attempts-1 ELSE 0 END WHERE id=? AND lease_id=?').bind(order.id,lease).run();
+   return json({error:'The AI generation service is temporarily unavailable. Your payment is saved. Retry after service access is restored; do not pay again.'},503);
+  }
   await db.prepare('UPDATE safework_orders SET lease_until=0 WHERE id=? AND lease_id=?').bind(order.id,lease).run();
   return json({error:'The pack could not be completed. Your payment is saved. Retry this order without paying again, or contact support.'},502);
  }
