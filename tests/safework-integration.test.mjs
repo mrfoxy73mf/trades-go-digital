@@ -5,7 +5,7 @@ import { build } from 'esbuild';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 mkdirSync('tmp/safework-tests',{recursive:true});
-await build({entryPoints:['src/pages/api/safework/checkout.ts','src/pages/api/safework/order.ts','src/pages/api/safework/generate.ts','src/pages/api/safework/download.ts','src/lib/safework/generate.ts','src/lib/safework/render.ts'].map((entry)=>resolve(entry)),outbase:resolve('src'),outdir:resolve('tmp/safework-tests'),bundle:true,platform:'node',format:'esm',outExtension:{'.js':'.mjs'}});
+await build({absWorkingDir:process.cwd(),entryPoints:['./src/pages/api/safework/checkout.ts','./src/pages/api/safework/order.ts','./src/pages/api/safework/generate.ts','./src/pages/api/safework/download.ts','./src/lib/safework/generate.ts','./src/lib/safework/render.ts'],outbase:'src',outdir:'tmp/safework-tests',bundle:true,platform:'node',format:'esm',outExtension:{'.js':'.mjs'}});
 const checkout=await import('../tmp/safework-tests/pages/api/safework/checkout.mjs');
 const order=await import('../tmp/safework-tests/pages/api/safework/order.mjs');
 const generate=await import('../tmp/safework-tests/pages/api/safework/generate.mjs');
@@ -63,6 +63,12 @@ test('conditional forms match normal, excavation/hot-work, static TM and mobile 
  assert.ok(staticTm.includes('Closure and signed diversion inspected before opening'));
  assert.ok(staticTm.includes('Each phase change recorded and accepted before release'));
  assert.ok(!staticTm.includes('Mobile lane closure vehicle, radio and supervisor record'));
+
+ const trafficLights=packAsA4Html(makePack('Portable traffic-light job within Red Book road scope using portable two-way traffic signals',{traffic_management:true}),profile,emergency,3,1,'');
+ assert.ok(trafficLights.includes('RED BOOK PORTABLE-SIGNAL CHECKLIST'));
+ assert.ok(trafficLights.includes('Portable-signal person-in-charge duties and sign-off'));
+ assert.ok(!trafficLights.includes('Foreman / IPV driver control'));
+ assert.ok(!trafficLights.includes('Approved maximum flow / go-no-go limit'));
 
  const mobileTm=packAsA4Html(makePack('Chapter 8 mobile lane closure (MLC)',{traffic_management:true}),profile,emergency,6,1,'');
  assert.ok(mobileTm.includes('MLC vehicle allocation, radio checks and traffic-flow decision recorded'));

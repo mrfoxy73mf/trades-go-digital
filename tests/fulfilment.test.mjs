@@ -50,8 +50,15 @@ test("SafeWork knowledge includes the official Chapter 8 and Red Book traffic so
 test("traffic-management packs distinguish static work from the Chapter 8 mobile lane closure technique", async () => {
 	const page = await readFile(new URL("../src/pages/traffic-management.astro", import.meta.url), "utf8");
 	const renderer = await readFile(new URL("../src/lib/safework/render.ts", import.meta.url), "utf8");
+	assert.match(page, /Motorway or dual-carriageway lane closure/);
+	assert.match(page, /Portable traffic-light job/);
+	assert.match(page, /Start of traffic-light works/);
+	assert.match(page, /Marker posts are not required/);
+	assert.match(page, /TRAFFIC-MANAGEMENT JOB TYPE/);
 	assert.match(page, /value="Static lane closure"/);
 	assert.match(page, /value="Mobile lane closure \(MLC\)"/);
+	assert.match(renderer, /RED BOOK PORTABLE-SIGNAL CHECKLIST/);
+	assert.match(renderer, /traffic && !trafficLightJob/);
 	assert.match(renderer, /TM-MLC/);
 	assert.match(renderer, /IPV \/ leading block-vehicle driver/);
 });
