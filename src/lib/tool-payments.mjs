@@ -6,7 +6,8 @@ export const TOOL_PRODUCTS = Object.freeze({
 export function toolPaymentConfig(env, tool) {
 	const item = TOOL_PRODUCTS[tool];
 	if (!item) return { enabled: false, mode: "test", key: "", item: null };
-	const mode = env.TOOL_PAYMENT_MODE === "live" ? "live" : "test";
+	const requestedMode = tool === "logo" ? env.LOGO_PAYMENT_MODE : env.PDF_PAYMENT_MODE;
+	const mode = (requestedMode || env.TOOL_PAYMENT_MODE) === "live" ? "live" : "test";
 	const key = mode === "live" ? env.STRIPE_SECRET_KEY : env.STRIPE_TEST_SECRET_KEY;
 	const configuredPrice = Number(env[tool === "pdf" ? "PDF_DOWNLOAD_PRICE_PENCE" : "LOGO_DOWNLOAD_PRICE_PENCE"]);
 	const amount = Number.isSafeInteger(configuredPrice) ? configuredPrice : item.price;

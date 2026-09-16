@@ -1,6 +1,8 @@
 interface Env {
  STRIPE_SECRET_KEY?: string;
- STRIPE_TEST_SECRET_KEY?: string;
+	STRIPE_TEST_SECRET_KEY?: string;
+	LOGO_PAYMENT_MODE?: string;
+	PDF_PAYMENT_MODE?: string;
  STRIPE_TEST_WEBHOOK_SECRET?: string;
  OPENAI_API_KEY?: string;
  SAFEWORK_MODEL?: string;
