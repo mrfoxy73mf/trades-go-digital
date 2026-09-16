@@ -58,6 +58,7 @@ test("traffic-management packs distinguish static work from the Chapter 8 mobile
 	assert.match(page, /value="Static lane closure"/);
 	assert.match(page, /value="Mobile lane closure \(MLC\)"/);
 	assert.match(renderer, /RED BOOK PORTABLE-SIGNAL CHECKLIST/);
+	assert.match(renderer, /portable traffic-light job\/i\.test\(`\$\{sourceDescription\} \$\{packText\}`\)/);
 	assert.match(renderer, /traffic && !trafficLightJob/);
 	assert.match(renderer, /TM-MLC/);
 	assert.match(renderer, /IPV \/ leading block-vehicle driver/);

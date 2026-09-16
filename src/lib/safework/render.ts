@@ -44,7 +44,7 @@ function buildPackIndex(pack: WorkPack, workerCount = workforceRows(pack), trial
     ? /^Mobile lane closure \(MLC\)$/i.test(submittedArrangement)
     : /mobile lane closure|\bMLC\b/i.test(packText));
   const portableSignals = requirements.traffic && /portable (?:(?:two-way|multi-way)\s+)?traffic (?:signals|lights)|stop\s*\/\s*go/i.test(packText);
-  const trafficLightJob = portableSignals && /portable traffic-light job/i.test(packText);
+  const trafficLightJob = portableSignals && /portable traffic-light job/i.test(`${sourceDescription} ${packText}`);
   const roadClosure = requirements.traffic && /full road closure|signed diversion route/i.test(packText);
   const multiPhaseTraffic = requirements.traffic && (sourceDescription
     ? /Selected arrangement:[^\n\r]*(?:multi-phase|multiphase|staged traffic-management)/i.test(sourceDescription)
@@ -148,7 +148,7 @@ export function packAsA4Html(pack: WorkPack, profile: CompanyProfile, emergency:
     ? /^Mobile lane closure \(MLC\)$/i.test(submittedArrangement)
     : /mobile lane closure|\bMLC\b/i.test(packText));
   const portableSignals = traffic && /portable (?:(?:two-way|multi-way)\s+)?traffic (?:signals|lights)|stop\s*\/\s*go/i.test(packText);
-  const trafficLightJob = portableSignals && /portable traffic-light job/i.test(packText);
+  const trafficLightJob = portableSignals && /portable traffic-light job/i.test(`${sourceDescription} ${packText}`);
   const roadClosure = traffic && /full road closure|signed diversion route/i.test(packText);
   const multiPhaseTraffic = traffic && (sourceDescription
     ? /Selected arrangement:[^\n\r]*(?:multi-phase|multiphase|staged traffic-management)/i.test(sourceDescription)
