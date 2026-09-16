@@ -15,7 +15,7 @@ export function bindCompanyLogoUpload(form: HTMLFormElement) {
       valueInput.value = saved.dataUrl;
       preview.src = saved.dataUrl;
       preview.hidden = false;
-      status.textContent = `Logo from Logo Maker ready${saved.name ? ` for ${saved.name}` : ''}. Choose another file to replace it.`;
+      status.textContent = `Free work-pack logo ready${saved.name ? ` for ${saved.name}` : ''}. It will appear on every A4 page. Choose another file to replace it.`;
     }
   } catch { localStorage.removeItem(SAFEWORK_LOGO_KEY); }
 
