@@ -43,7 +43,7 @@ export async function stripe(key, path, params, idempotency) {
 }
 export async function authorisedOrder(request, db) {
  const id = new URL(request.url).searchParams.get('id') || '';
- const supplied = request.headers.get('Authorization')?.replace(/^Bearer /,'') || '';
+ const supplied = request.headers.get('X-SafeWork-Token') || request.headers.get('Authorization')?.replace(/^Bearer /,'') || '';
  if (!/^[a-f0-9]{64}$/.test(supplied)) return null;
  return db.prepare('SELECT * FROM safework_orders WHERE id = ? AND token_hash = ?').bind(id, await digest(supplied)).first();
 }
