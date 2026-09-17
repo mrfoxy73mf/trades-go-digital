@@ -6,7 +6,7 @@ export const prerender = false;
 export const GET: APIRoute = async ({request,locals}) => {
  const order=await authorisedOrder(request,locals.runtime.env.FULFILMENT_DB);
  if(!order || order.status!=='ready') return json({error:'The paid work pack is not available.'},404);
- const stored=await locals.runtime.env.FULFILMENT_FILES.get(editorKey(order.id),'json').catch(()=>null);
+ const stored:any=await locals.runtime.env.FULFILMENT_FILES.get(editorKey(order.id),'json').catch(()=>null);
  return json({edits:stored?.edits&&typeof stored.edits==='object'?stored.edits:{},savedAt:Number(stored?.savedAt)||null});
 };
 
@@ -14,7 +14,7 @@ export const PUT: APIRoute = async ({request,locals}) => {
  const order=await authorisedOrder(request,locals.runtime.env.FULFILMENT_DB);
  if(!order || order.status!=='ready') return json({error:'The paid work pack is not available.'},404);
  try {
-  const body=await request.json();
+  const body:any=await request.json();
   const edits=normalisePackEdits(body?.edits);
   const savedAt=Date.now();
   await locals.runtime.env.FULFILMENT_FILES.put(editorKey(order.id),JSON.stringify({edits,savedAt}));

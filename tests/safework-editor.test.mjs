@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { editorKey, normalisePackEdits } from '../src/lib/safework/editor.mjs';
+import { enhanceFillableMarkup } from '../src/lib/safework/fillable.mjs';
 
 test('normalises tablet editor fields and drops blank entries',()=>{
  assert.deepEqual(normalisePackEdits({'field-1':'  Mark Fox  ','field-2':'   '}),{'field-1':'Mark Fox'});
@@ -10,4 +11,11 @@ test('normalises tablet editor fields and drops blank entries',()=>{
 test('rejects malformed tablet editor fields',()=>{
  assert.throws(()=>normalisePackEdits({'wrong':'text'}),/invalid/);
  assert.throws(()=>normalisePackEdits({'field-1':42}),/invalid/);
+});
+
+test('turns printed lines and checklist symbols into interactive pack controls',()=>{
+ const html=enhanceFillableMarkup('<p>Name: __________________</p><p>☐ Checked</p><p>Yes / No / N/A</p>');
+ assert.match(html,/class="fill-line"/);
+ assert.equal((html.match(/class="tick-box"/g)||[]).length,4);
+ assert.doesNotMatch(html,/_{3,}/);
 });
