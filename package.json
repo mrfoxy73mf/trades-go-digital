@@ -37,7 +37,7 @@
 		"dev": "astro dev",
 		"preview": "astro build && wrangler dev",
 		"smoke:fulfilment": "node scripts/run-fulfilment-smoke.mjs",
-		"test:fulfilment": "node --test tests/fulfilment.test.mjs"
+		"test:fulfilment": "node --test tests/fulfilment.test.mjs tests/safework-editor.test.mjs"
 	},
 	"type": "module"
 }
