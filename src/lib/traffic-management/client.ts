@@ -1,3 +1,4 @@
+import { buildDraft, designReport } from "./generate.mjs";
 import {
   HEIGHT,
   DRAFT,
@@ -14,6 +15,7 @@ type Item = {
   x2: number;
   y2: number;
   text: string;
+  scale?: number;
 };
 const NS = "http://www.w3.org/2000/svg",
   KEY = "tgd-tm-draft-v1";
@@ -73,6 +75,13 @@ export function bindTrafficDrawing() {
   const status = (s: string) => {
     q("[data-drawing-status]").textContent = s;
   };
+  let calculationReport = "";
+  const setReport = (text: string) => {
+    calculationReport = text;
+    q("[data-calculation-report]").textContent = text;
+    q<HTMLElement>("[data-calculation-details]").hidden = !text;
+    q<HTMLButtonElement>("[data-report]").disabled = !text;
+  };
   let items: Item[] = [],
     selected = -1,
     history: Item[][] = [],
@@ -88,8 +97,19 @@ export function bindTrafficDrawing() {
     const saved = localStorage.getItem(KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      if (validDrawing(parsed)) items = parsed;
-      else
+      if (validDrawing(parsed)) {
+        items = parsed;
+        const record = JSON.parse(
+          localStorage.getItem(KEY + "-report") || "null",
+        );
+        if (
+          record &&
+          record.snapshot === saved &&
+          typeof record.report === "string" &&
+          record.report.length <= 80000
+        )
+          setReport(record.report);
+      } else
         status(
           "The saved drawing is invalid. Open a saved project to recover your work.",
         );
@@ -100,6 +120,15 @@ export function bindTrafficDrawing() {
   const save = () => {
     try {
       localStorage.setItem(KEY, JSON.stringify(items));
+      if (calculationReport)
+        localStorage.setItem(
+          KEY + "-report",
+          JSON.stringify({
+            snapshot: JSON.stringify(items),
+            report: calculationReport,
+          }),
+        );
+      else localStorage.removeItem(KEY + "-report");
       q("[data-save-status]").textContent =
         "Saved in this browser only. Export a file to keep or share it.";
     } catch {
@@ -108,6 +137,8 @@ export function bindTrafficDrawing() {
     }
   };
   const render = () => {
+    q("[data-cone-count]").textContent =
+      `Cone symbols in current sketch: ${items.filter((item) => item.type === "cone").length}. Core generated quantities exclude spare cones and extra site-specific runs.`;
     layer.replaceChildren();
     items.forEach((item, i) => {
       const g = document.createElementNS(NS, "g");
@@ -179,9 +210,88 @@ export function bindTrafficDrawing() {
     q<HTMLButtonElement>("[data-delete]").disabled = selected < 0;
   };
   const checkpoint = () => {
+    if (calculationReport) {
+      setReport("");
+      q("[data-generator-status]").textContent =
+        "Drawing changed manually. Regenerate from verified measurements for a new calculated schedule.";
+      status(
+        "Sketch changed: the calculation report is now invalid. Regenerate from verified measurements for a new schedule; manual edits do not recalculate chainages.",
+      );
+    }
     history.push(structuredClone(items));
     if (history.length > 50) history.shift();
   };
+  const generator = q<HTMLFormElement>("[data-generator]");
+  const roadType = q<HTMLSelectElement>('[data-generator] [name="roadType"]');
+  const syncGenerator = () => {
+    const single = roadType.value === "single";
+    const lanes = q<HTMLSelectElement>('[data-generator] [name="laneCount"]');
+    for (const option of lanes.options)
+      option.disabled = single && option.value !== "2";
+    if (single) lanes.value = "2";
+    const speed = q<HTMLSelectElement>('[data-generator] [name="speed"]');
+    for (const option of speed.options)
+      option.disabled = single
+        ? option.value === "70"
+        : roadType.value === "motorway"
+          ? Number(option.value) < 50
+          : option.value === "20";
+    if (speed.selectedOptions[0]?.disabled) speed.value = single ? "30" : "70";
+  };
+  generator.addEventListener("input", () => {
+    if (calculationReport)
+      q("[data-generator-status]").textContent =
+        "Inputs changed. The displayed drawing and report still describe the previous generation; calculate again to replace them.";
+  });
+  roadType.addEventListener("change", syncGenerator);
+  syncGenerator();
+  generator.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!generator.reportValidity()) return;
+    try {
+      const values = new FormData(generator);
+      const { items: generated, design } = buildDraft({
+        roadType: String(values.get("roadType")),
+        speed: Number(values.get("speed")),
+        worksSide: String(values.get("worksSide")),
+        laneCount: Number(values.get("laneCount")),
+        roadName: String(values.get("roadName") || ""),
+        worksLength: Number(values.get("worksLength")),
+        roadWidth: Number(values.get("roadWidth")),
+        workWidth: Number(values.get("workWidth")),
+        worksStart: Number(values.get("worksStart")),
+        scopeConfirmed: values.has("scopeConfirmed"),
+        hasHardShoulder: values.has("hasHardShoulder"),
+        congestion: values.has("congestion"),
+      });
+      if (
+        items.length &&
+        !confirm(
+          "Replace the current drawing with a calculated draft? Save a project first to keep your current layout. You can undo this change.",
+        )
+      )
+        return;
+      checkpoint();
+      items = generated;
+      selected = -1;
+      tool.value = "select";
+      setReport(designReport(design));
+      render();
+      save();
+      q<HTMLDetailsElement>("[data-calculation-details]").open = true;
+      q("[data-generator-status]").textContent =
+        `Calculated ${design.coneCount} core boundary cones and ${design.signs.length} sign assemblies. Review the schedule below, including provisional positions and exclusions. All items remain manually editable.`;
+    } catch (error) {
+      q("[data-generator-status]").textContent =
+        error instanceof Error ? error.message : "Could not calculate a draft.";
+    }
+  });
+  q("[data-report]").addEventListener("click", () =>
+    download(
+      new Blob([calculationReport], { type: "text/plain" }),
+      "traffic-management-DRAFT-calculations.txt",
+    ),
+  );
   const pick = (i: number) => {
     selected = i;
     if (items[i]) label.value = items[i].text;
@@ -355,15 +465,18 @@ export function bindTrafficDrawing() {
   });
   q("[data-dxf]").addEventListener("click", () =>
     download(
-      new Blob([toDxf(items)], { type: "application/dxf" }),
+      new Blob([toDxf(items, calculationReport)], { type: "application/dxf" }),
       "traffic-management-DRAFT.dxf",
     ),
   );
   q("[data-project]").addEventListener("click", () =>
     download(
-      new Blob([JSON.stringify({ version: 1, items }, null, 2)], {
-        type: "application/json",
-      }),
+      new Blob(
+        [JSON.stringify({ version: 1, items, calculationReport }, null, 2)],
+        {
+          type: "application/json",
+        },
+      ),
       "traffic-management-project.json",
     ),
   );
@@ -385,6 +498,14 @@ export function bindTrafficDrawing() {
           return;
         checkpoint();
         items = data.items;
+        if (
+          typeof data.calculationReport === "string" &&
+          data.calculationReport.length <= 80000
+        )
+          setReport(
+            "IMPORTED REPORT — verify against the drawing and current guidance.\n" +
+              data.calculationReport,
+          );
         selected = -1;
         render();
         save();
@@ -438,9 +559,19 @@ export function bindTrafficDrawing() {
           pdf.text(s.text, ox + s.x * scale, oy + s.y * scale);
         }
       }
+      if (calculationReport) {
+        const lines: string[] = pdf.splitTextToSize(calculationReport, 760);
+        for (let i = 0; i < lines.length; i += 42) {
+          pdf.addPage();
+          pdf.setTextColor("#102d23");
+          pdf.setFontSize(9);
+          pdf.text(lines.slice(i, i + 42), 30, 35);
+        }
+      }
       pdf.save("traffic-management-DRAFT.pdf");
       status("Draft PDF exported.");
-    } catch {
+    } catch (error) {
+      console.error("Traffic-management PDF export failed", error);
       status("PDF export failed. Try again or export DXF / save a project.");
     } finally {
       button.disabled = false;

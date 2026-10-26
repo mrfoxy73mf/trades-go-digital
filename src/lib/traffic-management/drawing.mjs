@@ -23,7 +23,9 @@ export function validDrawing(value) {
           (k) => Number.isFinite(e[k]) && Math.abs(e[k]) <= 10000,
         ) &&
         typeof e.text === "string" &&
-        e.text.length <= 120,
+        e.text.length <= 120 &&
+        (e.scale === undefined ||
+          (Number.isFinite(e.scale) && e.scale >= 0.1 && e.scale <= 2)),
     )
   );
 }
@@ -54,14 +56,47 @@ export function primitives(entities) {
       line(x, y2, x, y, "#d66a00", 3);
       text(Math.min(x, x2) + 5, Math.min(y, y2) + 18, e.text || "WORKS");
     } else if (e.type === "cone") {
-      line(x, y - 12, x - 9, y + 9, "#d66a00", 3);
-      line(x - 9, y + 9, x + 9, y + 9, "#d66a00", 3);
-      line(x + 9, y + 9, x, y - 12, "#d66a00", 3);
-      line(x - 4, y, x + 4, y, "#d66a00", 3);
+      const size = e.scale ?? 1;
+      line(
+        x,
+        y - 12 * size,
+        x - 9 * size,
+        y + 9 * size,
+        "#d66a00",
+        Math.max(0.5, 3 * size),
+      );
+      line(
+        x - 9 * size,
+        y + 9 * size,
+        x + 9 * size,
+        y + 9 * size,
+        "#d66a00",
+        Math.max(0.5, 3 * size),
+      );
+      line(
+        x + 9 * size,
+        y + 9 * size,
+        x,
+        y - 12 * size,
+        "#d66a00",
+        Math.max(0.5, 3 * size),
+      );
+      line(
+        x - 4 * size,
+        y,
+        x + 4 * size,
+        y,
+        "#d66a00",
+        Math.max(0.5, 3 * size),
+      );
     } else if (e.type === "sign") {
-      circle(x, y, 16, "#c53524");
-      text(x - 12, y + 5, "!");
-      if (e.text) text(x + 21, y + 5, e.text);
+      const size = e.scale ?? 1;
+      circle(x, y, 16 * size, "#c53524");
+      text(x - 4 * size, y + 5 * size, "!", 14 * size);
+      if (e.text) {
+        if (size < 1) text(x - e.text.length * 3, y + 23, e.text, 10);
+        else text(x + 21, y + 5, e.text);
+      }
     } else if (e.type === "lights") {
       circle(x, y - 12, 5, "#c53524");
       circle(x, y, 5, "#ba7900");
@@ -74,7 +109,7 @@ export function primitives(entities) {
   }
   return out;
 }
-export function toDxf(entities) {
+export function toDxf(entities, report = "") {
   const pairs = [];
   const p = (...a) => pairs.push(...a.map(String));
   p(
@@ -95,6 +130,16 @@ export function toDxf(entities) {
   );
   for (const shape of [
     ...primitives(entities),
+    ...report
+      .split("\n")
+      .filter(Boolean)
+      .map((text, i) => ({
+        kind: "text",
+        x: 10,
+        y: HEIGHT + 30 + i * 14,
+        text,
+        size: 10,
+      })),
     { kind: "text", x: 10, y: HEIGHT - 10, text: DRAFT, size: 10 },
   ]) {
     if (shape.kind === "line")
