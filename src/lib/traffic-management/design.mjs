@@ -27,6 +27,8 @@ export function calculateDesign(input) {
     scopeConfirmed = false,
     hasHardShoulder = false,
     congestion = false,
+    widths,
+    closedLane,
   } = input;
   const signals = roadType === "single";
   if (
@@ -71,20 +73,25 @@ export function calculateDesign(input) {
     throw Error(
       "Nearside closures involving a hard shoulder need an additional shoulder-specific design. Automatic calculation is not supported for this case.",
     );
-  const lateral = speed >= 50 ? 1.2 : 0.5,
-    laneWidth = roadWidth / laneCount;
+  const laneWidths = Array.isArray(widths) && widths.length === laneCount
+      ? widths
+      : Array.from({ length: laneCount }, () => roadWidth / laneCount),
+    selectedLane = Number.isInteger(closedLane)
+      ? laneWidths[closedLane - 1]
+      : laneWidths[worksSide === "near" ? 0 : laneWidths.length - 1],
+    lateral = speed >= 50 ? 1.2 : 0.5,
+    laneWidth = selectedLane;
+  if (laneWidths.some((width) => !Number.isFinite(width) || width < 1 || width > 6))
+    throw Error("Check each lane width (1–6 m). These values may be estimates, but must be labelled for review.");
   const closureWidth = signals ? workWidth + lateral : laneWidth;
   const remainingWidth = roadWidth - closureWidth;
   if (signals && remainingWidth < 3)
     throw Error(
       "Remaining shuttle lane is below the 3 m general-traffic minimum. A site-specific design is required.",
     );
-  if (
-    !signals &&
-    (laneWidth < 3.6 || laneWidth > 4 || workWidth + lateral > laneWidth + 1e-9)
-  )
+  if (!signals && workWidth + lateral > laneWidth + 1e-9)
     throw Error(
-      "This standard single-lane profile requires 3.6–4 m lanes and working space plus lateral clearance contained within the closed lane.",
+      `The proposed ${workWidth} m working width plus ${lateral} m lateral clearance does not fit inside the selected ${laneWidth} m lane. Review the work footprint or use a site-specific arrangement.`,
     );
   const firstDistance = signals
     ? speed <= 30
@@ -246,6 +253,10 @@ export function calculateDesign(input) {
     "Sketch zones are compressed independently; use the chainage schedule for distances. Drawing is not to scale. Symbols are illustrative, not prescribed sign artwork.",
     "Temporary speed-limit signing, mobile closures, contraflow, multiple closed lanes, stepped tapers, junction control and guide islands require a separate design. No signal timings are calculated.",
   ];
+  if (!signals && (laneWidth < 3.6 || laneWidth > 4))
+    warnings.push(
+      `Selected lane width is ${laneWidth} m, outside the old equal-lane 3.6–4 m calculator profile. The draft uses the entered width without treating that profile limitation as a site conflict; verify the measurement and applicable arrangement.`,
+    );
   if (signals) {
     warnings.push(
       "Traffic-signals-ahead and road-narrows sign positions are provisional subdivisions of the advance zone. The guidance specifies sequence, not fixed intermediate spacings; confirm and adjust these positions on site.",

@@ -59,7 +59,7 @@ export function bindMapControls(
     q<SVGImageElement>("[data-map-image]").setAttribute("href", image);
     q("[data-map-alignment]").textContent =
       state?.alignment.length === 2
-        ? state.alignmentMode === "direction" ? "Work start and direction marked for AI drafting. Enter the working-space length to set the work end." : `Working section marked: approximately ${(Math.hypot(state.alignment[1][0] - state.alignment[0][0], state.alignment[1][1] - state.alignment[0][1]) / mapPixelsPerMetre(state.view)).toFixed(1)} m on map. Enter the surveyed length below. ${state.features.length} junction/access points marked for review.`
+        ? `Work start and work end marked: approximately ${(Math.hypot(state.alignment[1][0] - state.alignment[0][0], state.alignment[1][1] - state.alignment[0][1]) / mapPixelsPerMetre(state.view)).toFixed(1)} m along the map chord. AI will trace the road curve; this remains an estimate until surveyed. ${state.features.length} junction/access points marked for review.`
         : marking
           ? "Tap the start, then end of the working section on the road centreline, in the primary direction of travel."
           : "No working section marked.";
@@ -225,8 +225,8 @@ export function bindMapControls(
   q("[data-map-ai-mark]").addEventListener("click", () => {
     if(!state)return;
     measuring=false;measureStart=null;
-    state.alignmentMode="direction";marking=1;featureMode=false;pan=false;update();
-    message("Tap the actual work start, then a second point along the correct carriageway in the travel direction. The entered length sets the work end.");
+    state.alignmentMode="section";marking=1;featureMode=false;pan=false;update();
+    message("Tap the actual work start, then the actual work end on the correct carriageway in the direction of travel.");
   });
   q("[data-map-feature]").addEventListener("click", () => {
     if (!state) return;
@@ -324,12 +324,12 @@ export function bindMapControls(
         if (marking === 1) {
           state.alignment = [[p.x, p.y]];
           marking = 2;
-          message(state.alignmentMode === "direction" ? "Now tap a second point along the correct carriageway in the travel direction." : "Now tap the end of the working section.");
+          message("Now tap the work end on the correct carriageway in the direction of travel.");
         } else {
           state.alignment.push([p.x, p.y]);
           marking = 0;
           message(
-            state.alignmentMode === "direction" ? "Work start and direction marked. Enter the working-space size and use Create AI drawing." : "Working section marked. Enter site measurements and confirm the supported scope before generating.",
+            "Work start and work end marked. Create a planning draft; optional measurements left blank will be labelled as estimates.",
           );
         }
         hooks.changed(true);
