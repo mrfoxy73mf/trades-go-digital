@@ -37,6 +37,63 @@ export function panMap(map, dx, dy) {
     lng: ((((lng + 180) % 360) + 360) % 360) - 180,
   };
 }
+export function mapPointToLocation(map, point) {
+  if (!validMap(map) || !Array.isArray(point) || point.length !== 2)
+    throw Error("Invalid map point.");
+  return panMap(
+    map,
+    ((point[0] - 500) * MAP_WIDTH) / 1000,
+    ((point[1] - 325) * MAP_HEIGHT) / 650,
+  );
+}
+export function locationToMapPoint(map, location) {
+  if (!validMap(map) || !validMap({ ...map, ...location }))
+    throw Error("Invalid map location.");
+  const world = 256 * 2 ** map.zoom;
+  const project = ({ lat, lng }) => {
+    const sin = Math.sin((lat * Math.PI) / 180);
+    return [
+      ((lng + 180) / 360) * world,
+      (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) * world,
+    ];
+  };
+  const [cx, cy] = project(map), [x, y] = project(location);
+  return [500 + ((x - cx) * 1000) / MAP_WIDTH, 325 + ((y - cy) * 650) / MAP_HEIGHT];
+}
+export function planningMapView(map, alignment, chainage) {
+  if (!validMap(map) || !Array.isArray(alignment) || alignment.length !== 2)
+    throw Error("Invalid planning map request.");
+  const dx = alignment[1][0] - alignment[0][0],
+    dy = alignment[1][1] - alignment[0][1],
+    length = Math.hypot(dx, dy);
+  if (length < 10) throw Error("Mark two distinct work points.");
+  const workLength = length / mapPixelsPerMetre(map),
+    from = Math.min(chainage.from, 0),
+    to = Math.max(chainage.to, workLength),
+    midpoint = (from + to) / 2,
+    start = mapPointToLocation(map, alignment[0]);
+  // Move the map centre along the marked carriageway. This is an initial
+  // exploration corridor only; the vision pass must trace bends and reject
+  // roads that do not physically connect.
+  const logicalDx = (dx / length) * midpoint * mapPixelsPerMetre(map),
+    logicalDy = (dy / length) * midpoint * mapPixelsPerMetre(map);
+  let view = panMap(
+    { ...map },
+    ((alignment[0][0] - 500 + logicalDx) * MAP_WIDTH) / 1000,
+    ((alignment[0][1] - 325 + logicalDy) * MAP_HEIGHT) / 650,
+  );
+  const required = to - from;
+  while (view.zoom > 12 && required * mapPixelsPerMetre(view) > 720)
+    view = { ...view, zoom: view.zoom - 1 };
+  return {
+    ...view,
+    mapType: map.mapType === "hybrid" ? "hybrid" : "roadmap",
+    label: map.label,
+    created: map.created,
+    workStart: locationToMapPoint(view, start),
+    workEnd: locationToMapPoint(view, mapPointToLocation(map, alignment[1])),
+  };
+}
 // A surveyed straight alignment only: map images are not lane/junction surveys.
 export function buildMapDraft(input, alignment, map) {
   if (!validMap(map) || !Array.isArray(alignment) || alignment.length !== 2)

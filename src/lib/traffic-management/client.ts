@@ -464,13 +464,13 @@ export function bindTrafficDrawing() {
   let aiRunning = false;
   fetch("/api/traffic-map/draft").then(r=>r.json() as Promise<{available?: boolean}>).then(data=>{
     aiButton.disabled=!data.available;
-    aiStatus.textContent=data.available ? "Ready. Mark the work start and direction, describe the job and enter its measurements." : "AI drawing needs owner setup. The manual editor and standard calculator remain available.";
+    aiStatus.textContent=data.available ? "Ready. Mark the fixed work start and work end, then describe the job. Optional measurements may remain estimated for the planning draft." : "AI drawing needs owner setup. The manual editor and standard calculator remain available.";
   }).catch(()=>{aiStatus.textContent="Could not check AI availability. Refresh to retry.";});
   aiButton.addEventListener("click", async () => {
     if(aiRunning)return;
     try {
       if(!map.state||map.busy||awaitingMap)throw Error("Load the map before creating an AI drawing.");
-      if(map.state.alignment.length!==2)throw Error("Mark the work start, then a second point along the road in the direction of travel.");
+      if(map.state.alignment.length!==2)throw Error("Mark the fixed work start and work end on the correct carriageway.");
       const values=new FormData(generator);
       const access=q<HTMLInputElement>("[data-ai-access]").value;
       const payload={
@@ -487,7 +487,7 @@ export function bindTrafficDrawing() {
       generator.addEventListener("input",onChange);generator.addEventListener("change",onChange);
       aiRunning=true;aiButton.disabled=true;aiStatus.textContent="AI is reading this map and tracing the road. This may take up to a few minutes…";
       q<HTMLElement>("[data-ai-review]").hidden=true;
-      let data: {error?:string;status?:string;analysis?:{summary:string;observations:string[];features:{label:string}[]};issues?:string[];items?:Item[];report?:string};
+      let data: {error?:string;status?:string;analysis?:{summary:string;observations:string[];features:{label:string}[]};issues?:string[];items?:Item[];report?:string;map?:MapState["view"];alignment?:number[][];assumptions?:string[]};
       try {
         const response=await fetch("/api/traffic-map/draft",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:AbortSignal.timeout(170000)});
         data=await response.json();
@@ -501,9 +501,10 @@ export function bindTrafficDrawing() {
       if(data.status!=="draft") {aiStatus.textContent="AI reviewed the map, but could not complete a supported equipment layout. Resolve the points below or finish the site-specific design manually. Your drawing is unchanged.";return;}
       if(!validDrawing(data.items)||typeof data.report!=="string"||data.report.length>80000)throw Error("The AI drawing response was invalid. Your drawing is unchanged.");
       if(items.length&&!confirm("Replace the current drawing with the AI-assisted draft? Save editable data first to keep the current version. You can undo this replacement.")){aiStatus.textContent="AI result was not applied. Current drawing kept.";return;}
+      if(data.map&&data.alignment)await map.restore({view:data.map,alignment:data.alignment,alignmentMode:"section",features:[],site:map.state.site});
       checkpoint();items=data.items!;selected=-1;tool.value="select";setReport(data.report);render();save();
       q<HTMLDetailsElement>("[data-calculation-details]").open=true;
-      aiStatus.textContent="AI-assisted draft created from this map. Signs, cones and tapers are editable. Inspect the road alignment, schedule and all site conditions before use. This is not an approved design.";
+      aiStatus.textContent="Editable planning draft created after expanding the affected route. Review every estimate, road connection, sign position and taper. The installing team must stop and escalate if a safe arrangement cannot be established; this is not site approval.";
       q<HTMLElement>("#tm-map-controls").scrollIntoView({block:"start",behavior:"smooth"});
     } catch(error){aiStatus.textContent=error instanceof Error?error.message:"AI drawing failed; current drawing kept.";}
     finally{aiRunning=false;aiButton.disabled=false;}

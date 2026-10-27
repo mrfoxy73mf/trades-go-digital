@@ -140,7 +140,7 @@ test("unsupported cases fail with actionable messages instead of fabricated desi
     [{ ...motorway, laneCount: 5 }, /2–4/],
     [{ ...motorway, hasHardShoulder: true }, /hard shoulder/],
     [{ ...motorway, workWidth: 3 }, /clearance/],
-    [{ ...motorway, roadWidth: 6.5 }, /3.6–4/],
+    [{ ...motorway, roadWidth: 6.5 }, /selected 3.25 m lane/],
     [{ ...signal, worksLength: NaN }, /finite/],
   ])
     assert.throws(() => calculateDesign(input), reason);
