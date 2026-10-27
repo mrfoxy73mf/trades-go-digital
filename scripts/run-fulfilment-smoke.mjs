@@ -61,8 +61,8 @@ const getStatus = async (sessionId) => {
 	return response.json();
 };
 
-const lockedPage = await fetch(`${baseUrl}/tgd-lettingdesk`, { redirect: "manual" });
-assert.equal(lockedPage.status, 401, "The main website lock was bypassed.");
+const unavailablePage = await fetch(`${baseUrl}/tgd-lettingdesk`, { redirect: "manual" });
+assert.equal(unavailablePage.status, 404, "A withdrawn project page is still reachable.");
 
 const licenceSession = await stripePost("licence_download", 499000);
 const licenceStatus = await getStatus(licenceSession);
