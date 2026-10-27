@@ -1,4 +1,7 @@
 interface Env {
+ GOOGLE_MAPS_SERVER_KEY?: string;
+ WHAT3WORDS_API_KEY?: string;
+ TRAFFIC_MAP_RATE_LIMITER?: {limit(input:{key:string}):Promise<{success:boolean}>};
  STRIPE_SECRET_KEY?: string;
 	STRIPE_TEST_SECRET_KEY?: string;
 	LOGO_PAYMENT_MODE?: string;

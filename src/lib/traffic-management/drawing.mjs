@@ -22,6 +22,17 @@ export function validDrawing(value) {
         ["x", "y", "x2", "y2"].every(
           (k) => Number.isFinite(e[k]) && Math.abs(e[k]) <= 10000,
         ) &&
+        (e.signFace === undefined || signFaces.includes(e.signFace)) &&
+        (e.points === undefined ||
+          (e.type === "works" &&
+            Array.isArray(e.points) &&
+            e.points.length === 4 &&
+            e.points.every(
+              (p) =>
+                Array.isArray(p) &&
+                p.length === 2 &&
+                p.every((v) => Number.isFinite(v) && Math.abs(v) <= 10000),
+            ))) &&
         typeof e.text === "string" &&
         e.text.length <= 120 &&
         (e.scale === undefined ||
@@ -29,17 +40,111 @@ export function validDrawing(value) {
     )
   );
 }
-// Common geometry is used for the editor and both exports.
-export function primitives(entities) {
+export const signFaces = [
+  "generic",
+  "roadworks",
+  "signals",
+  "narrows",
+  "wait",
+  "end",
+  "keep-left",
+  "keep-right",
+  "lane-closure",
+];
+export function signFaceForLabel(label = "") {
+  if (/end of road works/i.test(label)) return "end";
+  if (/keep left/i.test(label)) return "keep-left";
+  if (/keep right/i.test(label)) return "keep-right";
+  if (/WAIT HERE/i.test(label)) return "wait";
+  if (/signals ahead/i.test(label)) return "signals";
+  if (/narrows|single-file/i.test(label)) return "narrows";
+  if (/lane closure/i.test(label)) return "lane-closure";
+  if (/road works ahead/i.test(label)) return "roadworks";
+  return "generic";
+}
+// Legacy projects contain schedule IDs only. Recover faces from the actual
+// schedule descriptions, never from S1/S2 numbering (which varies by layout).
+export function withSignFaces(items, report = "") {
+  const schedule = new Map();
+  for (const line of report.split("\n")) {
+    const parts = line.split(" | ");
+    if (parts.length >= 3)
+      schedule.set(parts[0].split(":")[0], signFaceForLabel(parts[2]));
+  }
+  return items.map((item) =>
+    item.type === "sign" && !item.signFace
+      ? {
+          ...item,
+          signFace: schedule.get(item.text) || signFaceForLabel(item.text),
+        }
+      : item,
+  );
+}
+// Callout positions are presentation only. Leader dots retain actual item anchors.
+export function layoutSymbolCallouts(entities) {
+  const occupied = [];
+  return entities.map((e) => {
+    if (!["sign", "lights"].includes(e.type)) return e;
+    const w = e.type === "sign" ? 54 : 30,
+      h = e.type === "sign" ? 72 : 56;
+    const candidates = [[0, 0]];
+    for (const dy of [-80, 80, -160, 160, -240, 240])
+      for (const dx of [0, -65, 65, -130, 130]) candidates.push([dx, dy]);
+    for (const [dx, dy] of candidates) {
+      const cx = e.x + dx,
+        cy = e.y + dy,
+        box = [cx - w / 2, cy - 28, cx + w / 2, cy + h - 28];
+      if (box[0] < 12 || box[2] > 988 || box[1] < 12 || box[3] > 600) continue;
+      if (
+        occupied.some(
+          (b) =>
+            box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1],
+        )
+      )
+        continue;
+      occupied.push(box);
+      return { ...e, displayX: cx, displayY: cy };
+    }
+    occupied.push([e.x - w / 2, e.y - 28, e.x + w / 2, e.y + h - 28]);
+    return { ...e, displayX: e.x, displayY: e.y };
+  });
+}
+// Shared vector artwork for SVG and PDF; DXF preserves the same outlines.
+export function primitives(entities, layout = true) {
   const out = [];
   const line = (x1, y1, x2, y2, color = "#243b53", width = 2) =>
     out.push({ kind: "line", x1, y1, x2, y2, color, width });
-  const circle = (cx, cy, r, color) =>
-    out.push({ kind: "circle", cx, cy, r, color });
-  const text = (x, y, value, size = 14) =>
-    out.push({ kind: "text", x, y, text: value, size, color: "#102d23" });
-  for (const e of entities) {
-    const { x, y, x2, y2 } = e;
+  const circle = (cx, cy, r, color, fill = "none") =>
+    out.push({ kind: "circle", cx, cy, r, color, fill });
+  const polygon = (points, color, fill = color, width = 1) =>
+    out.push({ kind: "polygon", points, color, fill, width });
+  const text = (x, y, value, size = 14, color = "#102d23") =>
+    out.push({ kind: "text", x, y, text: value, size, color });
+  const box = (x, y, w, h, color, fill = color) =>
+    polygon(
+      [
+        [x, y],
+        [x + w, y],
+        [x + w, y + h],
+        [x, y + h],
+      ],
+      color,
+      fill,
+    );
+  for (const e of layout ? layoutSymbolCallouts(entities) : entities) {
+    let { x, y, x2, y2 } = e;
+    if (
+      ["sign", "lights"].includes(e.type) &&
+      Number.isFinite(e.displayX) &&
+      Number.isFinite(e.displayY)
+    ) {
+      if (e.displayX !== x || e.displayY !== y) {
+        line(x, y, e.displayX, e.displayY, "#536174", 1);
+        circle(x, y, 2, "#172033", "#172033");
+      }
+      x = e.displayX;
+      y = e.displayY;
+    }
     if (e.type === "road") {
       const length = Math.hypot(x2 - x, y2 - y) || 1,
         dx = (-(y2 - y) / length) * 25,
@@ -48,63 +153,163 @@ export function primitives(entities) {
       line(x - dx, y - dy, x2 - dx, y2 - dy);
       line(x, y, x2, y2, "#738496", 1);
     } else if (e.type === "barrier") {
-      line(x, y, x2, y2, "#c53524", 7);
+      line(x, y, x2, y2, "#fff", 7);
+      line(x, y, x2, y2, "#c53524", 3);
     } else if (e.type === "works") {
-      line(x, y, x2, y, "#d66a00", 3);
-      line(x2, y, x2, y2, "#d66a00", 3);
-      line(x2, y2, x, y2, "#d66a00", 3);
-      line(x, y2, x, y, "#d66a00", 3);
-      text(Math.min(x, x2) + 5, Math.min(y, y2) + 18, e.text || "WORKS");
+      const points = e.points || [
+        [x, y],
+        [x2, y],
+        [x2, y2],
+        [x, y2],
+      ];
+      polygon(points, "#c65a00", "#ffedd5", 2);
+      text(
+        Math.min(...points.map((p) => p[0])) + 3,
+        Math.min(...points.map((p) => p[1])) + 13,
+        e.text || "WORKS",
+        11,
+      );
     } else if (e.type === "cone") {
-      const size = e.scale ?? 1;
-      line(
-        x,
-        y - 12 * size,
-        x - 9 * size,
-        y + 9 * size,
-        "#d66a00",
-        Math.max(0.5, 3 * size),
+      const size = Math.max(0.65, e.scale ?? 1);
+      polygon(
+        [
+          [x, y - 15 * size],
+          [x - 10 * size, y + 10 * size],
+          [x + 10 * size, y + 10 * size],
+        ],
+        "#9a3412",
+        "#ff791f",
+        1,
       );
-      line(
-        x - 9 * size,
-        y + 9 * size,
-        x + 9 * size,
-        y + 9 * size,
-        "#d66a00",
-        Math.max(0.5, 3 * size),
+      polygon(
+        [
+          [x - 3.6 * size, y - 6 * size],
+          [x + 3.6 * size, y - 6 * size],
+          [x + 6.4 * size, y + 1 * size],
+          [x - 6.4 * size, y + 1 * size],
+        ],
+        "#fff",
+        "#fff",
+        0.3,
       );
-      line(
-        x + 9 * size,
-        y + 9 * size,
-        x,
-        y - 12 * size,
-        "#d66a00",
-        Math.max(0.5, 3 * size),
-      );
-      line(
-        x - 4 * size,
-        y,
-        x + 4 * size,
-        y,
-        "#d66a00",
-        Math.max(0.5, 3 * size),
-      );
+      box(x - 12 * size, y + 9 * size, 24 * size, 4 * size, "#243b53");
     } else if (e.type === "sign") {
-      const size = e.scale ?? 1;
-      circle(x, y, 16 * size, "#c53524");
-      text(x - 4 * size, y + 5 * size, "!", 14 * size);
-      if (e.text) {
-        if (size < 1) text(x - e.text.length * 3, y + 23, e.text, 10);
-        else text(x + 21, y + 5, e.text);
+      const size = Math.max(0.85, e.scale ?? 1),
+        face = e.signFace || signFaceForLabel(e.text);
+      const poly = (pts, color, fill = color, width = 1) =>
+        polygon(
+          pts.map(([a, b]) => [x + a * size, y + b * size]),
+          color,
+          fill,
+          width,
+        );
+      const ln = (a, b, c, d, color = "#172033", width = 2) =>
+        line(
+          x + a * size,
+          y + b * size,
+          x + c * size,
+          y + d * size,
+          color,
+          width * size,
+        );
+      const circ = (a, b, r, color, fill = color) =>
+        circle(x + a * size, y + b * size, r * size, color, fill);
+      const txt = (a, b, t, font = 8, color = "#172033") =>
+        text(x + a * size, y + b * size, t, font * size, color);
+      if (face.startsWith("keep-")) {
+        circ(0, 0, 19, "#1255b0");
+        const dir = face === "keep-left" ? -1 : 1;
+        poly(
+          [
+            [-7 * dir, -10],
+            [-11 * dir, -6],
+            [2 * dir, 7],
+            [-3 * dir, 7],
+            [10 * dir, 13],
+            [10 * dir, 0],
+            [6 * dir, 4],
+          ],
+          "#fff",
+        );
+      } else if (face === "wait" || face === "end" || face === "lane-closure") {
+        poly(
+          [
+            [-23, -18],
+            [23, -18],
+            [23, 18],
+            [-23, 18],
+          ],
+          "#172033",
+          face === "lane-closure" ? "#ffdf35" : "#fff",
+          1.5,
+        );
+        if (face === "wait") {
+          txt(-18, -7, "WHEN RED", 6.2);
+          txt(-18, 0, "LIGHT SHOWS", 6);
+          txt(-18, 10, "WAIT HERE", 7.2);
+        } else if (face === "end") {
+          txt(-17, -3, "END OF", 8);
+          txt(-21, 9, "ROAD WORKS", 6.6);
+        } else {
+          ln(-10, 11, -10, -10);
+          ln(-14, -5, -10, -10);
+          ln(-6, -5, -10, -10);
+          ln(10, 11, 10, 2);
+          ln(10, 2, 0, -8);
+          ln(1, -2, 0, -8);
+          ln(7, -8, 0, -8);
+        }
+      } else {
+        poly(
+          [
+            [0, -23],
+            [-23, 18],
+            [23, 18],
+          ],
+          "#d62426",
+          "#fff",
+          4 * size,
+        );
+        if (face === "roadworks") {
+          circ(-3, -5, 2.8, "#172033");
+          ln(-4, -1, 1, 4);
+          ln(1, 4, -4, 12);
+          ln(1, 4, 8, 12);
+          ln(-2, 0, 7, 2);
+          ln(7, 2, 11, 12);
+          poly(
+            [
+              [7, 12],
+              [15, 12],
+              [11, 8],
+            ],
+            "#172033",
+          );
+        } else if (face === "signals") {
+          poly(
+            [
+              [-4, -12],
+              [4, -12],
+              [4, 13],
+              [-4, 13],
+            ],
+            "#172033",
+          );
+          circ(0, -7, 2.5, "#e22");
+          circ(0, 0, 2.5, "#f5a800");
+          circ(0, 7, 2.5, "#1d9955");
+        } else if (face === "narrows") {
+          ln(-10, 11, -10, -8);
+          ln(10, 11, 10, 2);
+          ln(10, 2, 3, -7);
+        } else txt(-3, 11, "!", 23);
       }
+      if (e.text) text(x - e.text.length * 3, y + 35 * size, e.text, 10);
     } else if (e.type === "lights") {
-      circle(x, y - 12, 5, "#c53524");
-      circle(x, y, 5, "#ba7900");
-      circle(x, y + 12, 5, "#126747");
-      line(x - 10, y - 22, x + 10, y - 22);
-      line(x + 10, y - 22, x + 10, y + 22);
-      line(x + 10, y + 22, x - 10, y + 22);
-      line(x - 10, y + 22, x - 10, y - 22);
+      box(x - 10, y - 24, 20, 48, "#172033");
+      circle(x, y - 14, 5, "#d62426", "#d62426");
+      circle(x, y, 5, "#eda900", "#eda900");
+      circle(x, y + 14, 5, "#18804a", "#18804a");
     } else text(x, y, e.text || "Label");
   }
   return out;
@@ -129,7 +334,19 @@ export function toDxf(entities, report = "") {
     "ENTITIES",
   );
   for (const shape of [
-    ...primitives(entities),
+    ...primitives(entities).flatMap((shape) =>
+      shape.kind === "polygon"
+        ? shape.points.map((p, i) => ({
+            kind: "line",
+            x1: p[0],
+            y1: p[1],
+            x2: shape.points[(i + 1) % shape.points.length][0],
+            y2: shape.points[(i + 1) % shape.points.length][1],
+            color: shape.color,
+            width: shape.width,
+          }))
+        : [shape],
+    ),
     ...report
       .split("\n")
       .filter(Boolean)
@@ -313,6 +530,12 @@ export function bounds(shapes) {
   const xs = [],
     ys = [];
   for (const s of shapes) {
+    if (s.kind === "polygon") {
+      for (const p of s.points) {
+        xs.push(p[0]);
+        ys.push(p[1]);
+      }
+    }
     if (s.kind === "line") {
       xs.push(s.x1, s.x2);
       ys.push(s.y1, s.y2);

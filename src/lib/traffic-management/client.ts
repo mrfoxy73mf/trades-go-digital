@@ -1,3 +1,5 @@
+import { buildMapDraft } from "./map.mjs";
+import { bindMapControls, type MapState } from "./map-client";
 import { buildDraft, designReport } from "./generate.mjs";
 import {
   HEIGHT,
@@ -7,6 +9,8 @@ import {
   toDxf,
   parseDxf,
   bounds,
+  withSignFaces,
+  layoutSymbolCallouts,
 } from "./drawing.mjs";
 type Item = {
   type: string;
@@ -16,40 +20,56 @@ type Item = {
   y2: number;
   text: string;
   scale?: number;
+  signFace?: string;
+  points?: number[][];
 };
 const NS = "http://www.w3.org/2000/svg",
   KEY = "tgd-tm-draft-v1";
 function svgShape(s: any) {
   const node = document.createElementNS(
     NS,
-    s.kind === "text" ? "text" : s.kind === "circle" ? "circle" : "line",
+    s.kind === "text"
+      ? "text"
+      : s.kind === "circle"
+        ? "circle"
+        : s.kind === "polygon"
+          ? "polygon"
+          : "line",
   );
   const attrs =
-    s.kind === "line"
+    s.kind === "polygon"
       ? {
-          x1: s.x1,
-          y1: s.y1,
-          x2: s.x2,
-          y2: s.y2,
+          points: s.points.map((p: number[]) => p.join(",")).join(" "),
+          fill: s.fill,
           stroke: s.color,
           "stroke-width": s.width,
+          "stroke-linejoin": "round",
         }
-      : s.kind === "circle"
+      : s.kind === "line"
         ? {
-            cx: s.cx,
-            cy: s.cy,
-            r: s.r,
-            fill: "none",
+            x1: s.x1,
+            y1: s.y1,
+            x2: s.x2,
+            y2: s.y2,
             stroke: s.color,
-            "stroke-width": 2,
+            "stroke-width": s.width,
           }
-        : {
-            x: s.x,
-            y: s.y,
-            fill: s.color,
-            "font-size": s.size,
-            "font-family": "Arial, sans-serif",
-          };
+        : s.kind === "circle"
+          ? {
+              cx: s.cx,
+              cy: s.cy,
+              r: s.r,
+              fill: s.fill || "none",
+              stroke: s.color,
+              "stroke-width": 2,
+            }
+          : {
+              x: s.x,
+              y: s.y,
+              fill: s.color,
+              "font-size": s.size,
+              "font-family": "Arial, sans-serif",
+            };
   for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, String(v));
   if (s.kind === "text") node.textContent = s.text;
   return node;
@@ -82,6 +102,8 @@ export function bindTrafficDrawing() {
     q<HTMLElement>("[data-calculation-details]").hidden = !text;
     q<HTMLButtonElement>("[data-report]").disabled = !text;
   };
+  let restoredMap: MapState | null = null,
+    awaitingMap = false;
   let items: Item[] = [],
     selected = -1,
     history: Item[][] = [],
@@ -109,6 +131,12 @@ export function bindTrafficDrawing() {
           record.report.length <= 80000
         )
           setReport(record.report);
+        items = withSignFaces(items, calculationReport);
+        const mapRecord = JSON.parse(
+          localStorage.getItem(KEY + "-map") || "null",
+        );
+        if (mapRecord?.snapshot === saved && mapRecord.state)
+          restoredMap = mapRecord.state;
       } else
         status(
           "The saved drawing is invalid. Open a saved project to recover your work.",
@@ -120,6 +148,12 @@ export function bindTrafficDrawing() {
   const save = () => {
     try {
       localStorage.setItem(KEY, JSON.stringify(items));
+      if (map.state)
+        localStorage.setItem(
+          KEY + "-map",
+          JSON.stringify({ snapshot: JSON.stringify(items), state: map.state }),
+        );
+      else localStorage.removeItem(KEY + "-map");
       if (calculationReport)
         localStorage.setItem(
           KEY + "-report",
@@ -140,6 +174,7 @@ export function bindTrafficDrawing() {
     q("[data-cone-count]").textContent =
       `Cone symbols in current sketch: ${items.filter((item) => item.type === "cone").length}. Core generated quantities exclude spare cones and extra site-specific runs.`;
     layer.replaceChildren();
+    const displayItems = layoutSymbolCallouts(items);
     items.forEach((item, i) => {
       const g = document.createElementNS(NS, "g");
       g.dataset.index = String(i);
@@ -171,7 +206,8 @@ export function bindTrafficDrawing() {
       for (const [key, value] of Object.entries(hitAttributes))
         hit.setAttribute(key, String(value));
       g.appendChild(hit);
-      for (const s of primitives([item])) g.appendChild(svgShape(s));
+      for (const s of primitives([displayItems[i]], false))
+        g.appendChild(svgShape(s));
       if (i === selected) {
         const r = document.createElementNS(NS, "rect");
         const pad = ["road", "sign", "lights"].includes(item.type) ? 30 : 18;
@@ -189,11 +225,70 @@ export function bindTrafficDrawing() {
     const warning = svgShape({
       kind: "text",
       x: 10,
-      y: HEIGHT - 10,
+      y: map.state ? HEIGHT - 35 : HEIGHT - 10,
       text: DRAFT,
       size: 12,
       color: "#8c3510",
     });
+    if (map.state) {
+      const points = map.state.alignment;
+      if (points.length === 2)
+        layer.appendChild(
+          svgShape({
+            kind: "line",
+            x1: points[0][0],
+            y1: points[0][1],
+            x2: points[1][0],
+            y2: points[1][1],
+            color: "#1470b8",
+            width: 2,
+          }),
+        );
+      points.forEach((p, i) => {
+        layer.appendChild(
+          svgShape({
+            kind: "circle",
+            cx: p[0],
+            cy: p[1],
+            r: 5,
+            color: "#1470b8",
+            fill: "white",
+          }),
+        );
+        layer.appendChild(
+          svgShape({
+            kind: "text",
+            x: p[0] + 8,
+            y: p[1] - 8,
+            size: 12,
+            color: "#1255b0",
+            text: i === 0 ? "Works start" : "Works end",
+          }),
+        );
+      });
+      map.state.features.forEach((p, i) => {
+        layer.appendChild(
+          svgShape({
+            kind: "circle",
+            cx: p[0],
+            cy: p[1],
+            r: 10,
+            color: "#9a3412",
+            fill: "#ffe589",
+          }),
+        );
+        layer.appendChild(
+          svgShape({
+            kind: "text",
+            x: p[0] + 13,
+            y: p[1],
+            size: 12,
+            color: "#9a3412",
+            text: `Review ${i + 1}`,
+          }),
+        );
+      });
+    }
     layer.appendChild(warning);
     selection.replaceChildren(
       new Option("None", "-1"),
@@ -221,8 +316,56 @@ export function bindTrafficDrawing() {
     history.push(structuredClone(items));
     if (history.length > 50) history.shift();
   };
+  const map = bindMapControls(root, {
+    hasItems: () => items.length > 0,
+    clear: () => {
+      items = [];
+      history = [];
+      selected = -1;
+      setReport("");
+    },
+    changed: (invalidate = false) => {
+      if (invalidate) setReport("");
+      awaitingMap = false;
+      render();
+      save();
+    },
+  });
   const generator = q<HTMLFormElement>("[data-generator]");
   const roadType = q<HTMLSelectElement>('[data-generator] [name="roadType"]');
+  const laneCount = q<HTMLSelectElement>('[data-generator] [name="laneCount"]');
+  const widthHost = q("[data-lane-widths]");
+  const totalWidth = () => {
+    q<HTMLInputElement>('[name="roadWidth"]').value = String(
+      Array.from(widthHost.querySelectorAll<HTMLInputElement>("input")).reduce(
+        (n, i) => n + Number(i.value),
+        0,
+      ),
+    );
+  };
+  const syncWidths = () => {
+    const old = Array.from(
+      widthHost.querySelectorAll<HTMLInputElement>("input"),
+    ).map((i) => i.value);
+    widthHost.replaceChildren();
+    for (let i = 0; i < Number(laneCount.value); i++) {
+      const label = document.createElement("label"),
+        input = document.createElement("input");
+      label.textContent = `Lane ${i + 1} width (m)`;
+      input.type = "number";
+      input.min = "1";
+      input.max = "6";
+      input.step = "any";
+      input.required = true;
+      input.value = old[i] || "3";
+      input.dataset.laneWidth = String(i);
+      input.addEventListener("input", totalWidth);
+      label.appendChild(input);
+      widthHost.appendChild(label);
+    }
+    totalWidth();
+  };
+  laneCount.addEventListener("change", syncWidths);
   const syncGenerator = () => {
     const single = roadType.value === "single";
     const lanes = q<HTMLSelectElement>('[data-generator] [name="laneCount"]');
@@ -237,6 +380,7 @@ export function bindTrafficDrawing() {
           ? Number(option.value) < 50
           : option.value === "20";
     if (speed.selectedOptions[0]?.disabled) speed.value = single ? "30" : "70";
+    syncWidths();
   };
   generator.addEventListener("input", () => {
     if (calculationReport)
@@ -250,7 +394,23 @@ export function bindTrafficDrawing() {
     if (!generator.reportValidity()) return;
     try {
       const values = new FormData(generator);
-      const { items: generated, design } = buildDraft({
+      if (map.busy || awaitingMap)
+        throw Error("Wait for the job map to load before generating.");
+      if (map.state?.site === "complex" || map.state?.features.length)
+        throw Error(
+          "Junction/roundabout or access review is required. Use the map and manual tools to design the affected approaches; the straight-road calculator cannot design this case.",
+        );
+      const widths = Array.from(
+        widthHost.querySelectorAll<HTMLInputElement>("input"),
+      ).map((i) => Number(i.value));
+      if (
+        roadType.value !== "single" &&
+        widths.some((w) => Math.abs(w - widths[0]) > 0.01)
+      )
+        throw Error(
+          "Unequal lanes require a site-specific lane-closure design. They cannot use the equal-lane automatic profile.",
+        );
+      const input = {
         roadType: String(values.get("roadType")),
         speed: Number(values.get("speed")),
         worksSide: String(values.get("worksSide")),
@@ -263,7 +423,10 @@ export function bindTrafficDrawing() {
         scopeConfirmed: values.has("scopeConfirmed"),
         hasHardShoulder: values.has("hasHardShoulder"),
         congestion: values.has("congestion"),
-      });
+      };
+      const { items: generated, design } = map.state
+        ? buildMapDraft(input, map.state.alignment, map.state.view)
+        : buildDraft(input);
       if (
         items.length &&
         !confirm(
@@ -275,7 +438,9 @@ export function bindTrafficDrawing() {
       items = generated;
       selected = -1;
       tool.value = "select";
-      setReport(designReport(design));
+      setReport(
+        `${map.state ? "MAP-BASED DRAFT — verify image currency, alignment and all junctions/accesses.\n" : ""}Lane widths: ${widths.join(", ")} m — ${values.get("widthSource") === "surveyed" ? "entered as surveyed measurements" : "ASSUMED — confirm on site"}.\n${designReport(design)}`,
+      );
       render();
       save();
       q<HTMLDetailsElement>("[data-calculation-details]").open = true;
@@ -295,6 +460,9 @@ export function bindTrafficDrawing() {
   const pick = (i: number) => {
     selected = i;
     if (items[i]) label.value = items[i].text;
+    if (items[i]?.type === "sign")
+      q<HTMLSelectElement>("[data-sign-face]").value =
+        items[i].signFace || "generic";
     render();
   };
   const point = (e: PointerEvent) => {
@@ -323,12 +491,15 @@ export function bindTrafficDrawing() {
         ? label.value.trim()
         : "",
     });
+    if (tool.value === "sign")
+      items.at(-1)!.signFace = q<HTMLSelectElement>("[data-sign-face]").value;
     selected = items.length - 1;
     return true;
   };
   canvas.addEventListener("pointerdown", (e) => {
-    if (e.button !== 0) return;
+    if (e.button !== 0 || map.busy || map.pan) return;
     const p = point(e);
+    if (map.consume(p)) return;
     canvas.setPointerCapture(e.pointerId);
     if (tool.value === "select") {
       const hit = (e.target as Element).closest<SVGGElement>("[data-index]");
@@ -374,6 +545,11 @@ export function bindTrafficDrawing() {
           30 - Math.min(b.y, b.y2),
           Math.min(570 - Math.max(b.y, b.y2), p.y - drag.start.y),
         );
+      if (item.points)
+        item.points = item.points.map((p, i) => [
+          drag!.base[drag!.index].points![i][0] + dx,
+          drag!.base[drag!.index].points![i][1] + dy,
+        ]);
       Object.assign(item, {
         x: b.x + dx,
         y: b.y + dy,
@@ -402,6 +578,14 @@ export function bindTrafficDrawing() {
     render();
   });
   selection.addEventListener("change", () => pick(Number(selection.value)));
+  q<HTMLSelectElement>("[data-sign-face]").addEventListener("change", () => {
+    if (selected >= 0 && items[selected].type === "sign") {
+      checkpoint();
+      items[selected].signFace = q<HTMLSelectElement>("[data-sign-face]").value;
+      render();
+      save();
+    }
+  });
   label.addEventListener("change", () => {
     if (
       selected >= 0 &&
@@ -460,19 +644,38 @@ export function bindTrafficDrawing() {
     checkpoint();
     items = [];
     selected = -1;
+    history = [];
+    map.reset();
+    awaitingMap = false;
     render();
     save();
   });
   q("[data-dxf]").addEventListener("click", () =>
     download(
-      new Blob([toDxf(items, calculationReport)], { type: "application/dxf" }),
+      new Blob(
+        [
+          toDxf(
+            items,
+            (map.state
+              ? "Map background is omitted from DXF. Drawing coordinates are sketch units, not surveyed CAD coordinates.\n"
+              : "") + calculationReport,
+          ),
+        ],
+        { type: "application/dxf" },
+      ),
       "traffic-management-DRAFT.dxf",
     ),
   );
   q("[data-project]").addEventListener("click", () =>
     download(
       new Blob(
-        [JSON.stringify({ version: 1, items, calculationReport }, null, 2)],
+        [
+          JSON.stringify(
+            { version: 1, items, calculationReport, map: map.state },
+            null,
+            2,
+          ),
+        ],
         {
           type: "application/json",
         },
@@ -506,7 +709,23 @@ export function bindTrafficDrawing() {
             "IMPORTED REPORT — verify against the drawing and current guidance.\n" +
               data.calculationReport,
           );
+        items = withSignFaces(items, calculationReport);
         selected = -1;
+        history = [];
+        map.reset();
+        awaitingMap = !!data.map;
+        if (data.map) {
+          try {
+            await map.restore(data.map);
+            awaitingMap = false;
+          } catch {
+            status(
+              "Project opened, but its map could not load. Check map setup or start a new drawing.",
+            );
+            render();
+            return;
+          }
+        }
         render();
         save();
         status("Editable project opened.");
@@ -521,6 +740,10 @@ export function bindTrafficDrawing() {
     const button = q<HTMLButtonElement>("[data-pdf]");
     button.disabled = true;
     try {
+      if (awaitingMap || map.busy)
+        throw Error(
+          "The map background has not loaded. Wait or check the map connection before exporting.",
+        );
       const { jsPDF } = await import("jspdf");
       const pdf = new jsPDF({
         orientation: "landscape",
@@ -528,17 +751,43 @@ export function bindTrafficDrawing() {
         format: "a4",
       });
       pdf.setFontSize(16);
-      pdf.text("Traffic management — DRAFT", 25, 28);
+      pdf.text("Traffic management - DRAFT", 25, 28);
       pdf.setFontSize(9);
       pdf.text(
         "Competent traffic-management designer review required. Schematic, not to scale.",
         25,
         44,
       );
+      pdf.text(
+        "Leader dots mark actual anchors; sign and signal faces may be displaced for readability.",
+        25,
+        56,
+      );
       const scale = 0.75,
         ox = 35,
         oy = 65;
-      for (const s of primitives(items)) {
+      if (map.image)
+        pdf.addImage(map.image, "PNG", ox, oy, 1000 * scale, 650 * scale);
+      const mapMarkers =
+        map.state?.features.flatMap((p, i) => [
+          {
+            kind: "circle",
+            cx: p[0],
+            cy: p[1],
+            r: 10,
+            color: "#9a3412",
+            fill: "#ffe589",
+          },
+          {
+            kind: "text",
+            x: p[0] + 13,
+            y: p[1],
+            text: `Review ${i + 1}`,
+            size: 12,
+            color: "#9a3412",
+          },
+        ]) || [];
+      for (const s of [...primitives(items), ...mapMarkers] as any[]) {
         pdf.setDrawColor(s.color);
         pdf.setTextColor(s.color);
         if (s.kind === "line") {
@@ -550,14 +799,47 @@ export function bindTrafficDrawing() {
             oy + s.y2 * scale,
           );
         }
+        if (s.kind === "polygon") {
+          pdf.setFillColor(s.fill === "none" ? "#fff" : s.fill);
+          pdf.setLineWidth(s.width * scale);
+          const [first, ...rest] = s.points;
+          let prev = first;
+          const vectors = rest.map((p: number[]) => {
+            const v = [(p[0] - prev[0]) * scale, (p[1] - prev[1]) * scale];
+            prev = p;
+            return v;
+          });
+          pdf.lines(
+            vectors,
+            ox + first[0] * scale,
+            oy + first[1] * scale,
+            [1, 1],
+            s.fill === "none" ? "S" : "FD",
+            true,
+          );
+        }
         if (s.kind === "circle") {
           pdf.setLineWidth(1);
-          pdf.circle(ox + s.cx * scale, oy + s.cy * scale, s.r * scale);
+          if (s.fill && s.fill !== "none") pdf.setFillColor(s.fill);
+          pdf.circle(
+            ox + s.cx * scale,
+            oy + s.cy * scale,
+            s.r * scale,
+            s.fill && s.fill !== "none" ? "FD" : "S",
+          );
         }
         if (s.kind === "text") {
           pdf.setFontSize(s.size * scale);
           pdf.text(s.text, ox + s.x * scale, oy + s.y * scale);
         }
+      }
+      if (map.state) {
+        pdf.setFontSize(8);
+        pdf.text(
+          "Map context only. Verify site measurements and all marked features. Map not to print scale.",
+          25,
+          575,
+        );
       }
       if (calculationReport) {
         const lines: string[] = pdf.splitTextToSize(calculationReport, 760);
@@ -665,6 +947,20 @@ export function bindTrafficDrawing() {
     }
   });
   render();
+  if (restoredMap) {
+    awaitingMap = true;
+    map
+      .restore(restoredMap)
+      .then(() => {
+        awaitingMap = false;
+        render();
+      })
+      .catch(() =>
+        status(
+          "Saved drawing restored but its map could not load. Check map setup, or start a new drawing. PDF export is paused to avoid an incomplete plan.",
+        ),
+      );
+  }
   if (items.length)
     q("[data-save-status]").textContent =
       "Restored the drawing saved in this browser.";

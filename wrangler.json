@@ -1,7 +1,9 @@
 {
 	"name": "trades-go-digital",
 	"compatibility_date": "2026-07-29",
-	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
 	"main": "./dist/locked-worker.js",
 	"vars": {
 		"SAFEWORK_MODE": "test",
@@ -39,5 +41,15 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	"ratelimits": [
+		{
+			"name": "TRAFFIC_MAP_RATE_LIMITER",
+			"namespace_id": "732731",
+			"simple": {
+				"limit": 20,
+				"period": 60
+			}
+		}
+	]
 }
