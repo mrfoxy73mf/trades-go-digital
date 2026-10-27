@@ -2,7 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_TITLE, TGD_APP_URL } from "../consts";
+import { SITE_TITLE } from "../consts";
 
 export const prerender = false;
 
@@ -169,7 +169,7 @@ const operationsFeatures = [
 						</p>
 						<div class="pt-intro-actions">
 							<a class="pt-action pt-action-primary" href="#explore">Explore the app</a>
-							<a class="pt-action pt-action-secondary" href="/pricing#trades">See pricing</a>
+							<a class="pt-action pt-action-secondary" href="/contact/#tgd-enquiry">Show your interest</a>
 						</div>
 						<ul class="pt-intro-points" aria-label="TGD Trades highlights">
 							<li>Win work and book it faster</li>
@@ -315,7 +315,7 @@ const operationsFeatures = [
 				</div>
 			</section>
 
-			<section id="pricing" class="pt-section"><div class="pt-container"><h2>Choose your TGD Trades subscription.</h2><p>See the introductory offer and ongoing subscription on our pricing page.</p><a class="pt-action pt-action-primary" href="/pricing#trades">View TGD Trades pricing</a></div></section>
+			<section id="interest" class="pt-section"><div class="pt-container"><h2>Interested in TGD Trades?</h2><p>Tell us about your trade business and how you would use the app. We will contact you with launch information when it is ready.</p><a class="pt-action pt-action-primary" href="/contact/#tgd-enquiry">Contact us and show your interest</a></div></section>
 
 			<section class="pt-section pt-faq" aria-labelledby="faq-title">
 				<div class="pt-container">
@@ -334,8 +334,8 @@ const operationsFeatures = [
 				<div class="pt-container">
 					<p class="pt-eyebrow">Ready to begin?</p>
 					<h2>Put TGD Trades to work in your business.</h2>
-					<p>Create your account in the TGD Trades app, choose your subscription and let Stripe handle the payment securely.</p>
-					<a class="pt-action pt-action-primary" href={TGD_APP_URL}>Open TGD Trades and subscribe</a>
+					<p>TGD Trades is being prepared for launch. Contact us to show your interest and tell us what your trade business needs.</p>
+					<a class="pt-action pt-action-primary" href="/contact/#tgd-enquiry">Show your interest in TGD Trades</a>
 				</div>
 			</section>
 		</main>
