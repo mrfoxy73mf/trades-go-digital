@@ -377,7 +377,9 @@ const operationsFeatures = [
 
 			const updateDemoPriceOverlay = () => {
 				if (!demoPriceOverlay || !demoPlayer) return;
-				const coversIncorrectPrice = activeDemoKey === "phoneCallAdvert" || (activeDemoKey === "tour" && demoPlayer.currentTime >= 79);
+				const tourPriceNeedsCovering = activeDemoKey === "tour" && demoPlayer.currentTime >= 79;
+				const coversIncorrectPrice = activeDemoKey === "phoneCallAdvert" || tourPriceNeedsCovering;
+				demoPriceOverlay.classList.toggle("is-tour-price", tourPriceNeedsCovering);
 				demoPriceOverlay.hidden = !coversIncorrectPrice;
 			};
 
@@ -1226,6 +1228,22 @@ const operationsFeatures = [
 
 	.pt-demo-price-overlay[hidden] {
 		display: none;
+	}
+
+	.pt-demo-price-overlay.is-tour-price {
+		top: 67%;
+		right: auto;
+		bottom: auto;
+		left: 2.5%;
+		width: 54%;
+		height: 20%;
+		padding: 0 2%;
+		border-left: 4px solid #20c9ff;
+		background: linear-gradient(90deg, #020b17 0%, #061426 88%, rgba(6, 20, 38, 0.96) 100%);
+		font-size: clamp(0.72rem, 1.7vw, 1.5rem);
+		line-height: 1.25;
+		white-space: normal;
+		text-align: center;
 	}
 
 	.pt-demo-video video {
