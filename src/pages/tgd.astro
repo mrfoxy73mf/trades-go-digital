@@ -221,6 +221,7 @@ const operationsFeatures = [
 							<source src="/videos/tgd-trades-demo-business-music.mp4?v=20261026" type="video/mp4" />
 							Your browser does not support embedded video.
 						</video>
+						<div id="pt-demo-price-overlay" class="pt-demo-price-overlay" hidden>£40 a month for 3 months — then £70/month</div>
 					</div>
 				</div>
 			</section>
@@ -345,6 +346,7 @@ const operationsFeatures = [
 			const demoTitle = document.querySelector<HTMLElement>("#demo-title");
 			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
 			const demoButtons = document.querySelectorAll<HTMLButtonElement>("[data-demo]");
+			const demoPriceOverlay = document.querySelector<HTMLElement>("#pt-demo-price-overlay");
 			const demos = {
 				tour: {
 					title: "Take a guided tour of TGD Trades.",
@@ -377,6 +379,7 @@ const operationsFeatures = [
 					const key = button.dataset.demo as keyof typeof demos;
 					const demo = demos[key];
 					if (!demo || !demoPlayer || !demoTitle || !demoDescription) return;
+					if (demoPriceOverlay) demoPriceOverlay.hidden = key !== "phoneCallAdvert";
 					demoPlayer.pause();
 					demoPlayer.src = demo.src;
 					demoPlayer.poster = demo.poster;
@@ -1180,12 +1183,37 @@ const operationsFeatures = [
 	}
 
 	.pt-demo-video {
+		position: relative;
 		overflow: hidden;
 		width: 100%;
 		border: 1px solid rgba(255, 107, 0, 0.46);
 		border-radius: 12px;
 		background: #030508;
 		box-shadow: 0 28px 90px rgba(0, 0, 0, 0.5), 0 0 46px rgba(255, 107, 0, 0.14);
+	}
+
+	.pt-demo-price-overlay {
+		position: absolute;
+		right: 13.5%;
+		bottom: 0;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 34%;
+		height: 8.4%;
+		padding: 0 1%;
+		background: #001b38;
+		color: #fff;
+		font-size: clamp(0.38rem, 1.25vw, 1.45rem);
+		font-weight: 900;
+		line-height: 1.1;
+		white-space: nowrap;
+		pointer-events: none;
+	}
+
+	.pt-demo-price-overlay[hidden] {
+		display: none;
 	}
 
 	.pt-demo-video video {
