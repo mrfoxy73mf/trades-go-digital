@@ -1,4 +1,5 @@
 interface Env {
+ TRAFFIC_AI_RATE_LIMITER?: {limit(input:{key:string}):Promise<{success:boolean}>};
  GOOGLE_MAPS_SERVER_KEY?: string;
  WHAT3WORDS_API_KEY?: string;
  TRAFFIC_MAP_RATE_LIMITER?: {limit(input:{key:string}):Promise<{success:boolean}>};
