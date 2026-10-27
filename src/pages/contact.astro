@@ -10,7 +10,7 @@ const faqs = [
 	{
 		question: "Do I need internet on site?",
 		answer:
-			"No. Log jobs, snap receipts and take voice notes offline in the van or a loft. Everything syncs the moment you get signal, so nothing gets lost.",
+			"You need an internet connection for cloud features and syncing. Some screens may remain visible briefly if your signal drops, but you should reconnect before relying on new information being saved.",
 	},
 	{
 		question: "Does this replace my accountant?",
@@ -25,27 +25,27 @@ const faqs = [
 	{
 		question: "Is my customer data safe?",
 		answer:
-			"Data is encrypted in transit, stored on secure UK-region servers and backed up daily. Sensitive sections such as Wages, Tax and Archives are locked behind a separate PIN.",
+			"We use technical and organisational safeguards designed to protect account and customer information, including encrypted connections and access controls. No online service can guarantee absolute security; see the Privacy Notice for more detail.",
 	},
 	{
 		question: "I am not great with tech. Will I get lost?",
 		answer:
-			"If you can send a WhatsApp, you can use TGD Trades. The AI Assistant works like texting a mate: log diesel, book a customer in, or ask how much you earned this month.",
+			"TGD Trades is designed to be straightforward on a phone, tablet or computer. The guided screens and AI Assistant can help with everyday tasks, but important information should always be checked before you rely on it.",
 	},
 	{
-		question: "Will HMRC be happy with it?",
+		question: "Can it help with my business records?",
 		answer:
-			"Yes. Every job, receipt and mile is stored digitally in the format HMRC Making Tax Digital rules require, so VAT return figures are already in the right shape.",
+			"It can help you organise jobs, receipts, mileage and reports for your records and accountant. It does not guarantee tax or Making Tax Digital compliance, so check your setup and submissions with HMRC guidance or a qualified accountant.",
 	},
 	{
 		question: "Can I bring my last few months' records in from another app?",
 		answer:
-			"Yes. Go to Settings, then Bring Your History, and upload a CSV export from Xero, QuickBooks, Sage or your spreadsheet. TGD Trades auto-maps the columns and imports jobs, expenses and mileage in one shot.",
+			"Where an import tool is available in your account, you can bring in supported CSV records. Check the preview carefully before confirming an import, and contact us if your existing export uses a different format.",
 	},
 	{
 		question: "What happens if I lose my phone?",
 		answer:
-			"Nothing important. Your data lives on secure UK-region servers, not on your phone. Grab any phone, log back in, and every job, receipt, mile and PDF is where you left it. Two-factor login in V2 and full CSV/PDF backups add extra peace of mind.",
+			"Your records are linked to your account rather than only to one phone. Use another supported device to sign in, change any credentials that may be exposed, and contact us promptly if you suspect unauthorised access.",
 	},
 ];
 ---
@@ -65,7 +65,7 @@ const faqs = [
 				<p class="eyebrow">Contact</p>
 				<h1>Ask about TGD Trades.</h1>
 				<a class="email-card" href={`mailto:${CONTACT_EMAIL}`}>
-					<span>Email Mac</span>
+					<span>Email Trades Go Digital</span>
 					<strong>{CONTACT_EMAIL}</strong>
 				</a>
 			</section>
@@ -98,7 +98,7 @@ const faqs = [
 							</svg>
 						</div>
 						<div>
-							<p class="message-lead">Join hundreds of trades preparing for launch.</p>
+							<p class="message-lead">Interested in TGD Trades?</p>
 							<p class="message-sub">Tell us how TGD Trades could help your business.</p>
 						</div>
 					</div>
