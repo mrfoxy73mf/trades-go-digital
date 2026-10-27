@@ -347,6 +347,7 @@ const operationsFeatures = [
 			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
 			const demoButtons = document.querySelectorAll<HTMLButtonElement>("[data-demo]");
 			const demoPriceOverlay = document.querySelector<HTMLElement>("#pt-demo-price-overlay");
+			let activeDemoKey: "tour" | "advert" | "phoneCallAdvert" | "bathroomAdvert" = "tour";
 			const demos = {
 				tour: {
 					title: "Take a guided tour of TGD Trades.",
@@ -374,13 +375,24 @@ const operationsFeatures = [
 				},
 			};
 
+			const updateDemoPriceOverlay = () => {
+				if (!demoPriceOverlay || !demoPlayer) return;
+				const coversIncorrectPrice = activeDemoKey === "phoneCallAdvert" || (activeDemoKey === "tour" && demoPlayer.currentTime >= 79);
+				demoPriceOverlay.hidden = !coversIncorrectPrice;
+			};
+
+			demoPlayer?.addEventListener("timeupdate", updateDemoPriceOverlay);
+			demoPlayer?.addEventListener("seeked", updateDemoPriceOverlay);
+
 			demoButtons.forEach((button) => {
 				button.addEventListener("click", () => {
 					const key = button.dataset.demo as keyof typeof demos;
 					const demo = demos[key];
 					if (!demo || !demoPlayer || !demoTitle || !demoDescription) return;
-					if (demoPriceOverlay) demoPriceOverlay.hidden = key !== "phoneCallAdvert";
+					activeDemoKey = key;
 					demoPlayer.pause();
+					demoPlayer.currentTime = 0;
+					updateDemoPriceOverlay();
 					demoPlayer.src = demo.src;
 					demoPlayer.poster = demo.poster;
 					demoPlayer.load();
