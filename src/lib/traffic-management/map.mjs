@@ -5,6 +5,7 @@ export const MAP_WIDTH = 640,
 export function validMap(value) {
   return (
     !!value &&
+    (value.mapType === undefined || ["roadmap", "hybrid"].includes(value.mapType)) &&
     [value.lat, value.lng, value.zoom].every(Number.isFinite) &&
     Math.abs(value.lat) <= 85 &&
     Math.abs(value.lng) <= 180 &&

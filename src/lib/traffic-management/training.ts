@@ -11,7 +11,7 @@ const steps = [
   },
   {
     title: "3. Mark the working section",
-    copy: "Press Mark working section, then tap the start and end on the road centreline in the direction of travel. These points mark the work itself, not the whole advance-signing area. Use Mark junction / access for nearby features needing review. The map controls sit directly above the map, below the measurements. Use “Go to the map and its controls” to jump there.",
+    copy: "For AI drawing, press Mark work start + direction and tap the work start followed by a point along the travel direction; your entered length sets the work end. For the alternative standard calculator, Mark working section needs the two actual work endpoints. Use Mark junction / access for nearby features needing review. The map controls sit directly above the map, below the measurements. Use “Go to the map and its controls” to jump there.",
     target: "[data-map-mark]",
   },
   {
@@ -21,7 +21,7 @@ const steps = [
   },
   {
     title: "5. Generate only a supported draft",
-    copy: "Read the scope confirmation before selecting it. The calculator has limited straight-road profiles and may reject your dimensions; never change real measurements to make them pass. A slip-road case needs manual design. A generated draft still needs a competent designer’s review of the whole site and the sign schedule.",
+    copy: "Describe the job and use Create AI drawing to analyse the selected map and generate a supported draft. If AI returns review points, resolve them or finish a site-specific design manually. The alternative standard calculator has a separate scope confirmation: read it before selecting it. Both use limited profiles and may reject your dimensions; never change real measurements to make them pass. A slip-road case needs manual design. A generated draft still needs a competent designer’s review of the whole site and the sign schedule.",
     target: "[name=scopeConfirmed]",
   },
   {

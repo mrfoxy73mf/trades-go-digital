@@ -364,6 +364,13 @@ export function bindTrafficDrawing() {
       widthHost.appendChild(label);
     }
     totalWidth();
+    const aiLane = q<HTMLSelectElement>("[data-ai-lane]");
+    const prior = aiLane.value;
+    aiLane.replaceChildren();
+    for (let i=1;i<=Number(laneCount.value);i++) {
+      const option=document.createElement("option");option.value=String(i);option.textContent=`Lane ${i}`;aiLane.appendChild(option);
+    }
+    aiLane.value=Number(prior)<=Number(laneCount.value)?prior:"1";
   };
   laneCount.addEventListener("change", syncWidths);
   const syncGenerator = () => {
@@ -396,6 +403,7 @@ export function bindTrafficDrawing() {
       const values = new FormData(generator);
       if (map.busy || awaitingMap)
         throw Error("Wait for the job map to load before generating.");
+      if(map.state?.alignmentMode === "direction")throw Error("For the standard calculator, use Mark working section to mark both actual work endpoints. The start + direction marks are for AI drafting.");
       if (map.state?.site === "complex" || map.state?.features.length)
         throw Error(
           "Junction/roundabout or access review is required. Use the map and manual tools to design the affected approaches; the straight-road calculator cannot design this case.",
@@ -439,7 +447,7 @@ export function bindTrafficDrawing() {
       selected = -1;
       tool.value = "select";
       setReport(
-        `${map.state ? "MAP-BASED DRAFT — verify image currency, alignment and all junctions/accesses.\n" : ""}Lane widths: ${widths.join(", ")} m — ${values.get("widthSource") === "surveyed" ? "entered as surveyed measurements" : "ASSUMED — confirm on site"}.\n${designReport(design)}`,
+        `${map.state ? "MAP-BASED DRAFT — verify image currency, alignment and all junctions/accesses.\n" : ""}Lane widths: ${widths.join(", ")} m — ${values.get("widthSource") === "surveyed" ? "entered as surveyed measurements" : values.get("widthSource") === "map" ? "map-measured — approximate, confirm" : "ASSUMED — confirm on site"}.\n${designReport(design)}`,
       );
       render();
       save();
@@ -450,6 +458,55 @@ export function bindTrafficDrawing() {
       q("[data-generator-status]").textContent =
         error instanceof Error ? error.message : "Could not calculate a draft.";
     }
+  });
+  const aiButton = q<HTMLButtonElement>("[data-ai-create]");
+  const aiStatus = q("[data-ai-status]");
+  let aiRunning = false;
+  fetch("/api/traffic-map/draft").then(r=>r.json() as Promise<{available?: boolean}>).then(data=>{
+    aiButton.disabled=!data.available;
+    aiStatus.textContent=data.available ? "Ready. Mark the work start and direction, describe the job and enter its measurements." : "AI drawing needs owner setup. The manual editor and standard calculator remain available.";
+  }).catch(()=>{aiStatus.textContent="Could not check AI availability. Refresh to retry.";});
+  aiButton.addEventListener("click", async () => {
+    if(aiRunning)return;
+    try {
+      if(!map.state||map.busy||awaitingMap)throw Error("Load the map before creating an AI drawing.");
+      if(map.state.alignment.length!==2)throw Error("Mark the work start, then a second point along the road in the direction of travel.");
+      const values=new FormData(generator);
+      const access=q<HTMLInputElement>("[data-ai-access]").value;
+      const payload={
+        description:q<HTMLTextAreaElement>("[data-ai-description]").value,
+        closedLane:Number(q<HTMLSelectElement>("[data-ai-lane]").value),
+        map:map.state.view,alignment:map.state.alignment,features:map.state.features,site:map.state.site,
+        inputs:{roadType:String(values.get("roadType")),speed:Number(values.get("speed")),laneCount:Number(values.get("laneCount")),roadName:String(values.get("roadName")||""),
+          widths:Array.from(widthHost.querySelectorAll<HTMLInputElement>("input")).map(i=>Number(i.value)),widthSource:String(values.get("widthSource")),
+          worksLength:Number(values.get("worksLength")),workWidth:Number(values.get("workWidth")),hasHardShoulder:values.has("hasHardShoulder"),congestion:values.has("congestion"),accessAt:access===""?null:Number(access)}
+      };
+      const mapSnapshot=JSON.stringify(map.state);
+      let changed=false;
+      const onChange=()=>{changed=true;};
+      generator.addEventListener("input",onChange);generator.addEventListener("change",onChange);
+      aiRunning=true;aiButton.disabled=true;aiStatus.textContent="AI is reading this map and tracing the road. This may take up to a few minutes…";
+      q<HTMLElement>("[data-ai-review]").hidden=true;
+      let data: {error?:string;status?:string;analysis?:{summary:string;observations:string[];features:{label:string}[]};issues?:string[];items?:Item[];report?:string};
+      try {
+        const response=await fetch("/api/traffic-map/draft",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:AbortSignal.timeout(170000)});
+        data=await response.json();
+        if(!response.ok)throw Error(data.error||"Could not create an AI drawing.");
+        if(changed||JSON.stringify(map.state)!==mapSnapshot)throw Error("The map or job inputs changed during generation. The result was not applied; create again using the current details.");
+      } finally {generator.removeEventListener("input",onChange);generator.removeEventListener("change",onChange);}
+      q<HTMLElement>("[data-ai-review]").hidden=false;
+      q("[data-ai-summary]").textContent=data.analysis?.summary||"AI map review";
+      const list=q("[data-ai-issues]");list.replaceChildren();
+      for(const text of [...(data.issues||[]),...(data.analysis?.observations||[]),...(data.analysis?.features||[]).map(f=>"Review feature: "+f.label)]){const li=document.createElement("li");li.textContent=text;list.appendChild(li);}
+      if(data.status!=="draft") {aiStatus.textContent="AI reviewed the map, but could not complete a supported equipment layout. Resolve the points below or finish the site-specific design manually. Your drawing is unchanged.";return;}
+      if(!validDrawing(data.items)||typeof data.report!=="string"||data.report.length>80000)throw Error("The AI drawing response was invalid. Your drawing is unchanged.");
+      if(items.length&&!confirm("Replace the current drawing with the AI-assisted draft? Save editable data first to keep the current version. You can undo this replacement.")){aiStatus.textContent="AI result was not applied. Current drawing kept.";return;}
+      checkpoint();items=data.items!;selected=-1;tool.value="select";setReport(data.report);render();save();
+      q<HTMLDetailsElement>("[data-calculation-details]").open=true;
+      aiStatus.textContent="AI-assisted draft created from this map. Signs, cones and tapers are editable. Inspect the road alignment, schedule and all site conditions before use. This is not an approved design.";
+      q<HTMLElement>("#tm-map-controls").scrollIntoView({block:"start",behavior:"smooth"});
+    } catch(error){aiStatus.textContent=error instanceof Error?error.message:"AI drawing failed; current drawing kept.";}
+    finally{aiRunning=false;aiButton.disabled=false;}
   });
   q("[data-report]").addEventListener("click", () =>
     download(
