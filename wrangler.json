@@ -50,6 +50,14 @@
 				"limit": 20,
 				"period": 60
 			}
+		},
+		{
+			"name": "TRAFFIC_AI_RATE_LIMITER",
+			"namespace_id": "732732",
+			"simple": {
+				"limit": 1,
+				"period": 60
+			}
 		}
 	]
 }
