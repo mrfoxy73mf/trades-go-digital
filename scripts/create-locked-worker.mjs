@@ -67,6 +67,10 @@ export default {
 			return Response.redirect(new URL("/tgd", url), 302);
 		}
 
+		if (url.pathname === "/pricing" || url.pathname === "/pricing/") {
+			return Response.redirect(new URL("/contact/#tgd-enquiry", url), 302);
+		}
+
 		const isPublicFulfilmentRoute =
 			PUBLIC_EXACT_PATHS.has(url.pathname) ||
 			PUBLIC_PATH_PREFIXES.some((prefix) => url.pathname.startsWith(prefix));
