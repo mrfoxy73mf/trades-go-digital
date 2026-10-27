@@ -62,6 +62,39 @@ const pricingFeatures = [
 	"Unlimited jobs, photos and PDFs—with no long contract",
 ];
 
+const tradeTypes = [
+	"Plumbers",
+	"Electricians",
+	"Builders",
+	"Carpenters & joiners",
+	"Bathroom fitters",
+	"Kitchen fitters",
+	"Roofers",
+	"Painters & decorators",
+	"Plasterers",
+	"Bricklayers",
+	"Tilers",
+	"Flooring installers",
+	"Heating & gas engineers",
+	"HVAC & air-conditioning engineers",
+	"Drainage engineers",
+	"Locksmiths",
+	"Glaziers & window fitters",
+	"Landscapers & gardeners",
+	"Fencing contractors",
+	"Groundworkers",
+	"Handymen",
+	"Property-maintenance businesses",
+	"Cleaning contractors",
+	"Solar-panel installers",
+	"Security & alarm installers",
+	"Appliance-repair engineers",
+	"Garage-door installers",
+	"Fire-protection engineers",
+	"Pest-control businesses",
+	"Small construction & refurbishment firms",
+];
+
 const operationsFeatures = [
 	{
 		label: "OFFICE MAILROOM",
@@ -153,6 +186,17 @@ const operationsFeatures = [
 						</video>
 						<div id="pt-demo-price-overlay" class="pt-demo-price-overlay" hidden>£40 a month for 3 months — then £70/month</div>
 					</div>
+				</div>
+			</section>
+
+			<section class="pt-section pt-trades" aria-labelledby="trades-title">
+				<div class="pt-container">
+					<p class="pt-eyebrow">Built for UK trades</p>
+					<h2 id="trades-title">Made for the people who keep work moving.</h2>
+					<p class="pt-trades-lead">TGD Trades is designed for sole traders and small trade businesses that quote work, manage jobs, buy materials, send invoices and keep business records.</p>
+					<ul class="pt-trades-grid">
+						{tradeTypes.map((trade) => <li>{trade}</li>)}
+					</ul>
 				</div>
 			</section>
 
@@ -1155,6 +1199,45 @@ const operationsFeatures = [
 		height: auto;
 		object-fit: cover;
 		background: #030508;
+	}
+
+	.pt-trades {
+		background:
+			radial-gradient(circle at 14% 20%, rgba(32, 201, 255, 0.1), transparent 28%),
+			radial-gradient(circle at 88% 78%, rgba(124, 58, 237, 0.12), transparent 30%);
+	}
+
+	.pt-trades-lead {
+		max-width: 820px;
+	}
+
+	.pt-trades-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 10px;
+		margin: 30px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.pt-trades-grid li {
+		display: flex;
+		align-items: center;
+		min-height: 52px;
+		padding: 12px 16px;
+		border: 1px solid rgba(32, 201, 255, 0.28);
+		border-radius: 10px;
+		background: rgba(6, 17, 31, 0.88);
+		color: #e6f5ff;
+		font-weight: 800;
+		line-height: 1.35;
+	}
+
+	.pt-trades-grid li::before {
+		content: "✓";
+		margin-right: 10px;
+		color: #20c9ff;
+		font-weight: 950;
 	}
 
 	.pt-demo-proof {
@@ -2445,6 +2528,10 @@ const operationsFeatures = [
 	}
 
 	@media (max-width: 1000px) {
+		.pt-trades-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
 		.pt-smart-features {
 			grid-template-columns: 1fr;
 		}
@@ -2545,6 +2632,11 @@ const operationsFeatures = [
 	}
 
 	@media (max-width: 720px) {
+		.pt-trades-grid {
+			grid-template-columns: 1fr;
+			gap: 8px;
+		}
+
 		.pt-app-chain-track {
 			gap: 12px;
 			padding-left: 12px;
