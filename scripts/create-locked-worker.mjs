@@ -8,8 +8,8 @@ const worker = String.raw`import astroWorker from "./_worker.js/index.js";
 const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
-const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook", "/pdf-maker", "/logo-maker", "/traffic-management", "/traffic-management/", "/images/tgd-pricing-office-people.png", "/images/safework-office-background.png", "/images/tgd-pdf-document-studio.png", "/images/tgd-logo-design-studio.png", "/images/tgd-home-office.png", "/images/tgd-home-office-clean.png", "/images/tgd-news-office.png", "/images/tgd-news-office-clean.png", "/images/tgd-letting-office.png", "/images/trades-go-digital-logo-stripe.png", "/favicon.svg", "/images/trades-go-digital-icon-stripe.png", "/pricing", "/pricing/", "/health-and-safety", "/health-and-safety/", "/safework", "/safework/"]);
-const PUBLIC_PATH_PREFIXES = ["/api/traffic-map","/fonts/", "/api/safework/", "/safework/", "/api/fulfilment/", "/fulfilment/", "/api/pdf-payment/", "/pdf-maker/", "/api/logo-payment/", "/logo-maker/", "/_astro/"];
+const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook", "/favicon.svg"]);
+const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/videos/", "/fonts/"];
 
 const unauthorized = () =>
 	new Response("Password required.", {
@@ -62,6 +62,11 @@ const isAuthorized = (request, env) => {
 export default {
 	fetch(request, env, ctx) {
 		const url = new URL(request.url);
+
+		if (url.pathname === "/") {
+			return Response.redirect(new URL("/tgd", url), 302);
+		}
+
 		const isPublicFulfilmentRoute =
 			PUBLIC_EXACT_PATHS.has(url.pathname) ||
 			PUBLIC_PATH_PREFIXES.some((prefix) => url.pathname.startsWith(prefix));
