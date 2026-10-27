@@ -3974,7 +3974,70 @@
           }
         ],
         "reuse_attribution": "Contains paraphrased public-sector information from the Department for Transport, with Crown copyright acknowledged. Official source links and editions retained; no logos or diagram artwork reproduced.",
-        "licence_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+        "licence_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+        "upstream_layout_planning": {
+          "provenance": {
+            "kind": "user_supplied_planning_method",
+            "recorded_on": "2026-10-27",
+            "status": "Application planning heuristic. Example values are not verified universal Chapter 8 requirements."
+          },
+          "purpose": "Plan a connected advance-sign, taper and protection arrangement along the actual road, testing candidate positions around slip roads and laybys while keeping the real work location fixed.",
+          "fixed_inputs": [
+            "Pin the actual work-start location and identify the correct carriageway and direction of travel.",
+            "Preserve the entered working length, width, lane selection and measurement provenance. Never move the physical works to make a candidate fit."
+          ],
+          "procedure": [
+            "Select the applicable road/layout profile and obtain its sign stations, taper length, safety clearances, access/exit provisions and end signing from the relevant verified guidance.",
+            "Anchor the working area at the pinned location. Work upstream to locate the required protection and initial candidate taper; work downstream to include departure, exit and end signing.",
+            "Measure backwards along the carriageway route from the candidate taper datum to find the first advance-warning sign and all intermediate signs. Follow bends and road connectivity rather than the straight-line chord.",
+            "Treat the advance signs, taper and protection as a linked candidate arrangement, with each distance tied to its correct datum. Keep the actual work area separately anchored.",
+            "Expand or pan the map as necessary to inspect the entire candidate signing, taper, protection, works and departure corridor, including any approach outside the first viewport.",
+            "Check slip roads, laybys, junctions, access points, visibility and relevant traffic movements against the actual candidate limits. Distinguish roads passing under/over the route, separate parallel roads and opposite-carriageway connections from genuine connections to the selected carriageway.",
+            "If a genuine feature conflicts with the candidate taper/protection or other applicable requirements, test a suitable candidate further upstream. Do not apply an invented universal clearance from every layby or slip road.",
+            "After shifting the taper, recompute every advance-sign position and the additional protected/closed length leading to the fixed works. Reassess access and exit locations; do not shift the work area or label all additional length as usable workspace.",
+            "Recheck the whole shifted arrangement, including new upstream conflicts and any signing/control needed for traffic joining inside the advance-sign zone. Shifting a mainline layout does not automatically resolve a feeder-road conflict.",
+            "Repeat candidate evaluation until the applicable constraints can be met. If no supported candidate can be established, identify the exact missing information or design capability rather than inventing distances or claiming completion.",
+            "Produce an editable proposed layout with its selected source/profile, chainage datums, assumptions, unresolved checks, and optional proposed works-access/exit positions clearly distinguished from fixed design points."
+          ],
+          "illustrative_example": {
+            "scope": "The user's example for explaining the method only; select actual distances by applicable layout and conditions.",
+            "advance_sign_offsets_from_taper_yards": [
+              1760,
+              800,
+              600,
+              400,
+              200
+            ],
+            "first_sign_description": "Road works ahead, illustrated with a 1 mile distance.",
+            "example_safety_clearance_yards": 200,
+            "taper_length": "Must be added separately from the selected layout; not supplied by this example.",
+            "example_first_sign_to_work_start_yards": "1760 + selected taper length in yards + 200, only if that selected layout actually uses these stations/clearance.",
+            "arithmetic_without_taper": {
+              "yards": 1960,
+              "metres": 1792.224,
+              "miles": 1.1136363636363635
+            },
+            "clarification": "One mile plus 200 yards is approximately 1.114 miles before the taper is added; it is not a fixed 1.2-mile block.",
+            "units": {
+              "yards_per_mile": 1760,
+              "metres_per_yard": 0.9144
+            },
+            "not_universal": [
+              "The 1-mile/800/600/400/200-yard sign sequence.",
+              "A 200-yard safety zone or feature-to-taper clearance.",
+              "Any assumption that every slip road or layby must be closed or handled identically."
+            ]
+          },
+          "implementation_boundary": "This knowledge describes a planning procedure. It does not itself implement autonomous map exploration, candidate optimisation, additional approach layouts or new drawing profiles. Do not report those actions as performed unless the application actually performs and validates them.",
+          "related_knowledge_cases": [
+            "taper-and-lane-width-selection",
+            "dual-carriageway-open-slip-or-junction",
+            "closed-exit-slip-road",
+            "closed-entry-slip-road",
+            "layby-and-roadside-access",
+            "works-access-and-exit"
+          ]
+        }
       }
     },
     {
