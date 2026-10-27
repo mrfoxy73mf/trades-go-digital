@@ -1,3 +1,7 @@
+# AI drawing update
+
+See [AI map-assisted drawing](traffic-ai-drawings.md) for the new map-image analysis action, aerial view and measurement tool, their deployment binding and current supported profiles. The original straight-road calculator described below remains available as an alternative; it is distinct from AI analysis.
+
 # Location based traffic management drafts
 
 The drawing editor now starts with a location search (postcode/address or what3words), an owner-configured road map, and start/end markers for the working section. Adjust the map before drawing. Search results must be explicitly selected to avoid assuming an ambiguous postcode or road name is the correct site.
