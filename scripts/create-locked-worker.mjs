@@ -8,7 +8,7 @@ const worker = String.raw`import astroWorker from "./_worker.js/index.js";
 const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
-const PUBLIC_EXACT_PATHS = new Set(["/tgd", "/tgd/", "/pricing", "/pricing/", "/contact", "/contact/", "/terms-and-conditions", "/terms-and-conditions/", "/api/stripe/webhook", "/favicon.svg"]);
+const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook", "/favicon.svg"]);
 const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/videos/", "/fonts/"];
 
 const unauthorized = () =>
