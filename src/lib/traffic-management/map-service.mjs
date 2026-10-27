@@ -91,7 +91,7 @@ export async function mapImage(map, env, fetcher = fetch) {
     zoom: map.zoom,
     size: `${MAP_WIDTH}x${MAP_HEIGHT}`,
     scale: 2,
-    maptype: "roadmap",
+    maptype: map.mapType === "hybrid" ? "hybrid" : "roadmap",
     format: "png",
     key: env.GOOGLE_MAPS_SERVER_KEY,
   }))
