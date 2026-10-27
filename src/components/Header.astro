@@ -1,5 +1,5 @@
 ---
-import { TGD_APP_URL } from "../consts";
+
 const path = Astro.url.pathname.replace(/\/$/, "") || "/tgd";
 const active = (href: string) => path === href;
 ---
@@ -9,10 +9,9 @@ const active = (href: string) => path === href;
   <button class="navigation-toggle" type="button" aria-expanded="false" aria-controls="tgd-navigation-links" hidden>Menu <span aria-hidden="true">☰</span></button>
   <div class="navigation-links" id="tgd-navigation-links">
    <a class="navigation-link" href="/tgd" aria-current={active("/tgd") ? "page" : undefined}>TGD Trades</a>
-   <a class="navigation-link" href="/pricing" aria-current={active("/pricing") ? "page" : undefined}>Pricing</a>
    <a class="navigation-link" href="/contact" aria-current={active("/contact") ? "page" : undefined}>Contact</a>
    <a class="navigation-link" href="/terms-and-conditions" aria-current={active("/terms-and-conditions") ? "page" : undefined}>Terms</a>
-   <a class="navigation-cta" href={TGD_APP_URL}>Open TGD Trades<span aria-hidden="true">↗</span></a>
+   <a class="navigation-cta" href="/contact/#tgd-enquiry">Show Interest<span aria-hidden="true">→</span></a>
   </div>
  </nav>
 </header>
