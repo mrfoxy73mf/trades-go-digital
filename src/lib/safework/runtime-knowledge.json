@@ -3339,26 +3339,72 @@
         {
           "id": "live-traffic-interface",
           "hazard": "Workers or road users enter an inadequately protected work area",
-          "possible_harm": ["collision", "crushing", "serious injury", "fatal injury"],
-          "people_at_risk": ["workers", "drivers", "passengers", "pedestrians", "cyclists", "equestrians", "public"],
-          "control_prompts": ["competent approved layout", "advance warning and conspicuous boundaries", "correct tapers and safety zones", "safe installation sequence", "regular recorded inspections"]
+          "possible_harm": [
+            "collision",
+            "crushing",
+            "serious injury",
+            "fatal injury"
+          ],
+          "people_at_risk": [
+            "workers",
+            "drivers",
+            "passengers",
+            "pedestrians",
+            "cyclists",
+            "equestrians",
+            "public"
+          ],
+          "control_prompts": [
+            "competent approved layout",
+            "advance warning and conspicuous boundaries",
+            "correct tapers and safety zones",
+            "safe installation sequence",
+            "regular recorded inspections"
+          ]
         },
         {
           "id": "vulnerable-road-user-route",
           "hazard": "A diversion or obstruction exposes a vulnerable road user to traffic, a fall, an inaccessible route or confusing information",
-          "possible_harm": ["collision", "fall", "entrapment", "loss of safe access"],
-          "people_at_risk": ["disabled people", "pedestrians", "children", "older people", "people with pushchairs", "cyclists", "equestrians"],
-          "control_prompts": ["continuous accessible route", "suitable barriers and ramps", "adequate width and visibility", "clear signed crossings and diversions", "inspect after every change"]
+          "possible_harm": [
+            "collision",
+            "fall",
+            "entrapment",
+            "loss of safe access"
+          ],
+          "people_at_risk": [
+            "disabled people",
+            "pedestrians",
+            "children",
+            "older people",
+            "people with pushchairs",
+            "cyclists",
+            "equestrians"
+          ],
+          "control_prompts": [
+            "continuous accessible route",
+            "suitable barriers and ramps",
+            "adequate width and visibility",
+            "clear signed crossings and diversions",
+            "inspect after every change"
+          ]
         }
       ],
-      "permit_triggers": ["road-lane-closure-traffic-management"],
+      "permit_triggers": [
+        "road-lane-closure-traffic-management"
+      ],
       "competence_requirements": [
         "Temporary traffic-management design, installation, maintenance, inspection and removal by people competent for the road category and system used",
         "Named supervisor with authority to stop work and correct defects"
       ],
-      "ppe_considerations": ["Suitable high-visibility clothing for the road environment, selected after higher-order traffic controls"],
-      "emergency_requirements": ["Maintain emergency-service access and provide a method to make the site safe after collision, failed signals, displaced equipment or sudden deterioration"],
-      "health_surveillance_considerations": ["Consider fatigue, night work, noise and exhaust exposure for traffic-management operatives"],
+      "ppe_considerations": [
+        "Suitable high-visibility clothing for the road environment, selected after higher-order traffic controls"
+      ],
+      "emergency_requirements": [
+        "Maintain emergency-service access and provide a method to make the site safe after collision, failed signals, displaced equipment or sudden deterioration"
+      ],
+      "health_surveillance_considerations": [
+        "Consider fatigue, night work, noise and exhaust exposure for traffic-management operatives"
+      ],
       "stop_work_conditions": [
         "No approved layout or the actual road conditions do not match it",
         "Required authority, road-space, restriction or signal approval is absent",
@@ -3366,8 +3412,570 @@
         "A safe accessible route for vulnerable road users cannot be maintained",
         "Visibility, traffic, weather or site changes make the arrangement unsafe"
       ],
-      "source_topic_ids": ["temporary-traffic-management-street-works"],
-      "legal_currency_note": "Check the live Department for Transport publications, current legislation and the relevant highway authority's requirements before issuing the pack. The generated record does not approve a traffic-management design or grant road-space permission."
+      "source_topic_ids": [
+        "temporary-traffic-management-street-works"
+      ],
+      "legal_currency_note": "Check the live Department for Transport publications, current legislation and the relevant highway authority's requirements before issuing the pack. The generated record does not approve a traffic-management design or grant road-space permission.",
+      "layout_design_knowledge": {
+        "schema_version": "1.0.0",
+        "checked_on": "2026-10-27",
+        "purpose": "Source-grounded knowledge for proposing and reviewing traffic-management layouts at dual carriageways, junctions, roundabouts, slip roads, laybys and works accesses.",
+        "evidence_status": "Official publication pages checked; relevant PDF text read; SRC1, SC13 and works-access material visually checked. Summaries are paraphrases, with application inferences separately labelled.",
+        "publication_status": {
+          "current_basis": "GOV.UK currently lists Chapter 8 Parts 1/2 (2009), Part 3 (2020), and the 2013 Red Book with June 2014 impression amendments.",
+          "announced_update": "National Highways announces a unified Chapter 8 with republication expected November 2026. Recheck publication before treating an announced edition as operative.",
+          "status_url": "https://nationalhighways.co.uk/work-with-us/suppliers/design-standards-and-specifications/traffic-signs-manual-chapter-8/"
+        },
+        "scope_selection": [
+          "The Red Book excludes motorways and dual carriageways with speed limits of 50 mph or more. Use Chapter 8 for those roads; do not reject them solely because Red Book layouts do not apply.",
+          "Apply Part 3 updates alongside Parts 1 and 2. Historical references to TSRGD/DMRB documents are not confirmation of current legal or engineering provisions.",
+          "Source plans illustrate specific conditions. Use their text, notes, definitions and Appendix 1 details together; a title or extracted number alone is not a complete executable design rule."
+        ],
+        "drafting_policy": [
+          "Help develop an editable proposal from the mapped site and description; distinguish a proposal from approval for site use.",
+          "Identify which movements remain open, which close, and which approaches require signing before selecting a case.",
+          "Preserve real entered measurements. An app profile rejection is not evidence that the measured road is unlawful or that its widths should be changed.",
+          "Do not invent missing distances, authorisations, signal timings, safe diversion routes or facts outside the visible map.",
+          "Knowledge availability does not itself add a missing branch/merge/roundabout geometry algorithm. Clearly describe an unsupported drawing capability instead of treating a general standard as proof that it has been implemented."
+        ],
+        "sources": [
+          {
+            "id": "dft-ch8-part1-design-2009",
+            "title": "Traffic Signs Manual Chapter 8 Part 1: Design (2009)",
+            "url": "https://assets.publishing.service.gov.uk/media/5a74adeaed915d7ab83b5ab2/traffic-signs-manual-chapter-08-part-01.pdf",
+            "printed_to_pdf_offset": 1,
+            "sections": [
+              "D3.3",
+              "D3.6",
+              "D3.21",
+              "D3.26.14",
+              "D5.14–D5.16",
+              "D6.15–D6.22",
+              "Appendix 1"
+            ]
+          },
+          {
+            "id": "dft-ch8-part2-operations-2009",
+            "title": "Traffic Signs Manual Chapter 8 Part 2: Operations (2009)",
+            "url": "https://assets.publishing.service.gov.uk/media/5a7cc632e5274a38e5756aa3/traffic-signs-manual-chapter-08-part-02.pdf",
+            "printed_to_pdf_offset": 2,
+            "sections": [
+              "O3.3–O3.8",
+              "O3.21.28–O3.21.32",
+              "O4.2"
+            ]
+          },
+          {
+            "id": "dft-ch8-part3-update-2020",
+            "title": "Traffic Signs Manual Chapter 8 Part 3: Update (2020)",
+            "url": "https://assets.publishing.service.gov.uk/media/5e7a3a1a86650c37182f78d3/Traffic_Signs_Manual_-_chapter_8.3.pdf",
+            "printed_to_pdf_offset": 1,
+            "sections": [
+              "U2.15",
+              "U7.2"
+            ]
+          },
+          {
+            "id": "dft-red-book-2013-pdf",
+            "title": "Safety at Street Works and Road Works (October 2013; second impression with amendments June 2014)",
+            "url": "https://assets.publishing.service.gov.uk/media/5a7d8038e5274a676d532707/safety-at-streetworks.pdf",
+            "printed_to_pdf_offset": 2,
+            "sections": [
+              "pp. 5–8: scope",
+              "pp. 40–49: dual carriageways, junctions and roundabouts",
+              "pp. 25–27: setting out",
+              "inside back cover: dimensions"
+            ]
+          }
+        ],
+        "cases": [
+          {
+            "id": "taper-and-lane-width-selection",
+            "applies_when": "Selecting the lane closure position and remaining running widths on any affected route.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D3.3",
+                  "D3.6"
+                ],
+                "printed_pages": [
+                  24,
+                  26
+                ],
+                "pdf_pages": [
+                  25,
+                  27
+                ],
+                "plans": []
+              },
+              {
+                "source_id": "dft-ch8-part3-update-2020",
+                "sections": [
+                  "U2.15"
+                ],
+                "printed_pages": [
+                  28,
+                  33
+                ],
+                "pdf_pages": [
+                  29,
+                  34
+                ],
+                "plans": []
+              }
+            ],
+            "guidance": [
+              "Choose taper positions in relation to road geometry, visibility and junctions; a work-start point is not automatically a safe taper position.",
+              "Assess running widths for expected vehicles and lateral clearance using D3.3. The app’s 3.6–4 m profile range is an implementation restriction, not a universal statement that other measured lane widths are prohibited.",
+              "Fixed taper positions in Part 3 are a planned provision with supporting sign siting, not permission to move a taper arbitrarily."
+            ],
+            "application_notes": [
+              "Trace each carriageway separately and measure approach distances along its route, not across the straight chord of a bend. This is application geometry logic; source compliance still depends on the selected design."
+            ]
+          },
+          {
+            "id": "dual-carriageway-open-slip-or-junction",
+            "applies_when": "A mainline closure affects an entry/exit slip road or adjoining route that is intended to remain open.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D3.6",
+                  "D6.15–D6.19"
+                ],
+                "printed_pages": [
+                  26,
+                  169,
+                  218
+                ],
+                "pdf_pages": [
+                  27,
+                  170,
+                  219
+                ],
+                "plans": []
+              },
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D6.18: DZD6/DZD7 explanatory text"
+                ],
+                "printed_pages": [
+                  214,
+                  215,
+                  216,
+                  217
+                ],
+                "pdf_pages": [
+                  215,
+                  216,
+                  217,
+                  218
+                ],
+                "plans": [
+                  "DZD6",
+                  "DZD7"
+                ]
+              }
+            ],
+            "guidance": [
+              "Account for joining and leaving movements and their own warning/signing needs; do not let a mainline cone run inadvertently seal an intended open route.",
+              "DZD6/DZD7 illustrate segregated contraflow by destination using the hard shoulder for merging/diverging. They are not generic instructions for every open slip road.",
+              "Within that illustrated arrangement, joining routes are reduced to one lane unless the main carriageway gains a lane; lane-gain and lane-merge signing must represent the actual temporary lane connectivity.",
+              "Review conflicting permanent direction signs and markings when temporary routing differs."
+            ],
+            "application_notes": [
+              "Record open/closed status, entry versus exit, lane connectivity, affected approaches and the chosen applicable plan before proposing symbols. A nearby slip road is a design feature to assess, not proof that a Red Book straight-road profile fits."
+            ]
+          },
+          {
+            "id": "closed-exit-slip-road",
+            "applies_when": "Traffic is prevented from using an exit slip road.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D6.21.1–D6.21.3"
+                ],
+                "printed_pages": [
+                  232,
+                  233
+                ],
+                "pdf_pages": [
+                  233,
+                  234
+                ],
+                "plans": [
+                  "SRC1"
+                ]
+              },
+              {
+                "source_id": "dft-ch8-part3-update-2020",
+                "sections": [
+                  "U7.2"
+                ],
+                "printed_pages": [
+                  89,
+                  92
+                ],
+                "pdf_pages": [
+                  90,
+                  93
+                ],
+                "plans": []
+              }
+            ],
+            "guidance": [
+              "Assess the diversion’s suitability, length and signing before selecting closure. Consider advance publicity.",
+              "SRC1 illustrates main-carriageway warning/direction signing and slip-road closure equipment; not all signs are drawn. Its coning refers to Detail B.",
+              "Part 3 U7.2 updates diversion signing, including route continuity at intermediate junctions."
+            ],
+            "application_notes": [
+              "Do not invent a diversion destination from the postcode alone. Show a proposed routing option with unresolved route checks identified, rather than asserting that a diversion has been authorised."
+            ]
+          },
+          {
+            "id": "closed-entry-slip-road",
+            "applies_when": "Traffic is prevented from entering the mainline through an entry slip road.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D6.21.4"
+                ],
+                "printed_pages": [
+                  233,
+                  234
+                ],
+                "pdf_pages": [
+                  234,
+                  235
+                ],
+                "plans": [
+                  "SRC2"
+                ]
+              },
+              {
+                "source_id": "dft-ch8-part3-update-2020",
+                "sections": [
+                  "U7.2"
+                ],
+                "printed_pages": [
+                  89,
+                  92
+                ],
+                "pdf_pages": [
+                  90,
+                  93
+                ],
+                "plans": []
+              }
+            ],
+            "guidance": [
+              "SRC2 is the entry-slip closure example and requires suitable diversion signing. An opposite-carriageway/previous-junction route is an option only if suitable, not a default.",
+              "Check where queues could affect the upstream junction and signing on feeder approaches. Use current Part 3 diversion guidance alongside the original plan."
+            ],
+            "application_notes": [
+              "Keep entry-slip closure separate from a mainline closure that merely passes an open merge."
+            ]
+          },
+          {
+            "id": "at-grade-junction",
+            "applies_when": "Works include a junction or are close enough for the junction’s movements to be affected.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D5.14",
+                  "D5.15"
+                ],
+                "printed_pages": [
+                  140,
+                  144
+                ],
+                "pdf_pages": [
+                  141,
+                  145
+                ],
+                "plans": [
+                  "SC9",
+                  "SC10"
+                ]
+              },
+              {
+                "source_id": "dft-red-book-2013-pdf",
+                "sections": [
+                  "Works at road junctions"
+                ],
+                "printed_pages": [
+                  43,
+                  46
+                ],
+                "pdf_pages": [
+                  45,
+                  48
+                ],
+                "plans": []
+              },
+              {
+                "source_id": "dft-ch8-part2-operations-2009",
+                "sections": [
+                  "O3.21.28–O3.21.32"
+                ],
+                "printed_pages": [
+                  40,
+                  41
+                ],
+                "pdf_pages": [
+                  42,
+                  43
+                ],
+                "plans": []
+              }
+            ],
+            "guidance": [
+              "Maintain two-way movement where feasible; provide relevant warning on each affected approach and directional warning for traffic turning into works.",
+              "When using signals, determine whether the side road also needs signal control; do not assume a simple two-head shuttle arrangement controls every junction movement.",
+              "Alterations to permanent signals, prohibited turns and diversions need the applicable authority process."
+            ],
+            "application_notes": [
+              "For a draft, identify the required authorisation as pending. Do not fabricate permission or require an already-existing drawing number as the sole way to begin authoring a proposed layout."
+            ]
+          },
+          {
+            "id": "roundabout-entry-exit-circulatory",
+            "applies_when": "The work area affects a roundabout entrance, exit or circulatory road.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D5.16.1–D5.16.5"
+                ],
+                "printed_pages": [
+                  145,
+                  146,
+                  147
+                ],
+                "pdf_pages": [
+                  146,
+                  147,
+                  148
+                ],
+                "plans": [
+                  "SC13 Case A",
+                  "SC13 Case B",
+                  "SC13 Case C",
+                  "SC13 Case D"
+                ]
+              },
+              {
+                "source_id": "dft-red-book-2013-pdf",
+                "sections": [
+                  "Works at roundabouts"
+                ],
+                "printed_pages": [
+                  47,
+                  48,
+                  49
+                ],
+                "pdf_pages": [
+                  49,
+                  50,
+                  51
+                ],
+                "plans": []
+              }
+            ],
+            "case_selection": {
+              "A": "Entrance works",
+              "B": "Circulatory works while retaining movements",
+              "C": "Obstruction interrupting circulation",
+              "D": "Exit works"
+            },
+            "guidance": [
+              "Select the case matching the obstruction, rather than drawing a straight taper across the roundabout.",
+              "Warn traffic on all affected approaches; guard the work area and guide retained movements.",
+              "An exit-only arrangement needs entry traffic diverted; do not silently remove that movement.",
+              "Check approach/circulatory lane consistency and long-vehicle turning paths.",
+              "D5.16.1 omits the ordinary end-of-works sign for its entrance case; end signing must be selected by case, not appended indiscriminately."
+            ],
+            "application_notes": [
+              "SC13 and Red Book low-speed road examples do not automatically establish a high-speed dual-carriageway roundabout design. Match each approach’s scope and geometry."
+            ]
+          },
+          {
+            "id": "works-access-and-exit",
+            "applies_when": "Works vehicles enter or leave the protected work area.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D3.21",
+                  "D6.22.3–D6.22.7"
+                ],
+                "printed_pages": [
+                  43,
+                  235,
+                  236,
+                  237,
+                  238,
+                  239
+                ],
+                "pdf_pages": [
+                  44,
+                  236,
+                  237,
+                  238,
+                  239,
+                  240
+                ],
+                "plans": [
+                  "DWA1",
+                  "DWA2",
+                  "DWA3"
+                ]
+              }
+            ],
+            "case_selection": {
+              "DWA1": "Nearside works with hard-shoulder access",
+              "DWA2": "Nearside works without a hard shoulder",
+              "DWA3": "Offside works"
+            },
+            "guidance": [
+              "Plan access/exit with delivery storage, conflict points and sign visibility; keep the access usable rather than placing a sign across it.",
+              "DWA access signs supplement the normal closure signing, not replace it.",
+              "Do not treat an access label as a designed cone gap, protected route or safe vehicle merge."
+            ],
+            "source_specific_distances": {
+              "applies_only_to": "D6.22.3–D6.22.5 and matching DWA1–DWA3 conditions",
+              "access_advance_sign": {
+                "diagram": "7306",
+                "position_m_before_access": 100,
+                "illustrated_face_distance_yards": 100
+              },
+              "exit_advance_sign": {
+                "diagram": "7307",
+                "position_m_before_exit": 100,
+                "illustrated_face_distance_yards": 100
+              },
+              "access_position_sign": "7301 variant",
+              "exit_position_sign": "7302",
+              "qualifications": [
+                "DWA2/DWA3 place the access advance sign after the entry taper.",
+                "The text permits the plate distance to vary where required; assess the resulting siting.",
+                "D6.22.6 partial-contraflow exit describes a different 100-yard advance distance; do not merge it into this 100-metre example."
+              ]
+            }
+          },
+          {
+            "id": "layby-and-roadside-access",
+            "applies_when": "A layby, parking bay or roadside access is present within the affected area.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D3.3",
+                  "D3.6",
+                  "D3.21"
+                ],
+                "printed_pages": [
+                  24,
+                  26,
+                  43
+                ],
+                "pdf_pages": [
+                  25,
+                  27,
+                  44
+                ],
+                "plans": []
+              },
+              {
+                "source_id": "dft-ch8-part1-design-2009",
+                "sections": [
+                  "D3.26.14"
+                ],
+                "printed_pages": [
+                  51
+                ],
+                "pdf_pages": [
+                  52
+                ],
+                "plans": [
+                  "SV1a",
+                  "SV2a"
+                ]
+              }
+            ],
+            "guidance": [
+              "D3.26.14 discusses guide-island separation at layby survey sites specifically; do not generalise that survey arrangement to all layby work."
+            ],
+            "application_notes": [
+              "Classify the feature as a public layby, survey site, works access or actual slip road before selecting a layout.",
+              "Determine whether it stays open, is itself the work area, becomes a proposed works access, or requires closure.",
+              "Apply relevant clearance, taper, access and warning provisions to the selected use. No universal layby closure template was established by this research."
+            ]
+          },
+          {
+            "id": "installation-inspection-and-removal",
+            "applies_when": "Planning how a proposed layout will be installed, operated, changed and removed.",
+            "references": [
+              {
+                "source_id": "dft-ch8-part2-operations-2009",
+                "sections": [
+                  "O3.3",
+                  "O3.6–O3.8",
+                  "O4.2"
+                ],
+                "printed_pages": [
+                  24,
+                  25,
+                  26,
+                  27,
+                  49
+                ],
+                "pdf_pages": [
+                  26,
+                  27,
+                  28,
+                  29,
+                  51
+                ],
+                "plans": []
+              },
+              {
+                "source_id": "dft-red-book-2013-pdf",
+                "sections": [
+                  "Sequence for setting out signs"
+                ],
+                "printed_pages": [
+                  25,
+                  26,
+                  27
+                ],
+                "pdf_pages": [
+                  27,
+                  28,
+                  29
+                ],
+                "plans": []
+              }
+            ],
+            "guidance": [
+              "Plan the installation sequence and any intermediate layouts as well as the completed arrangement.",
+              "Start the normal setting-out sequence with advance roadworks warning, then progress towards the work site with appropriate protection.",
+              "After installation or alteration, inspect from the driver’s viewpoint for readable signs, clear routes and safe manoeuvres; record inspections and maintain the equipment.",
+              "Cover or remove permanent signs and markings that conflict with the temporary arrangement, and reinstate appropriately."
+            ],
+            "application_notes": [
+              "A map view is useful design input but does not establish present visibility, lighting, traffic flows or site access conditions. Record those checks without pretending the image proves them."
+            ]
+          }
+        ],
+        "reuse_attribution": "Contains paraphrased public-sector information from the Department for Transport, with Crown copyright acknowledged. Official source links and editions retained; no logos or diagram artwork reproduced.",
+        "licence_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+      }
     },
     {
       "id": "workplace-transport-driving",
@@ -4429,7 +5037,8 @@
           "temporary-traffic-management-street-works",
           "workplace-transport-driving",
           "risk-management"
-        ]
+        ],
+        "checked_on": "2026-10-27"
       },
       {
         "id": "dft-safety-street-road-works-red-book",
@@ -4442,7 +5051,8 @@
           "temporary-traffic-management-street-works",
           "workplace-transport-driving",
           "risk-management"
-        ]
+        ],
+        "checked_on": "2026-10-27"
       },
       {
         "id": "hse-risk-assessment",
@@ -5131,6 +5741,50 @@
         "topic_ids": [
           "hazardous-substances",
           "ppe-rpe"
+        ]
+      },
+      {
+        "id": "dft-ch8-part1-design-2009",
+        "title": "Traffic Signs Manual Chapter 8 Part 1: Design (2009)",
+        "url": "https://assets.publishing.service.gov.uk/media/5a74adeaed915d7ab83b5ab2/traffic-signs-manual-chapter-08-part-01.pdf",
+        "publisher": "Department for Transport",
+        "phase": 2,
+        "checked_on": "2026-10-27",
+        "topic_ids": [
+          "temporary-traffic-management-street-works"
+        ]
+      },
+      {
+        "id": "dft-ch8-part2-operations-2009",
+        "title": "Traffic Signs Manual Chapter 8 Part 2: Operations (2009)",
+        "url": "https://assets.publishing.service.gov.uk/media/5a7cc632e5274a38e5756aa3/traffic-signs-manual-chapter-08-part-02.pdf",
+        "publisher": "Department for Transport",
+        "phase": 2,
+        "checked_on": "2026-10-27",
+        "topic_ids": [
+          "temporary-traffic-management-street-works"
+        ]
+      },
+      {
+        "id": "dft-ch8-part3-update-2020",
+        "title": "Traffic Signs Manual Chapter 8 Part 3: Update (2020)",
+        "url": "https://assets.publishing.service.gov.uk/media/5e7a3a1a86650c37182f78d3/Traffic_Signs_Manual_-_chapter_8.3.pdf",
+        "publisher": "Department for Transport",
+        "phase": 2,
+        "checked_on": "2026-10-27",
+        "topic_ids": [
+          "temporary-traffic-management-street-works"
+        ]
+      },
+      {
+        "id": "dft-red-book-2013-pdf",
+        "title": "Safety at Street Works and Road Works (October 2013; second impression with amendments June 2014)",
+        "url": "https://assets.publishing.service.gov.uk/media/5a7d8038e5274a676d532707/safety-at-streetworks.pdf",
+        "publisher": "Department for Transport",
+        "phase": 2,
+        "checked_on": "2026-10-27",
+        "topic_ids": [
+          "temporary-traffic-management-street-works"
         ]
       }
     ]
