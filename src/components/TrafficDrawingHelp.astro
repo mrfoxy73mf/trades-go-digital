@@ -1,0 +1,50 @@
+<details class="drawing-guide" id="tm-help">
+ <summary>Help and guide — locations, measurements, controls and saving</summary>
+ <p>Use this reference whenever you need an explanation. For a guided practice session, use <a href="#training-heading">training mode</a>. Your job drawing stays separate from the practice sketch.</p>
+ <nav aria-label="Drawing help topics"><a href="#tm-help-location">Location and map</a><a href="#tm-help-scope">Slip roads and site layout</a><a href="#tm-help-measure">Measurements</a><a href="#tm-help-tools">Drawing tools</a><a href="#tm-help-files">Saving and downloads</a></nav>
+ <section id="tm-help-location"><h4>1. Find the location and use the map</h4>
+ <p>Enter a postcode or a road and town, press <strong>Find location</strong>, then select a result. A postcode is an approximate area: check the road and move closer to the exact work location. A what3words address works only when that service is configured.</p>
+ <dl><dt>Map zoom in / out (Map + / Map −)</dt><dd>Changes the geographical area shown. Zoom in to see the road layout; zoom out to include advance signs. These controls are directly above the map.</dd>
+ <dt>North, South, East, West</dt><dd>Moves the map in that direction. Set the view before adding your drawing: changing the map can clear existing symbols after a confirmation, so save first.</dd>
+ <dt>Mark working section</dt><dd>Press this button, then tap the start and end of the actual working section on the road centreline, in the direction of travel. Do not include the whole advance-signing area in these two points. Enter the surveyed working-space length in the measurements.</dd>
+ <dt>Mark junction / access</dt><dd>Press this button, then tap the feature on the map. It records a point for review and blocks the simple automatic generator. It does not calculate a junction design.</dd>
+ <dt>Remove map / start fresh</dt><dd>Removes the map and its associated drawing after any required confirmation. Save a project first if you need to keep it.</dd>
+ <dt>Drawing zoom and Pan view</dt><dd>Fit view shows the whole drawing; 150%, 200% and 300% enlarge it without changing the map area or real distances. Turn on Pan view to scroll the enlarged drawing on a phone; return to editing to place items.</dd></dl>
+ <p>A map is background context, not a lane survey. It may be outdated and does not automatically identify every junction, access or road hazard. <a href="#tm-map-controls">Go to the map controls ↓</a></p></section>
+ <section id="tm-help-scope"><h4>2. Choose the site layout</h4>
+ <p><strong>Simple straight road</strong> is for supported cases without affected junctions or the other excluded features listed in the confirmation. Check the full area, including advance signs and traffic queues.</p>
+ <p><strong>Slip road / junction / roundabout / affected access</strong> means the simple automatic generator is unsuitable. Use the map and manual drawing tools for a competent designer to develop the layout. A lane-one closure with an affected slip road belongs here. Leave the straight-road confirmation unticked.</p>
+ <p>The confirmation is a statement about the real site, not a button to unlock the app. Training mode does not bypass it. Level crossings, guide islands, contraflow, multiple closed lanes and mobile working also need a separate design.</p></section>
+ <section id="tm-help-measure"><h4>3. Enter road and working-space measurements</h4><dl>
+ <dt>Road name</dt><dd>The road or site name printed in the draft and report.</dd>
+ <dt>Road / layout</dt><dd>Choose single carriageway for the supported two-way portable-signal layout, or dual carriageway/motorway for a supported one-lane static closure. This choice does not establish that the site is suitable.</dd>
+ <dt>Permanent speed limit</dt><dd>The existing permanent limit, in mph, used by the calculator. It is not a proposed temporary speed restriction.</dd>
+ <dt>Lanes on the modelled carriageway</dt><dd>The number of lanes on the carriageway being modelled. On a dual carriageway, do not add the lanes travelling the other way.</dd>
+ <dt>Closed side in increasing-chainage direction</dt><dd>Which side is closed when looking in the direction in which your distances increase: nearside / left or offside / right. Check it against the actual direction of travel.</dd>
+ <dt>Lane widths and width source</dt><dd>Enter each lane’s width in metres. The initial 3 m is an assumption; choose Surveyed only when you have entered measured widths. Total carriageway width adds those lane widths. The automatic profiles have their own permitted ranges and may reject a site: do not alter real measurements to make it pass.</dd>
+ <dt>Working-space width</dt><dd>The width needed for the work, including plant and materials, excluding the separately calculated traffic-facing safety clearance.</dd>
+ <dt>Working-space length</dt><dd>The surveyed length of the actual work area, in metres. This is not the total length including tapers and advance signs.</dd>
+ <dt>Start of working space — chainage</dt><dd>Distance along the road from your chosen reference point to the start of work. If work starts at that point, enter 0; if it starts 50 m further along, enter 50. Chainage is a distance, not a postcode or map coordinate.</dd>
+ <dt>Hard shoulder present</dt><dd>Records the shoulder. A nearside closure involving it needs a separate design.</dd>
+ <dt>Congestion likely</dt><dd>Requests the calculator’s extended dual-carriageway advance signing. It does not predict queues or assess junction effects.</dd></dl></section>
+ <section><h4>4. Calculate and read the result</h4><p>Load a map, mark the working section and enter the site details before pressing <strong>Calculate and draw editable draft</strong>. Read the status message if generation is blocked. Common causes include missing points, unsupported lane dimensions, an affected junction, a mismatch between the marked and measured length, or signs falling outside the map view.</p>
+ <p>Open <strong>Calculated distances, sign schedule and cone quantities</strong> to review the report. The cone quantity covers only the stated core runs, not all spare or site-specific cones. Provisional sign positions need checking. Signal timings and design approval are not calculated.</p></section>
+ <section id="tm-help-tools"><h4>5. Edit the drawing</h4><dl>
+ <dt>Road, barrier and works area</dt><dd>Choose the tool, then drag between the start and end positions.</dd>
+ <dt>Cone, sign, traffic lights and label</dt><dd>Choose a tool, then tap the drawing to place it. For signs choose a Sign face; use Label / sign text for the wording.</dd>
+ <dt>Select / move</dt><dd>Choose this tool, select an item and drag it to reposition it. Select an item to edit its text. Manual changes invalidate the calculated schedule; the changed sketch needs review.</dd>
+ <dt>Undo / Delete selected / New drawing</dt><dd>Undo reverses the previous drawing edit. Delete selected removes the selected item. New drawing clears the current drawing after confirmation; export it first if needed.</dd>
+ <dt>Place items using coordinates</dt><dd>A keyboard alternative: choose the tool, enter X and Y (plus End X and End Y for lines/areas), then press Add item. These are sketch coordinates, not metres or surveyed map coordinates.</dd></dl>
+ <p>Symbols are illustrative and enlarged for readability. A leader line and dot indicate a symbol’s original anchor when its face has been displaced to avoid overlap. A grid is a drawing guide, not a distance scale.</p></section>
+ <section id="tm-help-files"><h4>6. Save, reopen and upload files</h4><dl>
+ <dt>Download drawing PDF</dt><dd>Downloads a viewable drawing and any included report. Keep map attribution visible. A PDF does not approve the design.</dd>
+ <dt>Export DXF (outlines)</dt><dd>Downloads vector outlines for compatible CAD software. The map image is not included, and sketch units are not surveyed CAD coordinates.</dd>
+ <dt>Save editable data (.json)</dt><dd>Saves the editable project. JSON looks like code when opened directly; use Open project to load it back into this app. Map image bytes are not saved; a saved map needs to be fetched again and old location metadata can expire.</dd>
+ <dt>Open project</dt><dd>Choose a previously saved project JSON file to restore it. Save the current drawing first if you need to keep both.</dd>
+ <dt>Autosave</dt><dd>Job drawings save only in this browser on this device, where storage is available. They are not saved to your account or attached to a paid work pack. Clearing browser data can erase them.</dd>
+ <dt>Upload an existing drawing</dt><dd>Choose a file up to 20 MB. Images and PDFs can be previewed; DXF preview supports only basic entities. DWG needs a compatible CAD viewer or an export to PDF/image/DXF. Uploaded originals remain in the tab’s memory and are removed when it closes or reloads. Uploading does not attach a file to checkout.</dd></dl></section>
+ <p><strong>Before site use:</strong> a competent traffic-management designer must check the real site, visibility, accesses, swept paths, queues, pedestrians, signs and authority requirements. This guide explains the app controls.</p>
+</details>
+<style>
+ .drawing-guide{border:2px solid #126747;border-radius:8px;padding:18px;margin:20px 0;background:#f6faf7}.drawing-guide summary{font-size:20px;font-weight:800;cursor:pointer}.drawing-guide nav{display:flex;flex-wrap:wrap;gap:10px 20px;margin:18px 0}.drawing-guide section{border-top:1px solid #bfd0c6;padding-top:12px;scroll-margin-top:24px}.drawing-guide h4{font-size:20px;margin:8px 0}.drawing-guide dt{font-weight:800;margin-top:14px}.drawing-guide dd{margin:4px 0 12px;line-height:1.6}.drawing-guide :focus-visible{outline:3px solid #126747;outline-offset:3px}
+</style>
