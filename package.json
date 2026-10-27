@@ -32,12 +32,13 @@
 		"astro": "astro",
 		"build": "astro build && node scripts/lock-routes.mjs && node scripts/create-locked-worker.mjs",
 		"cf-typegen": "wrangler types",
-		"check": "npm run test:fulfilment && npm run build && tsc && wrangler deploy --dry-run",
+		"check": "npm run test:fulfilment && npm run test:traffic && npm run build && tsc && wrangler deploy --dry-run",
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
 		"preview": "astro build && wrangler dev",
 		"smoke:fulfilment": "node scripts/run-fulfilment-smoke.mjs",
-		"test:fulfilment": "node --test tests/fulfilment.test.mjs tests/safework-editor.test.mjs"
+		"test:fulfilment": "node --test tests/fulfilment.test.mjs tests/safework-editor.test.mjs",
+		"test:traffic": "node --test tests/traffic*.test.mjs"
 	},
 	"type": "module"
 }

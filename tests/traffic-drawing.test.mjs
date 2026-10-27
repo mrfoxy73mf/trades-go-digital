@@ -18,11 +18,17 @@ const items = tools.map((type) => ({
 }));
 test("all seven drawing tools export geometry and a review warning that round-trips through ASCII DXF", () => {
   const shapes = primitives(items);
-  assert.ok(shapes.length > 20);
+  assert.ok(items.every((item) => primitives([item]).length > 0));
   const source = toDxf(items),
     preview = parseDxf(source);
   assert.equal(preview.unsupported, 0);
-  assert.equal(preview.shapes.length, shapes.length + 1);
+  assert.equal(
+    preview.shapes.length,
+    shapes.reduce(
+      (n, s) => n + (s.kind === "polygon" ? s.points.length : 1),
+      0,
+    ) + 1,
+  );
   assert.ok(
     preview.shapes.some(
       (s) => s.kind === "text" && s.text.includes("designer review required"),

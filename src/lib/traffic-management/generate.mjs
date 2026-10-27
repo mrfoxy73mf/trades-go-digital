@@ -1,3 +1,4 @@
+import { signFaceForLabel } from "./drawing.mjs";
 import { calculateDesign } from "./design.mjs";
 export function buildDraft(input) {
   const design = calculateDesign(input),
@@ -80,11 +81,12 @@ export function buildDraft(input) {
       s.side === "Approach A exit"
         ? 455
         : roadTop - 35;
-    add("sign", x(s.chainage), signY, x(s.chainage), signY, s.id, 0.65);
+    add("sign", x(s.chainage), signY, x(s.chainage), signY, s.id, 0.85);
+    items.at(-1).signFace = signFaceForLabel(s.label);
   }
   if (input.roadType === "single") {
     add("lights", x(design.taperEnd), 455);
-    add("lights", x(design.returnStart), roadTop - 35);
+    add("lights", x(design.returnStart) + 35, roadTop - 35);
   }
   label(
     40,
