@@ -1,5 +1,6 @@
 import { validMap, panMap, mapPixelsPerMetre } from "./map.mjs";
 export interface MapView {
+  mapType?: "roadmap" | "hybrid";
   lat: number;
   lng: number;
   zoom: number;
@@ -15,6 +16,7 @@ interface MapResult {
 export interface MapState {
   view: MapView;
   alignment: number[][];
+  alignmentMode?: "direction" | "section";
   features: number[][];
   site: "straight" | "complex";
 }
@@ -30,6 +32,8 @@ export function bindMapControls(
     root.querySelector(s) as unknown as T;
   let state: MapState | null = null,
     image = "",
+    measuring = false,
+    measureStart: number[] | null = null,
     marking = 0,
     featureMode = false,
     pan = false,
@@ -55,12 +59,12 @@ export function bindMapControls(
     q<SVGImageElement>("[data-map-image]").setAttribute("href", image);
     q("[data-map-alignment]").textContent =
       state?.alignment.length === 2
-        ? `Working section marked: approximately ${(Math.hypot(state.alignment[1][0] - state.alignment[0][0], state.alignment[1][1] - state.alignment[0][1]) / mapPixelsPerMetre(state.view)).toFixed(1)} m on map. Enter the surveyed length below. ${state.features.length} junction/access points marked for review.`
+        ? state.alignmentMode === "direction" ? "Work start and direction marked for AI drafting. Enter the working-space length to set the work end." : `Working section marked: approximately ${(Math.hypot(state.alignment[1][0] - state.alignment[0][0], state.alignment[1][1] - state.alignment[0][1]) / mapPixelsPerMetre(state.view)).toFixed(1)} m on map. Enter the surveyed length below. ${state.features.length} junction/access points marked for review.`
         : marking
           ? "Tap the start, then end of the working section on the road centreline, in the primary direction of travel."
           : "No working section marked.";
     for (const b of root.querySelectorAll<HTMLButtonElement>(
-      "[data-map-zoom-in],[data-map-zoom-out],[data-map-pan],[data-map-mark],[data-map-feature],[data-map-remove]",
+      "[data-map-zoom-in],[data-map-zoom-out],[data-map-pan],[data-map-mark],[data-map-ai-mark],[data-map-measure],[data-map-feature],[data-map-remove]",
     ))
       b.disabled = !state || busy;
   };
@@ -111,9 +115,13 @@ export function bindMapControls(
       });
       if (replace) hooks.clear();
       state = structuredClone(next);
+      q<HTMLSelectElement>("[data-map-type]").value = state.view.mapType || "roadmap";
       state.view.created = next.view.created || Date.now();
       image = data;
       marking = 0;
+      measuring=false;measureStart=null;
+      q("[data-map-measurement]").textContent="Map measurements are approximate. Use Measure distance / width, then tap two points.";
+      q("[data-canvas]").querySelector("[data-measure-line]")?.remove();
       featureMode = false;
       q<HTMLSelectElement>("[data-map-site]").value = state.site;
       hooks.changed();
@@ -184,6 +192,9 @@ export function bindMapControls(
       load({ view, alignment: [], features: [], site: state!.site }, true),
     );
   };
+  q<HTMLSelectElement>("[data-map-type]").addEventListener("change", () =>
+    changeView(v => ({...v, mapType: q<HTMLSelectElement>("[data-map-type]").value as MapView["mapType"]})),
+  );
   q("[data-map-zoom-in]").addEventListener("click", () =>
     changeView((v) => ({ ...v, zoom: Math.min(20, v.zoom + 1) })),
   );
@@ -198,14 +209,28 @@ export function bindMapControls(
   );
   q("[data-map-mark]").addEventListener("click", () => {
     if (!state) return;
+    measuring=false;measureStart=null;
+    state.alignmentMode = "section";
     marking = 1;
     featureMode = false;
     pan = false;
     update();
     message("Tap the start of the working section on the road centreline.");
   });
+  q("[data-map-measure]").addEventListener("click", () => {
+    if(!state)return;
+    measuring=true;measureStart=null;marking=0;featureMode=false;pan=false;
+    q("[data-map-measurement]").textContent="Tap the first measurement point, then the second. Use a clear aerial view for a lane-width estimate.";
+  });
+  q("[data-map-ai-mark]").addEventListener("click", () => {
+    if(!state)return;
+    measuring=false;measureStart=null;
+    state.alignmentMode="direction";marking=1;featureMode=false;pan=false;update();
+    message("Tap the actual work start, then a second point along the correct carriageway in the travel direction. The entered length sets the work end.");
+  });
   q("[data-map-feature]").addEventListener("click", () => {
     if (!state) return;
+    measuring=false;measureStart=null;
     featureMode = true;
     marking = 0;
     message(
@@ -223,6 +248,9 @@ export function bindMapControls(
     if (!confirm("Remove the map and overlay and start a fresh drawing?"))
       return;
     state = null;
+    measuring=false;measureStart=null;
+    q("[data-canvas]").querySelector("[data-measure-line]")?.remove();
+    q("[data-map-measurement]").textContent="Map measurements are approximate. Load a map to measure.";
     image = "";
     marking = 0;
     featureMode = false;
@@ -274,22 +302,34 @@ export function bindMapControls(
     },
     restore: (next: MapState) => load(next, false),
     reset: () => {
+      measuring=false;measureStart=null;
+      q("[data-canvas]").querySelector("[data-measure-line]")?.remove();
       state = null;
       image = "";
       update();
     },
     consume(p: { x: number; y: number }) {
       if (!state) return false;
+      if(measuring) {
+        if(!measureStart){measureStart=[p.x,p.y];q("[data-map-measurement]").textContent="Now tap the second measurement point.";return true;}
+        const metres=Math.hypot(p.x-measureStart[0],p.y-measureStart[1])/mapPixelsPerMetre(state.view);
+        q("[data-map-measurement]").textContent=`Approximately ${metres.toFixed(2)} m between selected points (map estimate, not a survey). Copy this into the appropriate width or length field if suitable.`;
+        const line=document.createElementNS("http://www.w3.org/2000/svg","line");
+        line.dataset.measureLine="true";
+        for(const [key,value] of Object.entries({x1:measureStart[0],y1:measureStart[1],x2:p.x,y2:p.y,stroke:"#006fc7","stroke-width":3,"stroke-dasharray":"6 4","pointer-events":"none"}))line.setAttribute(key,String(value));
+        canvas.querySelector("[data-measure-line]")?.remove();canvas.appendChild(line);
+        measuring=false;measureStart=null;return true;
+      }
       if (marking) {
         if (marking === 1) {
           state.alignment = [[p.x, p.y]];
           marking = 2;
-          message("Now tap the end of the working section.");
+          message(state.alignmentMode === "direction" ? "Now tap a second point along the correct carriageway in the travel direction." : "Now tap the end of the working section.");
         } else {
           state.alignment.push([p.x, p.y]);
           marking = 0;
           message(
-            "Working section marked. Enter site measurements and confirm the supported scope before generating.",
+            state.alignmentMode === "direction" ? "Work start and direction marked. Enter the working-space size and use Create AI drawing." : "Working section marked. Enter site measurements and confirm the supported scope before generating.",
           );
         }
         hooks.changed(true);
