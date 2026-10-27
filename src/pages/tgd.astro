@@ -6,54 +6,6 @@ import { SITE_TITLE } from "../consts";
 
 export const prerender = false;
 
-const heroButtons = [
-	{
-		label: "Dashboard",
-		image: "/images/tgd-dashboard.png",
-		alt: "TGD Trades dashboard screen",
-	},
-	{
-		label: "Quotes & Materials",
-		image: "/images/tgd-quote-page.png",
-		alt: "TGD Trades quote page screen",
-	},
-	{
-		label: "Job Page",
-		image: "/images/tgd-job-folder.png",
-		alt: "TGD Trades jobs screen",
-	},
-	{
-		label: "Work Calendar",
-		image: "/images/tgd-work-calendar.png",
-		alt: "TGD Trades work calendar screen",
-	},
-	{
-		label: "Suppliers Page",
-		image: "/images/tgd-suppliers-page.png",
-		alt: "TGD Trades suppliers page screen",
-	},
-	{
-		label: "AI Assistant",
-		image: "/images/tgd-ai-assistant.png",
-		alt: "TGD Trades AI Assistant screen",
-	},
-	{
-		label: "Office Mailroom",
-		image: "/images/tgd-office-mailroom-safe.png",
-		alt: "TGD Trades Office Mailroom with AI receipt scanning and Business Office filing",
-	},
-	{
-		label: "Business Office",
-		image: "/images/tgd-business-office.png",
-		alt: "TGD Trades Business Office screen",
-	},
-	{
-		label: "Vehicles & Mileage",
-		image: "/images/tgd-vehicles-logs.png",
-		alt: "TGD Trades vehicles and mileage logs screen",
-	},
-];
-
 const paperworkItems = [
 	{
 		title: "Quote PDF",
@@ -168,7 +120,7 @@ const operationsFeatures = [
 							TGD Trades keeps every stage connected without entering the same details again.
 						</p>
 						<div class="pt-intro-actions">
-							<a class="pt-action pt-action-primary" href="#explore">Explore the app</a>
+							<a class="pt-action pt-action-primary" href="#videos">Watch TGD Trades</a>
 							<a class="pt-action pt-action-secondary" href="/contact/#tgd-enquiry">Show your interest</a>
 						</div>
 						<ul class="pt-intro-points" aria-label="TGD Trades highlights">
@@ -182,43 +134,21 @@ const operationsFeatures = [
 					</div>
 				</div>
 			</section>
-			<section id="explore" class="pt-hero pt-section">
-				<div class="pt-container pt-chain-heading">
-			<p class="pt-eyebrow">Everything in its place</p>
-			<h2>Everything you need—right where you need it.</h2>
-			<p>Your jobs, customers, materials and paperwork—all organised and ready when you need them.</p>
-				</div>
-				<div class="pt-app-chain" aria-label="TGD Trades app screens">
-					<div class="pt-app-chain-track">
-						{[...heroButtons, ...heroButtons].map((item, index) => (
-							<figure class="pt-app-chain-card" aria-hidden={index >= heroButtons.length ? "true" : undefined}>
-								<div><img src={item.image} alt={index < heroButtons.length ? item.alt : ""} loading="lazy" /></div>
-								<figcaption>{item.label}</figcaption>
-							</figure>
-						))}
-					</div>
-				</div>
-				<div class="pt-container pt-chain-benefits" aria-label="TGD Trades key benefits">
-					<span>Quote once</span><span>Book the work</span><span>Automate the paperwork</span><span>Know what is paid</span>
-				</div>
-			</section>
-
-			<section class="pt-section pt-demo" aria-labelledby="demo-title">
+			<section id="videos" class="pt-section pt-demo" aria-labelledby="demo-title">
 				<div class="pt-container pt-demo-inner">
 					<div class="pt-demo-copy">
 						<p class="pt-eyebrow">See the connected workflow</p>
-						<h2 id="demo-title">Take a guided tour of TGD Trades.</h2>
-						<p id="demo-description">Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.</p>
+						<h2 id="demo-title">See TGD Trades in action.</h2>
+						<p id="demo-description">See how TGD Trades gives busy tradespeople less paperwork and more time for their business and family.</p>
 						<div class="pt-demo-selector" role="group" aria-label="Choose a TGD Trades demonstration">
-							<button class="is-active" type="button" data-demo="tour" aria-pressed="true">Watch the Full TGD Tour</button>
-							<button type="button" data-demo="advert" aria-pressed="false">Watch TGD Trades in Action</button>
+							<button class="is-active" type="button" data-demo="advert" aria-pressed="true">Watch TGD Trades in Action</button>
 							<button type="button" data-demo="phoneCallAdvert" aria-pressed="false">Watch the Full Advert</button>
 							<button type="button" data-demo="bathroomAdvert" aria-pressed="false">Watch the Bathroom Advert</button>
 						</div>
 					</div>
 					<div class="pt-demo-video">
-						<video id="pt-demo-player" controls playsinline preload="metadata" poster="/images/tgd-trades-demo-poster.jpg">
-							<source src="/videos/tgd-trades-demo-business-music.mp4?v=20261026" type="video/mp4" />
+						<video id="pt-demo-player" controls playsinline preload="metadata" poster="/images/tgd-trades-advert-poster.jpg">
+							<source src="/videos/tgd-trades-advert.mp4" type="video/mp4" />
 							Your browser does not support embedded video.
 						</video>
 						<div id="pt-demo-price-overlay" class="pt-demo-price-overlay" hidden>£40 a month for 3 months — then £70/month</div>
@@ -347,14 +277,8 @@ const operationsFeatures = [
 			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
 			const demoButtons = document.querySelectorAll<HTMLButtonElement>("[data-demo]");
 			const demoPriceOverlay = document.querySelector<HTMLElement>("#pt-demo-price-overlay");
-			let activeDemoKey: "tour" | "advert" | "phoneCallAdvert" | "bathroomAdvert" = "tour";
+			let activeDemoKey: "advert" | "phoneCallAdvert" | "bathroomAdvert" = "advert";
 			const demos = {
-				tour: {
-					title: "Take a guided tour of TGD Trades.",
-					description: "Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.",
-					src: "/videos/tgd-trades-demo-business-music.mp4?v=20261026",
-					poster: "/images/tgd-trades-demo-poster.jpg",
-				},
 				advert: {
 					title: "See TGD Trades in action.",
 					description: "See how TGD Trades gives busy tradespeople less paperwork and more time for their business and family.",
@@ -377,14 +301,8 @@ const operationsFeatures = [
 
 			const updateDemoPriceOverlay = () => {
 				if (!demoPriceOverlay || !demoPlayer) return;
-				const tourPriceNeedsCovering = activeDemoKey === "tour" && demoPlayer.currentTime >= 79;
-				const coversIncorrectPrice = activeDemoKey === "phoneCallAdvert" || tourPriceNeedsCovering;
-				demoPriceOverlay.classList.toggle("is-tour-price", tourPriceNeedsCovering);
-				demoPriceOverlay.hidden = !coversIncorrectPrice;
+				demoPriceOverlay.hidden = activeDemoKey !== "phoneCallAdvert";
 			};
-
-			demoPlayer?.addEventListener("timeupdate", updateDemoPriceOverlay);
-			demoPlayer?.addEventListener("seeked", updateDemoPriceOverlay);
 
 			demoButtons.forEach((button) => {
 				button.addEventListener("click", () => {
@@ -1228,22 +1146,6 @@ const operationsFeatures = [
 
 	.pt-demo-price-overlay[hidden] {
 		display: none;
-	}
-
-	.pt-demo-price-overlay.is-tour-price {
-		top: 67%;
-		right: auto;
-		bottom: auto;
-		left: 2.5%;
-		width: 54%;
-		height: 20%;
-		padding: 0 2%;
-		border-left: 4px solid #20c9ff;
-		background: linear-gradient(90deg, #020b17 0%, #061426 88%, rgba(6, 20, 38, 0.96) 100%);
-		font-size: clamp(0.72rem, 1.7vw, 1.5rem);
-		line-height: 1.25;
-		white-space: normal;
-		text-align: center;
 	}
 
 	.pt-demo-video video {
