@@ -11,7 +11,7 @@ const steps = [
   },
   {
     title: "3. Mark the working section",
-    copy: "Press Mark working section, then tap the start and end on the road centreline in the direction of travel. These points mark the work itself, not the whole advance-signing area. Use Mark junction / access for nearby features needing review. The map controls are above the measurements; the map drawing is further down the page.",
+    copy: "Press Mark working section, then tap the start and end on the road centreline in the direction of travel. These points mark the work itself, not the whole advance-signing area. Use Mark junction / access for nearby features needing review. The map controls sit directly above the map, below the measurements. Use “Go to the map and its controls” to jump there.",
     target: "[data-map-mark]",
   },
   {
