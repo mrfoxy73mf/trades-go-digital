@@ -167,6 +167,32 @@ const operationsFeatures = [
 					</div>
 				</div>
 			</section>
+
+			<section class="pt-section pt-page-tour" aria-labelledby="page-tour-title">
+				<div class="pt-container pt-page-tour-inner">
+					<div class="pt-page-tour-copy">
+						<p class="pt-eyebrow">A tour of the complete app</p>
+						<h2 id="page-tour-title">Welcome to the TGD Trades page tour.</h2>
+						<p>See how TGD Trades brings your jobs, quotes, calendar, paperwork and business records together.</p>
+					</div>
+					<div class="pt-page-tour-video">
+						<video
+							id="pt-page-tour-player"
+							autoplay
+							muted
+							loop
+							playsinline
+							preload="metadata"
+							poster="/images/tgd-trades-page-tour-poster.jpg"
+							aria-label="TGD Trades app page tour"
+						>
+							<source src="/videos/tgd-page-tour/part-00.mp4" type="video/mp4" />
+							Your browser does not support embedded video.
+						</video>
+					</div>
+				</div>
+			</section>
+
 			<section id="videos" class="pt-section pt-demo" aria-labelledby="demo-title">
 				<div class="pt-container pt-demo-inner">
 					<div class="pt-demo-copy">
@@ -316,6 +342,17 @@ const operationsFeatures = [
 		</main>
 		<Footer />
 		<script>
+			const pageTourPlayer = document.querySelector<HTMLVideoElement>("#pt-page-tour-player");
+			const pageTourParts = Array.from({ length: 31 }, (_, index) =>
+				`/videos/tgd-page-tour/part-${String(index).padStart(2, "0")}.mp4`,
+			);
+			let pageTourPart = 0;
+			pageTourPlayer?.addEventListener("ended", () => {
+				pageTourPart = (pageTourPart + 1) % pageTourParts.length;
+				pageTourPlayer.src = pageTourParts[pageTourPart];
+				pageTourPlayer.play().catch(() => undefined);
+			});
+
 			const demoPlayer = document.querySelector<HTMLVideoElement>("#pt-demo-player");
 			const demoTitle = document.querySelector<HTMLElement>("#demo-title");
 			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
@@ -1116,6 +1153,41 @@ const operationsFeatures = [
 
 	.pt-demo-copy #demo-description {
 		max-width: 680px;
+	}
+
+	.pt-page-tour {
+		background:
+			radial-gradient(circle at 50% 0%, rgba(32, 201, 255, 0.12), transparent 38%),
+			linear-gradient(180deg, rgba(3, 8, 16, 0.2), rgba(3, 8, 16, 0.82));
+	}
+
+	.pt-page-tour-inner {
+		display: grid;
+		gap: 28px;
+	}
+
+	.pt-page-tour-copy {
+		max-width: 880px;
+	}
+
+	.pt-page-tour-copy h2 {
+		margin-bottom: 14px;
+	}
+
+	.pt-page-tour-video {
+		overflow: hidden;
+		width: 100%;
+		border: 1px solid rgba(32, 201, 255, 0.46);
+		border-radius: 16px;
+		background: #07111f;
+		box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52), 0 0 52px rgba(32, 201, 255, 0.12);
+	}
+
+	.pt-page-tour-video video {
+		display: block;
+		width: 100%;
+		height: auto;
+		background: #07111f;
 	}
 
 	.pt-demo-selector {
