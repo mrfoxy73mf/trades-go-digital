@@ -6,54 +6,6 @@ import { SITE_TITLE } from "../consts";
 
 export const prerender = false;
 
-const heroButtons = [
-	{
-		label: "Dashboard",
-		image: "/images/tgd-dashboard.png",
-		alt: "TGD Trades dashboard screen",
-	},
-	{
-		label: "Quotes & Materials",
-		image: "/images/tgd-quote-page.png",
-		alt: "TGD Trades quote page screen",
-	},
-	{
-		label: "Job Page",
-		image: "/images/tgd-job-folder.png",
-		alt: "TGD Trades jobs screen",
-	},
-	{
-		label: "Work Calendar",
-		image: "/images/tgd-work-calendar.png",
-		alt: "TGD Trades work calendar screen",
-	},
-	{
-		label: "Suppliers Page",
-		image: "/images/tgd-suppliers-page.png",
-		alt: "TGD Trades suppliers page screen",
-	},
-	{
-		label: "AI Assistant",
-		image: "/images/tgd-ai-assistant.png",
-		alt: "TGD Trades AI Assistant screen",
-	},
-	{
-		label: "Office Mailroom",
-		image: "/images/tgd-office-mailroom-safe.png",
-		alt: "TGD Trades Office Mailroom with AI receipt scanning and Business Office filing",
-	},
-	{
-		label: "Business Office",
-		image: "/images/tgd-business-office.png",
-		alt: "TGD Trades Business Office screen",
-	},
-	{
-		label: "Vehicles & Mileage",
-		image: "/images/tgd-vehicles-logs.png",
-		alt: "TGD Trades vehicles and mileage logs screen",
-	},
-];
-
 const paperworkItems = [
 	{
 		title: "Quote PDF",
@@ -108,6 +60,39 @@ const pricingFeatures = [
 	"Prepare accountant records automatically",
 	"Keep working offline and sync automatically when reconnected",
 	"Unlimited jobs, photos and PDFs—with no long contract",
+];
+
+const tradeTypes = [
+	"Plumbers",
+	"Electricians",
+	"Builders",
+	"Carpenters & joiners",
+	"Bathroom fitters",
+	"Kitchen fitters",
+	"Roofers",
+	"Painters & decorators",
+	"Plasterers",
+	"Bricklayers",
+	"Tilers",
+	"Flooring installers",
+	"Heating & gas engineers",
+	"HVAC & air-conditioning engineers",
+	"Drainage engineers",
+	"Locksmiths",
+	"Glaziers & window fitters",
+	"Landscapers & gardeners",
+	"Fencing contractors",
+	"Groundworkers",
+	"Handymen",
+	"Property-maintenance businesses",
+	"Cleaning contractors",
+	"Solar-panel installers",
+	"Security & alarm installers",
+	"Appliance-repair engineers",
+	"Garage-door installers",
+	"Fire-protection engineers",
+	"Pest-control businesses",
+	"Small construction & refurbishment firms",
 ];
 
 const operationsFeatures = [
@@ -168,7 +153,7 @@ const operationsFeatures = [
 							TGD Trades keeps every stage connected without entering the same details again.
 						</p>
 						<div class="pt-intro-actions">
-							<a class="pt-action pt-action-primary" href="#explore">Explore the app</a>
+							<a class="pt-action pt-action-primary" href="#videos">Watch TGD Trades</a>
 							<a class="pt-action pt-action-secondary" href="/contact/#tgd-enquiry">Show your interest</a>
 						</div>
 						<ul class="pt-intro-points" aria-label="TGD Trades highlights">
@@ -182,47 +167,62 @@ const operationsFeatures = [
 					</div>
 				</div>
 			</section>
-			<section id="explore" class="pt-hero pt-section">
-				<div class="pt-container pt-chain-heading">
-			<p class="pt-eyebrow">Everything in its place</p>
-			<h2>Everything you need—right where you need it.</h2>
-			<p>Your jobs, customers, materials and paperwork—all organised and ready when you need them.</p>
-				</div>
-				<div class="pt-app-chain" aria-label="TGD Trades app screens">
-					<div class="pt-app-chain-track">
-						{[...heroButtons, ...heroButtons].map((item, index) => (
-							<figure class="pt-app-chain-card" aria-hidden={index >= heroButtons.length ? "true" : undefined}>
-								<div><img src={item.image} alt={index < heroButtons.length ? item.alt : ""} loading="lazy" /></div>
-								<figcaption>{item.label}</figcaption>
-							</figure>
-						))}
+
+			<section class="pt-section pt-page-tour" aria-labelledby="page-tour-title">
+				<div class="pt-container pt-page-tour-inner">
+					<div class="pt-page-tour-copy">
+						<p class="pt-eyebrow">A tour of the complete app</p>
+						<h2 id="page-tour-title">Welcome to the TGD Trades page tour.</h2>
+						<p>See how TGD Trades brings your jobs, quotes, calendar, paperwork and business records together.</p>
 					</div>
-				</div>
-				<div class="pt-container pt-chain-benefits" aria-label="TGD Trades key benefits">
-					<span>Quote once</span><span>Book the work</span><span>Automate the paperwork</span><span>Know what is paid</span>
+					<div class="pt-page-tour-video">
+						<video
+							id="pt-page-tour-player"
+							autoplay
+							muted
+							loop
+							playsinline
+							preload="metadata"
+							poster="/images/tgd-trades-page-tour-poster.jpg"
+							aria-label="TGD Trades app page tour"
+						>
+							<source src="/videos/tgd-page-tour/part-00.mp4" type="video/mp4" />
+							Your browser does not support embedded video.
+						</video>
+					</div>
 				</div>
 			</section>
 
-			<section class="pt-section pt-demo" aria-labelledby="demo-title">
+			<section id="videos" class="pt-section pt-demo" aria-labelledby="demo-title">
 				<div class="pt-container pt-demo-inner">
 					<div class="pt-demo-copy">
 						<p class="pt-eyebrow">See the connected workflow</p>
-						<h2 id="demo-title">Take a guided tour of TGD Trades.</h2>
-						<p id="demo-description">Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.</p>
+						<h2 id="demo-title">See TGD Trades in action.</h2>
+						<p id="demo-description">See how TGD Trades gives busy tradespeople less paperwork and more time for their business and family.</p>
 						<div class="pt-demo-selector" role="group" aria-label="Choose a TGD Trades demonstration">
-							<button class="is-active" type="button" data-demo="tour" aria-pressed="true">Watch the Full TGD Tour</button>
-							<button type="button" data-demo="advert" aria-pressed="false">Watch TGD Trades in Action</button>
+							<button class="is-active" type="button" data-demo="advert" aria-pressed="true">Watch TGD Trades in Action</button>
 							<button type="button" data-demo="phoneCallAdvert" aria-pressed="false">Watch the Full Advert</button>
 							<button type="button" data-demo="bathroomAdvert" aria-pressed="false">Watch the Bathroom Advert</button>
 						</div>
 					</div>
 					<div class="pt-demo-video">
-						<video id="pt-demo-player" controls playsinline preload="metadata" poster="/images/tgd-trades-demo-poster.jpg">
-							<source src="/videos/tgd-trades-demo-business-music.mp4?v=20261026" type="video/mp4" />
+						<video id="pt-demo-player" controls playsinline preload="metadata" poster="/images/tgd-trades-advert-poster.jpg">
+							<source src="/videos/tgd-trades-advert.mp4" type="video/mp4" />
 							Your browser does not support embedded video.
 						</video>
 						<div id="pt-demo-price-overlay" class="pt-demo-price-overlay" hidden>£40 a month for 3 months — then £70/month</div>
 					</div>
+				</div>
+			</section>
+
+			<section class="pt-section pt-trades" aria-labelledby="trades-title">
+				<div class="pt-container">
+					<p class="pt-eyebrow">Built for UK trades</p>
+					<h2 id="trades-title">Made for the people who keep work moving.</h2>
+					<p class="pt-trades-lead">TGD Trades is designed for sole traders and small trade businesses that quote work, manage jobs, buy materials, send invoices and keep business records.</p>
+					<ul class="pt-trades-grid">
+						{tradeTypes.map((trade) => <li>{trade}</li>)}
+					</ul>
 				</div>
 			</section>
 
@@ -342,19 +342,24 @@ const operationsFeatures = [
 		</main>
 		<Footer />
 		<script>
+			const pageTourPlayer = document.querySelector<HTMLVideoElement>("#pt-page-tour-player");
+			const pageTourParts = Array.from({ length: 31 }, (_, index) =>
+				`/videos/tgd-page-tour/part-${String(index).padStart(2, "0")}.mp4`,
+			);
+			let pageTourPart = 0;
+			pageTourPlayer?.addEventListener("ended", () => {
+				pageTourPart = (pageTourPart + 1) % pageTourParts.length;
+				pageTourPlayer.src = pageTourParts[pageTourPart];
+				pageTourPlayer.play().catch(() => undefined);
+			});
+
 			const demoPlayer = document.querySelector<HTMLVideoElement>("#pt-demo-player");
 			const demoTitle = document.querySelector<HTMLElement>("#demo-title");
 			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
 			const demoButtons = document.querySelectorAll<HTMLButtonElement>("[data-demo]");
 			const demoPriceOverlay = document.querySelector<HTMLElement>("#pt-demo-price-overlay");
-			let activeDemoKey: "tour" | "advert" | "phoneCallAdvert" | "bathroomAdvert" = "tour";
+			let activeDemoKey: "advert" | "phoneCallAdvert" | "bathroomAdvert" = "advert";
 			const demos = {
-				tour: {
-					title: "Take a guided tour of TGD Trades.",
-					description: "Watch how TGD Trades turns an accepted quote into booked work, organised paperwork and accounts ready for reporting.",
-					src: "/videos/tgd-trades-demo-business-music.mp4?v=20261026",
-					poster: "/images/tgd-trades-demo-poster.jpg",
-				},
 				advert: {
 					title: "See TGD Trades in action.",
 					description: "See how TGD Trades gives busy tradespeople less paperwork and more time for their business and family.",
@@ -377,12 +382,8 @@ const operationsFeatures = [
 
 			const updateDemoPriceOverlay = () => {
 				if (!demoPriceOverlay || !demoPlayer) return;
-				const coversIncorrectPrice = activeDemoKey === "phoneCallAdvert" || (activeDemoKey === "tour" && demoPlayer.currentTime >= 79);
-				demoPriceOverlay.hidden = !coversIncorrectPrice;
+				demoPriceOverlay.hidden = activeDemoKey !== "phoneCallAdvert";
 			};
-
-			demoPlayer?.addEventListener("timeupdate", updateDemoPriceOverlay);
-			demoPlayer?.addEventListener("seeked", updateDemoPriceOverlay);
 
 			demoButtons.forEach((button) => {
 				button.addEventListener("click", () => {
@@ -1154,6 +1155,41 @@ const operationsFeatures = [
 		max-width: 680px;
 	}
 
+	.pt-page-tour {
+		background:
+			radial-gradient(circle at 50% 0%, rgba(32, 201, 255, 0.12), transparent 38%),
+			linear-gradient(180deg, rgba(3, 8, 16, 0.2), rgba(3, 8, 16, 0.82));
+	}
+
+	.pt-page-tour-inner {
+		display: grid;
+		gap: 28px;
+	}
+
+	.pt-page-tour-copy {
+		max-width: 880px;
+	}
+
+	.pt-page-tour-copy h2 {
+		margin-bottom: 14px;
+	}
+
+	.pt-page-tour-video {
+		overflow: hidden;
+		width: 100%;
+		border: 1px solid rgba(32, 201, 255, 0.46);
+		border-radius: 16px;
+		background: #07111f;
+		box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52), 0 0 52px rgba(32, 201, 255, 0.12);
+	}
+
+	.pt-page-tour-video video {
+		display: block;
+		width: 100%;
+		height: auto;
+		background: #07111f;
+	}
+
 	.pt-demo-selector {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1235,6 +1271,45 @@ const operationsFeatures = [
 		height: auto;
 		object-fit: cover;
 		background: #030508;
+	}
+
+	.pt-trades {
+		background:
+			radial-gradient(circle at 14% 20%, rgba(32, 201, 255, 0.1), transparent 28%),
+			radial-gradient(circle at 88% 78%, rgba(124, 58, 237, 0.12), transparent 30%);
+	}
+
+	.pt-trades-lead {
+		max-width: 820px;
+	}
+
+	.pt-trades-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 10px;
+		margin: 30px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.pt-trades-grid li {
+		display: flex;
+		align-items: center;
+		min-height: 52px;
+		padding: 12px 16px;
+		border: 1px solid rgba(32, 201, 255, 0.28);
+		border-radius: 10px;
+		background: rgba(6, 17, 31, 0.88);
+		color: #e6f5ff;
+		font-weight: 800;
+		line-height: 1.35;
+	}
+
+	.pt-trades-grid li::before {
+		content: "✓";
+		margin-right: 10px;
+		color: #20c9ff;
+		font-weight: 950;
 	}
 
 	.pt-demo-proof {
@@ -2525,6 +2600,10 @@ const operationsFeatures = [
 	}
 
 	@media (max-width: 1000px) {
+		.pt-trades-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
 		.pt-smart-features {
 			grid-template-columns: 1fr;
 		}
@@ -2625,6 +2704,11 @@ const operationsFeatures = [
 	}
 
 	@media (max-width: 720px) {
+		.pt-trades-grid {
+			grid-template-columns: 1fr;
+			gap: 8px;
+		}
+
 		.pt-app-chain-track {
 			gap: 12px;
 			padding-left: 12px;
