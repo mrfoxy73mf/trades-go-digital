@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trades-go-digital.co.uk/sitemap-index.xml

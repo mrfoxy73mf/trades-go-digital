@@ -1,32 +1,17 @@
 ---
-import { TGD_APP_URL } from "../consts";
-const path = Astro.url.pathname.replace(/\/$/, "") || "/";
-const isLettingDesk = path.startsWith("/tgd-lettingdesk");
-const apps = [
- {name:"TGD Trades",href:"/tgd",detail:"Jobs, quotes and your business office"},
- {name:"TAD The Business",href:"/tad-the-business",detail:"Business management for your team"},
- {name:"Health & Safety",href:"/health-and-safety",detail:"SafeWork AI and work-pack preparation"},
- {name:"Traffic Management",href:"/traffic-management",detail:"Chapter 8 road, lane and closure work packs"},
- {name:"PDF Maker",href:"/pdf-maker",detail:"Branded quotes, invoices and documents"},
- {name:"Logo Maker",href:"/logo-maker",detail:"Create your business identity"},
- {name:"TGD LettingDesk",href:"/tgd-lettingdesk",detail:"Property and agency management"},
-];
-const active = (href: string) => path === href || (href === "/health-and-safety" && path.startsWith("/safework"));
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/tgd";
+const active = (href: string) => path === href;
 ---
 <header class="tgd-navigation">
  <nav class="navigation-shell" aria-label="Primary navigation">
-  <a class="navigation-brand" href="/" aria-label="Trades Go Digital home"><img src="/images/trades-go-digital-icon-stripe.png" width="46" height="46" alt="" /><span>Trades <b>Go</b> Digital<small>Tools for your working day</small></span></a>
+  <a class="navigation-brand" href="/tgd" aria-label="TGD Trades home"><img src="/images/trades-go-digital-icon-stripe.png" width="46" height="46" alt="" /><span>TGD <b>Trades</b><small>Your business office</small></span></a>
   <button class="navigation-toggle" type="button" aria-expanded="false" aria-controls="tgd-navigation-links" hidden>Menu <span aria-hidden="true">☰</span></button>
   <div class="navigation-links" id="tgd-navigation-links">
-   <a class="navigation-link" href="/" aria-current={active("/") ? "page" : undefined}>Home</a>
-   <details class="navigation-apps">
-    <summary class:list={{"apps-active":apps.some(app=>active(app.href))}}>Apps &amp; Tools <span aria-hidden="true">⌄</span></summary>
-    <div class="apps-panel"><p class="apps-label">Find the right tool for your business</p><div class="apps-grid">{apps.map(app=><a href={app.href} aria-current={active(app.href) ? "page" : undefined}><strong>{app.name}<span aria-hidden="true">↗</span></strong><small>{app.detail}</small></a>)}</div><a class="all-tools" href="/#explore">Explore everything <span aria-hidden="true">→</span></a></div>
-   </details>
-   <a class="navigation-link" href="/pricing" aria-current={active("/pricing") ? "page" : undefined}>Pricing</a>
-   <a class="navigation-link" href="/monthly-updates" aria-current={active("/monthly-updates") ? "page" : undefined}>Updates</a>
+   <a class="navigation-link" href="/tgd" aria-current={active("/tgd") ? "page" : undefined}>TGD Trades</a>
    <a class="navigation-link" href="/contact" aria-current={active("/contact") ? "page" : undefined}>Contact</a>
-   <a class="navigation-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : TGD_APP_URL}>{isLettingDesk ? "Enquire about LettingDesk" : "Open TGD Trades"}<span aria-hidden="true">↗</span></a>
+   <a class="navigation-link" href="/terms-and-conditions" aria-current={active("/terms-and-conditions") ? "page" : undefined}>Terms</a>
+   <a class="navigation-cta" href="/contact/#tgd-enquiry">Show Interest<span aria-hidden="true">→</span></a>
   </div>
  </nav>
 </header>
@@ -34,12 +19,11 @@ const active = (href: string) => path === href || (href === "/health-and-safety"
  const header=document.querySelector<HTMLElement>('.tgd-navigation');
  if(header){
   const toggle=header.querySelector<HTMLButtonElement>('.navigation-toggle')!;
-  const apps=header.querySelector<HTMLDetailsElement>('.navigation-apps')!;
   toggle.hidden=false;header.classList.add('navigation-ready');
-  const close=()=>{header.classList.remove('navigation-open');toggle.setAttribute('aria-expanded','false');apps.open=false;};
-  toggle.addEventListener('click',()=>{const open=header.classList.toggle('navigation-open');toggle.setAttribute('aria-expanded',String(open));if(!open)apps.open=false;});
+  const close=()=>{header.classList.remove('navigation-open');toggle.setAttribute('aria-expanded','false');};
+  toggle.addEventListener('click',()=>{const open=header.classList.toggle('navigation-open');toggle.setAttribute('aria-expanded',String(open));});
   document.addEventListener('click',event=>{if(event.target instanceof Node&&!header.contains(event.target))close();});
-  header.addEventListener('keydown',event=>{if(event.key==='Escape'){if(apps.open){apps.open=false;apps.querySelector('summary')?.focus();}else{close();toggle.focus();}}});
+  header.addEventListener('keydown',event=>{if(event.key==='Escape'){close();toggle.focus();}});
   header.querySelectorAll('a').forEach(link=>link.addEventListener('click',close));
   matchMedia('(min-width: 1081px)').addEventListener('change',close);
  }

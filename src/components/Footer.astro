@@ -1,28 +1,25 @@
 ---
 const today = new Date();
-const isLettingDesk = Astro.url.pathname.startsWith("/tgd-lettingdesk");
-const isTgdTrades = Astro.url.pathname === "/tgd" || Astro.url.pathname.startsWith("/tgd/");
+const isTgdTrades = true;
 ---
 
 <footer class:list={["site-footer", { "footer-tgd-trades": isTgdTrades }]}>
 	<div class="footer-main">
-		<a class="footer-brand" href="/" aria-label="Trades Go Digital home">
+		<a class="footer-brand" href="/tgd" aria-label="TGD Trades home">
 			<img src="/images/trades-go-digital-logo-stripe.png" alt="Trades Go Digital" />
 		</a>
 		<div class="footer-message">
-			<strong>Practical software for working businesses.</strong>
-			<span>Websites, business apps and straightforward UK support.</span>
+			<strong>TGD Trades - your business office.</strong>
+			<span>Jobs, quotes, invoices and trade-business admin in one place.</span>
 		</div>
 		<nav aria-label="Footer navigation">
-			<a href="/#explore">Products</a><a href="/pricing">Pricing</a>
-			<a href="/monthly-updates">Updates</a><a href="/contact">Contact</a>
+			<a href="/tgd">TGD Trades</a><a href="/contact">Contact</a>
+			<a href="/contact/#tgd-enquiry">Show Interest</a><a href="/terms-and-conditions">Terms</a>
 		</nav>
-		<a class="footer-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : "/contact/#tgd-enquiry"}>
-			{isLettingDesk ? "Enquire about LettingDesk" : "Talk to us"}
-		</a>
+		<a class="footer-cta" href="/contact/#tgd-enquiry">Show your interest</a>
 	</div>
 	<div class="footer-bottom">
-		<span>&copy; {today.getFullYear()} Trades Go Digital Ltd.</span>
+		<span>&copy; {today.getFullYear()} Trades Go Digital</span>
 		<a href="mailto:hello@trades-go-digital.co.uk">hello@trades-go-digital.co.uk</a>
 		<a href="/terms-and-conditions">Terms &amp; Conditions</a>
 	</div>
