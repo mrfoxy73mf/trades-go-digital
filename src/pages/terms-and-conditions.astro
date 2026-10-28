@@ -107,7 +107,7 @@ const policies = [
 			<section class="policy-list" aria-label="Legal and policy dropdowns">
 				{
 					policies.map((policy, index) => (
-						<details class="policy-item" open={index === 0}>
+						<details id={policy.title === "Privacy Notice" ? "privacy-notice" : undefined} class="policy-item" open={index === 0}>
 							<summary>
 								<span>{policy.title}</span>
 								<span class="summary-icon" aria-hidden="true">&gt;</span>
@@ -122,7 +122,14 @@ const policies = [
 		</main>
 		<Footer />
 		<script>
-			const policyItems = document.querySelectorAll(".policy-item");
+			const policyItems = document.querySelectorAll<HTMLDetailsElement>(".policy-item");
+   const openLinkedPolicy = () => {
+    if (window.location.hash !== "#privacy-notice") return;
+    policyItems.forEach((item) => { item.open = item.id === "privacy-notice"; });
+    document.getElementById("privacy-notice")?.scrollIntoView({ block: "start" });
+   };
+   openLinkedPolicy();
+   window.addEventListener("hashchange", openLinkedPolicy);
 
 			policyItems.forEach((item) => {
 				item.addEventListener("toggle", () => {
@@ -193,6 +200,7 @@ const policies = [
 	}
 
 	details {
+		scroll-margin-top: 100px;
 		overflow: hidden;
 		border: 1px solid rgba(7, 17, 31, 0.11);
 		border-radius: 12px;

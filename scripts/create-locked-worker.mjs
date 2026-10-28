@@ -15,6 +15,7 @@ const PUBLIC_EXACT_PATHS = new Set([
 	"/robots.txt",
 	"/sitemap-index.xml",
 	"/api/stripe/webhook",
+	"/api/enquiry",
 	"/favicon.svg",
 ]);
 const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/videos/", "/fonts/", "/sitemap-"];
