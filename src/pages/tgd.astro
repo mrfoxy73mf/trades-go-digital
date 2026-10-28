@@ -6,52 +6,6 @@ import { SITE_TITLE } from "../consts";
 
 export const prerender = false;
 
-const paperworkItems = [
-	{
-		title: "Quote PDF",
-		text: "Send a clear, professional quote to the customer.",
-		image: "/images/tgd-quote-pdf.png",
-		alt: "TGD Trades quote PDF preview",
-	},
-	{
-		title: "Job Sign-Off PDF",
-		text: "Get the work signed off and keep the record with the job.",
-		image: "/images/tgd-job-signoff-pdf.png",
-		alt: "TGD Trades job sign-off PDF preview",
-	},
-	{
-		title: "Invoice PDF",
-		text: "Create the invoice without typing everything again.",
-		image: "/images/tgd-invoice-pdf.png",
-		alt: "TGD Trades invoice PDF preview",
-	},
-	{
-		title: "Dividends",
-		text: "Keep company paperwork ready for your accountant.",
-		image: "/images/tgd-dividends-pdf.png",
-		alt: "TGD Trades dividends PDF preview",
-	},
-	{
-		title: "Accountant",
-		text: "Package the numbers your accountant needs.",
-		image: "/images/tgd-accountant-pdf.png",
-		alt: "TGD Trades accountant report PDF preview",
-	},
-	{
-		title: "Wage Slip",
-		text: "Create clear wage records for the people you pay.",
-		image: "/images/tgd-wage-slip.jpg",
-		alt: "TGD Trades wage slip preview",
-	},
-	{
-		title: "Certificates & Sign-Offs",
-		text: "Pick the right paperwork and keep certificates connected to the job.",
-		label: "SCREEN",
-		image: "/images/tgd-certificates-screen.jpg",
-		alt: "TGD Trades certificates and sign-off screen",
-	},
-];
-
 const pricingFeatures = [
 	"Run your jobs from phone, tablet or computer",
 	"Keep customers informed through their own portal",
@@ -230,31 +184,10 @@ const operationsFeatures = [
 					<p>Quotes, invoices, sign-offs, certificates and accountant records use information already held in TGD Trades—without entering everything again.</p>
 				</div>
 				<div class="pt-paperwork-grid">
-					<div class="pt-paperwork-visual">
-						<div class="pt-pdf-machine" aria-label="TGD Trades paperwork previews">
-							<div class="pt-fake-phone" aria-label="TGD Trades mobile app creating business documents">
-								<span class="pt-phone-speaker"></span>
-								<div class="pt-phone-screen">
-									<div class="pt-phone-brand">TGD</div>
-									<small>BUSINESS OFFICE</small>
-									<strong>Your paperwork</strong>
-									<ul><li>Quotes</li><li>Invoices</li><li>Sign-offs</li><li>Reports</li></ul>
-									<span>Ready to send</span>
-								</div>
-								<div class="pt-phone-home"></div>
-							</div>
-							<div class="pt-document-wall">
-								{paperworkItems.map((item) => (
-									<article class="pt-document-card">
-										<img src={item.image} alt={item.alt} loading="lazy" />
-										<div>
-											<h3>{item.title}</h3>
-											<p>{item.text}</p>
-										</div>
-									</article>
-								))}
-							</div>
-						</div>
+					<div class="pt-page-tour-video pt-paperwork-tour-video">
+						<video autoplay loop muted playsinline preload="metadata" aria-label="TGD Trades paperwork and PDF document tour">
+							<source src="/videos/tgd-paperwork-tour.mp4" type="video/mp4" />
+						</video>
 					</div>
 				</div>
 			</section>
@@ -1605,6 +1538,11 @@ const operationsFeatures = [
 	.pt-paperwork-grid {
 		display: block;
 		width: min(1480px, calc(100% - 28px));
+		margin: 0 auto;
+	}
+
+	.pt-paperwork-tour-video {
+		width: min(960px, 100%);
 		margin: 0 auto;
 	}
 
