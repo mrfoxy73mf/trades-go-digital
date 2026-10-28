@@ -153,7 +153,7 @@ const operationsFeatures = [
 							TGD Trades keeps every stage connected without entering the same details again.
 						</p>
 						<div class="pt-intro-actions">
-							<a class="pt-action pt-action-primary" href="#videos">Watch TGD Trades</a>
+							<a class="pt-action pt-action-primary" href="#page-tour-title">Watch the TGD Trades tour</a>
 							<a class="pt-action pt-action-secondary" href="/contact/#tgd-enquiry">Show your interest</a>
 						</div>
 						<ul class="pt-intro-points" aria-label="TGD Trades highlights">
@@ -179,12 +179,13 @@ const operationsFeatures = [
 						<video
 							id="pt-page-tour-player"
 							autoplay
+							loop
 							muted
 							playsinline
-							preload="metadata"
+							preload="auto"
 							aria-label="TGD Trades app page tour"
 						>
-							<source src="/videos/tgd-page-tour/part-00.mp4" type="video/mp4" />
+							<source src="/videos/tgd-page-tour.mp4" type="video/mp4" />
 							Your browser does not support embedded video.
 						</video>
 					</div>
@@ -199,7 +200,6 @@ const operationsFeatures = [
 						<p id="demo-description">See how TGD Trades gives busy tradespeople less paperwork and more time for their business and family.</p>
 						<div class="pt-demo-selector" role="group" aria-label="Choose a TGD Trades demonstration">
 							<button class="is-active" type="button" data-demo="advert" aria-pressed="true">Watch TGD Trades in Action</button>
-							<button type="button" data-demo="phoneCallAdvert" aria-pressed="false">Watch the Full Advert</button>
 							<button type="button" data-demo="bathroomAdvert" aria-pressed="false">Watch the Bathroom Advert</button>
 						</div>
 					</div>
@@ -208,7 +208,6 @@ const operationsFeatures = [
 							<source src="/videos/tgd-trades-advert.mp4" type="video/mp4" />
 							Your browser does not support embedded video.
 						</video>
-						<div id="pt-demo-price-overlay" class="pt-demo-price-overlay" hidden>£40 a month for 3 months — then £70/month</div>
 					</div>
 				</div>
 			</section>
@@ -340,34 +339,15 @@ const operationsFeatures = [
 		</main>
 		<Footer />
 		<script>
-			const pageTourPlayer = document.querySelector<HTMLVideoElement>("#pt-page-tour-player");
-			const pageTourParts = Array.from({ length: 31 }, (_, index) =>
-				`/videos/tgd-page-tour/part-${String(index).padStart(2, "0")}.mp4`,
-			);
-			let pageTourPart = 0;
-			pageTourPlayer?.addEventListener("ended", () => {
-				pageTourPart = (pageTourPart + 1) % pageTourParts.length;
-				pageTourPlayer.src = pageTourParts[pageTourPart];
-				pageTourPlayer.play().catch(() => undefined);
-			});
-
 			const demoPlayer = document.querySelector<HTMLVideoElement>("#pt-demo-player");
 			const demoTitle = document.querySelector<HTMLElement>("#demo-title");
 			const demoDescription = document.querySelector<HTMLElement>("#demo-description");
 			const demoButtons = document.querySelectorAll<HTMLButtonElement>("[data-demo]");
-			const demoPriceOverlay = document.querySelector<HTMLElement>("#pt-demo-price-overlay");
-			let activeDemoKey: "advert" | "phoneCallAdvert" | "bathroomAdvert" = "advert";
 			const demos = {
 				advert: {
 					title: "See TGD Trades in action.",
 					description: "See how TGD Trades gives busy tradespeople less paperwork and more time for their business and family.",
 					src: "/videos/tgd-trades-advert.mp4",
-					poster: "/images/tgd-trades-advert-poster.jpg",
-				},
-				phoneCallAdvert: {
-					title: "See how TGD Trades gives you your evening back.",
-					description: "Watch Mark and Dave compare paperwork after work, then see how TGD Trades keeps quotes, invoices, sign-offs and business records connected.",
-					src: "/videos/tgd-trades-phone-call-advert.mp4?v=20261026",
 					poster: "/images/tgd-trades-advert-poster.jpg",
 				},
 				bathroomAdvert: {
@@ -378,20 +358,13 @@ const operationsFeatures = [
 				},
 			};
 
-			const updateDemoPriceOverlay = () => {
-				if (!demoPriceOverlay || !demoPlayer) return;
-				demoPriceOverlay.hidden = activeDemoKey !== "phoneCallAdvert";
-			};
-
 			demoButtons.forEach((button) => {
 				button.addEventListener("click", () => {
 					const key = button.dataset.demo as keyof typeof demos;
 					const demo = demos[key];
 					if (!demo || !demoPlayer || !demoTitle || !demoDescription) return;
-					activeDemoKey = key;
 					demoPlayer.pause();
 					demoPlayer.currentTime = 0;
-					updateDemoPriceOverlay();
 					demoPlayer.src = demo.src;
 					demoPlayer.poster = demo.poster;
 					demoPlayer.load();
