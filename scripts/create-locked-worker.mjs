@@ -12,10 +12,12 @@ const PUBLIC_EXACT_PATHS = new Set([
 	"/contact/",
 	"/terms-and-conditions",
 	"/terms-and-conditions/",
+	"/robots.txt",
+	"/sitemap-index.xml",
 	"/api/stripe/webhook",
 	"/favicon.svg",
 ]);
-const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/videos/", "/fonts/"];
+const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/videos/", "/fonts/", "/sitemap-"];
 
 const unavailable = () =>
 	new Response("This page is not currently available.", {
@@ -28,11 +30,11 @@ export default {
 		const url = new URL(request.url);
 
 		if (url.pathname === "/") {
-			return Response.redirect(new URL("/tgd", url), 302);
+			return Response.redirect(new URL("/tgd", url), 308);
 		}
 
 		if (url.pathname === "/pricing" || url.pathname === "/pricing/") {
-			return Response.redirect(new URL("/contact/#tgd-enquiry", url), 302);
+			return Response.redirect(new URL("/contact/#tgd-enquiry", url), 308);
 		}
 
 		const isPublicRoute =
