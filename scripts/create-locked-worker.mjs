@@ -5,48 +5,100 @@ const workerPath = join(process.cwd(), "dist", "locked-worker.js");
 
 const worker = String.raw`import astroWorker from "./_worker.js/index.js";
 
-const PUBLIC_EXACT_PATHS = new Set([
-	"/tgd",
-	"/tgd/",
-	"/contact",
-	"/contact/",
-	"/terms-and-conditions",
-	"/terms-and-conditions/",
-	"/robots.txt",
-	"/sitemap-index.xml",
-	"/api/stripe/webhook",
-	"/api/enquiry",
-	"/favicon.svg",
-]);
-const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/videos/", "/fonts/", "/sitemap-"];
+const USERNAME = "president";
+const REALM = "Trades Go Digital";
+const INVITE_COOKIE = "tgd_invite";
+const PUBLIC_EXACT_PATHS = new Set(["/api/stripe/webhook", "/favicon.svg"]);
+const PUBLIC_PATH_PREFIXES = [];
 
-const unavailable = () =>
-	new Response("This page is not currently available.", {
-		status: 404,
-		headers: { "Cache-Control": "no-store" },
+const unauthorized = () =>
+	new Response("Password required.", {
+		status: 401,
+		headers: {
+			"WWW-Authenticate": ` + "`Basic realm=\"${REALM}\", charset=\"UTF-8\"`" + `,
+			"Cache-Control": "no-store",
+		},
 	});
+
+const getBasicCredentials = (header) => {
+	if (!header?.startsWith("Basic ")) return null;
+
+	try {
+		const decoded = atob(header.slice("Basic ".length));
+		const separator = decoded.indexOf(":");
+		if (separator === -1) return null;
+
+		return {
+			username: decoded.slice(0, separator),
+			password: decoded.slice(separator + 1),
+		};
+	} catch {
+		return null;
+	}
+};
+
+const isAuthorized = (request, env) => {
+	const password = env.SITE_PASSWORD;
+	const inviteToken = env.INVITE_TOKEN;
+
+	if (password) {
+		const credentials = getBasicCredentials(request.headers.get("Authorization"));
+		if (credentials?.username === USERNAME && credentials.password === password) {
+			return true;
+		}
+	}
+
+	if (inviteToken) {
+		const cookies = request.headers.get("Cookie") ?? "";
+		return cookies
+			.split(";")
+			.map((cookie) => cookie.trim())
+			.includes(INVITE_COOKIE + "=" + inviteToken);
+	}
+
+	return false;
+};
 
 export default {
 	fetch(request, env, ctx) {
 		const url = new URL(request.url);
 
 		if (url.pathname === "/") {
-			return Response.redirect(new URL("/tgd", url), 308);
+			return Response.redirect(new URL("/tgd", url), 302);
 		}
 
 		if (url.pathname === "/pricing" || url.pathname === "/pricing/") {
-			return Response.redirect(new URL("/contact/#tgd-enquiry", url), 308);
+			return Response.redirect(new URL("/contact/#tgd-enquiry", url), 302);
 		}
 
-		const isPublicRoute =
+		const isPublicFulfilmentRoute =
 			PUBLIC_EXACT_PATHS.has(url.pathname) ||
 			PUBLIC_PATH_PREFIXES.some((prefix) => url.pathname.startsWith(prefix));
 
-		if (isPublicRoute) {
+		if (isPublicFulfilmentRoute) {
 			return astroWorker.fetch(request, env, ctx);
 		}
 
-		return unavailable();
+		const inviteToken = env.INVITE_TOKEN;
+		const invite = url.searchParams.get("invite");
+
+		if (inviteToken && invite === inviteToken) {
+			url.searchParams.delete("invite");
+			return new Response(null, {
+				status: 302,
+				headers: {
+					Location: url.toString(),
+					"Set-Cookie": INVITE_COOKIE + "=" + inviteToken + "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000",
+					"Cache-Control": "no-store",
+				},
+			});
+		}
+
+		if (!isAuthorized(request, env)) {
+			return unauthorized();
+		}
+
+		return astroWorker.fetch(request, env, ctx);
 	},
 };
 `;
