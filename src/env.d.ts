@@ -11,6 +11,7 @@ interface Env {
  OPENAI_API_KEY?: string;
 	SUPPORT_AI_MODEL?: string;
 	SUPPORT_AI_RATE_LIMITER?: {limit(input:{key:string}):Promise<{success:boolean}>};
+	SUPPORT_PORTAL_SECRET?: string;
  SAFEWORK_MODEL?: string;
  SAFEWORK_MODE?: string;
  SAFEWORK_SALES_ENABLED?: string;

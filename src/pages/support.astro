@@ -1,5 +1,15 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import { SUPPORT_COOKIE, verifySupportToken } from "../lib/support-access";
+export const prerender = false;
+const env = Astro.locals.runtime.env;
+const accessToken = Astro.url.searchParams.get("access") || undefined;
+if (accessToken && await verifySupportToken(accessToken, env.SUPPORT_PORTAL_SECRET)) {
+	Astro.cookies.set(SUPPORT_COOKIE, accessToken, { httpOnly: true, secure: true, sameSite: "strict", path: "/", maxAge: 3600 });
+	return Astro.redirect("/support");
+}
+const subscriber = await verifySupportToken(Astro.cookies.get(SUPPORT_COOKIE)?.value, env.SUPPORT_PORTAL_SECRET);
+if (!subscriber) return Astro.redirect("https://president-trades.onrender.com");
 ---
 <!doctype html><html lang="en-GB"><head><BaseHead title="Support Centre | Trades Go Digital" description="Get help with TGD Trades, ask a question or create a support ticket." /></head>
 <body><header><a href="/" aria-label="Trades Go Digital home"><img src="/images/trades-go-digital-logo-stripe.png" alt="Trades Go Digital" /></a><a class="login" href="https://president-trades.onrender.com">Return to TGD Trades</a></header>
