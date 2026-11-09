@@ -22,6 +22,7 @@ interface Env {
 	STRIPE_WEBHOOK_SECRET: string;
 	RESEND_API_KEY: string;
 	ORDER_NOTIFICATION_EMAIL: string;
+	SUPPORT_CONTROL_KEY?: string;
 }
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
