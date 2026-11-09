@@ -27,7 +27,7 @@ const active = (href: string) => path === href || (href === "/health-and-safety"
    <a class="navigation-link" href="/pricing" aria-current={active("/pricing") ? "page" : undefined}>Pricing</a>
    <a class="navigation-link" href="/monthly-updates" aria-current={active("/monthly-updates") ? "page" : undefined}>Updates</a>
    <a class="navigation-link" href="/contact" aria-current={active("/contact") ? "page" : undefined}>Contact</a>
-   <a class="navigation-link" href="/support" aria-current={active("/support") ? "page" : undefined}>Support</a>
+   <a class="navigation-link" href="/contact#tgd-enquiry" aria-current={active("/contact") ? "page" : undefined}>Support</a>
    <a class="navigation-link" href="/terms-and-conditions" aria-current={active("/terms-and-conditions") ? "page" : undefined}>Terms</a>
    <a class="navigation-cta" href={isLettingDesk ? "/tgd-lettingdesk/#enquire" : TGD_APP_URL}>{isLettingDesk ? "Enquire about LettingDesk" : "Open TGD Trades"}<span aria-hidden="true">↗</span></a>
   </div>
