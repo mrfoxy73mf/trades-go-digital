@@ -9,6 +9,8 @@ interface Env {
 	PDF_PAYMENT_MODE?: string;
  STRIPE_TEST_WEBHOOK_SECRET?: string;
  OPENAI_API_KEY?: string;
+	SUPPORT_AI_MODEL?: string;
+	SUPPORT_AI_RATE_LIMITER?: {limit(input:{key:string}):Promise<{success:boolean}>};
  SAFEWORK_MODEL?: string;
  SAFEWORK_MODE?: string;
  SAFEWORK_SALES_ENABLED?: string;
