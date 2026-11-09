@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { supportClaims } from "../../../lib/support-access";
 
 export const prerender = false;
 
@@ -11,7 +12,7 @@ Approved product knowledge:
 - Accountant is under Business Office, Financial, Accountant. Reports can cover a month, VAT quarter, year to date or a custom period and can be downloaded as PDF and CSV. Users should check Expenses and Office Mailroom before sending.
 - Invoices, Expenses, Wages, Bank Statements, Tax Centre, Dividends, Company and Director Loans and Tax Year Archives are under Business Office, Financial.
 - Video Help is in the Welcome and Support area.
-- TGD Trades costs £40 per month. There is no later increase to £70 and no long-term contract.
+- TGD Trades costs £40 per month and has no long-term contract.
 
 Rules:
 - Never claim you accessed, inspected or changed an account.
@@ -27,8 +28,9 @@ const textFromResponse = (body: any) =>
 		?.flatMap((item: any) => item?.content || [])
 		?.find((item: any) => item?.type === "output_text")?.text;
 
-export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
+export const POST: APIRoute = async ({ request, locals, clientAddress, cookies }) => {
 	const env = locals.runtime.env;
+	if (!await supportClaims(cookies, env)) return Response.json({ error: "Subscriber support access has expired. Open Support again from TGD Trades." }, { status: 401 });
 	if (!env.OPENAI_API_KEY) {
 		return Response.json({ error: "AI support is temporarily unavailable." }, { status: 503 });
 	}

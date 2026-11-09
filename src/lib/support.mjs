@@ -10,7 +10,7 @@ function response(body, status = 200) {
  return Response.json(body, { status, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } });
 }
 
-export async function createSupportTicket(request, env, send = fetch) {
+export async function createSupportTicket(request, env, send = fetch, subscriber = null) {
  const url = new URL(request.url);
  if (request.headers.get("Origin") !== url.origin) return response({ error: "This support request was not accepted." }, 403);
  if (!request.headers.get("Content-Type")?.startsWith("application/json")) return response({ error: "Unsupported request." }, 415);
@@ -28,6 +28,7 @@ export async function createSupportTicket(request, env, send = fetch) {
   category: clean(body.category, 80), page_name: clean(body.page_name, 120), subject: clean(body.subject, 160),
   description: clean(body.description, 5000), steps: clean(body.steps, 3000), preferred_reply: clean(body.preferred_reply, 20) || "email",
  };
+ if (subscriber?.email) values.account_email = clean(subscriber.email, 254).toLowerCase();
  const emergency = body.priority === "emergency";
  if (!values.customer_name || !emailOk(values.account_email) || !CATEGORIES.has(values.category) || !values.subject || values.description.length < 20) return response({ error: "Please complete your name, account email, category, title and a clear description." }, 400);
  if (!phoneOk(values.phone) || (emergency && !values.phone)) return response({ error: emergency ? "Please provide a contact telephone number for an emergency report." : "Please check the telephone number." }, 400);
