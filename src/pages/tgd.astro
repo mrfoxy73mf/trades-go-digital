@@ -139,7 +139,7 @@ const operationsFeatures = [
 							<button type="button" data-demo="paperworkTour" aria-pressed="false"><strong>Paperwork and PDFs</strong><span>Quotes, invoices and business records</span></button>
 						</div>
 						<div class="pt-demo-video">
-							<video id="pt-demo-player" controls muted playsinline preload="none" poster="/images/tgd-trades-page-tour-poster.jpg">
+							<video id="pt-demo-player" controls playsinline preload="none" poster="/images/tgd-trades-page-tour-poster.jpg">
 								<source src="/videos/tgd-page-tour.mp4" type="video/mp4" />
 								Your browser does not support embedded video.
 							</video>
@@ -149,6 +149,13 @@ const operationsFeatures = [
 			</section>
 
 			<section class="pt-section pt-trades" aria-labelledby="trades-title">
+				<div class="pt-trades-procession" aria-hidden="true">
+					<video id="pt-trades-video" muted autoplay loop playsinline preload="metadata" poster="/images/tgd-cinematic-scene-terrace.png">
+						<source src="/videos/tgd-trades-procession.webm" type="video/webm" />
+						<source src="/videos/tgd-trades-procession.mp4" type="video/mp4" />
+					</video>
+				</div>
+				<div class="pt-trades-procession-shade" aria-hidden="true"></div>
 				<div class="pt-container">
 					<p class="pt-eyebrow">Built for UK trades</p>
 					<h2 id="trades-title">Made for the people who keep work moving.</h2>
@@ -163,6 +170,7 @@ const operationsFeatures = [
 						</ul>
 					</details>
 				</div>
+				<button id="pt-trades-toggle" class="pt-trades-toggle" type="button" aria-pressed="false"><span aria-hidden="true">Ⅱ</span> Pause trade procession</button>
 			</section>
 
 			<section id="features" class="pt-section pt-operations" aria-labelledby="operations-title">
@@ -254,6 +262,7 @@ const operationsFeatures = [
 					poster: "/images/tgd-quote-demo-poster.jpg",
 				},
 			};
+			if (demoPlayer) demoPlayer.volume = 0.8;
 
 			demoButtons.forEach((button) => {
 				button.addEventListener("click", () => {
@@ -274,6 +283,23 @@ const operationsFeatures = [
 					});
 				});
 			});
+
+			const tradesVideo = document.querySelector<HTMLVideoElement>("#pt-trades-video");
+			const tradesToggle = document.querySelector<HTMLButtonElement>("#pt-trades-toggle");
+			const updateTradesToggle = () => {
+				if (!tradesVideo || !tradesToggle) return;
+				const paused = tradesVideo.paused;
+				tradesToggle.setAttribute("aria-pressed", String(paused));
+				tradesToggle.innerHTML = paused ? '<span aria-hidden="true">▶</span> Play trade procession' : '<span aria-hidden="true">Ⅱ</span> Pause trade procession';
+			};
+			if (reducedMotion.matches) tradesVideo?.pause();
+			tradesVideo?.addEventListener("play", updateTradesToggle);
+			tradesVideo?.addEventListener("pause", updateTradesToggle);
+			tradesToggle?.addEventListener("click", () => {
+				if (!tradesVideo) return;
+				if (tradesVideo.paused) void tradesVideo.play(); else tradesVideo.pause();
+			});
+			updateTradesToggle();
 		</script>
 	</body>
 </html>
@@ -3196,9 +3222,20 @@ body.tgd-shared-background .tgd-navigation button:focus-visible{outline-color:#2
 	.pt-video-library .pt-demo-selector button strong{font-size:1rem}.pt-video-library .pt-demo-selector button span{color:#94a3b8;font-size:.82rem;font-weight:500;line-height:1.4}.pt-video-library .pt-demo-selector button.is-active{border-color:#20c9ff;background:linear-gradient(135deg,rgba(3,105,161,.8),rgba(91,33,182,.72))}.pt-video-library .pt-demo-selector button.is-active span{color:#dbeafe}
 	.pt-video-library .pt-demo-video{position:relative;overflow:hidden;aspect-ratio:16/9;border:1px solid rgba(32,201,255,.38);border-radius:16px;background:#02050a;box-shadow:0 24px 70px rgba(0,0,0,.42)}
 	.pt-video-library .pt-demo-video video{display:block;width:100%;height:100%;object-fit:contain;background:#02050a}
+	.pt-trades{position:relative;isolation:isolate;overflow:hidden;min-height:760px;background:#03070d url('/images/tgd-cinematic-scene-terrace.png') center/cover no-repeat}
+	.pt-trades-procession,.pt-trades-procession-shade{position:absolute;inset:0}
+	.pt-trades-procession{z-index:-3}
+	.pt-trades-procession video{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.86) contrast(1.12)}
+	.pt-trades-procession-shade{z-index:-2;background:linear-gradient(90deg,rgba(2,6,13,.94),rgba(2,6,13,.72) 50%,rgba(2,6,13,.88)),linear-gradient(0deg,rgba(2,6,13,.88),rgba(2,6,13,.25) 54%,rgba(2,6,13,.78))}
+	.pt-trades-procession-shade::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 14% 20%,rgba(32,201,255,.14),transparent 28%),radial-gradient(circle at 88% 78%,rgba(249,115,22,.12),transparent 28%)}
+	.pt-trades>.pt-container{position:relative;z-index:1;padding-block:clamp(70px,8vw,112px)}
+	.pt-trades .pt-eyebrow,.pt-trades h2,.pt-trades .pt-trades-lead{position:relative;text-shadow:0 4px 18px rgba(0,0,0,.9)}
+	.pt-trades .pt-trades-grid li{border-color:rgba(32,201,255,.44);background:rgba(3,13,25,.83);box-shadow:0 8px 24px rgba(0,0,0,.2);backdrop-filter:blur(8px)}
+	.pt-trades-toggle{position:absolute;right:24px;bottom:20px;z-index:3;padding:10px 14px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(2,7,16,.78);color:#fff;font:inherit;font-size:.82rem;font-weight:800;box-shadow:none;backdrop-filter:blur(8px);cursor:pointer}
+	.pt-trades-toggle:hover{border-color:#20c9ff;color:#fff}
 	.pt-trades-grid li{position:relative;padding-left:42px}.pt-trades-grid li::before{content:"◆";position:absolute;left:18px;color:#20c9ff;font-size:.72rem}
 	@keyframes pt-status-float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-8px,-7px,0)}}
-	@media(max-width:900px){.pt-cinematic-hero{min-height:760px}.pt-cinematic-media video{display:none}.pt-cinematic-shade{background:linear-gradient(90deg,rgba(2,7,16,.95),rgba(2,7,16,.68)),linear-gradient(0deg,rgba(2,5,12,.82),transparent)}.pt-cinematic-copy{max-width:720px}.pt-cinematic-status span{display:none}.pt-video-library-grid{grid-template-columns:1fr}.pt-video-library .pt-demo-selector{grid-template-columns:1fr 1fr}}
+	@media(max-width:900px){.pt-cinematic-hero{min-height:760px}.pt-cinematic-media video,.pt-trades-procession video{display:none}.pt-cinematic-shade{background:linear-gradient(90deg,rgba(2,7,16,.95),rgba(2,7,16,.68)),linear-gradient(0deg,rgba(2,5,12,.82),transparent)}.pt-cinematic-copy{max-width:720px}.pt-cinematic-status span{display:none}.pt-video-library-grid{grid-template-columns:1fr}.pt-video-library .pt-demo-selector{grid-template-columns:1fr 1fr}.pt-trades-toggle{display:none}}
 	@media(max-width:620px){.pt-cinematic-hero{min-height:720px}.pt-cinematic-content{padding:80px 0}.pt-cinematic-copy{padding:28px 20px}.pt-cinematic-copy h1{font-size:clamp(2.8rem,15vw,4.4rem)}.pt-cinematic-copy .pt-intro-actions{display:grid}.pt-cinematic-copy .pt-action{width:100%}.pt-hero-toggle{right:14px;bottom:14px}.pt-video-library .pt-demo-selector{grid-template-columns:1fr}.pt-video-library .pt-demo-video{border-radius:10px}}
-	@media(prefers-reduced-motion:reduce){.pt-cinematic-media video{display:none}.pt-cinematic-status span{animation:none}.pt-hero-toggle{display:none}}
+	@media(prefers-reduced-motion:reduce){.pt-cinematic-media video,.pt-trades-procession video{display:none}.pt-cinematic-status span{animation:none}.pt-hero-toggle,.pt-trades-toggle{display:none}}
 </style>
