@@ -3,12 +3,13 @@ export const TOOL_PRODUCTS = Object.freeze({
 	pdfPermit: { product: "tgd_pdf_permit", name: "PDF Maker permit", description: "Download your finished permit PDF.", price: 599, priceEnv: "PDF_PERMIT_PRICE_PENCE", path: "/pdf-maker" },
 	pdfRams: { product: "tgd_pdf_rams", name: "PDF Maker RAMS pack", description: "Download your finished four-page RAMS PDF pack.", price: 999, priceEnv: "PDF_RAMS_PRICE_PENCE", path: "/pdf-maker" },
 	logo: { product: "tgd_logo_download", name: "Logo Maker download", description: "Download your finished logo as SVG and PNG files.", price: 499, priceEnv: "LOGO_DOWNLOAD_PRICE_PENCE", path: "/logo-maker" },
+	bundle: { product: "tgd_logo_pdf_bundle", name: "Logo and standard PDF bundle", description: "Download one finished logo and one standard quote, invoice, receipt or sign-off PDF.", price: 799, priceEnv: "LOGO_PDF_BUNDLE_PRICE_PENCE", path: "/logo-maker" },
 });
 
 export function toolPaymentConfig(env, tool) {
 	const item = TOOL_PRODUCTS[tool];
 	if (!item) return { enabled: false, mode: "test", key: "", item: null };
-	const requestedMode = tool === "logo" ? env.LOGO_PAYMENT_MODE : env.PDF_PAYMENT_MODE;
+	const requestedMode = tool === "logo" || tool === "bundle" ? env.LOGO_PAYMENT_MODE : env.PDF_PAYMENT_MODE;
 	const mode = (requestedMode || env.TOOL_PAYMENT_MODE) === "live" ? "live" : "test";
 	const key = mode === "live" ? env.STRIPE_SECRET_KEY : env.STRIPE_TEST_SECRET_KEY;
 	const configuredPrice = Number(env[item.priceEnv]);
