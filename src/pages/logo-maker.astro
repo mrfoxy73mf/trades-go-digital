@@ -1,7 +1,7 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import BusinessToolsHeader from "../components/BusinessToolsHeader.astro";
+import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 ---
 
 <!doctype html>
@@ -10,7 +10,7 @@ import Footer from "../components/Footer.astro";
 	<BaseHead title="Logo Maker | Trades Go Digital" description="Design a simple business logo and export it as SVG or PNG." />
 </head>
 <body class="tgd-logo-office">
-	<Header />
+	<BusinessToolsHeader />
 	<main class="logo-studio">
 		<header class="studio-top">
 			<a class="brand" href="/"><img src="/images/trades-go-digital-icon-stripe.png" alt="" /><span><strong>Trades Go Digital</strong><small>Logo Maker</small></span></a>
@@ -228,7 +228,7 @@ import Footer from "../components/Footer.astro";
 		$("png").onclick=()=>{if(!logoPaid){openLogoCheckout("png");return}const img=new Image(),svg=logoSvg(state.transparentExport);img.onload=()=>{const baseW=state.layout==="wide"?900:720,baseH=state.layout==="wide"?320:520,width=Number(state.pngWidth)||2000,c=document.createElement("canvas");c.width=width;c.height=Math.round(width*baseH/baseW);const x=c.getContext("2d");if(!state.transparentExport){x.fillStyle=state.background;x.fillRect(0,0,c.width,c.height)}x.drawImage(img,0,0,c.width,c.height);download(fileName("png"),"image/png",c.toDataURL("image/png"))};img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)};
 		$("reset").onclick=()=>{state=fresh();render()};try{const saved=JSON.parse(localStorage.getItem("tgd-logo-maker"));if(saved?.name)state={...fresh(),...saved}}catch{}render();initialiseLogoPayment();
 	</script>
-<div class="maker-site-footer no-print"><Footer /></div>
+<div class="maker-site-footer no-print"><BusinessToolsFooter /></div>
 </body>
 </html>
 
