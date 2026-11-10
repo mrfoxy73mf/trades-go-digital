@@ -9,6 +9,9 @@ interface Env {
 	PDF_PAYMENT_MODE?: string;
  STRIPE_TEST_WEBHOOK_SECRET?: string;
  OPENAI_API_KEY?: string;
+	SUPPORT_AI_MODEL?: string;
+	SUPPORT_AI_RATE_LIMITER?: {limit(input:{key:string}):Promise<{success:boolean}>};
+	SUPPORT_PORTAL_SECRET?: string;
  SAFEWORK_MODEL?: string;
  SAFEWORK_MODE?: string;
  SAFEWORK_SALES_ENABLED?: string;
@@ -22,6 +25,7 @@ interface Env {
 	STRIPE_WEBHOOK_SECRET: string;
 	RESEND_API_KEY: string;
 	ORDER_NOTIFICATION_EMAIL: string;
+	SUPPORT_CONTROL_KEY?: string;
 }
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;

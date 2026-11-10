@@ -5,6 +5,8 @@ import Footer from "../components/Footer.astro";
 import { CONTACT_EMAIL, SITE_TITLE } from "../consts";
 
 export const prerender = false;
+const enquiryReady = Boolean(Astro.locals.runtime.env.RESEND_API_KEY);
+const enquirySent = Astro.url.searchParams.get("enquiry") === "sent";
 
 const faqs = [
 	{
@@ -71,20 +73,7 @@ const faqs = [
 				</a>
 			</section>
 
-			<section class="faq-section" aria-labelledby="faq-title">
-				<p class="eyebrow">Questions and answers</p>
-				<h2 id="faq-title">What trades usually ask first</h2>
-				<div class="faq-list">
-					{
-						faqs.map((item) => (
-							<article>
-								<h3>{item.question}</h3>
-								<p>{item.answer}</p>
-							</article>
-						))
-					}
-				</div>
-			</section>
+
 
 			<section
 				id="tgd-enquiry"
@@ -103,40 +92,57 @@ const faqs = [
 							<p class="message-sub">Tell us what you would want TGD Trades to help with.</p>
 						</div>
 					</div>
-					<form id="tgd-form" data-email={CONTACT_EMAIL}>
+					<form id="tgd-form" action="/api/enquiry" method="post">
+						<label class="enquiry-trap" aria-hidden="true">Leave this blank<input name="Website" type="text" tabindex="-1" autocomplete="off" /></label>
 						<label>
 							Your name
-							<input name="Name" type="text" autocomplete="name" placeholder="Your name" required />
+							<input name="Name" type="text" autocomplete="name" maxlength="120" placeholder="Your name" required />
 						</label>
 						<label>
 							Business name
-							<input name="Business name" type="text" placeholder="Your business name" />
+							<input name="Business name" type="text" maxlength="160" autocomplete="organization" placeholder="Your business name" />
 						</label>
 						<label>
 							Your trade
-							<input name="Trade" type="text" placeholder="Plumber, electrician, builder..." required />
+							<input name="Trade" type="text" maxlength="120" placeholder="Plumber, electrician, builder..." required />
 						</label>
 						<label>
 							Email or phone
-							<input name="Contact" type="text" autocomplete="email" placeholder="How should we reply?" required />
+							<input name="Contact" type="text" maxlength="200" autocomplete="email" placeholder="How should we reply?" required />
 						</label>
 						<label class="full">
 							Message
 							<textarea
-								name="Message"
+								name="Message" maxlength="4000"
 								placeholder="Tell us what you want to know about TGD Trades."
 								required
 							></textarea>
 						</label>
-						<button type="submit">
+						<button type="submit" disabled={!enquiryReady}>
 							<span>Send message</span>
 							<span aria-hidden="true">-&gt;</span>
 						</button>
 						<p class="form-note">
-							This opens your email app so you can send the message to <strong>{CONTACT_EMAIL}</strong>.
+							{enquiryReady ? "Your message is sent directly to" : "Online enquiries are temporarily unavailable. Please email"} <strong>{CONTACT_EMAIL}</strong>.
 						</p>
+					<p id="enquiry-status" class="form-note" role="status" aria-live="polite">{enquirySent ? "Thank you — your message has been sent. We will reply using the details you provided." : ""}</p>
 					</form>
-					<p class="safe-note">We will use your details to respond to your enquiry and handle them as described in our <a href="/terms-and-conditions">Privacy Notice</a>.</p>
+					<p class="safe-note">We will use your details to respond to your enquiry and handle them as described in our <a href="/terms-and-conditions#privacy-notice">Privacy Notice</a>.</p>
+				</div>
+			</section>
+
+			<section class="faq-section" aria-labelledby="faq-title">
+				<p class="eyebrow">Questions and answers</p>
+				<h2 id="faq-title">What trades usually ask first</h2>
+				<div class="faq-list">
+					{
+						faqs.map((item) => (
+							<article>
+								<h3>{item.question}</h3>
+								<p>{item.answer}</p>
+							</article>
+						))
+					}
 				</div>
 			</section>
 		</main>
@@ -145,6 +151,11 @@ const faqs = [
 </html>
 
 <style>
+	.enquiry-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+	input, textarea, .email-card { box-sizing: border-box; }
+	button:disabled { opacity: .65; cursor: wait; }
+	#enquiry-status:empty { display: none; }
+	#enquiry-status { grid-column: 1 / -1; }
 	body {
 		margin: 0;
 		background:
@@ -387,9 +398,7 @@ const faqs = [
 	}
 
 	.safe-note {
-		display: flex;
-		gap: 12px;
-		align-items: center;
+		display: block;
 		margin: 22px 0 0;
 		padding-top: 20px;
 		border-top: 1px solid rgba(148, 169, 189, 0.22);
@@ -489,23 +498,28 @@ const faqs = [
 </style>
 
 <script>
-	const form = document.querySelector("#tgd-form");
-
-	form?.addEventListener("submit", (event) => {
-		event.preventDefault();
-
-		const target = event.currentTarget;
-		if (!(target instanceof HTMLFormElement)) return;
-
-		const email = target.dataset.email;
-		if (!email) return;
-
-		const data = new FormData(target);
-		const subject = "TGD Trades enquiry";
-		const body = ["Name", "Business name", "Trade", "Contact", "Message"]
-			.map((field) => `${field}: ${data.get(field) ?? ""}`)
-			.join("\n\n");
-
-		window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-	});
+ const form = document.querySelector<HTMLFormElement>("#tgd-form");
+ const status = document.querySelector<HTMLElement>("#enquiry-status");
+ form?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!form || !status) return;
+  const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+  if (!button || button.disabled) return;
+  button.disabled = true;
+  status.textContent = "Sending your message…";
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 20000);
+  try {
+   const response = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" }, signal: controller.signal });
+   const result = await response.json();
+   if (!response.ok || !result.sent) throw new Error(result.error || "Your message could not be sent. Please try again or email hello@trades-go-digital.co.uk.");
+   status.textContent = "Thank you — your message has been sent. We will reply using the details you provided.";
+   form.reset();
+  } catch (error) {
+   status.textContent = error instanceof Error && error.name !== "AbortError" ? error.message : "We could not confirm delivery. Your message is still here; please try again or email hello@trades-go-digital.co.uk.";
+  } finally {
+   window.clearTimeout(timeout);
+   button.disabled = false;
+  }
+ });
 </script>
