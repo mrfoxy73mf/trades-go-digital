@@ -14,7 +14,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 	<main class="logo-studio">
 		<header class="studio-top">
 			<a class="brand" href="/business-tools/"><span><strong>Logo Maker</strong><small>Business Tools workspace</small></span></a>
-			<div class="actions"><span id="payment-status">Checking payment…</span><button id="reset" type="button">Reset</button><button id="use-pdf" type="button">Use in PDF Maker</button><button id="use-work-pack" type="button">Use free in Work Pack</button><button id="use-tm-pack" type="button">Use free in TM Pack</button><button id="svg" type="button" disabled>Download SVG</button><button id="png" type="button" disabled>Download PNG</button></div>
+			<div class="actions"><span id="payment-status">Checking payment…</span><button id="undo" type="button" disabled>Undo</button><button id="redo" type="button" disabled>Redo</button><button id="reset" type="button">Reset</button><button id="use-pdf" type="button">Use in PDF Maker</button><button id="use-work-pack" type="button">Use free in Work Pack</button><button id="use-tm-pack" type="button">Use free in TM Pack</button><button id="svg" type="button" disabled>Download SVG</button><button id="png" type="button" disabled>Download PNG</button></div>
 		</header>
 		<div class="studio-grid">
 			<aside class="tools">
@@ -49,10 +49,12 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 					<div class="shape-grid" id="shapes"></div>
 					<label>Badge treatment<select id="shapeStyle"><option value="solid">Solid fill</option><option value="outline">Outline only</option><option value="inset">Inset panel</option><option value="split">Split colour</option><option value="double">Double frame</option><option value="ghost">Soft ghost</option><option value="none">Symbol only</option></select></label>
 					<label>Finish<select id="finish"><option value="clean">Clean</option><option value="metal">Metal</option><option value="stamp">Stamp</option><option value="neon">Neon</option><option value="cutout">Cut-out</option><option value="plate">Name plate</option><option value="carbon">Carbon</option><option value="hazard">Hazard stripe</option><option value="outline">Double outline</option><option value="luxury">Luxury foil</option><option value="glass">Glass panel</option></select></label>
+					<div class="drag-tools"><strong>Drag on preview</strong><button type="button" data-drag="symbol">Move symbol</button><button type="button" data-drag="text">Move text</button></div>
 				</section>
 				<section class="panel two">
 					<h2><button class="drawer" type="button">Symbol <span>Icon controls</span></button></h2>
 					<label class="wide">Icon<select id="symbol"><option value="auto">Automatic for trade</option><option value="wrench">Wrench</option><option value="hammer">Hammer</option><option value="bolt">Lightning bolt</option><option value="plug">Electrical plug</option><option value="pipe">Pipework</option><option value="tap">Tap</option><option value="roof">Roof</option><option value="house">House</option><option value="spade">Spade</option><option value="leaf">Leaf</option><option value="brush">Cleaning brush</option><option value="flame">Flame</option><option value="shield">Shield tick</option><option value="none">No icon</option></select></label>
+					<label class="wide custom-symbol">Upload your own symbol<input id="customSymbol" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" /><button id="remove-custom-symbol" type="button">Remove uploaded symbol</button></label>
 					<label>Icon size<input id="iconSize" type="range" min="55" max="145" /></label>
 					<label>Badge size<input id="badgeScale" type="range" min="65" max="140" /></label>
 					<label>Icon rotation<input id="iconRotation" type="range" min="-180" max="180" /></label>
@@ -64,6 +66,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 					<label class="wide">Typeface<select id="font"><option value="industrial">Industrial sans</option><option value="condensed">Condensed trade</option><option value="geometric">Geometric modern</option><option value="classic">Classic serif</option><option value="technical">Technical mono</option><option value="rounded">Friendly rounded</option></select></label>
 					<label>Name weight<select id="nameWeight"><option value="700">Bold</option><option value="800">Heavy</option><option value="900">Extra heavy</option></select></label>
 					<label>Text style<select id="textStyle"><option value="normal">Straight</option><option value="italic">Italic</option></select></label>
+					<label>Alignment<select id="textAlign"><option value="auto">Automatic</option><option value="left">Left</option><option value="center">Centre</option><option value="right">Right</option></select></label>
 					<label>Mark size<input id="markSize" type="range" min="18" max="72" /></label>
 					<label>Name size<input id="nameSize" type="range" min="40" max="110" /></label>
 					<label>Tagline size<input id="taglineSize" type="range" min="12" max="36" /></label>
@@ -106,7 +109,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 		</div>
 	</main>
 	<script is:inline>
-		const fresh=()=>({name:"TGD Trades",mark:"TGD",tagline:"TRADES GO DIGITAL",trade:"Construction",layout:"stacked",shape:"badge",shapeStyle:"solid",finish:"metal",symbol:"auto",font:"industrial",nameWeight:"900",textStyle:"normal",uppercaseName:false,showTagline:true,accent:"#ff6b00",secondary:"#f8fafc",background:"#05070a",background2:"#172033",text:"#ffffff",iconColor:"#05070a",backgroundStyle:"solid",pattern:"none",patternOpacity:12,borderWidth:0,cornerRadius:34,shadowStrength:35,transparentExport:false,pngWidth:"2000",iconSize:100,badgeScale:100,iconRotation:0,iconStroke:2.4,badgeRotation:0,markSize:30,nameSize:78,taglineSize:24,letterSpace:7,textX:0,textY:0,markX:0,markY:0,mockup:"van"});
+		const fresh=()=>({name:"TGD Trades",mark:"TGD",tagline:"TRADES GO DIGITAL",trade:"Construction",layout:"stacked",shape:"badge",shapeStyle:"solid",finish:"metal",symbol:"auto",customSymbol:"",font:"industrial",nameWeight:"900",textStyle:"normal",textAlign:"auto",uppercaseName:false,showTagline:true,accent:"#ff6b00",secondary:"#f8fafc",background:"#05070a",background2:"#172033",text:"#ffffff",iconColor:"#05070a",backgroundStyle:"solid",pattern:"none",patternOpacity:12,borderWidth:0,cornerRadius:34,shadowStrength:35,transparentExport:false,pngWidth:"2000",iconSize:100,badgeScale:100,iconRotation:0,iconStroke:2.4,badgeRotation:0,markSize:30,nameSize:78,taglineSize:24,letterSpace:7,textX:0,textY:0,markX:0,markY:0,mockup:"van"});
 		const templates={
 			trade:{label:"Trade Strong",layout:"stacked",shape:"badge",finish:"metal",accent:"#ff6b00",secondary:"#f8fafc",background:"#05070a",text:"#ffffff",markSize:30,nameSize:78,taglineSize:24,letterSpace:7,textX:0,textY:0,markX:0,markY:0},
 			shield:{label:"Safety Shield",layout:"emblem",shape:"shield",finish:"plate",accent:"#f97316",secondary:"#facc15",background:"#111827",text:"#ffffff",markSize:34,nameSize:72,taglineSize:22,letterSpace:6,textX:0,textY:8,markX:0,markY:0},
@@ -130,8 +133,12 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 			badge:{label:"Soft square",d:"M12 6H88Q94 6 94 12V88Q94 94 88 94H12Q6 94 6 88V12Q6 6 12 6Z"},slab:{label:"Workshop slab",d:"M7 7H93V93H7Z"},circle:{label:"Circle",d:"M50 5A45 45 0 1 1 49.9 5Z"},roundel:{label:"Roundel",d:"M50 3A47 47 0 1 1 49.9 3Z"},shield:{label:"Shield",d:"M50 3 93 20V57Q93 85 50 98 7 85 7 57V20Z"},crest:{label:"Crest",d:"M12 7H88V53Q88 84 50 98 12 84 12 53Z"},hex:{label:"Hexagon",d:"M27 5H73L97 50 73 95H27L3 50Z"},diamond:{label:"Diamond",d:"M50 3 97 50 50 97 3 50Z"},arch:{label:"Arch",d:"M8 94V48A42 42 0 0 1 92 48V94Z"},chevron:{label:"Chevron",d:"M5 12H95V62L50 95 5 62Z"},house:{label:"Roof badge",d:"M50 3 96 38V95H4V38Z"},tab:{label:"Angled tab",d:"M5 5H95V95H5V25L25 5Z"},ticket:{label:"Ticket",d:"M5 12Q18 12 18 5H82Q82 12 95 12V88Q82 88 82 95H18Q18 88 5 88Z"},pill:{label:"Pill",d:"M22 5H78A45 45 0 0 1 78 95H22A45 45 0 0 1 22 5Z"},ribbon:{label:"Ribbon",d:"M8 5H92V95L50 79 8 95Z"},gear:{label:"Gear",d:"M42 3H58L62 13 73 8 84 19 79 30 90 34 97 47 88 55 94 67 84 81 71 77 65 91 50 97 40 87 27 92 16 81 21 68 8 62 3 48 13 39 8 27 19 16 32 21Z"},bolt:{label:"Lightning",d:"M59 2 15 57H45L34 98 86 38H57Z"}
 		};
 		const mockups={van:"Van side",quote:"Quote header",social:"Social avatar",workwear:"Workwear"};
-		let state=fresh();
+		let state=fresh(),history=[],future=[],restoring=false,dragMode="symbol",dragStart=null;
 		const $=id=>document.getElementById(id);
+		const snapshot=()=>JSON.stringify(state);
+		function remember(){if(restoring)return;const value=snapshot();if(history.at(-1)!==value){history.push(value);if(history.length>60)history.shift()}future=[];updateHistoryButtons()}
+		function updateHistoryButtons(){$("undo").disabled=history.length<2;$("redo").disabled=!future.length}
+		function restore(value){restoring=true;state={...fresh(),...JSON.parse(value)};render();restoring=false;updateHistoryButtons()}
 		const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 		function fittedFontSize(text,fontFamily,fontWeight,fontStyle,requested,maxWidth){
 			const canvas=document.createElement("canvas"),context=canvas.getContext("2d"),size=Math.max(10,Number(requested)||10);
@@ -145,8 +152,8 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 			const wide=state.layout==="wide",emblem=state.layout==="emblem",minimal=state.layout==="minimal",seal=state.layout==="seal",corner=state.layout==="corner";
 			const w=wide?900:720,h=wide?320:520,baseMarkSize=emblem||seal?190:wide?150:170,markSize=baseMarkSize*((Number(state.badgeScale)||100)/100);
 			const markX=(wide?54:(w-markSize)/2)+Number(state.markX||0),markY=(wide?82:54)+Number(state.markY||0);
-			const textAnchor=wide||corner?"start":"middle";
-			const textBaseX=(wide?250:corner?70:w/2)+Number(state.textX||0),textBaseY=(wide?86:corner?88:minimal?246:260)+Number(state.textY||0);
+			const automaticAnchor=wide||corner?"start":"middle",textAnchor=state.textAlign==="auto"?automaticAnchor:state.textAlign==="left"?"start":state.textAlign==="right"?"end":"middle";
+			const alignedBase=state.textAlign==="left"?56:state.textAlign==="right"?w-56:(wide?250:corner?70:w/2),textBaseX=alignedBase+Number(state.textX||0),textBaseY=(wide?86:corner?88:minimal?246:260)+Number(state.textY||0);
 			const fonts={industrial:'Arial Black, Arial, sans-serif',condensed:'Impact, Arial Narrow, sans-serif',geometric:'Avenir Next, Montserrat, Arial, sans-serif',classic:'Georgia, Times New Roman, serif',technical:'Courier New, monospace',rounded:'Trebuchet MS, Arial, sans-serif'};
 			const fontFamily=fonts[state.font]||fonts.industrial,nameText=state.uppercaseName?String(state.name).toUpperCase():state.name,cornerRadius=Number(state.cornerRadius??34),shadow=Number(state.shadowStrength??35)/100,iconScale=(Number(state.iconSize)||100)/100;
 			const textPadding=wide?40:56,maxTextWidth=textAnchor==="start"?Math.max(80,w-textBaseX-textPadding):Math.max(80,2*Math.min(textBaseX-textPadding,w-textBaseX-textPadding)),nameSize=fittedFontSize(nameText,fontFamily,state.nameWeight,state.textStyle,Number(state.nameSize)||78,maxTextWidth),taglineSize=fittedFontSize(state.tagline,fontFamily,"700","normal",Number(state.taglineSize)||24,maxTextWidth);
@@ -173,7 +180,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 				${state.finish==="glass"?`<rect x="34" y="34" width="${w-68}" height="${h-68}" rx="30" fill="#fff" opacity=".08"/><path d="M0 0 H${w} L0 ${h*.42}Z" fill="#fff" opacity=".12"/>`:""}
 				<g transform="translate(${markX+markSize/2} ${markY+markSize/2}) rotate(${Number(state.badgeRotation)||0}) translate(${-markSize/2} ${-markSize/2})">
 					<g filter="url(#s)">${badgeMarkup}${state.shape==="roundel"&&state.shapeStyle!=="none"?`<circle cx="${markSize/2}" cy="${markSize/2}" r="${markSize*.36}" fill="none" stroke="${state.secondary}" stroke-width="${Math.max(2,markSize*.025)}"/>`:""}</g>
-					${icon()?`<path d="${icon()}" transform="translate(${markSize/2} ${markSize/2}) rotate(${Number(state.iconRotation)||0}) scale(${markSize/28*iconScale}) translate(-12 -12)" fill="none" stroke="${state.iconColor}" stroke-width="${Number(state.iconStroke)||2.4}" stroke-linecap="round" stroke-linejoin="round"/>`:""}
+					${state.customSymbol?`<image href="${esc(state.customSymbol)}" x="${markSize*.19}" y="${markSize*.19}" width="${markSize*.62}" height="${markSize*.62}" preserveAspectRatio="xMidYMid meet"/>`:icon()?`<path d="${icon()}" transform="translate(${markSize/2} ${markSize/2}) rotate(${Number(state.iconRotation)||0}) scale(${markSize/28*iconScale}) translate(-12 -12)" fill="none" stroke="${state.iconColor}" stroke-width="${Number(state.iconStroke)||2.4}" stroke-linecap="round" stroke-linejoin="round"/>`:""}
 				</g>
 				${seal?`<circle cx="${w/2}" cy="${h/2}" r="225" fill="none" stroke="${state.accent}" stroke-width="8"/><circle cx="${w/2}" cy="${h/2}" r="195" fill="none" stroke="${state.secondary}" stroke-width="2" stroke-dasharray="10 10"/>`:""}
 				<g transform="translate(${textBaseX} ${textBaseY})" text-anchor="${textAnchor}">
@@ -185,7 +192,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 		}
 		const logoData=()=>"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(logoSvg());
 		function render(){
-			["name","mark","tagline","trade","shapeStyle","finish","symbol","font","nameWeight","textStyle","accent","secondary","background","background2","text","iconColor","backgroundStyle","pattern","patternOpacity","borderWidth","cornerRadius","shadowStrength","pngWidth","iconSize","badgeScale","iconRotation","iconStroke","badgeRotation","markSize","nameSize","taglineSize","letterSpace","textX","textY","markX","markY"].forEach(k=>$(k).value=state[k]);
+			["name","mark","tagline","trade","shapeStyle","finish","symbol","font","nameWeight","textStyle","textAlign","accent","secondary","background","background2","text","iconColor","backgroundStyle","pattern","patternOpacity","borderWidth","cornerRadius","shadowStrength","pngWidth","iconSize","badgeScale","iconRotation","iconStroke","badgeRotation","markSize","nameSize","taglineSize","letterSpace","textX","textY","markX","markY"].forEach(k=>$(k).value=state[k]);
 			["uppercaseName","showTagline","transparentExport"].forEach(k=>$(k).checked=Boolean(state[k]));
 			$("templates").innerHTML=Object.entries(templates).map(([k,v])=>`<button data-template="${k}" style="--swatch:${v.accent};--swatch-bg:${v.background}"><i></i><strong>${v.label}</strong><small>${v.layout} / ${v.shape}</small></button>`).join("");
 			$("layouts").innerHTML=Object.entries(layouts).map(([k,v])=>`<button class="${state.layout===k?"active":""}" data-layout="${k}"><strong>${v}</strong><small>${k}</small></button>`).join("");
@@ -198,9 +205,19 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 			localStorage.setItem("tgd-logo-maker",JSON.stringify(state));
 			localStorage.setItem("tgd-logo-maker-export",logoData());
 			lockChangedPaidDesign();
+			updateHistoryButtons();document.querySelectorAll("[data-drag]").forEach(button=>button.classList.toggle("active",button.dataset.drag===dragMode));
 		}
-		document.addEventListener("click",e=>{const d=e.target.closest(".drawer");if(d){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("open"));d.closest(".panel").classList.add("open");return}const t=e.target.closest("[data-template]");if(t){const clean=fresh(),content={name:state.name,mark:state.mark,tagline:state.tagline,trade:state.trade,mockup:state.mockup,pngWidth:state.pngWidth,transparentExport:state.transparentExport};state={...clean,...content,...templates[t.dataset.template]};render()}const l=e.target.closest("[data-layout]");if(l){state.layout=l.dataset.layout;render()}const s=e.target.closest("[data-shape]");if(s){state.shape=s.dataset.shape;render()}const m=e.target.closest("[data-mockup]");if(m){state.mockup=m.dataset.mockup;render()}});
-		document.addEventListener("input",e=>{if(e.target.id in state){state[e.target.id]=e.target.type==="checkbox"?e.target.checked:e.target.type==="range"?Number(e.target.value):e.target.value;render()}});
+		document.addEventListener("click",e=>{const d=e.target.closest(".drawer");if(d){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("open"));d.closest(".panel").classList.add("open");return}const drag=e.target.closest("[data-drag]");if(drag){dragMode=drag.dataset.drag;render();return}const t=e.target.closest("[data-template]");if(t){remember();const clean=fresh(),content={name:state.name,mark:state.mark,tagline:state.tagline,trade:state.trade,mockup:state.mockup,pngWidth:state.pngWidth,transparentExport:state.transparentExport};state={...clean,...content,...templates[t.dataset.template]};render();remember()}const l=e.target.closest("[data-layout]");if(l){remember();state.layout=l.dataset.layout;render();remember()}const s=e.target.closest("[data-shape]");if(s){remember();state.shape=s.dataset.shape;render();remember()}const m=e.target.closest("[data-mockup]");if(m){remember();state.mockup=m.dataset.mockup;render();remember()}});
+		document.addEventListener("change",e=>{if(e.target.id in state&&e.target.type!=="file"){remember();state[e.target.id]=e.target.type==="checkbox"?e.target.checked:e.target.type==="range"?Number(e.target.value):e.target.value;render();remember()}});
+		document.addEventListener("input",e=>{if(e.target.id in state&&e.target.type!=="file"){state[e.target.id]=e.target.type==="checkbox"?e.target.checked:e.target.type==="range"?Number(e.target.value):e.target.value;render()}});
+		document.addEventListener("focusin",e=>{if(e.target.id in state)remember()});
+		$("undo").onclick=()=>{if(history.length<2)return;future.push(history.pop());restore(history.at(-1))};
+		$("redo").onclick=()=>{if(!future.length)return;const value=future.pop();history.push(value);restore(value)};
+		$("customSymbol").onchange=event=>{const file=event.target.files?.[0];if(!file)return;if(!["image/png","image/jpeg","image/webp","image/svg+xml"].includes(file.type)||file.size>1000000){$("payment-status").textContent="Use a PNG, JPG, WebP or SVG symbol up to 1 MB";event.target.value="";return}remember();const reader=new FileReader();reader.onload=()=>{state.customSymbol=String(reader.result);render();remember()};reader.readAsDataURL(file)};
+		$("remove-custom-symbol").onclick=()=>{remember();state.customSymbol="";$("customSymbol").value="";render();remember()};
+		const canvasWrap=$("canvas-wrap");canvasWrap.addEventListener("pointerdown",event=>{if(!event.target.closest("#logo-preview"))return;event.preventDefault();remember();dragStart={x:event.clientX,y:event.clientY,textX:Number(state.textX)||0,textY:Number(state.textY)||0,markX:Number(state.markX)||0,markY:Number(state.markY)||0};canvasWrap.setPointerCapture(event.pointerId);canvasWrap.classList.add("dragging")});
+		canvasWrap.addEventListener("pointermove",event=>{if(!dragStart)return;const svg=canvasWrap.querySelector("svg"),rect=svg?.getBoundingClientRect();if(!rect)return;const scaleX=(Number(svg.getAttribute("width"))||720)/rect.width,scaleY=(Number(svg.getAttribute("height"))||520)/rect.height,dx=(event.clientX-dragStart.x)*scaleX,dy=(event.clientY-dragStart.y)*scaleY;if(dragMode==="text"){state.textX=Math.round(dragStart.textX+dx);state.textY=Math.round(dragStart.textY+dy)}else{state.markX=Math.round(dragStart.markX+dx);state.markY=Math.round(dragStart.markY+dy)}render()});
+		const finishDrag=()=>{if(!dragStart)return;dragStart=null;canvasWrap.classList.remove("dragging");remember()};canvasWrap.addEventListener("pointerup",finishDrag);canvasWrap.addEventListener("pointercancel",finishDrag);
 		function download(name,type,data){const a=document.createElement("a");a.href=data;a.download=name;a.click()}
 		let logoPaid=false,paidDesignKey="",logoPriceLabel="£4.99";
 		function designKey(){const {mockup,pngWidth,transparentExport,...design}=state;return JSON.stringify(design)}
@@ -228,7 +245,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 		const fileName=extension=>`${String(state.name||"trade-logo").trim().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"").toLowerCase()||"trade-logo"}.${extension}`;
 		$("svg").onclick=()=>logoPaid?download(fileName("svg"),"image/svg+xml",logoData()):openLogoCheckout("svg");
 		$("png").onclick=()=>{if(!logoPaid){openLogoCheckout("png");return}const img=new Image(),svg=logoSvg(state.transparentExport);img.onload=()=>{const baseW=state.layout==="wide"?900:720,baseH=state.layout==="wide"?320:520,width=Number(state.pngWidth)||2000,c=document.createElement("canvas");c.width=width;c.height=Math.round(width*baseH/baseW);const x=c.getContext("2d");if(!state.transparentExport){x.fillStyle=state.background;x.fillRect(0,0,c.width,c.height)}x.drawImage(img,0,0,c.width,c.height);download(fileName("png"),"image/png",c.toDataURL("image/png"))};img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)};
-		$("reset").onclick=()=>{state=fresh();render()};try{const saved=JSON.parse(localStorage.getItem("tgd-logo-maker"));if(saved?.name)state={...fresh(),...saved}}catch{}render();initialiseLogoPayment();
+		$("reset").onclick=()=>{remember();state=fresh();render();remember()};try{const saved=JSON.parse(localStorage.getItem("tgd-logo-maker"));if(saved?.name)state={...fresh(),...saved}}catch{}render();remember();initialiseLogoPayment();
 	</script>
 <div class="maker-site-footer no-print"><BusinessToolsFooter /></div>
 </body>
@@ -240,6 +257,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 <style is:global>
 	.maker-price{display:inline-flex;width:max-content;margin-top:14px;padding:8px 11px;border-radius:999px;background:#ff6b00;color:#07111f;font-size:13px;font-weight:950}
 	.shape-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.shape-grid button{min-width:0;border:1px solid #d5dfeb!important;background:#f8fafc!important;color:#40516a!important;padding:8px 4px!important;display:grid;place-items:center;gap:5px}.shape-grid button:hover{border-color:#94a3b8!important;background:#fff!important}.shape-grid button.active{border-color:#ff6b00!important;background:#fff2e8!important;box-shadow:inset 0 -3px #ff6b00}.shape-grid svg{width:34px;height:34px;overflow:visible}.shape-grid path{fill:#1e293b;transition:fill .15s,transform .15s;transform-origin:center}.shape-grid button:hover path,.shape-grid button.active path{fill:#ff6b00;transform:scale(1.07)}.shape-grid span{font-size:10px;font-weight:800;line-height:1.05;text-align:center;text-transform:none;letter-spacing:0}
+	.drag-tools{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:4px}.drag-tools strong{grid-column:1/-1;color:#40516a;font-size:12px;text-transform:uppercase}.drag-tools button.active{border-color:#ff6b00;background:#fff2e8;color:#07111f}.custom-symbol{padding:12px;border:1px dashed #b9c8d7;border-radius:9px;background:#f8fafc}.custom-symbol input{padding:8px;background:#fff}.custom-symbol button{width:max-content;background:transparent!important;color:#c2410c!important;padding:4px 0!important}.canvas-wrap{cursor:grab;touch-action:none}.canvas-wrap.dragging{cursor:grabbing}.actions button:disabled{opacity:.45;cursor:not-allowed}
 	@media(max-width:640px){.shape-grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 
