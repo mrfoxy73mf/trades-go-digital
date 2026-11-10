@@ -157,12 +157,17 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 				<section class="panel two">
 					<h2><button class="drawer-toggle" type="button">Design <span>Change the PDF</span></button></h2>
 					<label>Design<select id="design"><option value="letterhead">Premium letterhead</option><option value="trade">Bold trade</option><option value="accounts">Accounts office</option><option value="minimal">Clean minimal</option><option value="executive">Executive slate</option><option value="site">Site pack</option></select></label>
-					<label>Seasonal add-on<select id="seasonalBorder"><option value="none">None</option><option value="christmas">Full Christmas border</option><option value="trees">Christmas trees</option><option value="santas">Santa garland</option><option value="trimmings">Christmas trimmings</option></select></label>
 					<label>Font<select id="font"><option value="inter">Modern sans</option><option value="serif">Formal serif</option><option value="mono">Technical mono</option></select></label>
 					<label>Spacing<select id="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option><option value="spacious">Spacious</option></select></label>
 					<label>Header<select id="headerStyle"><option value="standard">Standard</option><option value="banner">Full banner</option><option value="boxed">Boxed details</option></select></label>
 					<label>Accent<input id="accent" type="color" /></label>
 					<label class="wide">Watermark<input id="watermark" placeholder="Optional watermark, e.g. DRAFT" /></label>
+				</section>
+
+				<section class="panel seasonal-panel">
+					<h2><button class="drawer-toggle" type="button">Seasonal Add-ons <span>Optional borders</span></button></h2>
+					<p class="seasonal-help">Add a seasonal border without changing your normal PDF design. Select None to remove it.</p>
+					<label>Christmas border<select id="seasonalBorder"><option value="none">Off — no seasonal border</option><option value="christmas">Full Christmas border</option><option value="trees">Christmas trees</option><option value="santas">Santa garland</option><option value="trimmings">Christmas trimmings</option></select></label>
 				</section>
 			</aside>
 		</div>
@@ -401,4 +406,5 @@ body.tgd-pdf-office .studio-top .brand{color:#07111f}
 <style is:global>
 body.tgd-pdf-office .sheet.seasonal-christmas{padding-top:88px!important;padding-bottom:88px!important;border:3px solid #166534!important;background-image:url('/images/seasonal/classic-christmas-horizontal.svg'),url('/images/seasonal/classic-christmas-horizontal.svg'),url('/images/seasonal/classic-christmas-vertical.svg'),url('/images/seasonal/classic-christmas-vertical.svg')!important;background-position:left top,left bottom,left top,right top!important;background-size:240px 72px,240px 72px,72px 240px,72px 240px!important;background-repeat:repeat-x,repeat-x,repeat-y,repeat-y!important}
 body.tgd-pdf-office .sheet.seasonal-trees,body.tgd-pdf-office .sheet.seasonal-santas,body.tgd-pdf-office .sheet.seasonal-trimmings{padding-top:78px!important;padding-bottom:78px!important;background-image:var(--seasonal-art),var(--seasonal-art),var(--seasonal-art),var(--seasonal-art)!important;background-position:left top,left bottom,left top,right top!important;background-repeat:repeat-x,repeat-x,repeat-y,repeat-y!important}
+.seasonal-panel{border:2px solid #177245;background:#f0fdf4}.seasonal-panel h2{background:#124d32}.seasonal-panel.open{border-color:#177245;box-shadow:0 14px 34px rgba(23,114,69,.16)}.seasonal-panel.open h2{background:#177245;color:#fff}.seasonal-panel.open .drawer-toggle span{color:#dcfce7}.seasonal-help{margin:0;color:#315c48;font-size:13px;line-height:1.45}.seasonal-panel select{border-color:#7fb697;background:#fff}
 </style>
