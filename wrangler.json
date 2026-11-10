@@ -15,8 +15,10 @@
 		"TOOL_PAYMENT_MODE": "test",
 		"LOGO_PAYMENT_MODE": "test",
 		"TOOL_PAYMENTS_ENABLED": "true",
-		"PDF_DOWNLOAD_PRICE_PENCE": "799",
-		"LOGO_DOWNLOAD_PRICE_PENCE": "199",
+		"PDF_DOWNLOAD_PRICE_PENCE": "499",
+		"PDF_PERMIT_PRICE_PENCE": "599",
+		"PDF_RAMS_PRICE_PENCE": "999",
+		"LOGO_DOWNLOAD_PRICE_PENCE": "499",
 		"PUBLIC_SITE_URL": "https://trades-go-digital.co.uk"
 	},
 	"assets": {

@@ -1,6 +1,8 @@
 export const TOOL_PRODUCTS = Object.freeze({
-	pdf: { product: "tgd_pdf_download", name: "PDF Maker download", description: "Download your finished, print-ready PDF.", price: 799, path: "/pdf-maker" },
-	logo: { product: "tgd_logo_download", name: "Logo Maker download", description: "Download your finished logo as SVG and PNG files.", price: 199, path: "/logo-maker" },
+	pdf: { product: "tgd_pdf_standard", name: "PDF Maker standard document", description: "Download a finished quote, invoice, receipt or sign-off PDF.", price: 499, priceEnv: "PDF_DOWNLOAD_PRICE_PENCE", path: "/pdf-maker" },
+	pdfPermit: { product: "tgd_pdf_permit", name: "PDF Maker permit", description: "Download your finished permit PDF.", price: 599, priceEnv: "PDF_PERMIT_PRICE_PENCE", path: "/pdf-maker" },
+	pdfRams: { product: "tgd_pdf_rams", name: "PDF Maker RAMS pack", description: "Download your finished four-page RAMS PDF pack.", price: 999, priceEnv: "PDF_RAMS_PRICE_PENCE", path: "/pdf-maker" },
+	logo: { product: "tgd_logo_download", name: "Logo Maker download", description: "Download your finished logo as SVG and PNG files.", price: 499, priceEnv: "LOGO_DOWNLOAD_PRICE_PENCE", path: "/logo-maker" },
 });
 
 export function toolPaymentConfig(env, tool) {
@@ -9,7 +11,7 @@ export function toolPaymentConfig(env, tool) {
 	const requestedMode = tool === "logo" ? env.LOGO_PAYMENT_MODE : env.PDF_PAYMENT_MODE;
 	const mode = (requestedMode || env.TOOL_PAYMENT_MODE) === "live" ? "live" : "test";
 	const key = mode === "live" ? env.STRIPE_SECRET_KEY : env.STRIPE_TEST_SECRET_KEY;
-	const configuredPrice = Number(env[tool === "pdf" ? "PDF_DOWNLOAD_PRICE_PENCE" : "LOGO_DOWNLOAD_PRICE_PENCE"]);
+	const configuredPrice = Number(env[item.priceEnv]);
 	const amount = Number.isSafeInteger(configuredPrice) ? configuredPrice : item.price;
 	const enabled = env.TOOL_PAYMENTS_ENABLED === "true" && Boolean(key) && amount === item.price && key.startsWith(mode === "live" ? "sk_live_" : "sk_test_");
 	return { enabled, mode, key, amount, item };

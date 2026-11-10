@@ -3,14 +3,18 @@ import { stripeRequest, toolPaymentConfig } from "../../../lib/tool-payments.mjs
 
 export const prerender = false;
 
-export const GET: APIRoute = ({ locals }) => {
-	const config = toolPaymentConfig(locals.runtime.env, "pdf");
+const paymentKey = (documentType = "") => documentType === "rams" ? "pdfRams" : documentType === "permit" ? "pdfPermit" : "pdf";
+
+export const GET: APIRoute = ({ request, locals }) => {
+	const config = toolPaymentConfig(locals.runtime.env, paymentKey(new URL(request.url).searchParams.get("document_type") || ""));
 	return Response.json({ enabled: config.enabled, mode: config.mode, amount: config.amount }, { headers: { "Cache-Control": "no-store" } });
 };
 
 export const POST: APIRoute = async ({ request, locals }) => {
 	const env = locals.runtime.env as any;
-	const config = toolPaymentConfig(env, "pdf");
+	const body = await request.json().catch(() => ({})) as { documentType?: string };
+	const documentType = body.documentType || "quote";
+	const config = toolPaymentConfig(env, paymentKey(documentType));
 	if (!config.enabled) {
 		return Response.json({ error: "PDF checkout is not connected yet." }, { status: 503 });
 	}
@@ -18,7 +22,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 	const origin = env.PUBLIC_SITE_URL || new URL(request.url).origin;
 	const params = new URLSearchParams({
 		mode: "payment",
-		success_url: `${origin}/pdf-maker?session_id={CHECKOUT_SESSION_ID}`,
+		success_url: `${origin}/pdf-maker?session_id={CHECKOUT_SESSION_ID}&document_type=${encodeURIComponent(documentType)}`,
 		cancel_url: `${origin}/pdf-maker?checkout=cancelled`,
 		submit_type: "pay",
 		allow_promotion_codes: "true",
@@ -28,6 +32,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		"line_items[0][price_data][product_data][name]": config.item.name,
 		"line_items[0][price_data][product_data][description]": config.item.description,
 		"metadata[product]": config.item.product,
+		"metadata[document_type]": documentType,
 	});
 	try { const session: any = await stripeRequest(config.key, "checkout/sessions", params); return Response.json({ url: session.url }); }
 	catch (error) { return Response.json({ error: error instanceof Error ? error.message : "Stripe checkout could not be created." }, { status: 502 }); }

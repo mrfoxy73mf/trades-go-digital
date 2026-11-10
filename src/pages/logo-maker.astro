@@ -22,7 +22,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 					<p>Brand Studio</p>
 					<h1>Build a sharp trade logo.</h1>
 					<span>Create a clean logo mark for vans, quotes, invoices, websites and social posts.</span>
-					<a class="maker-price" href="/pricing#tools">View pricing</a>
+					<a class="maker-price" href="/business-tools/pricing/">View pricing</a>
 				</section>
 				<section class="panel open">
 					<h2><button class="drawer" type="button">Business <span>Words</span></button></h2>
@@ -202,7 +202,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 		document.addEventListener("click",e=>{const d=e.target.closest(".drawer");if(d){document.querySelectorAll(".panel").forEach(p=>p.classList.remove("open"));d.closest(".panel").classList.add("open");return}const t=e.target.closest("[data-template]");if(t){const clean=fresh(),content={name:state.name,mark:state.mark,tagline:state.tagline,trade:state.trade,mockup:state.mockup,pngWidth:state.pngWidth,transparentExport:state.transparentExport};state={...clean,...content,...templates[t.dataset.template]};render()}const l=e.target.closest("[data-layout]");if(l){state.layout=l.dataset.layout;render()}const s=e.target.closest("[data-shape]");if(s){state.shape=s.dataset.shape;render()}const m=e.target.closest("[data-mockup]");if(m){state.mockup=m.dataset.mockup;render()}});
 		document.addEventListener("input",e=>{if(e.target.id in state){state[e.target.id]=e.target.type==="checkbox"?e.target.checked:e.target.type==="range"?Number(e.target.value):e.target.value;render()}});
 		function download(name,type,data){const a=document.createElement("a");a.href=data;a.download=name;a.click()}
-		let logoPaid=false,paidDesignKey="",logoPriceLabel="£1.99";
+		let logoPaid=false,paidDesignKey="",logoPriceLabel="£4.99";
 		function designKey(){const {mockup,pngWidth,transparentExport,...design}=state;return JSON.stringify(design)}
 		function lockChangedPaidDesign(){if(!logoPaid||!paidDesignKey||designKey()===paidDesignKey)return;logoPaid=false;paidDesignKey="";sessionStorage.removeItem("tgd-logo-payment");sessionStorage.removeItem("tgd-logo-paid-design");sessionStorage.removeItem("tgd-logo-state-pending");sessionStorage.removeItem("tgd-logo-design-pending");history.replaceState({},"",location.pathname);$("payment-status").textContent="Design changed — payment required for standalone downloads; work-pack use remains free";$("svg").textContent=`Pay ${logoPriceLabel} & download SVG`;$("png").textContent=`Pay ${logoPriceLabel} & download PNG`}
 		async function openLogoCheckout(format){const buttons=[$("svg"),$("png")];buttons.forEach(button=>button.disabled=true);$("payment-status").textContent="Opening secure Stripe checkout…";sessionStorage.setItem("tgd-logo-format",format);sessionStorage.setItem("tgd-logo-design-pending",designKey());sessionStorage.setItem("tgd-logo-state-pending",JSON.stringify(state));try{const response=await fetch("/api/logo-payment/checkout",{method:"POST",headers:{"Content-Type":"application/json"}}),data=await response.json();if(!response.ok)throw new Error(data.error);location.href=data.url}catch(error){$("payment-status").textContent=error instanceof Error?error.message:"Checkout could not be opened";buttons.forEach(button=>button.disabled=false)}}
