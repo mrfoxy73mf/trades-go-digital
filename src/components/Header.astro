@@ -4,6 +4,7 @@ import { TGD_APP_URL } from "../consts";
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isLettingDesk = path.startsWith("/tgd-lettingdesk");
 const apps = [
+ {name:"Business Tools",href:"/business-tools",detail:"Logo Maker and professional PDF Maker"},
  {name:"TGD Trades",href:"/tgd",detail:"Jobs, quotes and your business office"},
  {name:"TAD The Business",href:"/tad-the-business",detail:"Business management for your team"},
  {name:"TGD LettingDesk",href:"/tgd-lettingdesk",detail:"Property and agency management"},
