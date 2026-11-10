@@ -3,7 +3,9 @@ import BaseHead from "../../components/BaseHead.astro";
 import BusinessToolsHeader from "../../components/BusinessToolsHeader.astro";
 import BusinessToolsFooter from "../../components/BusinessToolsFooter.astro";
 const prices=[
-	{name:"Logo + standard PDF",price:"£7.99",description:"One logo and one standard business document",items:["SVG and PNG logo files","Quote, invoice, receipt or sign-off","Save £1.99 compared with separate purchases"],href:"/logo-maker/?bundle=1",button:"Create the bundle",featured:true,badge:"BEST VALUE"},
+	{name:"Logo + standard PDF",price:"£7.99",description:"One logo and one standard business document",items:["SVG and PNG logo files","Quote, invoice, receipt or sign-off","Save £1.99 compared with separate purchases"],href:"/logo-maker/?bundle=standard",button:"Create the bundle",featured:true,badge:"BEST VALUE"},
+	{name:"Logo + Permit",price:"£8.99",description:"One logo and one permit document",items:["SVG and PNG logo files","One finished permit PDF","Save £1.99 compared with separate purchases"],href:"/logo-maker/?bundle=permit",button:"Create the permit bundle"},
+	{name:"Logo + RAMS",price:"£12.99",description:"One logo and one four-page RAMS pack",items:["SVG and PNG logo files","Four-page RAMS PDF pack","Save £1.99 compared with separate purchases"],href:"/logo-maker/?bundle=rams",button:"Create the RAMS bundle"},
  {name:"Logo download",price:"£4.99",description:"One finished logo design",items:["SVG and PNG download","High-resolution PNG option","Transparent-background option"],href:"/logo-maker/",button:"Create a logo"},
  {name:"Standard PDF",price:"£4.99",description:"One finished business document",items:["Quote or invoice","Receipt or job sign-off","Branded, print-ready PDF"],href:"/pdf-maker/",button:"Create a document"},
  {name:"Permit",price:"£5.99",description:"One finished permit document",items:["Multiple permit types","Site controls and authorisation","Print-ready permit PDF"],href:"/pdf-maker/",button:"Create a permit"},

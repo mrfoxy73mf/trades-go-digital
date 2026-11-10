@@ -11,6 +11,8 @@ test("tool payments stay disabled without an exact test key and published price"
 	assert.equal(toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", STRIPE_TEST_SECRET_KEY: "sk_test_ok", PDF_RAMS_PRICE_PENCE: "999" }, "pdfRams").enabled, true);
 	assert.equal(toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", STRIPE_TEST_SECRET_KEY: "sk_test_ok", LOGO_DOWNLOAD_PRICE_PENCE: "499" }, "logo").enabled, true);
 	assert.equal(toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", STRIPE_TEST_SECRET_KEY: "sk_test_ok", LOGO_PDF_BUNDLE_PRICE_PENCE: "799" }, "bundle").enabled, true);
+	assert.equal(toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", STRIPE_TEST_SECRET_KEY: "sk_test_ok", LOGO_PERMIT_BUNDLE_PRICE_PENCE: "899" }, "bundlePermit").enabled, true);
+	assert.equal(toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", STRIPE_TEST_SECRET_KEY: "sk_test_ok", LOGO_RAMS_BUNDLE_PRICE_PENCE: "1299" }, "bundleRams").enabled, true);
 	assert.equal(toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", TOOL_PAYMENT_MODE: "test", LOGO_PAYMENT_MODE: "live", STRIPE_SECRET_KEY: "sk_live_ok", LOGO_DOWNLOAD_PRICE_PENCE: "499" }, "logo").mode, "live");
 	assert.equal(toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", TOOL_PAYMENT_MODE: "test", LOGO_PAYMENT_MODE: "live", STRIPE_TEST_SECRET_KEY: "sk_test_ok", PDF_DOWNLOAD_PRICE_PENCE: "499" }, "pdf").mode, "test");
 });
@@ -28,4 +30,12 @@ test("logo and standard PDF bundle verifies only at £7.99", () => {
 	assert.equal(matchesToolPayment(paid, config), true);
 	assert.equal(matchesToolPayment({ ...paid, amount_total: 499 }, config), false);
 	assert.equal(matchesToolPayment({ ...paid, metadata: { product: "tgd_logo_download" } }, config), false);
+});
+
+test("permit and RAMS bundles verify their exact products and prices", () => {
+	const permit = toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", STRIPE_TEST_SECRET_KEY: "sk_test_ok" }, "bundlePermit");
+	const rams = toolPaymentConfig({ TOOL_PAYMENTS_ENABLED: "true", STRIPE_TEST_SECRET_KEY: "sk_test_ok" }, "bundleRams");
+	assert.equal(matchesToolPayment({ payment_status:"paid",amount_total:899,currency:"gbp",livemode:false,metadata:{product:"tgd_logo_permit_bundle"} }, permit), true);
+	assert.equal(matchesToolPayment({ payment_status:"paid",amount_total:1299,currency:"gbp",livemode:false,metadata:{product:"tgd_logo_rams_bundle"} }, rams), true);
+	assert.equal(matchesToolPayment({ payment_status:"paid",amount_total:899,currency:"gbp",livemode:false,metadata:{product:"tgd_logo_rams_bundle"} }, rams), false);
 });
