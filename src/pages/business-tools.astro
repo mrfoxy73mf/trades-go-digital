@@ -1,0 +1,65 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+---
+
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <BaseHead title="Business Tools | Trades Go Digital" description="Create your trade-business logo, then use it on professional quotes, invoices and documents with Trades Go Digital Business Tools." />
+</head>
+<body>
+  <Header />
+  <main>
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow">TRADES GO DIGITAL / BUSINESS TOOLS</p>
+          <h1>Build your brand.<br /><span>Prepare your paperwork.</span></h1>
+          <p class="lead">Two focused tools for creating a professional business identity and turning it into customer-ready documents.</p>
+          <div class="actions"><a class="button primary" href="#tools">Choose a tool</a><a class="button secondary" href="#how-it-works">See how they work together</a></div>
+        </div>
+        <div class="hero-preview" aria-label="Logo and business document tools">
+          <img src="/images/tgd-logo-design-studio.png" alt="Trades Go Digital Logo Maker preview" />
+          <img src="/images/tgd-pdf-document-studio.png" alt="Trades Go Digital PDF Maker preview" />
+        </div>
+      </div>
+    </section>
+
+    <section class="tools" id="tools">
+      <div class="shell">
+        <p class="eyebrow dark">CHOOSE YOUR TOOL</p>
+        <h2>Start with what your business needs today.</h2>
+        <div class="tool-grid">
+          <article>
+            <img src="/images/tgd-logo-design-studio.png" alt="Logo Maker design screen" />
+            <div class="tool-copy"><span class="number">01</span><p class="tag">BUSINESS IDENTITY</p><h3>Logo Maker</h3><p>Create a straightforward trade-business logo, preview the design and export it as SVG or PNG.</p><ul><li>Choose your business name and style</li><li>Adjust colours, type and layout</li><li>Send the finished logo into PDF Maker</li></ul><a class="button primary" href="/logo-maker/">Open Logo Maker</a></div>
+          </article>
+          <article>
+            <img src="/images/tgd-pdf-document-studio.png" alt="PDF Maker document screen" />
+            <div class="tool-copy"><span class="number">02</span><p class="tag">BUSINESS DOCUMENTS</p><h3>PDF Maker</h3><p>Create branded quotes, invoices, receipts, sign-off sheets, RAMS and permits with a live A4 preview.</p><ul><li>Add your logo and business information</li><li>Build and preview the document</li><li>Download a professional PDF</li></ul><a class="button primary" href="/pdf-maker/">Open PDF Maker</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="workflow" id="how-it-works">
+      <div class="shell workflow-grid">
+        <div><p class="eyebrow">ONE SIMPLE WORKFLOW</p><h2>Create it once.<br />Use it across your documents.</h2><p>Your Logo Maker design can be transferred directly into PDF Maker on the same device. You can also upload an existing logo whenever you prefer.</p></div>
+        <ol><li><b>1</b><span><strong>Create your logo</strong><small>Choose the wording, colours and layout that suit your business.</small></span></li><li><b>2</b><span><strong>Move it into PDF Maker</strong><small>Use the built-in transfer button or upload your own logo file.</small></span></li><li><b>3</b><span><strong>Prepare your paperwork</strong><small>Complete the document and check the live preview.</small></span></li><li><b>4</b><span><strong>Download and use it</strong><small>Save the finished file for customers or business records.</small></span></li></ol>
+      </div>
+    </section>
+
+    <section class="closing"><div class="shell closing-card"><div><p class="eyebrow">READY WHEN YOU ARE</p><h2>Give your business a professional starting point.</h2><p>Start with your logo, or go directly to the document you need.</p></div><div class="actions"><a class="button light" href="/logo-maker/">Create a logo</a><a class="button primary" href="/pdf-maker/">Create a PDF</a></div></div></section>
+  </main>
+  <Footer />
+</body>
+</html>
+
+<style>
+  :global(*){box-sizing:border-box}:global(html){scroll-behavior:smooth}:global(body){margin:0;background:#07111f;color:#f8fafc;font-family:Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.6}:global(a){color:inherit}.shell{width:min(1180px,calc(100% - 32px));margin:auto}.eyebrow{margin:0 0 14px;color:#62d5ff;font-size:12px;font-weight:850;letter-spacing:1.8px}.eyebrow.dark{color:#007ba8}.hero{position:relative;overflow:hidden;padding:92px 0 100px;background:radial-gradient(circle at 80% 20%,#143c69 0,transparent 38%),linear-gradient(135deg,#050c16,#0b1e33)}.hero:after{content:"";position:absolute;inset:auto 0 0;height:4px;background:linear-gradient(90deg,#08c7ff,#ff6b00,#7c3aed)}.hero-glow{position:absolute;inset:0;background:linear-gradient(90deg,#07111ff2 0 42%,#07111f22 70%);pointer-events:none}.hero-grid{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}.hero h1{max-width:700px;margin:0;font-size:clamp(48px,6vw,82px);line-height:.98;letter-spacing:-4px}.hero h1 span{color:#ff7a1a}.lead{max-width:620px;margin:28px 0;color:#c6d4e3;font-size:19px}.actions{display:flex;flex-wrap:wrap;gap:12px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border:1px solid transparent;border-radius:8px;text-decoration:none;font-weight:850}.primary{background:#ff6b00;color:#07111f}.primary:hover{background:#ff8b3d}.secondary{border-color:#567087;color:#fff;background:#ffffff08}.secondary:hover{background:#ffffff14}.hero-preview{position:relative;min-height:480px}.hero-preview img{position:absolute;width:min(520px,88%);border:1px solid #6dd8ff55;border-radius:14px;box-shadow:0 28px 80px #0009}.hero-preview img:first-child{top:0;right:0;transform:rotate(2deg)}.hero-preview img:last-child{bottom:0;left:0;transform:rotate(-2deg)}.tools{padding:100px 0;background:#f3f7fb;color:#07111f}.tools h2,.workflow h2,.closing h2{margin:0;font-size:clamp(34px,4vw,54px);line-height:1.08;letter-spacing:-2px}.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px}.tool-grid article{overflow:hidden;background:#fff;border:1px solid #d9e2ec;border-radius:18px;box-shadow:0 20px 50px #0b254015}.tool-grid article>img{width:100%;height:290px;object-fit:cover;object-position:top;border-bottom:1px solid #d9e2ec}.tool-copy{position:relative;padding:32px}.number{position:absolute;right:28px;top:24px;color:#dbe5ee;font-size:54px;font-weight:900}.tag{margin:0;color:#d95500;font-size:11px;font-weight:900;letter-spacing:1.4px}.tool-copy h3{margin:5px 0 10px;font-size:34px}.tool-copy p{max-width:550px;color:#526174}.tool-copy ul{min-height:115px;padding-left:20px;color:#26384b}.tool-copy li{margin:7px 0}.workflow{padding:100px 0;background:linear-gradient(135deg,#07111f,#0a253d)}.workflow-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:start}.workflow p{color:#b8c8d8}.workflow ol{display:grid;gap:12px;margin:0;padding:0;list-style:none}.workflow li{display:flex;align-items:center;gap:18px;padding:20px;border:1px solid #4a759755;border-radius:12px;background:#ffffff08}.workflow li>b{display:grid;place-items:center;width:42px;height:42px;flex:none;border-radius:50%;background:#0bc5ff;color:#07111f}.workflow li span{display:grid}.workflow li strong{font-size:17px}.workflow li small{margin-top:3px;color:#aebfd0;font-size:13px}.closing{padding:70px 0;background:#eef4f8}.closing-card{display:flex;align-items:center;justify-content:space-between;gap:30px;padding:44px;border-radius:18px;background:linear-gradient(100deg,#0b2742,#102f50);box-shadow:0 20px 50px #07111f30}.closing-card p:not(.eyebrow){margin-bottom:0;color:#c0d0df}.light{background:#fff;color:#07111f}
+  @media(max-width:850px){.hero{padding:70px 0}.hero-grid,.workflow-grid{grid-template-columns:1fr;gap:45px}.hero-preview{min-height:390px}.tool-grid{grid-template-columns:1fr}.tool-copy ul{min-height:0}.closing-card{align-items:flex-start;flex-direction:column}}
+  @media(max-width:520px){.hero h1{font-size:46px;letter-spacing:-2px}.hero-preview{min-height:310px}.hero-preview img{width:90%}.tool-grid article>img{height:220px}.tool-copy{padding:24px}.closing-card{padding:28px 22px}.actions .button{width:100%}}
+</style>
