@@ -1,10 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60">
-  <rect width="80" height="60" rx="8" fill="#fffdf7"/>
-  <path d="M22 24C24 9 33 3 49 7l10 15-8 3H25Z" fill="#c81d25" stroke="#8f1118" stroke-width="2"/>
-  <circle cx="58" cy="22" r="3.5" fill="#fff" stroke="#d8dee8" stroke-width="1"/>
-  <ellipse cx="39" cy="31" rx="17" ry="16" fill="#f2c6a0"/>
-  <path d="M22 31c1 19 11 26 18 26s17-7 18-26c-3 3-7 5-11 5-3 0-5-2-7-2s-4 2-7 2c-4 0-8-2-11-5Z" fill="#fff" stroke="#d8dee8" stroke-width="2"/>
-  <circle cx="33" cy="29" r="2" fill="#152238"/><circle cx="47" cy="29" r="2" fill="#152238"/>
-  <path d="M36 39c3 2 5 2 8 0" fill="none" stroke="#9f1c22" stroke-width="2" stroke-linecap="round"/>
-  <path d="M21 23h37" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+  <rect width="80" height="60" fill="#fffdf7"/>
+  <!-- One complete Santa head: beard behind a single face, with no second face below. -->
+  <path d="M20 31c0-13 9-22 20-22s20 9 20 22c0 16-9 27-20 27S20 47 20 31Z" fill="#fff" stroke="#d9e0e9" stroke-width="1.7"/>
+  <path d="M25 25c0-9 6-15 15-15s15 6 15 15v8c0 8-6 14-15 14S25 41 25 33Z" fill="#f1bd92"/>
+  <path d="M19 22C22 8 31 2 47 6c6 2 10 7 13 15H20Z" fill="#d8212a" stroke="#a8151c" stroke-width="1.6"/>
+  <path d="M20 22h40" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="33" cy="29" r="1.8" fill="#172238"/>
+  <circle cx="47" cy="29" r="1.8" fill="#172238"/>
+  <ellipse cx="40" cy="34" rx="2.4" ry="2" fill="#dc8f70"/>
+  <path d="M27 37c4-5 9-5 13-1 4-4 9-4 13 1-4 4-9 5-13 2-4 3-9 2-13-2Z" fill="#fff" stroke="#d9e0e9" stroke-width="1"/>
+  <path d="M36 43c3 1.8 5 1.8 8 0" fill="none" stroke="#a92a2e" stroke-width="1.6" stroke-linecap="round"/>
 </svg>
