@@ -1,10 +1,12 @@
 import type { APIRoute } from 'astro';
 import { config, json, validateInput, token, digest, stripe, PRODUCT, rateLimit, priceForDescription, INCLUDED_TRIAL_HOLE_SHEETS, EXTRA_TRIAL_HOLE_SHEET_PENCE } from '../../../lib/safework/orders.mjs';
+import { isCheckoutCountryAllowed, SALES_COUNTRY_ERROR } from '../../../lib/sales-countries.mjs';
 export const prerender = false;
 export const GET: APIRoute = ({locals}) => { const c = config(locals.runtime.env); return json({enabled:c.enabled, mode:c.mode, amount:Number.isSafeInteger(c.amount) ? c.amount : null,prices:c.prices,includedTrialHoleSheets:INCLUDED_TRIAL_HOLE_SHEETS,extraTrialHoleSheetPence:EXTRA_TRIAL_HOLE_SHEET_PENCE}); };
 export const POST: APIRoute = async ({request,locals}) => {
  const env = locals.runtime.env; const c = config(env);
  if (!c.enabled) return json({error:'Online sales are not open yet. No payment has been taken.'},503);
+ if (!isCheckoutCountryAllowed(request)) return json({error:SALES_COUNTRY_ERROR},403);
  if(request.headers.get('origin') !== new URL(request.url).origin) return json({error:'Please start checkout from this website.'},403);
  if(Number(request.headers.get('content-length') || 0) > 24000) return json({error:'Job details are too long.'},413);
  let input; try { const raw = await request.text(); if(raw.length>70000) return json({error:'Job details are too long.'},413); input=validateInput(JSON.parse(raw)); } catch(e) { return json({error:e instanceof Error ? e.message : 'Invalid details'},400); }

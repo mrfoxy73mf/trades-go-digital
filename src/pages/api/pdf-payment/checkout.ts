@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { stripeRequest, toolPaymentConfig } from "../../../lib/tool-payments.mjs";
+import { isCheckoutCountryAllowed, SALES_COUNTRY_ERROR } from "../../../lib/sales-countries.mjs";
 
 export const prerender = false;
 
@@ -18,6 +19,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 	if (!config.enabled) {
 		return Response.json({ error: "PDF checkout is not connected yet." }, { status: 503 });
 	}
+	if (!isCheckoutCountryAllowed(request)) return Response.json({ error: SALES_COUNTRY_ERROR }, { status: 403 });
 	if (request.headers.get("origin") !== new URL(request.url).origin) return Response.json({ error: "Please start checkout from this website." }, { status: 403 });
 	const origin = env.PUBLIC_SITE_URL || new URL(request.url).origin;
 	const params = new URLSearchParams({
