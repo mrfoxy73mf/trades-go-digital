@@ -30,8 +30,10 @@ const PUBLIC_EXACT_PATHS = new Set([
 	"/api/support/admin/tickets",
 	"/api/stripe/webhook",
 	"/favicon.svg",
+	"/robots.txt",
+	"/sitemap-index.xml",
 ]);
-const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/fonts/"];
+const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/fonts/", "/sitemap-"];
 
 const unauthorized = () =>
 	new Response("Password required.", {
