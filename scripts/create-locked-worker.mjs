@@ -8,7 +8,29 @@ const worker = String.raw`import astroWorker from "./_worker.js/index.js";
 const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
-const PUBLIC_EXACT_PATHS = new Set(["/support", "/support/", "/api/support/tickets", "/api/support/admin/tickets", "/api/stripe/webhook", "/favicon.svg"]);
+const PUBLIC_EXACT_PATHS = new Set([
+	"/logo-maker",
+	"/logo-maker/",
+	"/pdf-maker",
+	"/pdf-maker/",
+	"/business-tools",
+	"/business-tools/",
+	"/business-tools/pricing",
+	"/business-tools/pricing/",
+	"/business-tools/feedback",
+	"/business-tools/feedback/",
+	"/business-tools/support",
+	"/business-tools/support/",
+	"/business-tools/terms",
+	"/business-tools/terms/",
+	"/support",
+	"/support/",
+	"/api/business-tools-feedback",
+	"/api/support/tickets",
+	"/api/support/admin/tickets",
+	"/api/stripe/webhook",
+	"/favicon.svg",
+]);
 const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/fonts/"];
 
 const unauthorized = () =>
@@ -65,6 +87,8 @@ export default {
 
 		const isPublicFulfilmentRoute =
 			PUBLIC_EXACT_PATHS.has(url.pathname) ||
+			url.pathname.startsWith("/api/logo-payment/") ||
+			url.pathname.startsWith("/api/pdf-payment/") ||
 			url.pathname.startsWith("/api/support/admin/tickets/") ||
 			PUBLIC_PATH_PREFIXES.some((prefix) => url.pathname.startsWith(prefix));
 
