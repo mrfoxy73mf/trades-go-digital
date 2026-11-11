@@ -280,6 +280,8 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 			if(document.fonts?.ready)await document.fonts.ready;
 			await Promise.all(Array.from(sheet.querySelectorAll("img")).map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.addEventListener("load",resolve,{once:true});img.addEventListener("error",resolve,{once:true})})));
 		}
+		let resetPdfAfterLeave=false;
+		addEventListener("pagehide",()=>{if(!resetPdfAfterLeave)return;localStorage.removeItem("tgd-word-style-pdf");["tgd-pdf-payment","tgd-pdf-paid-document","tgd-pdf-state-pending","tgd-pdf-document-pending","tgd-bundle-payment","tgd-bundle-credit"].forEach(key=>sessionStorage.removeItem(key))});
 		async function downloadPdf(){
 			const button=$("download"),sheet=$("sheet"),previousStatus=$("status").textContent;
 			if(!pdfPaid){if(bundleCovers(state.doc)){if(!await redeemBundleCredit())return}else{await openPdfCheckout();return}}
@@ -295,7 +297,7 @@ import BusinessToolsFooter from "../components/BusinessToolsFooter.astro";
 					if(outputPage>0)pdf.addPage("a4","portrait");pdf.addImage(canvas.toDataURL("image/jpeg",0.94),"JPEG",pdfX,0,pdfWidth,pdfHeight,undefined,"FAST");outputPage++;
 				}
 				const filename=[safeFilePart(docs[state.doc].label)||"document",safeFilePart(state.reference)].filter(Boolean).join("-").toLowerCase()+".pdf";
-				pdf.save(filename);$("status").textContent=`Downloaded ${filename}`;
+				pdf.save(filename);resetPdfAfterLeave=true;$("status").textContent=`Downloaded ${filename}`;
 			}catch(error){console.error(error);$("status").textContent="PDF download failed — please try again"}
 			finally{sheet.classList.remove("exporting");button.disabled=false;button.textContent="Download PDF";if($("status").textContent===previousStatus)$("status").textContent=previousStatus}
 		}
