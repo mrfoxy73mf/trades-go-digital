@@ -22,6 +22,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 	const origin = env.PUBLIC_SITE_URL || new URL(request.url).origin;
 	const params = new URLSearchParams({
 		mode: "payment",
+		"adaptive_pricing[enabled]": "true",
 		success_url: `${origin}/pdf-maker?session_id={CHECKOUT_SESSION_ID}&document_type=${encodeURIComponent(documentType)}`,
 		cancel_url: `${origin}/pdf-maker?checkout=cancelled`,
 		submit_type: "pay",

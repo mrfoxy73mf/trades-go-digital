@@ -19,7 +19,7 @@ test('purchase → unpaid rejection → paid → failed generation → retry →
  let session, paid=false, fail=true, calls=0;
  const original=globalThis.fetch;
  globalThis.fetch=async(url,opts)=>{
-  if(String(url).includes('api.stripe.com') && opts.method==='POST'){const p=opts.body;session={id:'cs_test_fixture',url:'https://checkout.stripe.com/test',payment_status:'unpaid',currency:'gbp',amount_total:Number(p.get('line_items[0][price_data][unit_amount]')),livemode:false,metadata:{product:p.get('metadata[product]'),order_id:p.get('metadata[order_id]')}};return Response.json(session);}
+  if(String(url).includes('api.stripe.com') && opts.method==='POST'){const p=opts.body;assert.equal(p.get('adaptive_pricing[enabled]'),'true');session={id:'cs_test_fixture',url:'https://checkout.stripe.com/test',payment_status:'unpaid',currency:'gbp',amount_total:Number(p.get('line_items[0][price_data][unit_amount]')),livemode:false,metadata:{product:p.get('metadata[product]'),order_id:p.get('metadata[order_id]')}};return Response.json(session);}
   if(String(url).includes('api.stripe.com'))return Response.json({...session,payment_status:paid?'paid':'unpaid'});
   calls++;if(fail)return Response.json({error:{message:'Simulated outage'}},{status:503});const pack=sample(workPackSchema);pack.pack_requirements.excavation=true;pack.pack_requirements.hot_work=true;return Response.json({output_text:JSON.stringify(pack)});
  };
