@@ -23,8 +23,6 @@ const PUBLIC_EXACT_PATHS = new Set([
 	"/business-tools/support/",
 	"/business-tools/terms",
 	"/business-tools/terms/",
-	"/support",
-	"/support/",
 	"/api/business-tools-feedback",
 	"/api/support/tickets",
 	"/api/support/admin/tickets",
@@ -86,6 +84,9 @@ const isAuthorized = (request, env) => {
 export default {
 	fetch(request, env, ctx) {
 		const url = new URL(request.url);
+		if (url.pathname === "/") {
+			return Response.redirect(new URL("/business-tools/", url), 301);
+		}
 
 		const isPublicFulfilmentRoute =
 			PUBLIC_EXACT_PATHS.has(url.pathname) ||
