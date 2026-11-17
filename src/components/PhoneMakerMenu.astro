@@ -96,13 +96,15 @@
 			cursor: pointer;
 		}
 		.phone-maker-tools:not([hidden]) {
-			display: grid;
+			display: flex;
+			flex-direction: column;
 			gap: 8px;
 			max-height: calc(max(220px, 100dvh - var(--phone-maker-top, 80px) - 12px) * .46);
 			overflow: auto;
 			overscroll-behavior: contain;
 			animation: phone-maker-slide 180ms ease-out;
 		}
+		.phone-maker-tools > * { flex: none; min-width: 0; }
 		.phone-maker-tools > .studio-top { margin: 0; }
 		.phone-maker-tools .builder-intro,
 		.phone-maker-tools .intro { display: none; }
