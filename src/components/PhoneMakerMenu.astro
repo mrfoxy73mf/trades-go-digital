@@ -1,0 +1,140 @@
+<div class="phone-maker-menu no-print" data-phone-maker-menu>
+	<button type="button" class="phone-maker-toggle" aria-controls="phone-maker-tools" aria-expanded="false">Tools</button>
+	<div id="phone-maker-tools" class="phone-maker-tools" hidden></div>
+</div>
+
+<script>
+	const menu = document.querySelector<HTMLElement>("[data-phone-maker-menu]");
+	const grid = menu?.parentElement;
+	const studio = grid?.parentElement;
+	const toggle = menu?.querySelector<HTMLButtonElement>("button");
+	const drawer = menu?.querySelector<HTMLElement>(".phone-maker-tools");
+
+	if (menu && grid && studio && toggle && drawer) {
+		const phone = window.matchMedia("(max-width: 639px)");
+		const controls = Array.from(studio.querySelectorAll(":scope > .studio-top, :scope > .studio-grid > aside"));
+		const positions = controls.map(control => {
+			const anchor = document.createComment("Maker controls");
+			control.before(anchor);
+			return { control, anchor };
+		});
+
+		function setOpen(open: boolean) {
+			drawer!.hidden = !open;
+			toggle!.textContent = open ? "Done" : "Tools";
+			toggle!.setAttribute("aria-expanded", String(open));
+			grid!.classList.toggle("phone-maker-drawer-open", open);
+		}
+
+		function updateHeight() {
+			const top = grid!.getBoundingClientRect().top + window.scrollY;
+			grid!.style.setProperty("--phone-maker-top", `${Math.max(0, top)}px`);
+		}
+
+		function updateLayout() {
+			grid!.classList.toggle("phone-maker-active", phone.matches);
+			for (const { control, anchor } of positions) {
+				if (phone.matches) drawer!.append(control);
+				else anchor.after(control);
+			}
+			setOpen(false);
+			if (phone.matches) updateHeight();
+		}
+
+		toggle.addEventListener("click", () => setOpen(drawer.hidden));
+		menu.addEventListener("keydown", event => {
+			if (event.key === "Escape" && !drawer.hidden) {
+				setOpen(false);
+				toggle.focus();
+			}
+		});
+		phone.addEventListener("change", updateLayout);
+		window.addEventListener("resize", () => {
+			if (phone.matches) updateHeight();
+		});
+		updateLayout();
+	}
+</script>
+
+<style is:global>
+	.phone-maker-menu { display: none; }
+	@media screen and (max-width: 639px) {
+		body:has(.phone-maker-active) .maker-site-footer { display: none; }
+		body:is(.tgd-logo-office, .tgd-pdf-office) .studio-grid.phone-maker-active {
+			display: grid;
+			grid-template: minmax(0, 1fr) auto / minmax(0, 1fr);
+			gap: 8px;
+			height: max(220px, calc(100dvh - var(--phone-maker-top, 80px) - 12px));
+			min-height: 0;
+			overflow: hidden;
+		}
+		body:is(.tgd-logo-office, .tgd-pdf-office) .phone-maker-active > section.preview {
+			position: relative;
+			grid-area: 1 / 1;
+			height: 100%;
+			min-height: 0;
+			padding: 6px;
+			overflow: auto;
+			overscroll-behavior: contain;
+		}
+		.phone-maker-active .phone-maker-menu {
+			display: grid;
+			grid-area: 2 / 1;
+			gap: 6px;
+			min-width: 0;
+			padding-bottom: env(safe-area-inset-bottom, 0px);
+		}
+		.phone-maker-toggle {
+			min-height: 44px;
+			width: 100%;
+			border: 0;
+			border-radius: 8px;
+			background: #f97316;
+			color: #111827;
+			font: inherit;
+			font-weight: 800;
+			cursor: pointer;
+		}
+		.phone-maker-tools:not([hidden]) {
+			display: grid;
+			gap: 8px;
+			max-height: calc(max(220px, 100dvh - var(--phone-maker-top, 80px) - 12px) * .46);
+			overflow: auto;
+			overscroll-behavior: contain;
+			animation: phone-maker-slide 180ms ease-out;
+		}
+		.phone-maker-tools > .studio-top { margin: 0; }
+		.phone-maker-tools .builder-intro,
+		.phone-maker-tools .intro { display: none; }
+		.phone-maker-tools #doc-types { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+		body.tgd-logo-office .phone-maker-active .preview {
+			grid-template-rows: minmax(0, 1fr) auto;
+			align-content: stretch;
+			gap: 8px;
+		}
+		body.tgd-logo-office .phone-maker-active .canvas-wrap {
+			min-height: 0;
+			padding: 8px;
+			grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+		}
+		.phone-maker-active .canvas-wrap #logo-preview {
+			display: grid;
+			place-items: center;
+			width: 100%;
+			height: 100%;
+			min-height: 0;
+		}
+		.phone-maker-active #logo-preview svg { width: 100%; height: 100%; max-height: 100%; }
+		body.tgd-logo-office .phone-maker-drawer-open #mockup { display: none; }
+		body.tgd-pdf-office .phone-maker-active .sheet-stage { width: 100%; overflow: clip; }
+		body.tgd-pdf-office .phone-maker-active .sheet-stage:has(.exporting) { overflow: visible; }
+		body.tgd-pdf-office .phone-maker-active .preview-head { margin-bottom: 6px; }
+		@keyframes phone-maker-slide {
+			from { transform: translateY(16px); opacity: 0; }
+			to { transform: translateY(0); opacity: 1; }
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.phone-maker-tools:not([hidden]) { animation: none; }
+	}
+</style>
