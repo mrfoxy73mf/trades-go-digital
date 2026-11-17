@@ -1,5 +1,10 @@
 <div class="phone-maker-menu no-print" data-phone-maker-menu>
-	<button type="button" class="phone-maker-toggle" aria-controls="phone-maker-tools" aria-expanded="false">Tools</button>
+	<div class="phone-maker-actions">
+		<button type="button" data-phone-action="templates" aria-controls="phone-maker-tools" aria-expanded="false">Templates</button>
+		<button type="button" data-phone-action="edit" aria-controls="phone-maker-tools" aria-expanded="false">Edit</button>
+		<button type="button" data-phone-action="download" aria-controls="phone-maker-tools" aria-expanded="false">Download</button>
+		<button type="button" data-phone-action="done" hidden>Done</button>
+	</div>
 	<div id="phone-maker-tools" class="phone-maker-tools" hidden></div>
 </div>
 
@@ -7,10 +12,10 @@
 	const menu = document.querySelector<HTMLElement>("[data-phone-maker-menu]");
 	const grid = menu?.parentElement;
 	const studio = grid?.parentElement;
-	const toggle = menu?.querySelector<HTMLButtonElement>("button");
+	const actions = menu?.querySelector<HTMLElement>(".phone-maker-actions");
 	const drawer = menu?.querySelector<HTMLElement>(".phone-maker-tools");
 
-	if (menu && grid && studio && toggle && drawer) {
+	if (menu && grid && studio && actions && drawer) {
 		const phone = window.matchMedia("(max-width: 639px)");
 		const controls = Array.from(studio.querySelectorAll(":scope > .studio-top, :scope > .studio-grid > aside"));
 		const positions = controls.map(control => {
@@ -19,11 +24,35 @@
 			return { control, anchor };
 		});
 
-		function setOpen(open: boolean) {
-			drawer!.hidden = !open;
-			toggle!.textContent = open ? "Done" : "Tools";
-			toggle!.setAttribute("aria-expanded", String(open));
-			grid!.classList.toggle("phone-maker-drawer-open", open);
+		const actionButtons = Array.from(actions.querySelectorAll<HTMLButtonElement>("[data-phone-action]"));
+		const done = actionButtons.find(button => button.dataset.phoneAction === "done")!;
+		const templates = studio.querySelector("#doc-types, #templates")?.closest(".panel");
+		const details = studio.querySelector("#business, #name")?.closest(".panel");
+		let activeAction: HTMLButtonElement | undefined;
+
+		function showDrawer(button?: HTMLButtonElement) {
+			activeAction = button;
+			const action = button?.dataset.phoneAction;
+			drawer!.hidden = !button;
+			drawer!.dataset.view = action ?? "";
+			done.hidden = !button;
+			for (const item of actionButtons) {
+				if (item !== done) item.setAttribute("aria-expanded", String(item === button));
+			}
+			grid!.classList.toggle("phone-maker-drawer-open", Boolean(button));
+			if (!button) return;
+
+			const panel = action === "templates" ? templates : action === "edit" ? details : null;
+			panel?.querySelector<HTMLButtonElement>("h2 button")?.click();
+			drawer!.scrollTop = panel
+				? panel.getBoundingClientRect().top - drawer!.getBoundingClientRect().top + drawer!.scrollTop - 4
+				: 0;
+		}
+
+		function closeDrawer() {
+			const opener = activeAction;
+			showDrawer();
+			opener?.focus({ preventScroll: true });
 		}
 
 		function updateHeight() {
@@ -37,16 +66,18 @@
 				if (phone.matches) drawer!.append(control);
 				else anchor.after(control);
 			}
-			setOpen(false);
+			showDrawer();
 			if (phone.matches) updateHeight();
 		}
 
-		toggle.addEventListener("click", () => setOpen(drawer.hidden));
+		for (const button of actionButtons) {
+			button.addEventListener("click", () => {
+				if (button === done) closeDrawer();
+				else showDrawer(button);
+			});
+		}
 		menu.addEventListener("keydown", event => {
-			if (event.key === "Escape" && !drawer.hidden) {
-				setOpen(false);
-				toggle.focus();
-			}
+			if (event.key === "Escape" && !drawer.hidden) closeDrawer();
 		});
 		phone.addEventListener("change", updateLayout);
 		window.addEventListener("resize", () => {
@@ -84,9 +115,11 @@
 			min-width: 0;
 			padding-bottom: env(safe-area-inset-bottom, 0px);
 		}
-		.phone-maker-toggle {
+		.phone-maker-actions { display: flex; flex-wrap: wrap; gap: 5px; }
+		.phone-maker-actions button:not([hidden]) {
+			flex: 1 1 auto;
 			min-height: 44px;
-			width: 100%;
+			padding: 0 9px;
 			border: 0;
 			border-radius: 8px;
 			background: #f97316;
@@ -104,7 +137,15 @@
 			overscroll-behavior: contain;
 			animation: phone-maker-slide 180ms ease-out;
 		}
+		.phone-maker-actions button[aria-expanded="true"],
+		.phone-maker-actions button[data-phone-action="done"] { background: #142b40; color: #fff; }
 		.phone-maker-tools > * { flex: none; min-width: 0; }
+		.phone-maker-tools[data-view="download"] > aside,
+		.phone-maker-tools:not([data-view="download"]) > .studio-top { display: none; }
+		body:is(.tgd-logo-office, .tgd-pdf-office) .phone-maker-tools > aside { padding: 10px; }
+		.phone-maker-tools :is(input:not([type]), input[type="text"], input[type="number"], input[type="email"], input[type="tel"], select, textarea) {
+			font-size: max(1em, 16px);
+		}
 		.phone-maker-tools > .studio-top { margin: 0; }
 		.phone-maker-tools .builder-intro,
 		.phone-maker-tools .intro { display: none; }
