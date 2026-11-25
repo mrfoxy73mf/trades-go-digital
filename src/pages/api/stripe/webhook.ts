@@ -48,9 +48,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		return await markPaid(env.FULFILMENT_DB, session) ? Response.json({received:true}) : new Response('Order not ready or payment mismatch', {status:409});
 	}
 	const fulfilmentType = resolveFulfilmentType(session);
+	if (!fulfilmentType) {
+		// Stripe sends completed checkouts for other products on this account too.
+		return Response.json({ received: true });
+	}
 	const email = session.customer_details?.email || session.customer_email;
-	if (!fulfilmentType || !email) {
-		console.error("Paid LettingDesk session is missing fulfilment metadata or customer email", session.id);
+	if (!email) {
+		console.error("Paid LettingDesk session is missing customer email", session.id);
 		return new Response("Unsupported paid session", { status: 422 });
 	}
 
