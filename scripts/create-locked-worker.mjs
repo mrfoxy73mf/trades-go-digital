@@ -31,6 +31,25 @@ const PUBLIC_EXACT_PATHS = new Set([
 	"/favicon.svg",
 ]);
 const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/fonts/"];
+// Stripe and order recovery use signatures or order credentials at the application layer.
+const PAYMENT_RECOVERY_PATHS = new Set([
+	"/api/stripe/webhook",
+	"/safework/order",
+	"/safework/order/",
+	"/api/safework/order",
+	"/api/safework/generate",
+	"/api/safework/download",
+	"/api/safework/editor",
+	"/api/safework/signoff",
+	"/api/safework/feedback",
+	"/fulfilment/complete",
+	"/fulfilment/complete/",
+	"/fulfilment/setup-received",
+	"/fulfilment/setup-received/",
+	"/api/fulfilment/status",
+	"/api/fulfilment/download",
+	"/api/fulfilment/installation",
+]);
 
 const preventCaching = (response) => {
 	const result = new Response(response.body, response);
@@ -97,6 +116,9 @@ export default {
 		}
 		if (url.pathname === "/") {
 			return Response.redirect(new URL("/business-tools/", url), 302);
+		}
+		if (PAYMENT_RECOVERY_PATHS.has(url.pathname)) {
+			return preventCaching(await astroWorker.fetch(request, env, ctx));
 		}
 
 		const isPublicFulfilmentRoute =
