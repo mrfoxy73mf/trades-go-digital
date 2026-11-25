@@ -9,12 +9,6 @@ const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
 const PUBLIC_EXACT_PATHS = new Set([
-	// The portal verifies the subscriber's signed session.
-	"/support",
-	"/logo-maker",
-	"/logo-maker/",
-	"/pdf-maker",
-	"/pdf-maker/",
 	"/business-tools",
 	"/business-tools/",
 	"/business-tools/pricing",
@@ -25,15 +19,26 @@ const PUBLIC_EXACT_PATHS = new Set([
 	"/business-tools/support/",
 	"/business-tools/terms",
 	"/business-tools/terms/",
+	"/logo-maker",
+	"/logo-maker/",
+	"/pdf-maker",
+	"/pdf-maker/",
 	"/api/business-tools-feedback",
-	"/api/support/tickets",
-	"/api/support/admin/tickets",
-	"/api/stripe/webhook",
+	"/api/logo-payment/checkout",
+	"/api/logo-payment/verify",
+	"/api/pdf-payment/checkout",
+	"/api/pdf-payment/verify",
 	"/favicon.svg",
-	"/robots.txt",
-	"/sitemap-index.xml",
 ]);
-const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/fonts/", "/sitemap-"];
+const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/fonts/"];
+
+const preventCaching = (response) => {
+	const result = new Response(response.body, response);
+	result.headers.set("Cache-Control", "private, no-store");
+	result.headers.set("CDN-Cache-Control", "no-store");
+	result.headers.set("Cloudflare-CDN-Cache-Control", "no-store");
+	return result;
+};
 
 const unauthorized = () =>
 	new Response("Password required.", {
@@ -84,17 +89,18 @@ const isAuthorized = (request, env) => {
 };
 
 export default {
-	fetch(request, env, ctx) {
+	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
+		if (url.pathname === "/support") {
+			// The portal verifies the subscriber's signed session.
+			return astroWorker.fetch(request, env, ctx);
+		}
 		if (url.pathname === "/") {
-			return Response.redirect(new URL("/business-tools/", url), 301);
+			return Response.redirect(new URL("/business-tools/", url), 302);
 		}
 
 		const isPublicFulfilmentRoute =
 			PUBLIC_EXACT_PATHS.has(url.pathname) ||
-			url.pathname.startsWith("/api/logo-payment/") ||
-			url.pathname.startsWith("/api/pdf-payment/") ||
-			url.pathname.startsWith("/api/support/admin/tickets/") ||
 			PUBLIC_PATH_PREFIXES.some((prefix) => url.pathname.startsWith(prefix));
 
 		if (isPublicFulfilmentRoute) {
@@ -106,21 +112,21 @@ export default {
 
 		if (inviteToken && invite === inviteToken) {
 			url.searchParams.delete("invite");
-			return new Response(null, {
+			return preventCaching(new Response(null, {
 				status: 302,
 				headers: {
 					Location: url.toString(),
 					"Set-Cookie": INVITE_COOKIE + "=" + inviteToken + "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000",
 					"Cache-Control": "no-store",
 				},
-			});
+			}));
 		}
 
 		if (!isAuthorized(request, env)) {
-			return unauthorized();
+			return preventCaching(unauthorized());
 		}
 
-		return astroWorker.fetch(request, env, ctx);
+		return preventCaching(await astroWorker.fetch(request, env, ctx));
 	},
 };
 `;
