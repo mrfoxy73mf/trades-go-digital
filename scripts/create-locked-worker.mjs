@@ -7,7 +7,6 @@ const worker = String.raw`import astroWorker from "./_worker.js/index.js";
 
 const USERNAME = "president";
 const REALM = "Trades Go Digital";
-const INVITE_COOKIE = "tgd_invite";
 const PUBLIC_EXACT_PATHS = new Set([
 	"/business-tools",
 	"/business-tools/",
@@ -31,25 +30,6 @@ const PUBLIC_EXACT_PATHS = new Set([
 	"/favicon.svg",
 ]);
 const PUBLIC_PATH_PREFIXES = ["/_astro/", "/images/", "/fonts/"];
-// Stripe and order recovery use signatures or order credentials at the application layer.
-const PAYMENT_RECOVERY_PATHS = new Set([
-	"/api/stripe/webhook",
-	"/safework/order",
-	"/safework/order/",
-	"/api/safework/order",
-	"/api/safework/generate",
-	"/api/safework/download",
-	"/api/safework/editor",
-	"/api/safework/signoff",
-	"/api/safework/feedback",
-	"/fulfilment/complete",
-	"/fulfilment/complete/",
-	"/fulfilment/setup-received",
-	"/fulfilment/setup-received/",
-	"/api/fulfilment/status",
-	"/api/fulfilment/download",
-	"/api/fulfilment/installation",
-]);
 
 const preventCaching = (response) => {
 	const result = new Response(response.body, response);
@@ -87,7 +67,6 @@ const getBasicCredentials = (header) => {
 
 const isAuthorized = (request, env) => {
 	const password = env.SITE_PASSWORD;
-	const inviteToken = env.INVITE_TOKEN;
 
 	if (password) {
 		const credentials = getBasicCredentials(request.headers.get("Authorization"));
@@ -96,29 +75,14 @@ const isAuthorized = (request, env) => {
 		}
 	}
 
-	if (inviteToken) {
-		const cookies = request.headers.get("Cookie") ?? "";
-		return cookies
-			.split(";")
-			.map((cookie) => cookie.trim())
-			.includes(INVITE_COOKIE + "=" + inviteToken);
-	}
-
 	return false;
 };
 
 export default {
 	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
-		if (url.pathname === "/support") {
-			// The portal verifies the subscriber's signed session.
-			return astroWorker.fetch(request, env, ctx);
-		}
 		if (url.pathname === "/") {
 			return Response.redirect(new URL("/business-tools/", url), 302);
-		}
-		if (PAYMENT_RECOVERY_PATHS.has(url.pathname)) {
-			return preventCaching(await astroWorker.fetch(request, env, ctx));
 		}
 
 		const isPublicFulfilmentRoute =
@@ -127,21 +91,6 @@ export default {
 
 		if (isPublicFulfilmentRoute) {
 			return astroWorker.fetch(request, env, ctx);
-		}
-
-		const inviteToken = env.INVITE_TOKEN;
-		const invite = url.searchParams.get("invite");
-
-		if (inviteToken && invite === inviteToken) {
-			url.searchParams.delete("invite");
-			return preventCaching(new Response(null, {
-				status: 302,
-				headers: {
-					Location: url.toString(),
-					"Set-Cookie": INVITE_COOKIE + "=" + inviteToken + "; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=2592000",
-					"Cache-Control": "no-store",
-				},
-			}));
 		}
 
 		if (!isAuthorized(request, env)) {
