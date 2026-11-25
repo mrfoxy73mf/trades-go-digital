@@ -1,0 +1,102 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { CONTACT_EMAIL, SITE_TITLE } from "../consts";
+
+export const prerender = true;
+const appUrl = "https://president-trades.onrender.com";
+const faqs = [
+	{
+		question: "Do I need internet on site?",
+		answer:
+			"You need an internet connection for cloud features and syncing. Some screens may remain visible briefly if your signal drops, but you should reconnect before relying on new information being saved.",
+	},
+	{
+		question: "Does this replace my accountant?",
+		answer:
+			"It replaces the shoebox, not the accountant. Come year-end, one tap can send a tidy monthly report with receipts, mileage, VAT, dividends and the rest, giving your accountant cleaner records to work from.",
+	},
+	{
+		question: "What if I need to switch phones or jack it in?",
+		answer:
+			"Your data is yours. Full CSV and PDF backup export is available any time, and you can cancel in one tap with no 12-month contracts and no call-to-cancel nonsense.",
+	},
+	{
+		question: "Is my customer data safe?",
+		answer:
+			"We use technical and organisational safeguards designed to protect account and customer information, including encrypted connections and access controls. No online service can guarantee absolute security; see the Privacy Notice for more detail.",
+	},
+	{
+		question: "I am not great with tech. Will I get lost?",
+		answer:
+			"TGD Trades is designed to be straightforward on a phone, tablet or computer. The guided screens and AI Assistant can help with everyday tasks, but important information should always be checked before you rely on it.",
+	},
+	{
+		question: "Can it help with my business records?",
+		answer:
+			"It can help you organise jobs, receipts, mileage and reports for your records and accountant. It does not guarantee tax or Making Tax Digital compliance, so check your setup and submissions with HMRC guidance or a qualified accountant.",
+	},
+	{
+		question: "Can I bring my last few months' records in from another app?",
+		answer:
+			"Where an import tool is available in your account, you can bring in supported CSV records. Check the preview carefully before confirming an import, and contact us if your existing export uses a different format.",
+	},
+	{
+		question: "What happens if I lose my phone?",
+		answer:
+			"Your records are linked to your account rather than only to one phone. Use another supported device to sign in, change any credentials that may be exposed, and contact us promptly if you suspect unauthorised access.",
+	},
+];
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <BaseHead title={`Support | ${SITE_TITLE}`} description="Support and self-help for TGD Trades subscribers." />
+  </head>
+  <body>
+    <Header />
+    <main class="support-main">
+      <section class="intro">
+        <p class="eyebrow">Trades Go Digital</p>
+        <h1>TGD Trades Support</h1>
+        <p>This page is for existing TGD Trades subscribers. Find answers below or open Subscriber Support to get help with your account or report a problem.</p>
+        <a class="support-button" href="/support">Subscriber Support</a>
+        <p>You’ll need to sign in to TGD Trades to use the support portal.</p>
+        <p>Not a subscriber yet? <a href="/contact">Contact us about TGD Trades</a>.</p>
+      </section>
+      <section aria-labelledby="help-title">
+        <h2 id="help-title">Self-help</h2>
+        <p>Open <a href={appUrl}>TGD Trades</a>, sign in and select <strong>Help &amp; Guide</strong> in the app.</p>
+        <div class="faq-grid">
+          {faqs.map(({ question, answer }) => (
+            <article>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section aria-labelledby="signin-title">
+        <h2 id="signin-title">Can’t sign in?</h2>
+        <p>Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> and tell us what happened. Please leave out passwords and card details.</p>
+        <p>See our <a href="/terms-and-conditions#privacy-notice">Privacy Notice</a> for how we handle your information.</p>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+<style>
+  .support-main { width: min(100% - 2rem, 68rem); margin-inline: auto; padding-block: clamp(2rem, 6vw, 5rem); }
+  section + section { margin-top: clamp(2rem, 5vw, 4rem); }
+  .intro { max-width: 48rem; }
+  h1 { font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1.05; }
+  h3 { font-size: 1rem; }
+  p { line-height: 1.6; }
+  a { overflow-wrap: anywhere; }
+  .support-button { display: inline-flex; align-items: center; min-height: 44px; padding: .75rem 1.25rem; border-radius: .5rem; background: #ff8a35; color: #091321; font-weight: 800; }
+  .faq-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  article { padding: 1.125rem; border-radius: .75rem; border: 1px solid #294158; background: #151f2d; }
+  article p { margin-bottom: 0; }
+  @media (max-width: 42rem) { .faq-grid { grid-template-columns: 1fr; } }
+</style>

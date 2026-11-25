@@ -9,6 +9,8 @@ const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
 const PUBLIC_EXACT_PATHS = new Set([
+	"/support-centre",
+	"/support-centre/",
 	"/logo-maker",
 	"/logo-maker/",
 	"/pdf-maker",
