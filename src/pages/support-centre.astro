@@ -54,7 +54,7 @@ const faqs = [
   <head>
     <BaseHead title={`Support | ${SITE_TITLE}`} description="Support and self-help for TGD Trades subscribers." />
   </head>
-  <body>
+  <body class="support-page">
     <Header />
     <main class="support-main">
       <section class="intro">
@@ -87,14 +87,20 @@ const faqs = [
   </body>
 </html>
 <style>
+  .support-page {
+    margin: 0;
+    background: radial-gradient(ellipse at top right, #102d43, #0a1320 65%);
+    color: #fff;
+  }
   .support-main { width: min(100% - 2rem, 68rem); margin-inline: auto; padding-block: clamp(2rem, 6vw, 5rem); }
   section + section { margin-top: clamp(2rem, 5vw, 4rem); }
   .intro { max-width: 48rem; }
   h1 { font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1.05; }
   h3 { font-size: 1rem; }
-  p { line-height: 1.6; }
-  a { overflow-wrap: anywhere; }
-  .support-button { display: inline-flex; align-items: center; min-height: 44px; padding: .75rem 1.25rem; border-radius: .5rem; background: #ff8a35; color: #091321; font-weight: 800; }
+  p { color: #c7d8e8; line-height: 1.6; }
+  .eyebrow { color: #f2bf54; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+  a { color: #69d5ff; overflow-wrap: anywhere; }
+  .support-button { display: inline-flex; align-items: center; box-sizing: border-box; min-height: 44px; padding: .75rem 1.25rem; border-radius: .5rem; background: #ff8a35; color: #091321; font-weight: 800; text-decoration: none; }
   .faq-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
   article { padding: 1.125rem; border-radius: .75rem; border: 1px solid #294158; background: #151f2d; }
   article p { margin-bottom: 0; }
