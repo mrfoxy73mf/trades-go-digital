@@ -9,12 +9,8 @@ const USERNAME = "president";
 const REALM = "Trades Go Digital";
 const INVITE_COOKIE = "tgd_invite";
 const PUBLIC_EXACT_PATHS = new Set([
-	"/support-centre",
-	"/support-centre/",
-	// The support page and chat verify the subscriber's signed session.
+	// The portal verifies the subscriber's signed session.
 	"/support",
-	"/support/",
-	"/api/support/chat",
 	"/logo-maker",
 	"/logo-maker/",
 	"/pdf-maker",
